@@ -1,0 +1,181 @@
+/* =========================================
+   VIBRATIONAL DESIGN SYSTEM (NANO BANANA)
+   Archetype Styles
+   ========================================= */
+
+/* --- BUTTON STYLES --- */
+
+/* Vibra 1, 8: Power / Leadership */
+.btn-solid-gold {
+    background: linear-gradient(135deg, var(--primary) 0%, #a67c00 100%);
+    color: #fff !important;
+    border-radius: 2px !important;
+    /* Sharp/Slight round */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    border: 1px solid var(--primary);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-solid-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+}
+
+/* Vibra 2, 6, 9: Love / Nurture / Soft */
+.btn-soft-rounded {
+    background: var(--secondary);
+    color: var(--dark) !important;
+    border-radius: 50px !important;
+    /* Pill shape */
+    font-weight: 600;
+    text-transform: capitalize;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    padding: 15px 45px !important;
+}
+
+.btn-soft-rounded:hover {
+    background: var(--secondary-light);
+    transform: scale(1.05);
+}
+
+/* Vibra 4, 7: Minimal / Structure / Spiritual */
+.btn-minimal-outline {
+    background: transparent;
+    color: var(--primary) !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 8px !important;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.btn-minimal-outline:hover {
+    background: var(--primary);
+    color: #fff !important;
+}
+
+/* Vibra 3, 5: Creative / Energy */
+.btn-sharp-edge {
+    background: var(--dark);
+    color: #fff !important;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%, 0% 20%);
+    /* Cool poly shape */
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-style: italic;
+    border: none;
+}
+
+.btn-sharp-edge:hover {
+    background: var(--primary);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    /* Morphs to rectangle */
+}
+
+
+/* --- BORDER RADIUS OVERRIDES (Based on Variable) --- */
+/* The generator passes this via style attribute on body or specific container, 
+   but we can also have specific utility classes */
+
+.radius-sharp {
+    border-radius: 0px !important;
+}
+
+.radius-soft {
+    border-radius: 20px !important;
+}
+
+.radius-pill {
+    border-radius: 999px !important;
+}
+
+/* --- HERO VARIATIONS --- */
+
+/* Vibe: Spiritual/Mystery (Fade/Blur) */
+.hero-vibe-spiritual .hero-image img {
+    filter: sepia(30%) contrast(1.1);
+    border-radius: 100px 100px 0 0;
+    /* Arch window */
+}
+
+/* Vibe: Power (Strong Shadows) */
+.hero-vibe-power h1 {
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+}
+
+/* --- STRUCTURAL LAYOUTS --- */
+
+/* LAYOUT 1: SPLIT SCREEN (Power / Action) 
+   Used for: Vibra 1, 5, 8 (Gyms, Barbers, Lawyers) */
+.hero-layout-split {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
+    padding: 120px 40px !important;
+}
+
+.hero-layout-split .hero-v1-content {
+    max-width: 100%;
+    padding: 0 40px 0 0;
+    text-align: left;
+}
+
+/* Force image/gradient to right side in split */
+.hero-layout-split::before {
+    left: 50% !important;
+    /* Overlay only on right possibly? Or full? Keep full for contrast */
+}
+
+@media (max-width: 768px) {
+    .hero-layout-split {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-layout-split .hero-v1-content {
+        padding: 0;
+        text-align: center;
+    }
+}
+
+/* LAYOUT 2: CENTERED (Love / Community) 
+   Used for: Vibra 2, 6, 9 (Food, Yoga, Care) 
+   (Matches default behavior mostly) */
+.hero-layout-centered {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* LAYOUT 3: MINIMAL (Spiritual / Mystery) 
+   Used for: Vibra 4, 7, 11 (Wellness, Jewelry, Exclusive) */
+.hero-layout-minimal {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 90vh !important;
+    /* Taller */
+}
+
+.hero-layout-minimal h1 {
+    font-weight: 300 !important;
+    letter-spacing: 5px !important;
+    text-transform: uppercase;
+    font-size: 3rem !important;
+}
+
+.hero-layout-minimal .btn-hero {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(5px);
+}

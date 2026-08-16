@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} | Tu Nuevo Sitio Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .logo-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: #E85D4C;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background: #C54B3C;
+        }
+
+        .contact {
+            padding: 80px 20px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .contact-item {
+            padding: 20px 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        footer {
+            padding: 30px;
+            background: #1a1a2e;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tucured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(232, 93, 76, 0.2);
+            border-radius: 50px;
+            color: #E85D4C;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        .mockup-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #E85D4C, #C54B3C);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+
+        body {
+            padding-top: 45px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mockup-banner">
+        ⚡ PROPUESTA EXCLUSIVA para <strong>{{name}}</strong> — Creado por TucuRed
+    </div>
+
+    <section class="hero">
+        <h1 class="logo-text">{{name}}</h1>
+        <p class="tagline">Tu negocio, ahora online</p>
+        <a href="tel:{{phone}}" class="cta-button">Contactanos</a>
+    </section>
+
+    <section class="contact">
+        <h2 class="section-title">Encontranos</h2>
+        <div class="contact-info">
+            {{#if phone}}
+            <div class="contact-item">📞 {{phone}}</div>
+            {{/if}}
+            {{#if address}}
+            <div class="contact-item">📍 {{address}}</div>
+            {{/if}}
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 {{name}}</p>
+        <div class="tucured-badge">
+            <span>🔴</span> Propuesta web por TucuRed
+        </div>
+    </footer>
+</body>
+
+</html>

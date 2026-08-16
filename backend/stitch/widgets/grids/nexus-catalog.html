@@ -1,0 +1,17 @@
+<!-- WIDGET: Nexus_Catalog_Standard -->
+<!-- VIBE: Structured, Clean, Conversion-Focused -->
+<section class="py-20 bg-[var(--surface)]">
+    <div class="container mx-auto px-6 mb-12 text-center">
+        <h2 class="text-4xl font-serif text-[var(--on-surface)]">{{SHOP_TITLE}}</h2>
+        <div class="w-12 h-1 bg-[var(--accent)] mx-auto mt-4"></div>
+    </div>
+    
+    <nexus-catalog
+        data-catalog='{{CATALOG_JSON}}'
+        data-accent='{{ACCENT_COLOR}}'
+        data-surface='{{SURFACE_COLOR}}'
+        data-on-surface='{{ON_SURFACE_COLOR}}'
+        data-head-font='{{HEAD_FONT}}'
+        data-body-font='{{BODY_FONT}}'
+    ></nexus-catalog>
+</section>

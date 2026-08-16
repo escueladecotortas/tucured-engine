@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google-cloud/vertexai": "^1.10.0",
+    "@google/generative-ai": "^0.24.1",
+    "apify-client": "^2.21.0",
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
+    "chokidar": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.4.1",
+    "firebase-admin": "^13.6.0",
+    "google-auth-library": "^10.5.0",
+    "groq-sdk": "^0.37.0",
+    "image-size": "^2.0.2",
+    "mercadopago": "^2.12.0",
+    "multer": "^2.0.2",
+    "netlify-cli": "^23.13.5",
+    "puppeteer": "^24.33.0",
+    "screenshot-desktop": "^1.15.3",
+    "socket.io": "^4.8.3",
+    "ts-morph": "^27.0.2"
+  }
+}

@@ -1,0 +1,25 @@
+<!-- WIDGET: Nexus_Hero_Standard -->
+<!-- VIBE: Premium, Shadow DOM, Zero Latency -->
+<section class="nexus-hero-wrapper relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#171817]">
+    <nexus-gallery 
+        data-photos='{{GALLERY_JSON}}'
+        data-accent='{{ACCENT_COLOR}}'
+        data-surface='{{SURFACE_COLOR}}'
+        data-on-surface='{{ON_SURFACE_COLOR}}'
+        data-primary='{{PRIMARY_COLOR}}'
+        data-head-font='{{HEAD_FONT}}'
+        data-body-font='{{BODY_FONT}}'
+        data-client-name='{{CLIENT_NAME}}'
+    ></nexus-gallery>
+    
+    <!-- Capa de Contenido Flotante para Hero -->
+    <div class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-center z-10 px-6">
+        <h1 class="text-white text-5xl md:text-7xl font-serif mb-6 drop-shadow-2xl">{{HERO_TITLE}}</h1>
+        <p class="text-white/80 text-lg md:text-xl max-w-2xl font-light mb-8">{{HERO_SUBTITLE}}</p>
+        <div class="pointer-events-auto">
+            <a href="#booking" class="inline-block px-8 py-4 bg-[var(--accent)] text-white font-bold rounded-full uppercase tracking-widest hover:scale-105 transition-transform">
+                {{CTA_TEXT}}
+            </a>
+        </div>
+    </div>
+</section>

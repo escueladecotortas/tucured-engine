@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} | Tu Nuevo Sitio Web</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2C1810 0%, #4A2C2A 50%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(212,165,116,0.1)" stroke-width="0.5"/></svg>') repeat;
+            background-size: 200px;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #D4A574;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 30px rgba(212, 165, 116, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #D4A574, #C4956A);
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(212, 165, 116, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(212, 165, 116, 0.4);
+        }
+
+        /* Services */
+        .services {
+            padding: 100px 20px;
+            background: #FAFAFA;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #2C1810;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2C1810;
+        }
+
+        .service-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 100px 20px;
+            background: #2C1810;
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: #D4A574;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 165, 116, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            background: #1a1a1a;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .tucured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(197, 75, 60, 0.2);
+            border: 1px solid rgba(197, 75, 60, 0.3);
+            border-radius: 50px;
+            color: #E85D4C;
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+
+        /* Mockup Notice */
+        .mockup-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #E85D4C, #C54B3C);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            padding-top: 45px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mockup-banner">
+        ⚡ PROPUESTA EXCLUSIVA para <strong>{{name}}</strong> — Creado por TucuRed
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="logo-text">{{name}}</h1>
+            <p class="tagline">Estilo • Elegancia • Profesionalismo</p>
+            <a href="tel:{{phone}}" class="cta-button">Reservar Turno</a>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <h3 class="service-name">Cortes</h3>
+                <p class="service-desc">Cortes modernos y clásicos adaptados a tu estilo personal.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3 class="service-name">Coloración</h3>
+                <p class="service-desc">Técnicas de color profesionales con productos de primera calidad.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💇</div>
+                <h3 class="service-name">Tratamientos</h3>
+                <p class="service-desc">Hidratación, keratina y tratamientos reparadores para tu cabello.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h2 class="section-title">Visitanos</h2>
+        <div class="contact-info">
+            {{#if phone}}
+            <div class="contact-item">
+                <div class="contact-icon">📞</div><span>{{phone}}</span>
+            </div>
+            {{/if}}
+            {{#if address}}
+            <div class="contact-item">
+                <div class="contact-icon">📍</div><span>{{address}}</span>
+            </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 {{name}} — Todos los derechos reservados</p>
+        <div class="tucured-badge">
+            <span>🔴</span> Propuesta web por TucuRed
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!-- WIDGET: Nexus_Footer_Standard -->
+<footer class="bg-[var(--primary)] text-white pt-20 pb-10">
+    <div class="container mx-auto px-6">
+        <nexus-map
+            data-q='{{LOCATION_QUERY}}'
+            data-address='{{LOCATION_ADDRESS}}'
+            data-accent='{{ACCENT_COLOR}}'
+            data-font='{{HEAD_FONT}}'
+            data-on-surface='{{SURFACE_COLOR}}'
+        ></nexus-map>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 border-t border-white/10 pt-12">
+            <div>
+                <h4 class="font-serif text-2xl mb-6">{{CLIENT_NAME}}</h4>
+                <p class="opacity-60 text-sm leading-relaxed">{{CLIENT_BIO}}</p>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-widest font-bold mb-6 text-[var(--accent)]">Contacto</h5>
+                <ul class="space-y-4 text-sm opacity-80">
+                    <li>{{WHATSAPP_NUMBER}}</li>
+                    <li>{{CLIENT_EMAIL}}</li>
+                    <li>{{LOCATION_ADDRESS}}</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-widest font-bold mb-6 text-[var(--accent)]">Horarios</h5>
+                <p class="text-sm opacity-80">Lunes a Viernes: 09:00 - 20:00</p>
+                <p class="text-sm opacity-80">Sábados: 10:00 - 18:00</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-20 opacity-30 text-[10px] uppercase tracking-widest">
+            Handcrafted by NEXUS-OS &copy; 2026
+        </div>
+    </div>
+</footer>
