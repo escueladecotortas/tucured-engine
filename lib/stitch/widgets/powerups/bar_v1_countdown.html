@@ -1,0 +1,58 @@
+<!-- POWER-UP: Promo_Countdown_Bar -->
+<!-- VIBE: Urgency, High Visibility, FOMO -->
+<div id="promoBar" class="fixed bottom-0 left-0 w-full bg-gradient-to-r from-red-600 to-orange-500 text-white py-3 px-4 z-50 flex flex-col md:flex-row items-center justify-center gap-4 text-center shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
+    <div class="flex items-center gap-2 animate-pulse">
+        <span class="text-xl">🔥</span>
+        <span class="font-bold uppercase tracking-wider text-sm md:text-base">{{PROMO_TEXT}}</span>
+    </div>
+    
+    <div class="flex items-center gap-2 font-mono text-lg font-bold bg-white/20 px-4 py-1 rounded-lg">
+        <span id="promoHours">00</span>h :
+        <span id="promoMinutes">00</span>m :
+        <span id="promoSeconds">00</span>s
+    </div>
+
+    <button onclick="scrollToShop()" class="bg-white text-red-600 px-4 py-1 rounded font-bold text-sm hover:bg-gray-100 transition-colors shadow-sm">
+        {{PROMO_CTA}}
+    </button>
+    
+    <button onclick="closePromo()" class="absolute top-2 right-2 md:relative md:top-auto md:right-auto opacity-50 hover:opacity-100">✕</button>
+</div>
+
+<script>
+    // COUNTDOWN LOGIC
+    // Set deadline to X hours from now (simulated urgency)
+    const HOURS_LEFT = {{PROMO_HOURS_DURATION}}; 
+    const deadline = new Date(Date.now() + HOURS_LEFT * 60 * 60 * 1000);
+
+    function updateTimer() {
+        const now = new Date();
+        const diff = deadline - now;
+
+        if (diff <= 0) {
+            document.getElementById('promoBar').style.display = 'none';
+            return;
+        }
+
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('promoHours').innerText = String(h).padStart(2, '0');
+        document.getElementById('promoMinutes').innerText = String(m).padStart(2, '0');
+        document.getElementById('promoSeconds').innerText = String(s).padStart(2, '0');
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    function closePromo() {
+        document.getElementById('promoBar').remove();
+    }
+
+    function scrollToShop() {
+        // Scroll to product grid if exists, else top
+        const shop = document.querySelector('.add-to-cart-btn')?.closest('section');
+        if(shop) shop.scrollIntoView({behavior: 'smooth'});
+    }
+</script>

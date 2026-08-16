@@ -1,0 +1,37 @@
+<!-- WIDGET: Hero_Minimal_Typer -->
+<!-- VIBE: Sophisticated, Serious, Luxury, Minimal -->
+<section class="relative py-32 px-6 bg-[var(--primary)] text-white overflow-hidden">
+    <!-- Abstract Geometry Background -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
+            <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+        </svg>
+    </div>
+
+    <div class="container mx-auto max-w-4xl relative z-10">
+        <p class="text-sm tracking-[0.3em] uppercase mb-8 opacity-80 border-b border-white/20 pb-4 inline-block">
+            {{CATEGORY_LABEL}}
+        </p>
+        
+        <h1 class="text-5xl md:text-8xl font-serif font-light mb-12 leading-[0.9] tracking-tighter mix-blend-overlay opacity-90">
+            {{HERO_BIG_STATEMENT}}
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/20 pt-12">
+            <div class="md:col-span-2">
+                <p class="text-xl md:text-2xl font-light leading-relaxed opacity-90">
+                    {{HERO_DESCRIPTION}}
+                </p>
+            </div>
+            <div class="flex flex-col justify-between items-start">
+                <a href="{{CTA_LINK}}" class="group flex items-center gap-4 text-xl font-bold hover:text-[var(--secondary)] transition-colors">
+                    {{CTA_TEXT}}
+                    <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+                <div class="mt-8 md:mt-0">
+                    <p class="text-sm opacity-50">SCROLL DOWN</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

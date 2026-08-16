@@ -1,0 +1,51 @@
+<!-- WIDGET: Hero_Slider_Retail -->
+<!-- VIBE: Dynamic, Commercial, Exciting -->
+<style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<section class="relative bg-white pt-24 pb-12">
+    <div class="container mx-auto px-4 mb-8 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-black text-[var(--primary)] uppercase tracking-tight">{{HERO_TITLE}}</h1>
+            <p class="text-gray-500 font-medium">{{HERO_SUBTITLE}}</p>
+        </div>
+        <!-- Simulación de controles -->
+        <div class="flex gap-2">
+            <button class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors">←</button>
+            <button class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition-colors">→</button>
+        </div>
+    </div>
+
+    <!-- Scroll Container -->
+    <div class="flex overflow-x-auto gap-6 px-4 pb-8 hide-scrollbar snap-x snap-mandatory">
+        <!-- Slide 1 (Promo) -->
+        <div class="snap-center shrink-0 w-[85vw] md:w-[600px] h-[400px] bg-red-500 rounded-3xl relative overflow-hidden shadow-xl group">
+            <img src="{{SLIDE_1_IMAGE}}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+                <span class="bg-yellow-400 text-black px-3 py-1 text-xs font-bold w-fit rounded mb-2">OFERTA</span>
+                <h3 class="text-3xl font-bold text-white">{{SLIDE_1_TITLE}}</h3>
+                <p class="text-white/80">{{SLIDE_1_DESC}}</p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="snap-center shrink-0 w-[85vw] md:w-[600px] h-[400px] bg-blue-500 rounded-3xl relative overflow-hidden shadow-xl group">
+            <img src="{{SLIDE_2_IMAGE}}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+                <h3 class="text-3xl font-bold text-white">{{SLIDE_2_TITLE}}</h3>
+                <p class="text-white/80">{{SLIDE_2_DESC}}</p>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="snap-center shrink-0 w-[85vw] md:w-[600px] h-[400px] bg-green-500 rounded-3xl relative overflow-hidden shadow-xl group">
+            <img src="{{SLIDE_3_IMAGE}}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+                <h3 class="text-3xl font-bold text-white">{{SLIDE_3_TITLE}}</h3>
+                <p class="text-white/80">{{SLIDE_3_DESC}}</p>
+            </div>
+        </div>
+    </div>
+</section>

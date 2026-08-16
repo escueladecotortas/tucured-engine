@@ -1,0 +1,43 @@
+<!-- WIDGET: List_Menu_Simple -->
+<!-- VIBE: Classic, Clear, Information-Dense -->
+<section class="py-20 bg-fixed" style="background-image: url('{{BG_PATTERN}}')">
+    <div class="container mx-auto px-4 max-w-4xl bg-white/95 backdrop-blur shadow-2xl rounded-xl p-8 md:p-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-serif italic text-(--primary) mb-2">{{MENU_SUBTITLE}}</h2>
+            <h1 class="text-5xl font-bold text-gray-900">{{MENU_TITLE}}</h1>
+            <div class="w-24 h-1 bg-(--primary) mx-auto mt-6"></div>
+        </div>
+
+        <div class="space-y-8">
+            <!-- Item 1 -->
+            <div class="flex justify-between items-baseline border-b border-gray-200 pb-4 border-dotted">
+                <div class="flex gap-4">
+                     <h3 class="text-xl font-bold text-gray-800">{{ITEM_1_NAME}}</h3>
+                     <span class="text-xs font-bold text-white bg-(--secondary) px-2 py-1 rounded self-start">NUEVO</span>
+                </div>
+                <span class="text-2xl font-bold text-(--primary)">{{ITEM_1_PRICE}}</span>
+            </div>
+            <p class="text-gray-500 text-sm -mt-6 mb-4">{{ITEM_1_DESC}}</p>
+
+            <!-- Item 2 -->
+             <div class="flex justify-between items-baseline border-b border-gray-200 pb-4 border-dotted">
+                <h3 class="text-xl font-bold text-gray-800">{{ITEM_2_NAME}}</h3>
+                <span class="text-2xl font-bold text-(--primary)">{{ITEM_2_PRICE}}</span>
+            </div>
+            <p class="text-gray-500 text-sm -mt-6 mb-4">{{ITEM_2_DESC}}</p>
+
+            <!-- Item 3 -->
+             <div class="flex justify-between items-baseline border-b border-gray-200 pb-4 border-dotted">
+                <h3 class="text-xl font-bold text-gray-800">{{ITEM_3_NAME}}</h3>
+                <span class="text-2xl font-bold text-(--primary)">{{ITEM_3_PRICE}}</span>
+            </div>
+            <p class="text-gray-500 text-sm -mt-6 mb-4">{{ITEM_3_DESC}}</p>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{{CTA_LINK}}" class="inline-block px-10 py-4 bg-(--primary) text-white font-bold rounded hover:bg-black transition-colors">
+                {{CTA_TEXT}}
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,18 @@
+{
+  "client": {
+    "name": "Smart Garage Detailing",
+    "slug": "smart-garage-tucuman",
+    "tagline": "Perfección automotriz y cuidado obsesivo.",
+    "location": "Yerba Buena, Tucumán",
+    "whatsapp_number": "5493815987654",
+    "social_link": "https://instagram.com/smartgarage",
+    "images": {
+      "hero": "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=2070&auto=format&fit=crop"
+    },
+    "theme": {
+      "primary": "#FF2A2A",
+      "background": "#F5F5F0",
+      "text": "#1A1A1A"
+    }
+  }
+}

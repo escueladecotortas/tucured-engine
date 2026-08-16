@@ -1,0 +1,43 @@
+{
+    "client": {
+      "name": "BALI Beauty & Nails",
+      "slug": "bali-beauty-yerba-buena",
+      "tagline": "Tu momento de relax en Yerba Buena.",
+      "location": "Juan L. Fanzolato, Yerba Buena",
+      "whatsapp_number": "5493814123456",
+      "social_link": "https://instagram.com/balibeauty",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=2070&auto=format&fit=crop",
+        "grid": [
+            "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1629213014154-d88812678688?q=80&w=800&auto=format&fit=crop"
+        ]
+      },
+      "theme": {
+        "primary": "#D4AF37", 
+        "background": "#F5F5F0",
+        "text": "#1A1A1A"
+      },
+      "hero": {
+        "title": "Tus Manos, Tu Arte",
+        "subtitle": "Experiencia premium en cuidado de uñas y belleza integral.",
+        "benefits": ["Materiales Esterilizados", "Esmaltes Importados", "Diseños a Mano Alzada"],
+        "formTitle": "Reservá tu Turno",
+        "formSubtitle": "Elegí tu tratamiento y horario preferido.",
+        "formCta": "Solicitar Cita por WhatsApp",
+        "ratingText": "Top Rated Salon en Yerba Buena"
+      },
+      "grid": {
+        "title": "El Mundo BALI",
+        "items": [
+            { "image": "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop", "title": "Nail Art Premium" },
+            { "title": "Spa de Pies", "description": "Relajación total con piedras calientes.", "icon": "sparkles" },
+            { "stat": "100%", "label": "Esterilización Grado Médico" },
+            { "image": "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=800&auto=format&fit=crop", "title": "Ver Catálogo de Diseños" },
+            { "image": "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" },
+            { "quote": "La belleza es poder, y una buena manicura es su espada." }
+        ]
+      }
+    }
+  }

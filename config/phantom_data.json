@@ -1,0 +1,172 @@
+{
+  "client": {
+    "name": "Tucu Red Seed",
+    "slug": "tucu-red-seed",
+    "tagline": "Transformación Digital Soberana.",
+    "location": "San Miguel de Tucumán",
+    "whatsapp_number": "5493814132154",
+    "social_link": "https://instagram.com/tucured",
+    "vibration": "V9",
+    "images": {
+      "hero": "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=2000",
+      "grid": [
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?auto=format&fit=crop&q=80&w=800"
+      ]
+    },
+    "theme": {
+      "primary": "#FFD700",
+      "background": "#000000",
+      "text": "#FFFFFF"
+    },
+    "hero": {
+      "title": "Tu Negocio, <br/>en 24 Horas.",
+      "subtitle": "Sitios web de alto impacto diseñados por IA, bajo control humano.",
+      "benefits": ["Dominio .AR incluido", "Hosting Premium", "WhatsApp Business Integrado"],
+      "formTitle": "Iniciá Tu Transformación",
+      "formSubtitle": "Completá tus datos y un agente NEXUS te contactará.",
+      "formCta": "Activar Mi Sitio Ahora",
+      "ratingText": "#1 en Transformación Digital Regional"
+    },
+    "grid": {
+      "title": "El Futuro es Soberano",
+      "items": [
+        { "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", "title": "Velocidad Extrema" },
+        { "title": "Diseño Exclusivo", "description": "Estética de vanguardia 2026.", "icon": "zap" },
+        { "stat": "100%", "label": "Control Total de Datos" },
+        { "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800", "title": "Soporte VIP" },
+        { "image": "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?auto=format&fit=crop&q=80&w=800" },
+        { "quote": "La soberanía digital no es una opción, es una necesidad." }
+      ]
+    }
+  },
+  "missions": {
+    "bali-beauty": {
+      "name": "BALI Beauty & Nails",
+      "slug": "bali-beauty",
+      "tagline": "Tu momento de relax en Yerba Buena.",
+      "location": "Juan L. Fanzolato, Yerba Buena",
+      "whatsapp_number": "5493814123456",
+      "social_link": "https://instagram.com/balibeauty",
+      "vibration": "V7",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=2070&auto=format&fit=crop",
+        "grid": [
+          "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1629213014154-d88812678688?q=80&w=800&auto=format&fit=crop"
+        ]
+      },
+      "theme": {
+        "primary": "#D4AF37",
+        "background": "#F5F5F0",
+        "text": "#1A1A1A"
+      },
+      "hero": {
+        "title": "Tus Manos, Tu Arte",
+        "subtitle": "Experiencia premium en cuidado de uñas y belleza integral.",
+        "benefits": ["Materiales Esterilizados", "Esmaltes Importados", "Diseños a Mano Alzada"],
+        "formTitle": "Reservá tu Turno",
+        "formSubtitle": "Elegí tu tratamiento y horario preferido.",
+        "formCta": "Solicitar Cita por WhatsApp",
+        "ratingText": "Top Rated Salon en Yerba Buena"
+      },
+      "grid": {
+        "title": "El Mundo BALI",
+        "items": [
+          { "image": "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop", "title": "Nail Art Premium" },
+          { "title": "Spa de Pies", "description": "Relajación total con piedras calientes.", "icon": "sparkles" },
+          { "stat": "100%", "label": "Esterilización Grado Médico" },
+          { "image": "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=800&auto=format&fit=crop", "title": "Ver Catálogo de Diseños" },
+          { "image": "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" },
+          { "quote": "La belleza es poder, y una buena manicura es su espada." }
+        ]
+      }
+    },
+    "smart-garage": {
+      "name": "Smart Garage Pro",
+      "slug": "smart-garage",
+      "tagline": "Ingeniería de Precisión para tu Vehículo.",
+      "location": "Yerba Buena, Tucumán",
+      "whatsapp_number": "5493819988776",
+      "social_link": "https://instagram.com/smartgarage",
+      "vibration": "V4",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1486006396193-471a2abc912a?q=80&w=2070&auto=format&fit=crop",
+        "grid": [
+          "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=800&auto=format&fit=crop"
+        ]
+      },
+      "theme": {
+        "primary": "#FF2A2A",
+        "background": "#F0F0F0",
+        "text": "#0F0F0F"
+      },
+      "hero": {
+        "title": "Tu Coche, En Manos Expertas",
+        "subtitle": "Service oficial multimarca con tecnología de escaneo de última generación.",
+        "benefits": ["Garantía de 1 año", "Repuestos Originales", "Escaneo Computarizado"],
+        "formTitle": "Diagnóstico Sin Cargo",
+        "formSubtitle": "Agendá tu revisión preventiva hoy mismo.",
+        "formCta": "Consultar Turno Mecánico",
+        "ratingText": "El taller #1 en Google Maps"
+      },
+      "grid": {
+        "title": "Potencia & Seguridad",
+        "items": [
+          { "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800&auto=format&fit=crop", "title": "Service Integral" },
+          { "title": "Inyección Directa", "description": "Limpieza de inyectores por ultrasonido.", "icon": "zap" },
+          { "stat": "2.5k", "label": "Motores Optimizados" },
+          { "image": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=800&auto=format&fit=crop", "title": "Clínica de Neumáticos" },
+          { "image": "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=800&auto=format&fit=crop" },
+          { "quote": "La velocidad es opcional, la seguridad es obligatoria." }
+        ]
+      }
+    },
+    "grupo-denti": {
+      "name": "Grupo Denti Odontología",
+      "slug": "grupo-denti",
+      "tagline": "Diseñamos sonrisas, devolvemos confianza.",
+      "location": "Centro Médico Tucumán",
+      "whatsapp_number": "5493811122334",
+      "social_link": "https://instagram.com/grupodenti",
+      "vibration": "V6",
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1629221199341-30ef17411603?q=80&w=2070&auto=format&fit=crop",
+        "grid": [
+          "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1606811841689-23dfdd7a2500?q=80&w=800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=800&auto=format&fit=crop"
+        ]
+      },
+      "theme": {
+        "primary": "#0077B6",
+        "background": "#FFFFFF",
+        "text": "#1A1A1A"
+      },
+      "hero": {
+        "title": "La Sonrisa que Te Mereces",
+        "subtitle": "Especialistas en implantes y estética dental de alta complejidad.",
+        "benefits": ["Implantes en 24hs", "Ortodoncia Invisible", "Cuotas Sin Interés"],
+        "formTitle": "Consulta de Evaluación",
+        "formSubtitle": "Realizá tu escaneo 3D y presupuesto sin cargo.",
+        "formCta": "Pedir Cita Odontológica",
+        "ratingText": "Liderando en Implantes Dentales"
+      },
+      "grid": {
+        "title": "Excelencia Dental",
+        "items": [
+          { "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop", "title": "Escaneo 3D" },
+          { "title": "Estética Blitz", "description": "Blanqueamiento láser de una sola sesión.", "icon": "sparkles" },
+          { "stat": "5/5", "label": "Satisfacción de Pacientes" },
+          { "image": "https://images.unsplash.com/photo-1606811841689-23dfdd7a2500?q=80&w=800&auto=format&fit=crop", "title": "Implantes Digitales" },
+          { "image": "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=800&auto=format&fit=crop" },
+          { "quote": "Una sonrisa es el mejor accesorio que puedes usar." }
+        ]
+      }
+    }
+  }
+}

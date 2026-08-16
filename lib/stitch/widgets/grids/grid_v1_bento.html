@@ -1,0 +1,53 @@
+<!-- WIDGET: Grid_Bento_Box -->
+<!-- VIBE: Modern, Geeky, Organized Chaos -->
+<section class="py-20 px-4 bg-gray-50">
+    <div class="container mx-auto max-w-6xl">
+        <h2 class="text-3xl font-bold mb-12 text-center">{{GRID_TITLE}}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6 h-auto md:h-[800px]">
+            
+            <!-- Item A (Large Square) -->
+            <div class="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group shadow-lg">
+                <img src="{{ITEM_1_IMG}}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/40 flex items-end p-8">
+                    <h3 class="text-white text-2xl font-bold">{{ITEM_1_TITLE}}</h3>
+                </div>
+            </div>
+
+            <!-- Item B (Tall) -->
+            <div class="md:col-span-1 md:row-span-2 relative rounded-3xl overflow-hidden group shadow-lg bg-white p-6 flex flex-col justify-between">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
+                    {{ITEM_2_ICON}}
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">{{ITEM_2_TITLE}}</h3>
+                    <p class="text-gray-500 text-sm">{{ITEM_2_DESC}}</p>
+                </div>
+            </div>
+
+            <!-- Item C (Small) -->
+            <div class="md:col-span-1 md:row-span-1 bg-[var(--primary)] rounded-3xl p-6 text-white flex flex-col justify-center shadow-lg">
+                <h3 class="text-4xl font-black mb-1">{{ITEM_3_STAT}}</h3>
+                <p class="text-sm opacity-80">{{ITEM_3_LABEL}}</p>
+            </div>
+
+             <!-- Item D (Wide) -->
+             <div class="md:col-span-2 md:row-span-1 bg-white rounded-3xl p-6 flex items-center gap-6 shadow-lg border border-gray-100">
+                <img src="{{ITEM_4_IMG}}" class="w-24 h-24 rounded-2xl object-cover shrink-0">
+                <div>
+                    <h3 class="text-lg font-bold mb-1">{{ITEM_4_TITLE}}</h3>
+                    <a href="#" class="text-[var(--primary)] text-sm font-bold hover:underline">Ver más →</a>
+                </div>
+            </div>
+
+            <!-- Item E (Medium) -->
+             <div class="md:col-span-1 md:row-span-1 relative rounded-3xl overflow-hidden shadow-lg">
+                 <img src="{{ITEM_5_IMG}}" class="absolute inset-0 w-full h-full object-cover">
+             </div>
+
+             <!-- Item F (Text) -->
+             <div class="md:col-span-1 md:row-span-1 bg-gray-900 rounded-3xl p-6 flex items-center justify-center text-center shadow-lg">
+                <p class="text-white/90 text-sm italic">"{{QUOTE_TEXT}}"</p>
+             </div>
+        </div>
+    </div>
+</section>
