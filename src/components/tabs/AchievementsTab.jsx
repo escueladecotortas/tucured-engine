@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, Trophy, Target, Star, TrendingUp, Cpu, Briefcase, Zap, CheckCircle } from 'lucide-react';
+import { Award, Trophy, Target, Star, TrendingUp, Cpu, Briefcase, Zap, CheckCircle, Shield } from 'lucide-react';
 import { GlassCard } from '../core';
 
 export default function AchievementsTab({ projectId }) {

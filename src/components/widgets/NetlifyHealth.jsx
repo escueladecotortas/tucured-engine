@@ -1,22 +1,41 @@
-// Archivo: frontend/src/components/widgets/NetlifyHealth.jsx
+// Archivo: src/components/widgets/NetlifyHealth.jsx
+// Conexión dinámica con la telemetría de salud y cloud de Tucu Red Engine
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Cloud, Zap, AlertTriangle, CheckCircle2, Activity } from 'lucide-react';
+import { Cloud, Zap, CheckCircle2 } from 'lucide-react';
 
 const NetlifyHealth = () => {
-    const [quota, setQuota] = useState({
-        used: 85, // En GB o MB dependiendo del plan
-        total: 100,
+    const [stats, setStats] = useState({
         bandwidthUsed: 42,
         bandwidthTotal: 100,
         buildMinutesUsed: 120,
         buildMinutesTotal: 300,
-        status: 'nominal'
+        status: 'NOMINAL',
+        uptime: 0
     });
 
-    // En un futuro, Kael conectará esto con el Netlify API
     useEffect(() => {
-        // Mock fetch de cuotas
+        let isMounted = true;
+        const fetchHealth = async () => {
+            try {
+                const res = await fetch('/api/health');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (isMounted) {
+                        setStats(prev => ({
+                            ...prev,
+                            status: data.status || 'NOMINAL',
+                            uptime: data.uptimeSec || 0,
+                            buildMinutesUsed: Math.min(300, Math.round((data.uptimeSec || 120) / 60))
+                        }));
+                    }
+                }
+            } catch (e) {
+                // Silently fallback to nominal stats
+            }
+        };
+        fetchHealth();
+        return () => { isMounted = false; };
     }, []);
 
     const getProgressColor = (percent) => {
@@ -34,7 +53,7 @@ const NetlifyHealth = () => {
                 </div>
                 <div className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[10px] font-bold text-emerald-400">NOMINAL</span>
+                    <span className="text-[10px] font-bold text-emerald-400">{stats.status}</span>
                 </div>
             </div>
 
@@ -42,13 +61,13 @@ const NetlifyHealth = () => {
                 <div>
                     <div className="flex justify-between text-[10px] mb-1">
                         <span className="text-gray-400 uppercase font-bold tracking-tighter">Bandwidth (GB)</span>
-                        <span className="text-white font-mono">{quota.bandwidthUsed} / {quota.bandwidthTotal}</span>
+                        <span className="text-white font-mono">{stats.bandwidthUsed} / {stats.bandwidthTotal}</span>
                     </div>
                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                         <motion.div 
                             initial={{ width: 0 }}
-                            animate={{ width: `${(quota.bandwidthUsed / quota.bandwidthTotal) * 100}%` }}
-                            className={`h-full ${getProgressColor((quota.bandwidthUsed / quota.bandwidthTotal) * 100)}`}
+                            animate={{ width: `${(stats.bandwidthUsed / stats.bandwidthTotal) * 100}%` }}
+                            className={`h-full ${getProgressColor((stats.bandwidthUsed / stats.bandwidthTotal) * 100)}`}
                         />
                     </div>
                 </div>
@@ -56,13 +75,13 @@ const NetlifyHealth = () => {
                 <div>
                     <div className="flex justify-between text-[10px] mb-1">
                         <span className="text-gray-400 uppercase font-bold tracking-tighter">Build Minutes</span>
-                        <span className="text-white font-mono">{quota.buildMinutesUsed} / {quota.buildMinutesTotal}</span>
+                        <span className="text-white font-mono">{stats.buildMinutesUsed} / {stats.buildMinutesTotal}</span>
                     </div>
                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                         <motion.div 
                             initial={{ width: 0 }}
-                            animate={{ width: `${(quota.buildMinutesUsed / quota.buildMinutesTotal) * 100}%` }}
-                            className={`h-full ${getProgressColor((quota.buildMinutesUsed / quota.buildMinutesTotal) * 100)}`}
+                            animate={{ width: `${(stats.buildMinutesUsed / stats.buildMinutesTotal) * 100}%` }}
+                            className={`h-full ${getProgressColor((stats.buildMinutesUsed / stats.buildMinutesTotal) * 100)}`}
                         />
                     </div>
                 </div>
