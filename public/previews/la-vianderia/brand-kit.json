@@ -1,0 +1,40 @@
+{
+  "projectName": "La Viandería",
+  "brand": {
+    "primaryColor": "#6f4e37",
+    "secondaryColor": "#d2691e",
+    "accentColor": "#f5deb3",
+    "backgroundColor": "#0d0d0d",
+    "textColor": "#f5f5f5"
+  },
+  "typography": {
+    "headingFont": "Merriweather",
+    "headingWeights": [
+      400,
+      600,
+      700
+    ],
+    "bodyFont": "Montserrat",
+    "bodyWeights": [
+      300,
+      400,
+      500
+    ],
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap"
+  },
+  "styles": {
+    "borderRadius": "8px",
+    "buttonStyle": "soft-rounded",
+    "cardStyle": "glass-dark",
+    "animationStyle": "subtle-fade"
+  },
+  "numerology": {
+    "masterNumber": 6,
+    "vibe": "warm-cozy",
+    "description": "Energía de amor y cuidado, con estética cálido y acogedor"
+  },
+  "notes": "Energía de amor y cuidado, con estética cálido y acogedor. Número maestro: 6.",
+  "instagram": "@lavianderiatucumanarg",
+  "phone": "+5493816509073",
+  "address": "Combate de San Lorenzo 963, T4000 San Miguel de Tucumán, Tucumán"
+}

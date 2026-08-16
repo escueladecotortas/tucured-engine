@@ -1,0 +1,52 @@
+[
+  {
+    "id": "0x94225d30936dc903_0x574b2b9be8f35e8f",
+    "name": "La Viandería",
+    "category": "Gastronomy",
+    "address": "Combate de San Lorenzo 963, T4000 San Miguel de Tucumán, Tucumán",
+    "phone": "+5493816509073",
+    "instagram": "@lavianderiatucumanarg",
+    "website": null,
+    "photos": [
+      "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyqQpbi6zkIP2V2C7ZzHUq3DaKKD7dztAkVA0RWSU9jmmcjcH3vxl08GweiMLc-SVJA7BsHt1JfD6swOHet3UTIFVqrj6NIl_2QXTlg02fqRWc_gB7tR7xKCRmXm4cac5g3XH4fGWGPwn3r=w1600-h1200-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyqQpbi6zkIP2V2C7ZzHUq3DaKKD7dztAkVA0RWSU9jmmcjcH3vxl08GweiMLc-SVJA7BsHt1JfD6swOHet3UTIFVqrj6NIl_2QXTlg02fqRWc_gB7tR7xKCRmXm4cac5g3XH4fGWGPwn3r=s677-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyII44w-suRNa1Qhn-k754R1_tJRuEMs1ILSDcNLCBcCU5dHp2DGPeFd8yLspkf3Yh4XB-D7NaptC14kalsMOi2BVoD8pY_eG1svfmoKWCQNJXup-zZzmAZ0cnWzuMwEWUB_NaFV4RFBUgh=w1600-h1200-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxTwWCgFOmCyUrmvLlfkk1u4St0G0cmMImhoJOBVH9coTYJpaS4ZMFyR3rjC62H5WD7NtGjM5wz_lQxCud-vj3c--lKFWfdLk93yXcWHKRJ-zC14CSD5gU4eQ3kzYgxE1YLW0KpB18Riu44=w1600-h1200-k-no"
+    ],
+    "reviews": [
+      {
+        "author": "Natalio V",
+        "text": "Lo recomendamos siempre, uno de los mejores lugares de tucuman. Comemos bien, rico y super casero. Y lo mejor de todo son los frizzados, nos organiza la semana familiar. Gracias siempre",
+        "time": "Hace 2 meses",
+        "rating": 5
+      },
+      {
+        "author": "Franco Guillermo Colotti",
+        "text": "Excelente atención y la comida aún mejor. Muy Recomendado. 💯…",
+        "time": "Hace 2 meses",
+        "rating": 5
+      },
+      {
+        "author": "Esteban Dominguez",
+        "text": "Muy rico todo y los wraps 10/10",
+        "time": "Hace 2 meses",
+        "rating": 5
+      }
+    ],
+    "reviewsCount": 3,
+    "rating": 5.0,
+    "openingHours": [
+      "Lunes a Viernes: 10:00–15:00, 19:30–21:30",
+      "Sábado: 11:00–14:00",
+      "Domingo: Cerrado"
+    ],
+    "coordinates": {
+      "lat": -26.8322902,
+      "lng": -65.2124948
+    },
+    "googlePlaceId": "0x94225d30936dc903:0x574b2b9be8f35e8f",
+    "source": "Hybrid (Cyborg + Manual)",
+    "status": "verified",
+    "createdAt": "2026-01-24T05:11:09.108Z"
+  }
+]

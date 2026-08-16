@@ -1,22 +1,10 @@
-# Dependencias y builds
 node_modules/
-.next/
-out/
-.netlify/
 dist/
-*.tsbuildinfo
-
-# Variables de entorno y secretos
+out/
+.next/
+*.log
 .env
 .env*.local
-*.pem
-serviceAccountKey*.json
-
-# Logs y temporales
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.DS_Store
-*.zip
 tmp/
+.DS_Store
+Thumbs.db

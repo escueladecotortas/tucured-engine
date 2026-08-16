@@ -1,0 +1,26 @@
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\leola\\Downloads\\NEXUS-OS\\tucu-red\\clients\\adore-tu-esencia"
+publishOrigin = "config"
+base = "C:\\Users\\leola\\Downloads\\NEXUS-OS\\tucu-red\\clients\\adore-tu-esencia"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]

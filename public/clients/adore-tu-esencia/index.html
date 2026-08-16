@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoré tu Esencia | Ultimate Collection</title>
+
+    <!-- FONTS: Manrope (Modern Luxury) + Playfair Display (Classic) + Great Vibes (Signature) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- STYLES V6 -->
+    <link rel="stylesheet" href="styles.ultimate.css">
+</head>
+
+<body>
+
+    <!-- DYNAMIC GLASS ISLAND (Navigation) -->
+    <nav id="glassIsland" class="glass-island">
+        <div class="island-content">
+            <div class="island-logo">
+                <img src="assets/logo.png" alt="Adoré" class="nav-logo-img">
+            </div>
+            <div class="island-links">
+                <a href="#collection" class="nav-link">Colección</a>
+                <a href="#story" class="nav-link">Historia</a>
+                <a href="#gallery" class="nav-link">Galería</a>
+            </div>
+            <div class="island-cta">
+                <button onclick="openTurnero()" class="btn-island">Agendar Cita</button>
+            </div>
+            <button class="island-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown integrated in Island -->
+        <div id="mobileDropdown" class="island-mobile-menu">
+            <a href="#collection" onclick="toggleMobileMenu()">Colección</a>
+            <a href="#story" onclick="toggleMobileMenu()">Historia</a>
+            <a href="#gallery" onclick="toggleMobileMenu()">Galería</a>
+            <a href="#" onclick="toggleMobileMenu(); openTurnero()">Reservar Visita</a>
+        </div>
+    </nav>
+
+    <!-- CINEMATIC HERO -->
+    <header id="hero" class="hero-cinematic">
+        <!-- Living Background (No flat colors) -->
+        <div class="hero-bg-layer"></div>
+        <div class="hero-content">
+            <span class="hero-overline">Signature Collection</span>
+            <h1 class="hero-title">Adoré <span class="italic-accent">tu Esencia</span></h1>
+            <p class="hero-subtitle">Arquitectura de aromas y texturas para tu refugio personal.</p>
+            <div class="hero-actions">
+                <button onclick="openTurnero()" class="btn-primary-glow">Visitar Showroom</button>
+                <a href="#collection" class="link-subtle">Explorar Colección</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="mouse-icon"></div>
+        </div>
+    </header>
+
+    <!-- SHOWCASE HORIZONTAL (The Museum) -->
+    <section id="collection" class="section-showcase">
+        <div class="section-header">
+            <h2>Nuestra Colección</h2>
+            <p>Piezas únicas creadas a mano</p>
+        </div>
+
+        <!-- Horizontal Scroll Container -->
+        <div class="showcase-track">
+            <!-- Card 1: Velas -->
+            <div class="showcase-card glass-panel">
+                <div class="card-visual">
+                    <img src="assets/card-velas.jpg" alt="Velas Artesanales">
+                    <div class="visual-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-number">01</div>
+                    <h3>Velas de Soja</h3>
+                    <p>Fragancias que transforman estados de ánimo. Envases reutilizables y cera 100% natural.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Aromas -->
+            <div class="showcase-card glass-panel">
+                <div class="card-visual">
+                    <img src="assets/card-aromas.jpg" alt="Difusores">
+                    <div class="visual-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-number">02</div>
+                    <h3>Difusores & Home Spray</h3>
+                    <p>La firma olfativa de tu hogar. Persistencia y sutileza en cada nota.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Textiles -->
+            <div class="showcase-card glass-panel">
+                <div class="card-visual">
+                    <img src="assets/card-textiles.jpg" alt="Textiles">
+                    <div class="visual-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-number">03</div>
+                    <h3>Textiles & Deco</h3>
+                    <p>El toque final de calidez. Mantas, almohadones y objetos con alma.</p>
+                </div>
+            </div>
+
+            <!-- Spacer for scroll feel -->
+            <div class="showcase-spacer"></div>
+        </div>
+    </section>
+
+    <!-- STORY EDITORIAL -->
+    <section id="story" class="section-story">
+        <div class="story-layout">
+            <div class="story-visual">
+                <div class="image-frame">
+                    <img src="assets/showroom-hero.jpg" alt="Fernanda Adoré">
+                </div>
+                <div class="decorative-circle"></div>
+            </div>
+            <div class="story-content glass-blur">
+                <span class="story-label">La Creadora</span>
+                <h2>Más que objetos,<br>creamos <em>atmósferas</em>.</h2>
+                <div class="separator-gold"></div>
+                <p>
+                    "Cada pieza de Adoré nace de una búsqueda personal: encontrar la belleza en la pausa.
+                    En un mundo que no se detiene, te invito a crear tu propio ritual de desconexión."
+                </p>
+                <div class="signature-area">
+                    <span class="signature-font">Fernanda</span>
+                    <span class="role-font">Fundadora</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY MASONRY (Refined) -->
+    <section id="gallery" class="section-gallery">
+        <div class="section-header centered">
+            <h2>Galería Visual</h2>
+            <div class="instagram-badge">
+                <a href="https://instagram.com/adoretuesencia" target="_blank"
+                    style="text-decoration: none; color: inherit;">
+                    <i class="fab fa-instagram"></i> @adoretuesencia
+                </a>
+            </div>
+        </div>
+
+        <div class="masonry-grid-v6">
+            <div class="masonry-item item-tall"><img src="assets/gallery-01.jpg" loading="lazy"></div>
+            <div class="masonry-item"><img src="assets/gallery-05.jpg" loading="lazy"></div>
+            <div class="masonry-item item-wide"><img src="assets/gallery-09.jpg" loading="lazy"></div>
+            <div class="masonry-item"><img src="assets/gallery-03.jpg" loading="lazy"></div>
+            <div class="masonry-item item-tall"><img src="assets/gallery-07.jpg" loading="lazy"></div>
+            <div class="masonry-item"><img src="assets/gallery-08.jpg" loading="lazy"></div>
+            <div class="masonry-item"><img src="assets/gallery-02.jpg" loading="lazy"></div>
+        </div>
+
+        <div class="gallery-footer">
+            <a href="https://instagram.com/adoretuesencia" target="_blank" class="btn-primary-glow"
+                style="display: inline-block; padding: 12px 30px; font-size: 0.9rem;">Seguir en Instagram</a>
+        </div>
+    </section>
+
+    <!-- FOOTER LUX -->
+    <footer class="footer-ultimate">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo-container">
+                    <img src="assets/logo.png" alt="Adoré" class="footer-logo-img">
+                </div>
+                <p>San Miguel de Tucumán, Argentina.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" onclick="openTurnero()">Reservar Cita</a>
+                <a href="https://wa.me/5493816202789">WhatsApp</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Adoré tu Esencia. Design by TUCU RED (Nexus System).</p>
+        </div>
+    </footer>
+
+    <!-- TURNERO SINGLETON (Hidden by default) -->
+    <div id="turneroModal" class="turnero-overlay-fixed">
+        <div class="turnero-glass-card">
+            <button class="btn-close-modal" onclick="closeTurnero()">&times;</button>
+            <div class="turnero-header">
+                <h3>Reservar Experiencia</h3>
+                <p>Te esperamos en nuestro showroom privado.</p>
+            </div>
+
+            <div id="turnero-body" class="turnero-body">
+                <!-- JS will inject Calendar here -->
+                <div class="loading-spinner">Cargando agenda...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT V6 -->
+    <script src="script.ultimate.js"></script>
+</body>
+
+</html>

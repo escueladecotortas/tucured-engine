@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TucuRed - Logo Concept</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Outfit', sans-serif;
+            gap: 60px;
+            padding: 40px;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-title {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .logo-bg {
+            background: white;
+            padding: 60px 80px;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
+        .logo-bg.dark {
+            background: #1a1a2e;
+        }
+        /* THE LOGO */
+        .tucured-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .logo-symbol {
+            position: relative;
+            width: 120px;
+            height: 100px;
+        }
+        /* Organic nodes representing connection */
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E85D4C 0%, #C54B3C 100%);
+            box-shadow: 0 4px 15px rgba(197, 75, 60, 0.4);
+        }
+        .node.center {
+            width: 32px;
+            height: 32px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #D4A574 0%, #C4956A 100%);
+            box-shadow: 0 4px 20px rgba(212, 165, 116, 0.5);
+            z-index: 2;
+        }
+        .node.left {
+            width: 24px;
+            height: 24px;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .node.right {
+            width: 24px;
+            height: 24px;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .node.top-left {
+            width: 18px;
+            height: 18px;
+            left: 20px;
+            top: 8px;
+        }
+        .node.top-right {
+            width: 18px;
+            height: 18px;
+            right: 20px;
+            top: 8px;
+        }
+        .node.bottom {
+            width: 20px;
+            height: 20px;
+            left: 50%;
+            bottom: 5px;
+            transform: translateX(-50%);
+        }
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .connections svg {
+            width: 100%;
+            height: 100%;
+        }
+        .connection-line {
+            stroke: #C54B3C;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            fill: none;
+            opacity: 0.6;
+        }
+        /* Typography */
+        .logo-text {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #E85D4C 0%, #C54B3C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-bg.dark .logo-text {
+            background: linear-gradient(135deg, #E85D4C 0%, #D4A574 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .tagline {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .logo-bg.dark .tagline {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Light Version -->
+    <div class="logo-container">
+        <span class="logo-title" style="color:#888">Versión Clara</span>
+        <div class="logo-bg">
+            <div class="tucured-logo">
+                <div class="logo-symbol">
+                    <div class="connections">
+                        <svg viewBox="0 0 120 100">
+                            <!-- Connection curves -->
+                            <path class="connection-line" d="M 22 50 Q 40 50 60 50" />
+                            <path class="connection-line" d="M 98 50 Q 80 50 60 50" />
+                            <path class="connection-line" d="M 29 17 Q 45 35 60 50" />
+                            <path class="connection-line" d="M 91 17 Q 75 35 60 50" />
+                            <path class="connection-line" d="M 60 85 Q 60 67 60 50" />
+                        </svg>
+                    </div>
+                    <div class="node center"></div>
+                    <div class="node left"></div>
+                    <div class="node right"></div>
+                    <div class="node top-left"></div>
+                    <div class="node top-right"></div>
+                    <div class="node bottom"></div>
+                </div>
+                <div class="logo-text">TucuRed</div>
+                <div class="tagline">Conectamos tu negocio</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Version -->
+    <div class="logo-container">
+        <span class="logo-title" style="color:#888">Versión Oscura</span>
+        <div class="logo-bg dark">
+            <div class="tucured-logo">
+                <div class="logo-symbol">
+                    <div class="connections">
+                        <svg viewBox="0 0 120 100">
+                            <path class="connection-line" d="M 22 50 Q 40 50 60 50" />
+                            <path class="connection-line" d="M 98 50 Q 80 50 60 50" />
+                            <path class="connection-line" d="M 29 17 Q 45 35 60 50" />
+                            <path class="connection-line" d="M 91 17 Q 75 35 60 50" />
+                            <path class="connection-line" d="M 60 85 Q 60 67 60 50" />
+                        </svg>
+                    </div>
+                    <div class="node center"></div>
+                    <div class="node left"></div>
+                    <div class="node right"></div>
+                    <div class="node top-left"></div>
+                    <div class="node top-right"></div>
+                    <div class="node bottom"></div>
+                </div>
+                <div class="logo-text">TucuRed</div>
+                <div class="tagline">Conectamos tu negocio</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
