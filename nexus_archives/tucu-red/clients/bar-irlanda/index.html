@@ -1,0 +1,508 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Bar Irlanda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "on-secondary": "#003912",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#02c953",
+                        "surface-tint": "#ffba20",
+                        "on-primary-fixed": "#271900",
+                        "inverse-on-surface": "#313030",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-tertiary": "#2f3131",
+                        "on-background": "#e5e2e1",
+                        "on-primary-container": "#6b4c00",
+                        "on-surface-variant": "#d5c4ab",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "secondary": "#40e56c",
+                        "primary-fixed": "#ffdea8",
+                        "inverse-primary": "#7c5800",
+                        "on-secondary-fixed": "#002108",
+                        "on-tertiary-container": "#505252",
+                        "secondary-fixed-dim": "#3ce36a",
+                        "outline": "#9e8f78",
+                        "on-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "on-primary-fixed-variant": "#5e4200",
+                        "primary-container": "#ffb800",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary-fixed": "#69ff87",
+                        "surface-dim": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "outline-variant": "#514532",
+                        "primary-fixed-dim": "#ffba20",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffdca1",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "tertiary-container": "#c4c5c5",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#004d1b",
+                        "on-primary": "#412d00",
+                        "surface-bright": "#3a3939",
+                        "tertiary": "#e0e1e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-variant": "#353534"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin-desktop": "64px",
+                        "container-margin-mobile": "16px",
+                        "gutter": "24px",
+                        "section-gap": "80px",
+                        "base-unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Montserrat"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Montserrat"],
+                        "display-lg-mobile": ["Montserrat"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "label-bold": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 186, 32, 0.5);
+        }
+    </style>
+<style>
+            :root { --font-sans: 'Inter', sans-serif; }
+            body { font-family: var(--font-sans); margin: 0; padding: 0; }
+        </style></head>
+<body class="bg-background text-on-background min-h-screen font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="bg-surface/80 backdrop-blur-xl fixed top-0 w-full border-b border-white/10 shadow-md transition-all duration-300 z-50">
+<nav class="flex justify-between items-center px-container-margin-mobile md:px-container-margin-desktop py-4 max-w-full mx-auto z-50">
+<div class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sports_bar</span>
+                Bar Irlanda
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-bold text-label-bold uppercase" href="#especialidades">Especialidades</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-bold text-label-bold uppercase" href="#galeria">Galería</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-bold text-label-bold uppercase" href="#ubicacion">Ubicación</a>
+</div>
+<a class="bg-primary text-on-primary px-6 py-2 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(255,186,32,0.3)]" href="https://wa.me/543815451779" rel="noopener noreferrer" target="_blank">
+                Contacto
+            </a>
+</nav>
+</header>
+<main class="pt-[80px]">
+<!-- Hero Section -->
+<section class="relative min-h-[819px] flex items-center px-container-margin-mobile md:px-container-margin-desktop py-section-gap overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-40" data-alt="A moody, high-energy shot of a modern craft brewery interior at night. Warm amber neon lights glow through condensation-covered pint glasses on a dark industrial bar top. The background is slightly blurred showing happy patrons enjoying the social atmosphere. High contrast dark mode aesthetic with deep shadows and golden highlights." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlgwWaevDUGItdNHqapcnMFuuHuzsl4QaiL2anEHPUAuMiO_inhTxNagLaJECmI2Zx9zRokm-BwuU73vEbInnsqvgsq0aHXL9sTRcigEpWkR_SCq4Hhthm8Efg6LfUPYBLj9dsNYQUNKvTYMlJh_SKs0SAXWSTNsQC-xs6-kpzqmbuNYpBvcF2-jZTlJg5W4Mk2CnelB8biALzHDnlaUkI9MS9q9_TuHK3H-8xU0UzFf3YAjAGh4Axof1YEV9FDPQonHEGgKwohnVa')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6">
+<div class="glass-panel inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4">
+<span class="text-surface-tint">4.3</span>
+<span class="material-symbols-outlined text-surface-tint text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface-variant text-sm border-l border-white/20 pl-2 ml-1">4288 opiniones en Google</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface text-glow mb-2">
+                    Bienvenido a Bar Irlanda
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
+                    La auténtica experiencia cervecera en el corazón de Tucumán. Noches de alta energía, la mejor cerveza artesanal tirada y gastronomía de primer nivel.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="bg-primary text-on-primary px-8 py-4 rounded-xl font-label-bold text-label-bold flex items-center justify-center gap-2 hover:bg-primary-container transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,186,32,0.4)]" href="https://wa.me/543815451779" target="_blank">
+<span class="material-symbols-outlined">chat</span>
+                        Reservá por WhatsApp
+                    </a>
+<a class="glass-panel text-on-surface px-8 py-4 rounded-xl font-label-bold text-label-bold hover:bg-white/10 transition-colors flex items-center justify-center" href="#especialidades">
+                        Ver Menú
+                    </a>
+</div>
+</div>
+</section>
+<!-- Widgets Slots -->
+<div class="px-container-margin-mobile md:px-container-margin-desktop py-8 max-w-7xl mx-auto space-y-8">
+<!-- WIDGET: Booking_WhatsApp_Turnero -->
+<!-- VIBE: Functional, Service-Oriented, Conversion -->
+<section class="py-20 bg-[var(--primary)] text-white text-center">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">Reservá tu Mesa / Turno en Bar Irlanda</h2>
+        <p class="text-xl opacity-90 mb-10 max-w-2xl mx-auto">Elegí día y horario para disfrutar de la mejor experiencia. Confirmación inmediata por WhatsApp.</p>
+        
+        <button onclick="openTurnero()" class="bg-white text-[var(--primary)] font-bold py-4 px-10 rounded-full shadow-lg hover:scale-105 transition-transform text-lg flex items-center justify-center gap-3 mx-auto">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Reservar Ahora
+        </button>
+    </div>
+</section>
+
+<!-- TURNERO MODAL (Hidden by default) -->
+<div id="turneroModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeTurnero()"></div>
+    <div class="relative bg-white text-gray-800 rounded-2xl w-[90%] max-w-md p-6 max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
+        <button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl" onclick="closeTurnero()">✕</button>
+
+        <div class="flex items-center gap-3 mb-6 text-[var(--primary)]">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <h3 class="font-bold text-lg">Reservar Turno</h3>
+        </div>
+
+        <!-- Step 1: Calendar -->
+        <div id="turneroStep1" class="turnero-step block">
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="prevMonth()" class="p-2 hover:bg-gray-100 rounded text-[var(--primary)]">◀</button>
+                <span id="currentMonthYear" class="font-bold capitalize"></span>
+                <button onclick="nextMonth()" class="p-2 hover:bg-gray-100 rounded text-[var(--primary)]">▶</button>
+            </div>
+            <div class="grid grid-cols-7 gap-1 mb-2 text-center text-xs text-gray-500 font-bold uppercase">
+                <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+            </div>
+            <div id="calendarGrid" class="grid grid-cols-7 gap-1"></div>
+        </div>
+
+        <!-- Step 2: Time -->
+        <div id="turneroStep2" class="turnero-step hidden">
+            <p class="text-center text-[var(--primary)] font-bold mb-4 capitalize" id="selectedDateDisplay"></p>
+            <div id="timeSlots" class="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto mb-4"></div>
+            <button class="w-full py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50" onclick="goBack()">← Cambiar fecha</button>
+        </div>
+
+        <!-- Step 3: Confirm -->
+        <div id="turneroStep3" class="turnero-step hidden space-y-4">
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-500">📅 Fecha</span>
+                    <span class="font-bold" id="confirmDate"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">🕐 Hora</span>
+                    <span class="font-bold" id="confirmTime"></span>
+                </div>
+            </div>
+            <input type="text" id="clientName" placeholder="Tu nombre (opcional)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none">
+            <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-xl hover:bg-[#20bd5a] flex items-center justify-center gap-2 shadow-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                Confirmar por WhatsApp
+            </button>
+            <button class="w-full py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50" onclick="goBackToTime()">← Cambiar hora</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Config
+    const PHONE_NUMBER = "{{WHATSAPP_NUMBER}}";
+    
+    // Logic
+    const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const WORK_DAYS = [1, 2, 3, 4, 5, 6]; 
+    const START_HOUR = 10;
+    const END_HOUR = 20;
+
+    let currentMonth = new Date();
+    let selectedDate = null;
+    let selectedTime = null;
+
+    function openTurnero() {
+        document.getElementById('turneroModal').classList.remove('hidden');
+        document.getElementById('turneroModal').classList.add('flex');
+        renderCalendar();
+    }
+
+    function closeTurnero() {
+        document.getElementById('turneroModal').classList.add('hidden');
+        document.getElementById('turneroModal').classList.remove('flex');
+        showStep(1);
+        selectedDate = null;
+        selectedTime = null;
+    }
+
+    function showStep(n) {
+        document.querySelectorAll('.turnero-step').forEach(s => s.classList.add('hidden'));
+        document.getElementById('turneroStep' + n).classList.remove('hidden');
+        document.getElementById('turneroStep' + n).classList.add('block');
+    }
+
+    function renderCalendar() {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        document.getElementById('currentMonthYear').textContent = MONTHS[month] + ' ' + year;
+
+        let html = '';
+        for (let i = 0; i < firstDay.getDay(); i++) {
+            html += `<button class="aspect-square opacity-0 cursor-default"></button>`;
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const d = new Date(year, month, day);
+            const isPast = d < today;
+            const isWorkDay = WORK_DAYS.includes(d.getDay());
+            const isToday = d.toDateString() === today.toDateString();
+            
+            let classes = "aspect-square rounded-lg text-sm font-medium transition-colors ";
+            let attrs = "";
+            
+            if (isToday) classes += "ring-2 ring-[var(--primary)] ";
+            
+            if (!isPast && isWorkDay) {
+                classes += "hover:bg-[var(--primary)] hover:text-white bg-gray-100 text-gray-800 cursor-pointer";
+                attrs = `onclick="selectDate(${year}, ${month}, ${day})"`;
+            } else {
+                classes += "text-gray-300 cursor-not-allowed";
+                attrs = "disabled";
+            }
+
+            html += `<button class="${classes}" ${attrs}>${day}</button>`;
+        }
+        document.getElementById('calendarGrid').innerHTML = html;
+    }
+
+    function prevMonth() {
+        currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+        renderCalendar();
+    }
+    function nextMonth() {
+        currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+        renderCalendar();
+    }
+
+    function selectDate(year, month, day) {
+        selectedDate = new Date(year, month, day);
+        document.getElementById('selectedDateDisplay').textContent = selectedDate.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+        renderTimeSlots();
+        showStep(2);
+    }
+
+    function renderTimeSlots() {
+        let html = '';
+        for (let h = START_HOUR; h < END_HOUR; h++) {
+            const time = h.toString().padStart(2, '0') + ':00';
+            html += `<button class="p-3 bg-gray-100 rounded-lg hover:bg-[var(--primary)] hover:text-white transition-colors" onclick="selectTime('${time}')">${time}</button>`;
+        }
+        document.getElementById('timeSlots').innerHTML = html;
+    }
+
+    function selectTime(time) {
+        selectedTime = time;
+        document.getElementById('confirmDate').textContent = selectedDate.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+        document.getElementById('confirmTime').textContent = time + ' hs';
+        showStep(3);
+    }
+
+    function goBack() { showStep(1); }
+    function goBackToTime() { showStep(2); }
+
+    function sendToWhatsApp() {
+        if (!selectedDate || !selectedTime) return;
+        const name = document.getElementById('clientName').value || 'Cliente';
+        const message = `Hola! Quiero reservar turno para el ${selectedDate.toLocaleDateString('es-AR')} a las ${selectedTime} hs. Soy ${name}.`;
+        const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank');
+        closeTurnero();
+    }
+</script>
+
+<!-- WIDGET: Trust_Reviews_Google -->
+<!-- VIBE: Authentic, Verified, Social Proof -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 text-center">
+        <div class="flex items-center justify-center gap-2 mb-4">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-8">
+             <span class="text-gray-500 font-medium">Rating: 4.3/5 (4288 opiniones)</span>
+        </div>
+        <h2 class="text-3xl font-bold mb-12">Lo que dicen nuestros clientes</h2>
+
+        <div class="flex flex-wrap justify-center gap-6">
+            <!-- Review 1 -->
+            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-600">A</div>
+                    <div>
+                        <p class="font-bold text-sm">Ana Gomez</p>
+                        <div class="text-yellow-400 text-xs">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm">"Muy buen lugar, buena música, buenas opciones, quizás no me convence tanto la atención"</p>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
+                <div class="flex items-center gap-3 mb-4">
+                     <img src="https://i.pravatar.cc/100?img=12" class="w-10 h-10 rounded-full">
+                    <div>
+                        <p class="font-bold text-sm">Carlos Ruiz</p>
+                        <div class="text-yellow-400 text-xs">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm">"Las mejores cervezas artesanales y tragos de Tucumán."</p>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-600">M</div>
+                    <div>
+                        <p class="font-bold text-sm">Maria T.</p>
+                        <div class="text-yellow-400 text-xs">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm">"Lugar increíble con muy buena música."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div>
+<!-- Especialidades Bento Grid -->
+<section class="px-container-margin-mobile md:px-container-margin-desktop py-section-gap max-w-7xl mx-auto" id="especialidades">
+<div class="mb-12 text-center">
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Nuestras Especialidades</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Selección premium para paladares exigentes.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Cervezas -->
+<div class="md:col-span-2 glass-panel rounded-xl overflow-hidden group relative min-h-[300px] flex items-end">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-60" data-alt="A close-up, dramatic shot of three frosty pint glasses filled with different shades of craft beer (stout, IPA, amber ale) lined up on a dark wooden bar. The background is a blurry array of glowing neon signs and beer taps. Dark mode aesthetic, premium feel." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-UKnSI8smYaxbmzymk8XLr1epRm7ombwsLjwO0IWsEFevWK6PIo1qkGZOKI4VjNffyw4lMDFGF6ghMAzT6qstGXPiHnwgvfeVw_-Waz23PYNPCGbIOFWeeU8-yq6VDP3cxNyEqftKCWntXjCwKPS8cCVvv65cS1Y-bGrr30xwBWHGft2g5Zozr5ILQUzg3wHIHs2fQb6eDotjTrKFnElGWuAlNzJ596WMzEiyyiClzS0dLXQV0lWE_ELp77Np6tfYn4DWEuaHbb5m')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/60 to-transparent"></div>
+<div class="relative z-10 p-6 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">sports_bar</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Cerveza Artesanal Tirada</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Más de 15 canillas con las mejores IPAs, Stouts y Amber Ales de la región.</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface/50 border border-white/10 px-3 py-1 rounded-full text-label-sm text-secondary">IPA</span>
+<span class="bg-surface/50 border border-white/10 px-3 py-1 rounded-full text-label-sm text-secondary">Stout</span>
+<span class="bg-surface/50 border border-white/10 px-3 py-1 rounded-full text-label-sm text-secondary">Honey</span>
+</div>
+</div>
+</div>
+<!-- Picadas -->
+<div class="glass-panel rounded-xl overflow-hidden group relative min-h-[300px] flex items-end">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-60" data-alt="Overhead shot of a massive, rustic wooden board filled with a generous charcuterie spread. Cured meats, artisanal cheeses, olives, and fresh bread. Lit by warm overhead spots in a dark pub setting. High contrast, appetizing." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuARWFyMgpdQqi8BSJwKUkYhlLwrMyHBJQ9eG8gGSjseu6t9dJDVKAC1OLu72xbOpWJg9SNFF--xXjboPIXdmhskRbkjtaAGimQ4BG8zZLxxaDLbZplf8zY3zwEJ_nC1V740SpbPP0NL9-EYVgYkI6f2KWNC-7hVpOlx-Ifhtvsd3ckHFzCJgx1c1x_4SqAgz22ulMzPIJMUEm1bsV63xKFpG3LHB2TDApDFLv4jaJDSAsR63OZ-6nEgJSw_i_36BFMYqNwtvsakP-X9')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/80 to-transparent"></div>
+<div class="relative z-10 p-6 w-full">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Picadas Irlandesas</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Para compartir. Fiambres premium, quesos curados y panes artesanales.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Map Slot -->
+<div class="px-container-margin-mobile md:px-container-margin-desktop py-8 max-w-7xl mx-auto" id="ubicacion">
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Encontranos</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Catamarca 380, San Miguel de Tucumán</p>
+</div>
+
+        <section class="py-12 bg-zinc-950 text-center border-t border-zinc-900" id="ubicacion">
+            <div class="container mx-auto px-4">
+                <h3 class="text-2xl font-bold text-white mb-3">📍 Cómo Llegar a Bar Irlanda</h3>
+                <p class="text-zinc-400 mb-6">T4000ITH ITH San Miguel de Tucumán Tucumán AR, Catamarca 380, T4000, Argentina</p>
+                <a href="https://maps.app.goo.gl/oL2znwjGseHuaBeH8" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-lg hover:scale-105">
+                    <span>Abrir en Google Maps</span> 🗺️
+                </a>
+            </div>
+        </section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest py-section-gap border-t border-white/5 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-start px-container-margin-mobile md:px-container-margin-desktop max-w-7xl mx-auto gap-gutter">
+<div class="flex flex-col gap-4">
+<div class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sports_bar</span>
+                    Bar Irlanda
+                </div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                    El punto de encuentro cervecero en la ciudad nocturna.
+                </p>
+</div>
+<div class="flex flex-col gap-6 md:flex-row md:gap-12">
+<div class="flex flex-col gap-2">
+<h4 class="font-label-bold text-label-bold text-on-surface uppercase mb-2">Visitanos</h4>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                        Lunes a Domingo<br>8 PM a 4 AM
+                    </span>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="font-label-bold text-label-bold text-on-surface uppercase mb-2">Contacto</h4>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                        Catamarca 380, T4000<br>San Miguel de Tucumán
+                    </span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 mt-12 pt-8 px-container-margin-mobile md:px-container-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-md text-body-md text-on-surface-variant opacity-100 hover:opacity-80 transition-opacity">
+                © 2024 Bar Irlanda. Powered by Tucu Red.
+            </p>
+<div class="flex gap-4">
+<a class="text-on-surface-variant hover:text-secondary font-label-sm text-label-sm" href="#">Términos</a>
+<a class="text-on-surface-variant hover:text-secondary font-label-sm text-label-sm" href="#">Dirección</a>
+<a class="text-on-surface-variant hover:text-secondary font-label-sm text-label-sm" href="#">Horarios</a>
+</div>
+</div>
+</footer>
+</body></html>

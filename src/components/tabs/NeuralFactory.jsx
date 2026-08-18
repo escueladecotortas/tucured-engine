@@ -41,6 +41,7 @@ export default function NeuralFactory() {
                         onGenerate={factory.handleGenerateSite} addToast={addToast}
                         setTargetProspect={factory.setTargetProspect}
                         setOutreachModalOpen={factory.setOutreachModalOpen}
+                        onUpdateLead={factory.handleUpdateLead}
                     />
                 )}
 

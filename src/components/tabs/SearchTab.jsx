@@ -9,7 +9,7 @@ const SearchTab = ({
     onImport, formData, setFormData, onManualAdd,
     onValidateAddress, isValidatingAddress,
     isExtracting, extractionStatus,
-    prospects, onDelete, onGenerate, addToast, setTargetProspect, setOutreachModalOpen
+    prospects, onDelete, onGenerate, addToast, setTargetProspect, setOutreachModalOpen, onUpdateLead
 }) => (
     <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-6">
         <div className="flex gap-3 mb-6">
@@ -54,6 +54,7 @@ const SearchTab = ({
                 onGenerate={onGenerate}
                 onCall={(p) => addToast(`Simulación de llamada a ${p.name}`, 'info')}
                 onOutreach={(p) => { setTargetProspect(p); setOutreachModalOpen(true); }}
+                onUpdateLead={onUpdateLead}
             />
         </div>
     </div>

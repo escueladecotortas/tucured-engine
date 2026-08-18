@@ -1,0 +1,80 @@
+<!-- WIDGET: Trust_v2_Live_Badge -->
+<!-- VIBE: Authority Signal, Floating Trust Pill — Dark/Light Adaptive -->
+<!-- Archivo: backend/stitch/widgets/social/trust_v2_live_badge.html -->
+
+<!-- Píldora flotante fija (desktop + mobile) -->
+<div id="trustBadge"
+     class="fixed bottom-4 left-4 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-full
+            bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md
+            border border-zinc-200 dark:border-zinc-800
+            shadow-xl shadow-black/10 dark:shadow-black/40
+            hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-default
+            group"
+     role="complementary" aria-label="Calificación en Google">
+
+  <!-- Google Icon -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+       alt="Google"
+       class="h-4 opacity-90 flex-shrink-0" />
+
+  <!-- Separador vertical -->
+  <div class="w-px h-5 bg-zinc-200 dark:bg-zinc-700 flex-shrink-0"></div>
+
+  <!-- Estrellas -->
+  <div class="flex items-center gap-0.5 flex-shrink-0" aria-hidden="true">
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+  </div>
+
+  <!-- Rating + Counter -->
+  <div class="flex flex-col leading-tight">
+    <span class="text-xs font-extrabold text-zinc-900 dark:text-zinc-50 tabular-nums">
+      {{RATING}}
+    </span>
+    <span class="text-[9px] text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
+      {{REVIEWS_COUNT}} opiniones
+    </span>
+  </div>
+
+  <!-- Pulse live indicator -->
+  <span class="relative flex-shrink-0">
+    <span class="absolute inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+  </span>
+
+</div>
+
+<!-- Versión inline/embebida para integración en sección hero (no flotante) -->
+<div id="trustBadgeInline"
+     class="hidden inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full
+            bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md
+            border border-zinc-200 dark:border-zinc-800
+            shadow-lg shadow-black/5"
+     role="complementary" aria-label="Calificación en Google">
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+       alt="Google" class="h-3.5 opacity-90" />
+  <div class="w-px h-4 bg-zinc-200 dark:bg-zinc-700"></div>
+  <div class="flex items-center gap-0.5">
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+  </div>
+  <span class="text-xs font-bold text-zinc-900 dark:text-zinc-50">{{RATING}} · {{REVIEWS_COUNT}} opiniones</span>
+</div>
+
+<script>
+  // Auto-ocultar badge flotante si el action-dock ya está visible (evitar colisión mobile)
+  (function () {
+    const dock = document.getElementById('actionDock');
+    const badge = document.getElementById('trustBadge');
+    if (dock && badge && window.innerWidth < 768) {
+      badge.classList.add('hidden');
+    }
+  })();
+</script>

@@ -1,32 +1,32 @@
 <!-- WIDGET: Gallery_Reel_Infinite -->
-<!-- VIBE: Dynamic, Modern, Tech -->
+<!-- VIBE: Dynamic, Modern, Dark/Light Adaptive -->
 <style>
-    @keyframes scroll {
+    @keyframes scrollReel {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
-    .animate-scroll {
-        animation: scroll 20s linear infinite;
+    .animate-reel-scroll {
+        animation: scrollReel 25s linear infinite;
     }
 </style>
 
-<section class="py-12 bg-black overflow-hidden relative border-y border-white/10">
-    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
-    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10"></div>
+<section class="py-12 bg-zinc-100 dark:bg-zinc-950 overflow-hidden relative border-y border-zinc-200 dark:border-zinc-800 transition-colors">
+    <div class="absolute inset-y-0 left-0 w-24 md:w-36 bg-gradient-to-r from-zinc-100 dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 md:w-36 bg-gradient-to-l from-zinc-100 dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
 
-    <div class="flex gap-16 animate-scroll w-max hover:pause">
+    <div class="flex gap-8 md:gap-12 animate-reel-scroll w-max hover:[animation-play-state:paused]">
         <!-- Loop 1 -->
-        <img src="{{IMG_1}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_2}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_3}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_4}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_5}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+        <img src="{{IMG_1}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_2}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_3}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_4}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_5}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
         
-        <!-- Loop 2 (Duplicate for infinity) -->
-        <img src="{{IMG_1}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_2}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_3}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_4}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-        <img src="{{IMG_5}}" class="h-16 md:h-24 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+        <!-- Loop 2 (Duplicate for smooth infinity) -->
+        <img src="{{IMG_1}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_2}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_3}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_4}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
+        <img src="{{IMG_5}}" class="h-20 md:h-28 rounded-2xl object-cover shadow-md opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105">
     </div>
 </section>

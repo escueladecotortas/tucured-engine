@@ -1,63 +1,29 @@
 // Archivo: backend/services/stitch/StitchRpcHandler.js
+// Gestor de comunicación JSON-RPC y Descargas Resilientes para Google Stitch (Ley de 200 líneas)
+
 const https = require("https");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../../.env") });
+require("dotenv").config();
 
-/**
- * Gestor de comunicación JSON-RPC y Descargas para Google Stitch.
- * Extraído para cumplimiento de la Ley de 200 líneas.
- */
 class StitchRpcHandler {
-  /**
-   * Helper paramétrico para POST JSON-RPC a Google Stitch.
-   */
-  static async getAccessToken() {
-    // Si ya tenemos un token y no ha expirado (usamos un margen de 5 minutos), lo devolvemos
-    if (this._cachedToken && this._tokenExpiry > Date.now() + 300000) {
-      return this._cachedToken;
-    }
-
-    try {
-      const { GoogleAuth } = require("google-auth-library");
-      const auth = new GoogleAuth({
-        scopes: ["https://www.googleapis.com/auth/cloud-platform"],
-      });
-      const client = await auth.getClient();
-      const tokenResponse = await client.getAccessToken();
-      
-      this._cachedToken = tokenResponse.token;
-      // El token de Google suele durar 1 hora (3600s)
-      this._tokenExpiry = Date.now() + 3600000;
-      
-      return this._cachedToken;
-    } catch (e) {
-      console.warn("[StitchRpcHandler] google-auth-library falló, intentando gcloud CLI:", e.message);
-      try {
-        const { execSync } = require("child_process");
-        const token = execSync("gcloud auth application-default print-access-token", { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
-        this._cachedToken = token;
-        this._tokenExpiry = Date.now() + 300000; // Cacheamos solo 5 min para gcloud CLI
-        return token;
-      } catch (err) {
-        console.error("[StitchRpcHandler] Fallo crítico al obtener token:", err.message);
-        return process.env.STITCH_OAUTH_TOKEN;
-      }
-    }
+  static getApiKey() {
+    return (process.env.STITCH_API_KEY || process.env.GOOGLE_STITCH_API_KEY || "").replace(/["']/g, "").trim();
   }
 
   /**
-   * Helper paramétrico para POST JSON-RPC a Google Stitch.
+   * Helper paramétrico para POST JSON-RPC oficial a Google Stitch MCP con X-Goog-Api-Key.
    */
   static async request(method, params = {}) {
-    const accessToken = await this.getAccessToken();
+    const apiKey = this.getApiKey();
+    if (!apiKey) throw new Error("STITCH_API_KEY / GOOGLE_STITCH_API_KEY no configurada.");
 
     return new Promise((resolve, reject) => {
       const data = JSON.stringify({
         jsonrpc: "2.0",
         id: Date.now(),
-        method: `tools/call`,
-        params: {
-          name: method,
-          arguments: params,
-        },
+        method: "tools/call",
+        params: { name: method, arguments: params },
       });
 
       const options = {
@@ -67,8 +33,8 @@ class StitchRpcHandler {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`,
-          "x-goog-user-project": "nexus-v2-native",
+          "Accept": "application/json",
+          "X-Goog-Api-Key": apiKey,
           "Content-Length": Buffer.byteLength(data),
         },
       };
@@ -81,31 +47,36 @@ class StitchRpcHandler {
             try {
               resolve(JSON.parse(raw));
             } catch (e) {
-              reject(new Error(`Failed to parse JSON: ${raw}`));
+              reject(new Error(`Fallo al parsear respuesta JSON de Stitch: ${raw.slice(0, 200)}`));
             }
           } else {
-            reject(new Error(`Status Code ${res.statusCode}: ${raw}`));
+            reject(new Error(`Stitch MCP HTTP ${res.statusCode}: ${raw.slice(0, 300)}`));
           }
         });
       });
 
-      req.on("error", reject);
+      req.on("error", (err) => reject(new Error(`Error de red con Stitch MCP: ${err.message}`)));
       req.write(data);
       req.end();
     });
   }
 
   /**
-   * Descarga el HTML desde una URL de Google Cloud Storage.
+   * Descarga resiliente del HTML siguiendo redirecciones (HTTP 301/302/307).
    */
-  static downloadHtml(url) {
-    return new Promise((resolve, reject) => {
-      https.get(url, (res) => {
-        let data = "";
-        res.on("data", (chunk) => (data += chunk));
-        res.on("end", () => resolve(data));
-      }).on("error", reject);
-    });
+  static async downloadHtml(url) {
+    if (!url) throw new Error("URL de descarga vacía.");
+    try {
+      const res = await fetch(url, { redirect: "follow" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} al descargar HTML (${res.statusText})`);
+      const html = await res.text();
+      if (!html || html.length < 500) {
+        throw new Error(`HTML descargado incompleto o corrupto (${html ? html.length : 0} bytes)`);
+      }
+      return html;
+    } catch (err) {
+      throw new Error(`Fallo en descarga de artefacto HTML: ${err.message}`);
+    }
   }
 }
 

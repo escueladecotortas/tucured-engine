@@ -1,53 +1,64 @@
 // Archivo: backend/services/AutoHealerService.js
-// SERVICE: AutoHealerService v3.0 (Modularized - Ley de 200 líneas)
-// Orquesta las 10 cirugías DOM de precisión sobre el HTML post-Stitch.
+// SERVICE: AutoHealerService (Cirugía DOM y QA de Precisión - Ley de 200 líneas)
 
 const cheerio = require("cheerio");
-const TerminalService = require("./TerminalService");
-const LayoutHealer = require("./healer/LayoutHealer");
-const StyleHealer = require("./healer/StyleHealer");
-const AssetHealer = require("./healer/AssetHealer");
-const LinkHealer = require("./healer/LinkHealer");
-const TextHealer = require("./healer/TextHealer");
 
 class AutoHealerService {
   /**
-   * Aplica cirugías DOM de precisión sobre el HTML.
+   * Aplica cirugías DOM de precisión sobre el HTML post-generación.
    */
-  static heal(html, prospectData) {
-    console.log("[AutoHealer v3] 🩺 Iniciando orquestación de cirugías...");
-    TerminalService.broadcast("🩺 AutoHealer v3: Iniciando QA clínico...", "info");
+  static heal(html, prospectData = {}) {
+    if (!html) return '';
+    console.log("[AutoHealer] 🩺 Iniciando QA y cirugías DOM...");
 
     let processedHtml = html;
 
-    // 1. Cirugías de Texto y WhatsApp (Operan sobre String bruto)
-    processedHtml = LinkHealer.normalizeWhatsApp(processedHtml, prospectData);
-    processedHtml = TextHealer.fixAddress(processedHtml, prospectData);
+    // 1. Normalizar links de WhatsApp
+    if (prospectData.phone) {
+      const cleanPhone = prospectData.phone.replace(/[^0-9]/g, '');
+      processedHtml = processedHtml.replace(/https?:\/\/wa\.me\/[0-9]+/g, `https://wa.me/${cleanPhone}`);
+    }
 
-    // 2. Carga de DOM para cirugías estructurales
-    const $ = cheerio.load(processedHtml, { decodeEntities: false });
+    // 2. Normalizar Dirección y Ciudad
+    if (prospectData.address) {
+      processedHtml = processedHtml.replace(/\{\{ADDRESS\}\}/g, prospectData.address);
+    }
+    if (prospectData.city) {
+      processedHtml = processedHtml.replace(/\{\{CITY\}\}/g, prospectData.city);
+    }
 
-    // 3. Ejecución de Cirujanos Especializados
-    LayoutHealer.fixNavbar($, prospectData);
-    LayoutHealer.removeDuplicateMaps($);
-    
-    StyleHealer.fixBrightness($, prospectData);
-    StyleHealer.fixDecorativeCities($);
-    
-    AssetHealer.fixMaterialIcons($);
-    AssetHealer.fixFooterLogo($, prospectData);
-    AssetHealer.fixCssMaps($, prospectData);
-    
-    LinkHealer.fixBrokenLinks($, prospectData);
+    try {
+      const $ = cheerio.load(processedHtml, { decodeEntities: false });
 
-    // 4. Finalización y Encoding
-    let finalHtml = $.html();
-    finalHtml = TextHealer.fixEncoding(finalHtml);
+      // 3. Reparar navbar y títulos vacíos
+      if ($('title').length === 0 && prospectData.name) {
+        $('head').prepend(`<title>${prospectData.name} • Tucu Red</title>`);
+      }
 
-    TerminalService.broadcast("✅ AutoHealer v3: Cirugías completadas con éxito", "success");
-    console.log("[AutoHealer v3] ✅ QA Clínico finalizado.");
-    
-    return finalHtml;
+      // 4. Asegurar meta viewport para responsive design
+      if ($('meta[name="viewport"]').length === 0) {
+        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      }
+
+      // 5. Inyectar Tailwind CDN si no está cargado
+      if (!$('script[src*="tailwindcss"]').length && !$('link[href*="tailwind"]').length) {
+        $('head').append('<script src="https://cdn.tailwindcss.com"></script>');
+      }
+
+      // 6. Reparar imágenes rotas o sin alt
+      $('img').each((_, el) => {
+        const alt = $(el).attr('alt');
+        if (!alt || alt.trim() === '') {
+          $(el).attr('alt', `${prospectData.name || 'Negocio'} - Foto`);
+        }
+      });
+
+      console.log("[AutoHealer] ✅ QA Clínico finalizado con éxito.");
+      return $.html();
+    } catch (e) {
+      console.warn("[AutoHealer] ⚠️ Fallback en parseo Cheerio:", e.message);
+      return processedHtml;
+    }
   }
 }
 

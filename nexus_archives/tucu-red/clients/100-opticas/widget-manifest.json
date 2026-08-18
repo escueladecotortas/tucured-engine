@@ -1,0 +1,95 @@
+{
+  "clientId": "100-opticas",
+  "category": "optician",
+  "selectedWidgets": [
+    {
+      "name": "trust_v2_live_badge",
+      "label": "TRUST V2 LIVE BADGE",
+      "slotId": "nexus-trust_v2_live_badge",
+      "floating": false,
+      "props": {
+        "name": "100 OPTICAS",
+        "phone": "+54 381 421-7626",
+        "igHandle": "100.opticas"
+      },
+      "tier": 1
+    },
+    {
+      "name": "booking_v1_turnero",
+      "label": "BOOKING V1 TURNERO",
+      "slotId": "nexus-booking_v1_turnero",
+      "floating": false,
+      "props": {
+        "name": "100 OPTICAS",
+        "phone": "+54 381 421-7626",
+        "igHandle": "100.opticas"
+      },
+      "tier": 1
+    },
+    {
+      "name": "social_v2_marquee_reviews",
+      "label": "SOCIAL V2 MARQUEE REVIEWS",
+      "slotId": "nexus-social_v2_marquee_reviews",
+      "floating": false,
+      "props": {
+        "name": "100 OPTICAS",
+        "phone": "+54 381 421-7626",
+        "igHandle": "100.opticas"
+      },
+      "tier": 1
+    },
+    {
+      "name": "contact_v2_action_dock",
+      "label": "CONTACT V2 ACTION DOCK",
+      "slotId": "nexus-contact_v2_action_dock",
+      "floating": false,
+      "props": {
+        "name": "100 OPTICAS",
+        "phone": "+54 381 421-7626",
+        "igHandle": "100.opticas"
+      },
+      "tier": 1
+    },
+    {
+      "name": "footer_v1_map",
+      "label": "FOOTER V1 MAP",
+      "slotId": "nexus-footer_v1_map",
+      "floating": false,
+      "props": {
+        "name": "100 OPTICAS",
+        "phone": "+54 381 421-7626",
+        "igHandle": "100.opticas"
+      },
+      "tier": 1
+    }
+  ],
+  "availablePremium": [
+    {
+      "name": "catalog_v1_grid",
+      "tier": 3,
+      "active": false,
+      "label": "Catálogo Interactivo con Filtros"
+    },
+    {
+      "name": "cart_v1_whatsapp",
+      "tier": 3,
+      "active": false,
+      "label": "Carrito de Compras WhatsApp"
+    },
+    {
+      "name": "promo_popup",
+      "tier": 3,
+      "active": false,
+      "label": "Popup de Captura de Leads"
+    }
+  ],
+  "slotInstructions": [
+    "- Contenedor para \"TRUST V2 LIVE BADGE\": <div id=\"nexus-trust_v2_live_badge\" data-nexus-widget=\"trust_v2_live_badge\"></div>",
+    "- Contenedor para \"BOOKING V1 TURNERO\": <div id=\"nexus-booking_v1_turnero\" data-nexus-widget=\"booking_v1_turnero\"></div>",
+    "- Contenedor para \"SOCIAL V2 MARQUEE REVIEWS\": <div id=\"nexus-social_v2_marquee_reviews\" data-nexus-widget=\"social_v2_marquee_reviews\"></div>",
+    "- Contenedor para \"CONTACT V2 ACTION DOCK\": <div id=\"nexus-contact_v2_action_dock\" data-nexus-widget=\"contact_v2_action_dock\"></div>",
+    "- Contenedor para \"FOOTER V1 MAP\": <div id=\"nexus-footer_v1_map\" data-nexus-widget=\"footer_v1_map\"></div>"
+  ],
+  "totalWidgets": 5,
+  "totalPremiumAvailable": 3
+}

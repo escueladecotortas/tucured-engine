@@ -23924,31 +23924,6 @@
       "resultHash": "pvkcwq",
       "status": "completed"
     },
-    "64gfrk4k1tr0AQWPHPP0": {
-      "title": "Implementar landing Tucu Red",
-      "description": "HTML/CSS/JS con diseño de Atenea + copy de Icaro",
-      "assignedTo": "Codi",
-      "projectId": "tucu-red",
-      "priority": "critical",
-      "estimatedTime": "6-8 hours",
-      "createdAt": {
-        "_seconds": 1766280733,
-        "_nanoseconds": 834000000
-      },
-      "startedAt": {
-        "_seconds": 1767073895,
-        "_nanoseconds": 969000000
-      },
-      "completedAt": {
-        "_seconds": 1769628695,
-        "_nanoseconds": 611000000
-      },
-      "status": "completed",
-      "updatedAt": {
-        "_seconds": 1769628695,
-        "_nanoseconds": 611000000
-      }
-    },
     "7UeccYBpzFGHhWB6HpmQ": {
       "assignedTo": "codi",
       "projectId": "amora-nails",
@@ -24001,76 +23976,6 @@
         "_nanoseconds": 214000000
       }
     },
-    "8OnjK19qthmF4sKZBEhv": {
-      "assignedTo": "deco",
-      "source": "smart_notepad",
-      "title": "Corregir corte de palabra en móvil",
-      "description": "Al pasar a la versión móvil, la palabra 'Impecables' se corta y la 's' se desplaza hacia abajo. Se requiere utilizar división de palabras en español para solucionar este problema y asegurar que el texto se muestre correctamente en todas las plataformas.",
-      "projectId": "amora-nails",
-      "priority": "medium",
-      "createdAt": {
-        "_seconds": 1767913308,
-        "_nanoseconds": 212000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767913336,
-        "_nanoseconds": 899000000
-      },
-      "result": "Adding CSS to prevent word cutting on mobile\n[Acción: appendFile completada]",
-      "completedAt": {
-        "_seconds": 1767913341,
-        "_nanoseconds": 605000000
-      },
-      "artifacts": [],
-      "resultHash": "y4cf283",
-      "status": "completed"
-    },
-    "9YViOnvtzALq9bjw16Y2": {
-      "projectId": "tucu-red",
-      "assignedTo": "icaro",
-      "priority": "high",
-      "title": "Revisar métricas de UX",
-      "result": "Tarea finalizada exitosamente por ICARO.",
-      "startedAt": {
-        "_seconds": 1767074389,
-        "_nanoseconds": 476000000
-      },
-      "status": "completed",
-      "completedAt": {
-        "_seconds": 1767074420,
-        "_nanoseconds": 904000000
-      }
-    },
-    "9hWN4v6VMPqtx53vwdSy": {
-      "title": "Corregir compatibilidad móvil en landing page",
-      "assignedTo": "deco",
-      "priority": "high",
-      "source": "smart_notepad",
-      "projectId": "amora-nails",
-      "description": "El landing page actual no es compatible con la versión móvil, lo que causa que la foto Hero se pierda. Se requiere ajustar el diseño y los estilos para que el contenido se adapte correctamente a diferentes tamaños de pantalla y dispositivos móviles.",
-      "createdAt": {
-        "_seconds": 1767907801,
-        "_nanoseconds": 929000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767908415,
-        "_nanoseconds": 200000000
-      },
-      "result": "Creating a new CSS file for mobile compatibility\n[Acción: writeFile completada]",
-      "completedAt": {
-        "_seconds": 1767908420,
-        "_nanoseconds": 731000000
-      },
-      "artifacts": [
-        {
-          "type": "file",
-          "createdAt": "2026-01-08T21:40:18.712Z",
-          "path": "nexus_archives/amora-nails/styles.css"
-        }
-      ],
-      "resultHash": "crkl039",
-      "status": "completed"
-    },
     "DQqKm8o3CpKstl0VmhAp": {
       "title": "Revisar footer",
       "projectId": "carniceria-la-vaca-tuerta",
@@ -24088,20 +23993,6 @@
         "_seconds": 1770007688,
         "_nanoseconds": 882000000
       }
-    },
-    "G9ECG98qP20B8naltRuI": {
-      "createdAt": {
-        "_seconds": 1769992518,
-        "_nanoseconds": 66000000
-      },
-      "migratedFrom": "missions",
-      "description": "Auditar el estado actual del proyecto 'Deco Tortas', identificar puntos de fallo anteriores y proponer un plan de reactivación.",
-      "priority": "high",
-      "title": "Reactivación y Auditoría del Proyecto Deco Tortas",
-      "type": "epic",
-      "projectId": "deco-tortas",
-      "assignedTo": "deco",
-      "status": "archived"
     },
     "H5sTx3tRbvvyOQ9pTK58": {
       "title": "Actualizar Instagram",
@@ -24127,30 +24018,6 @@
       },
       "resultHash": "ccj9zh"
     },
-    "HsNqWIaWvdJyuAIEFddK": {
-      "priority": "medium",
-      "description": "El botón de 'Ver disponibilidad' tiene un ancho excesivo y necesita ser ajustado para mejorar la experiencia del usuario y la estética de la interfaz. Se requiere una revisión y ajuste del código CSS para reducir el ancho del botón a un tamaño más adecuado.",
-      "title": "Ajustar ancho del botón de disponibilidad",
-      "source": "smart_notepad",
-      "assignedTo": "deco",
-      "projectId": "amora-nails",
-      "createdAt": {
-        "_seconds": 1767923610,
-        "_nanoseconds": 732000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767923684,
-        "_nanoseconds": 798000000
-      },
-      "result": "Ajusté el ancho del botón de disponibilidad\n[Acción: appendFile completada]",
-      "completedAt": {
-        "_seconds": 1767923689,
-        "_nanoseconds": 403000000
-      },
-      "artifacts": [],
-      "resultHash": "6f0824o",
-      "status": "completed"
-    },
     "L3woJdoiJbVjZiCNzYYE": {
       "title": "Actualizar Estilo de Texto Hero",
       "description": "Cambiar el texto hero de 'Estilo' a color '#e0b0b6' y cursiva, ajustando el estilo visual según sea necesario para mantener la coherencia de la marca y el diseño.",
@@ -24175,106 +24042,6 @@
       "resultHash": "6kadqv",
       "status": "completed"
     },
-    "Ly3C6hAbEjK2d9cqiQMq": {
-      "projectId": "tucu-red",
-      "source": "smart_notepad",
-      "assignedTo": "lumina",
-      "priority": "high",
-      "description": "El landing page actual no es compatible con la versión móvil, lo que causa problemas de visualización como la pérdida de la foto Hero, desalineación de palabras y pérdida del diseño. Se requiere una revisión y ajuste del código para garantizar una experiencia de usuario óptima en dispositivos móviles.",
-      "title": "Corregir compatibilidad móvil del landing page",
-      "createdAt": {
-        "_seconds": 1767904951,
-        "_nanoseconds": 501000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767904993,
-        "_nanoseconds": 433000000
-      },
-      "result": "Starting mission to correct mobile compatibility of the landing page.\n[Acción: readFile completada]",
-      "completedAt": {
-        "_seconds": 1767904998,
-        "_nanoseconds": 294000000
-      },
-      "artifacts": [],
-      "resultHash": "llpi0e",
-      "status": "completed"
-    },
-    "QdjgMUAf2xJFOikk0ctA": {
-      "title": "Corregir compatibilidad móvil del landing page",
-      "priority": "high",
-      "projectId": "tucu-red",
-      "assignedTo": "deco",
-      "description": "El diseño del landing page no se adapta correctamente a la versión móvil, lo que causa la pérdida de la foto Hero, desalineación de las palabras y pérdida del diseño. Se requiere ajustar el código CSS y verificar la responsividad para garantizar una experiencia de usuario óptima en dispositivos móviles.",
-      "source": "smart_notepad",
-      "createdAt": {
-        "_seconds": 1767906314,
-        "_nanoseconds": 113000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767906329,
-        "_nanoseconds": 229000000
-      },
-      "result": "Adjusting CSS for mobile compatibility\n[Acción: readFile completada]",
-      "completedAt": {
-        "_seconds": 1767906333,
-        "_nanoseconds": 898000000
-      },
-      "artifacts": [],
-      "resultHash": "3z5jm",
-      "status": "completed"
-    },
-    "RsWzBbZJBUtZp7sANqtF": {
-      "createdAt": {
-        "_seconds": 1765031910,
-        "_nanoseconds": 317000000
-      },
-      "migratedFrom": "missions",
-      "description": "Definir la oferta de la Casa de Jengibre Navideña (kits, casas hechas o ambas). Investigar presupuesto para la campaña de marketing. Calcular el margen de ganancia objetivo.",
-      "priority": "high",
-      "title": "Casa de jengibre navideña",
-      "type": "epic",
-      "projectId": "legacy-mission",
-      "assignedTo": "deco",
-      "status": "active"
-    },
-    "Se0wnCJFlfc3NoaXh3bN": {
-      "source": "smart_notepad",
-      "title": "Corregir estilo de texto",
-      "projectId": "amora-nails",
-      "description": "El texto 'Resultados reales. Sin filtros.' carece de estilo y color, lo que lo hace aparecer pequeño y apagado. Se requiere aplicar un estilo adecuado para mejorar su visibilidad y legibilidad.",
-      "assignedTo": "deco",
-      "priority": "medium",
-      "createdAt": {
-        "_seconds": 1767999217,
-        "_nanoseconds": 549000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767999236,
-        "_nanoseconds": 425000000
-      },
-      "result": "Estilo de texto corregido\n[Acción: appendFile completada]",
-      "completedAt": {
-        "_seconds": 1767999241,
-        "_nanoseconds": 48000000
-      },
-      "artifacts": [],
-      "resultHash": "pp9d9h",
-      "status": "completed"
-    },
-    "VZXxGdJjutYjyq1FauQ6": {
-      "createdAt": {
-        "_seconds": 1765003686,
-        "_nanoseconds": 3000000
-      },
-      "migratedFrom": "missions",
-      "description": "No description",
-      "priority": "normal",
-      "title": "Cookie Workshop Brainstorm - Christmas Theme",
-      "type": "epic",
-      "projectId": "legacy-mission",
-      "assignedTo": "Deco",
-      "status": "archived"
-    },
     "aPjsJ5CWpZZQFMJ0IIwK": {
       "projectId": "nexus-os",
       "title": "Actualizar dependencias",
@@ -24291,27 +24058,6 @@
       },
       "resultHash": "mwcfv4",
       "status": "completed"
-    },
-    "bM2bzT3WOrCyDM4Ssk5d": {
-      "projectId": "tucu-red",
-      "assignedTo": "deco",
-      "priority": "high",
-      "source": "smart_notepad",
-      "description": "El landing page actual no es compatible con dispositivos móviles, lo que causa la pérdida de la foto Hero. Se requiere ajustar el diseño y los estilos para garantizar una experiencia de usuario óptima en diferentes tamaños de pantalla y dispositivos móviles.",
-      "title": "Corregir compatibilidad de landing page en versión móvil",
-      "createdAt": {
-        "_seconds": 1767907510,
-        "_nanoseconds": 723000000
-      },
-      "completedAt": {
-        "_seconds": 1769628685,
-        "_nanoseconds": 300000000
-      },
-      "status": "completed",
-      "updatedAt": {
-        "_seconds": 1769628685,
-        "_nanoseconds": 300000000
-      }
     },
     "chat-rules-protocol": {
       "id": "chat-rules-protocol",
@@ -24527,27 +24273,6 @@
         "_nanoseconds": 882000000
       }
     },
-    "shgUPY0EfSeXZVL8KKmQ": {
-      "description": "Se requiere ajustar el CSS para el contacto en dispositivos móviles y solucionar el problema de visibilidad del elemento hero, asegurando que se muestre correctamente en todas las resoluciones y dispositivos.",
-      "projectId": "tucu-red",
-      "priority": "medium",
-      "assignedTo": "deco",
-      "title": "Corregir CSS de Contacto Móvil y Visibilidad de Hero",
-      "source": "smart_notepad",
-      "createdAt": {
-        "_seconds": 1767910885,
-        "_nanoseconds": 123000000
-      },
-      "completedAt": {
-        "_seconds": 1769628681,
-        "_nanoseconds": 77000000
-      },
-      "status": "completed",
-      "updatedAt": {
-        "_seconds": 1769628681,
-        "_nanoseconds": 77000000
-      }
-    },
     "skills-auto-integration": {
       "id": "skills-auto-integration",
       "title": "Auto-integración de skills a prompts",
@@ -24580,135 +24305,6 @@
       "resultHash": "b3el2t",
       "status": "completed"
     },
-    "tucured-copy-content": {
-      "id": "tucured-copy-content",
-      "title": "Crear copy para Tucu Red",
-      "description": "Textos para landing, pitch de venta, emails, posts",
-      "projectId": "tucu-red",
-      "category": "content",
-      "priority": "high",
-      "estimatedTime": "2 hours",
-      "assignedTo": "icaro",
-      "tags": [
-        "copy",
-        "marketing",
-        "content"
-      ],
-      "version": 1,
-      "createdAt": {
-        "_seconds": 1766194702,
-        "_nanoseconds": 36000000
-      },
-      "startedAt": {
-        "_seconds": 1767074557,
-        "_nanoseconds": 705000000
-      },
-      "result": "Tarea finalizada exitosamente por ICARO.",
-      "status": "completed",
-      "completedAt": {
-        "_seconds": 1767074590,
-        "_nanoseconds": 295000000
-      }
-    },
-    "tucured-landing-page": {
-      "id": "tucured-landing-page",
-      "title": "Implementar landing page Tucu Red",
-      "description": "React component con hero, beneficios, formulario de contacto",
-      "projectId": "tucu-red",
-      "category": "development",
-      "priority": "critical",
-      "estimatedTime": "4 hours",
-      "assignedTo": "codi",
-      "tags": [
-        "frontend",
-        "react",
-        "landing"
-      ],
-      "version": 1,
-      "createdAt": {
-        "_seconds": 1766194701,
-        "_nanoseconds": 793000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767714706,
-        "_nanoseconds": 267000000
-      },
-      "result": "Creando landing page de Tucu Red\n[Acción: writeFile completada]",
-      "completedAt": {
-        "_seconds": 1767714712,
-        "_nanoseconds": 394000000
-      },
-      "resultHash": "6o6fyb",
-      "status": "completed"
-    },
-    "tucured-pricing-strategy": {
-      "id": "tucured-pricing-strategy",
-      "title": "Definir pricing de Tucu Red",
-      "description": "Análisis de mercado tucumano y definición de precios (setup + mensual)",
-      "projectId": "tucu-red",
-      "category": "business",
-      "priority": "critical",
-      "estimatedTime": "2 hours",
-      "assignedTo": "nexus",
-      "tags": [
-        "pricing",
-        "strategy",
-        "market-research"
-      ],
-      "version": 1,
-      "createdAt": {
-        "_seconds": 1766194700,
-        "_nanoseconds": 814000000
-      },
-      "result": "Tarea finalizada exitosamente por NEXUS.",
-      "startedAt": {
-        "_seconds": 1767074291,
-        "_nanoseconds": 250000000
-      },
-      "status": "completed",
-      "completedAt": {
-        "_seconds": 1767074321,
-        "_nanoseconds": 900000000
-      }
-    },
-    "tucured-visual-identity": {
-      "id": "tucured-visual-identity",
-      "title": "Refinar identidad visual Tucu Red",
-      "description": "Paleta extendida, tipografía, componentes visuales basados en logo existente",
-      "projectId": "tucu-red",
-      "category": "design",
-      "priority": "high",
-      "estimatedTime": "3 hours",
-      "assignedTo": "atenea",
-      "tags": [
-        "design",
-        "branding",
-        "visual-identity"
-      ],
-      "version": 1,
-      "createdAt": {
-        "_seconds": 1766194701,
-        "_nanoseconds": 48000000
-      },
-      "ignitedAt": {
-        "_seconds": 1767715717,
-        "_nanoseconds": 867000000
-      },
-      "result": "Creando archivo de diseño para Tucu Red\n[Acción: writeFile completada]",
-      "completedAt": {
-        "_seconds": 1767715723,
-        "_nanoseconds": 54000000
-      },
-      "artifacts": [
-        {
-          "path": "tucu_red_design.txt",
-          "createdAt": "2026-01-06T16:08:42.456Z",
-          "type": "file"
-        }
-      ],
-      "resultHash": "kzeze",
-      "status": "completed"
-    },
     "uZ3fm54NvaOOwrGILwBA": {
       "title": "Agregar color #e0b0b6 a la paleta de colores",
       "description": "Agregar el color #e0b0b6 a la paleta de colores del proyecto para mantener la consistencia visual y estética.",
@@ -24733,29 +24329,77 @@
       "resultHash": "o476c",
       "status": "completed"
     },
-    "vPmXmc6kcUssj26NVYny": {
-      "source": "smart_notepad",
-      "title": "Corregir Bug de CSS en Formulario de Contacto Móvil",
-      "priority": "critical",
-      "assignedTo": "deco",
+    "tucu-m01-scraping": {
+      "title": "Scraping de Zona y Prospección de Comercios",
+      "description": "Extracción y calificación de 20 comercios gastronómicos y estética en Yerba Buena y San Miguel.",
+      "assignedTo": "icaro",
       "projectId": "tucu-red",
-      "description": "El formulario de contacto en la versión móvil presenta un error en la estructura de la cuadrícula (grid stack) debido a un problema con el CSS, lo que afecta la experiencia del usuario. Se requiere una corrección urgente para restaurar el diseño y la funcionalidad adecuados.",
+      "priority": "high",
+      "status": "in_progress",
+      "automationType": "ai_action",
+      "requiresTokens": true,
       "createdAt": {
-        "_seconds": 1767910914,
-        "_nanoseconds": 776000000
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
       },
-      "ignitedAt": {
-        "_seconds": 1767910933,
-        "_nanoseconds": 292000000
+      "updatedAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
+      }
+    },
+    "tucu-m02-stitch-demo": {
+      "title": "Generar Demo Stitch para Prospectos Calificados",
+      "description": "Ensamble de plantillas de alta conversión con Stitch Showroom y adaptación de identidad de marca.",
+      "assignedTo": "atenea",
+      "projectId": "tucu-red",
+      "priority": "critical",
+      "status": "pending",
+      "automationType": "system_action",
+      "requiresTokens": false,
+      "createdAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
       },
-      "result": "Reading styles.css file to identify the CSS bug\n[Acción: readFile completada]",
-      "completedAt": {
-        "_seconds": 1767910937,
-        "_nanoseconds": 470000000
+      "updatedAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
+      }
+    },
+    "tucu-m03-bionics-qa": {
+      "title": "Deploy en Subdominio y Auditoría Biónica",
+      "description": "Verificación de tiempos de carga, responsive design y contraste visual con el motor de Biónica.",
+      "assignedTo": "argus",
+      "projectId": "tucu-red",
+      "priority": "high",
+      "status": "pending",
+      "automationType": "system_action",
+      "requiresTokens": false,
+      "createdAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
       },
-      "artifacts": [],
-      "resultHash": "yih7yq",
-      "status": "completed"
+      "updatedAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
+      }
+    },
+    "tucu-m04-whatsapp-closing": {
+      "title": "Propuesta Comercial y Cierre por WhatsApp",
+      "description": "Redacción de mensaje de contacto personalizado con link a la demo interactiva y link de turnero.",
+      "assignedTo": "lorem",
+      "projectId": "tucu-red",
+      "priority": "medium",
+      "status": "pending",
+      "automationType": "ai_action",
+      "requiresTokens": true,
+      "createdAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
+      },
+      "updatedAt": {
+        "_seconds": 1786907918,
+        "_nanoseconds": 0
+      }
     }
   },
   "tucu_clients": {},

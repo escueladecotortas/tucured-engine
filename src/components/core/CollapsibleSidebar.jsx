@@ -1,17 +1,9 @@
-// ============================================
-// COLLAPSIBLE SIDEBAR - Navegación con Agentes
-// NEXUS PRO v1.0
-// ============================================
-
+// Archivo: src/components/core/CollapsibleSidebar.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-    ChevronLeft, ChevronRight, Folder, Brain, Users,
-    Settings, Zap, Terminal, Search, Target
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Zap } from 'lucide-react';
 import WorkspaceSelector from '../WorkspaceSelector';
 
-// Lista de agentes del sistema con sus avatares
 const AGENTS = [
     { id: 'antigravity', name: 'Antigravity', role: 'Chief Architect', color: '#d946ef' },
     { id: 'nexus', name: 'Nexus', role: 'System Operator', color: '#22d3ee' },
@@ -29,56 +21,16 @@ const AGENTS = [
     { id: 'orion', name: 'Orion', role: 'Security Chief', color: '#f43f5e' },
 ];
 
-/**
- * CollapsibleSidebar - Sidebar estilo VS Code con avatares de agentes
- * 
- * @param {function} onAgentClick - Callback cuando se clickea un agente
- * @param {string} activeAgentId - ID del agente actualmente seleccionado
- * @param {function} onNavigate - Callback para navegación (vault, brain, etc)
- */
-// Core Team IDs - Always Visible
-const CORE_TEAM = ['antigravity', 'nexus', 'atenea', 'codi', 'lorem'];
-
 export default function CollapsibleSidebar({
-    onAgentClick,
-    activeAgentId,
-    onNavigate,
-    recentLogs = [],
-    className = '',
-    // New Props for Lifted State & Filtering
     isExpanded = true,
     onToggle,
-    managerAgentId = null,
     navItems = [],
     activeTab,
     currentWorkspace,
-    onWorkspaceChange
+    onWorkspaceChange,
+    onNavigate,
+    className = ''
 }) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [activeAgents, setActiveAgents] = useState({});
-
-    // Calculate Active Agents (The Pulse Logic)
-    useEffect(() => {
-        if (!recentLogs.length) return;
-        const now = new Date();
-        const active = {};
-
-        recentLogs.forEach(log => {
-            const time = log.timestamp instanceof Date ? log.timestamp : new Date(log.timestamp);
-            const diff = (now - time) / 1000;
-            if (diff < 5) { // Active in last 5 seconds
-                const agentId = AGENTS.find(a =>
-                    log.agent?.toLowerCase().includes(a.id) ||
-                    a.id.includes(log.agent?.toLowerCase())
-                )?.id;
-                if (agentId) active[agentId] = true;
-            }
-        });
-        setActiveAgents(active);
-    }, [recentLogs]);
-
-    // Filter logic removed as Agent List is deprecated in Sidebar.
-
     return (
         <motion.aside
             initial={false}
@@ -86,18 +38,15 @@ export default function CollapsibleSidebar({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className={`h-full glass-panel border-r border-nexus-border flex flex-col relative z-50 ${className}`}
         >
-            {/* Toggle Button */}
             <button
                 onClick={onToggle}
-                className="absolute -right-3 top-6 z-20 w-6 h-6 bg-nexus-bg border border-nexus-orange/50 rounded-full flex items-center justify-center hover:bg-nexus-orange hover:text-white hover:scale-110 transition-all shadow-[0_0_10px_rgba(249,115,22,0.5)]"
+                className="absolute -right-3 top-6 z-20 w-6 h-6 bg-nexus-bg border border-nexus-orange/50 rounded-full flex items-center justify-center hover:bg-nexus-orange hover:text-white hover:scale-110 transition-all shadow-[0_0_10px_rgba(249,115,22,0.5)] cursor-pointer"
             >
                 {isExpanded ? <ChevronLeft className="w-3 h-3 text-nexus-orange hover:text-white" /> : <ChevronRight className="w-3 h-3 text-nexus-orange hover:text-white" />}
             </button>
 
-            {/* Header */}
             <div className="p-4 border-b border-white/5 flex flex-col gap-4">
                 <AnimatePresence mode="wait">
-                    {/* ... existing Logo ... */}
                     {isExpanded ? (
                         <motion.div
                             key="expanded-header"
@@ -111,8 +60,8 @@ export default function CollapsibleSidebar({
                                 <Zap className="w-4 h-4 text-white" />
                             </div>
                             <div>
-                                <h2 className="text-sm font-bold text-white tracking-wide font-['Outfit']">NEXUS PRO</h2>
-                                <p className="text-[10px] text-nexus-cyan font-mono tracking-wider">v5.4 NEON</p>
+                                <h2 className="text-sm font-bold text-white tracking-wide font-['Outfit']">Nexus OS</h2>
+                                <p className="text-[10px] text-slate-400 font-mono tracking-wider">Motor Operativo</p>
                             </div>
                         </motion.div>
                     ) : (
@@ -124,8 +73,6 @@ export default function CollapsibleSidebar({
                     )}
                 </AnimatePresence>
 
-                {/* WORKSPACE SELECTOR (Only Visible when Expanded) */}
-                {/* WORKSPACE SELECTOR (Only Visible when Expanded) */}
                 <AnimatePresence>
                     {isExpanded && (
                         <motion.div
@@ -143,7 +90,6 @@ export default function CollapsibleSidebar({
                 </AnimatePresence>
             </div>
 
-            {/* Navigation */}
             <div className="flex-1 overflow-y-auto custom-scrollbar border-t border-white/5 p-2 space-y-1 bg-transparent">
                 {(navItems || []).filter(t => t.id !== 'agents').map(tab => (
                     <NavItem
@@ -161,25 +107,24 @@ export default function CollapsibleSidebar({
     );
 }
 
-// Componente auxiliar para items de navegación
 function NavItem({ icon: Icon, label, isExpanded, onClick, active, colorClass }) {
     return (
         <button
             onClick={onClick}
-            className={`w-full flex items-center gap-3 p-2 rounded-lg transition-all clickable-scale ${active
-                ? `nav-item-active-glow text-white ${colorClass || ''}`
+            className={`w-full flex items-center gap-3 p-2.5 rounded-xl transition-all cursor-pointer ${active
+                ? `nav-item-active-glow text-white ${colorClass || 'bg-white/10'}`
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
                 }`}
             title={!isExpanded ? label : undefined}
         >
-            <Icon className={`w-4 h-4 flex-shrink-0 ${active && 'animate-pulse'}`} />
+            <Icon className={`w-4 h-4 flex-shrink-0 ${active ? 'animate-pulse text-nexus-cyan' : ''}`} />
             <AnimatePresence>
                 {isExpanded && (
                     <motion.span
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -10 }}
-                        className="text-sm font-medium"
+                        className="text-xs font-medium"
                     >
                         {label}
                     </motion.span>

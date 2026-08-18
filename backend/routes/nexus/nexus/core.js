@@ -78,7 +78,7 @@ router.post('/chat', async (req, res) => {
                 promptTokens: usage.promptTokenCount || 0,
                 candidatesTokens: usage.candidatesTokenCount || 0,
                 cost: 0,
-                model: "llama-3.3-70b-versatile"
+                model: process.env.GROQ_MODEL || "openai/gpt-oss-120b"
             },
             history: [
                 ...history,

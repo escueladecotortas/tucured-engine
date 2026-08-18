@@ -1,6 +1,6 @@
 // Archivo: backend/services/deploy/DeployProcessHandler.js
 const { exec } = require('child_process');
-const TerminalService = require('../TerminalService');
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 
 /**
  * Especialista en la ejecución del proceso CLI de Netlify.
@@ -20,7 +20,7 @@ class DeployProcessHandler {
     static run(sitePath, siteId, authToken) {
         const { spawn } = require('child_process');
         return new Promise((resolve, reject) => {
-            const args = ['netlify', 'deploy', '--prod', '--json', '--dir', '.'];
+            const args = ['--yes', 'netlify', 'deploy', '--prod', '--json', '--dir', '.'];
             if (siteId) {
                 args.push('--site', siteId);
             }

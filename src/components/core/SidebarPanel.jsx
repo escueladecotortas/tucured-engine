@@ -1,78 +1,37 @@
-// ============================================
-// SIDEBAR PANEL - Panel lateral de la consola
-// Extraído de NexusConsoleRedesign.jsx
-// ============================================
-
+// Archivo: src/components/core/SidebarPanel.jsx
 import React from 'react';
-import { GlassCard } from './index.jsx';
 
-// Lazy imports para widgets del sidebar
-const Roadmap = React.lazy(() => import('../Roadmap'));
-const CommercialData = React.lazy(() => import('../CommercialData'));
+const QuickProductionActions = React.lazy(() => import('../widgets/QuickProductionActions'));
 const AgentStatusHub = React.lazy(() => import('../AgentStatusHub'));
 const SmartNotepad = React.lazy(() => import('../SmartNotepad'));
-const TurneroWidget = React.lazy(() => import('../widgets/TurneroWidget'));
-const MemoryAidWidget = React.lazy(() => import('../widgets/MemoryAidWidget'));
-const NetlifyHealth = React.lazy(() => import('../widgets/NetlifyHealth'));
 
-
-/**
- * SidebarPanel - Panel lateral con widgets dinámicos
- * 
- * @param {Object} activeWidgets - Estado de widgets activos {'turnero-basic': bool, 'promo-popup': bool}
- * @param {string} projectId - ID del proyecto actual
- * @param {Object} projectData - Datos del proyecto (para config de widgets)
- */
 export default function SidebarPanel({ activeWidgets, projectId, projectData }) {
-    // La barra lateral ahora contiene herramientas del sistema (Memoria, Notepad), 
-    // por lo que siempre debe renderizarse a menos que se indique lo contrario explícitamente.
-    // (Condición anterior de turnero/promo eliminada para permitir herramientas 'Pro')
-
-    // Config del turnero basada en datos del proyecto
-    const turneroConfig = {
-        businessName: projectData?.name || 'Mi Negocio',
-        whatsappNumber: projectData?.phone || projectData?.whatsapp || '',
-        workDays: projectData?.workDays || [1, 2, 3, 4, 5, 6],
-        startHour: projectData?.startHour || 9,
-        endHour: projectData?.endHour || 20,
-        slotDuration: projectData?.slotDuration || 60,
-    };
-
     return (
         <div className="col-span-12 lg:col-span-3 h-full overflow-hidden min-h-0 z-20 flex flex-col gap-4">
-
-            {/* Netlify Health Widget - Critical Monitoring */}
+            {/* 1. Accesos Rápidos de Producción */}
             <div className="shrink-0">
-                <React.Suspense fallback={<div className="h-24 bg-nexus-card animate-pulse rounded-2xl" />}>
-                    <NetlifyHealth />
+                <React.Suspense fallback={<div className="h-28 bg-white/5 animate-pulse rounded-2xl" />}>
+                    <QuickProductionActions projectId={projectId} />
                 </React.Suspense>
             </div>
 
-            {/* Agent Activity Hub (Discreto) */}
-
+            {/* 2. Actividad de Agentes */}
             <div className="shrink-0">
-                <React.Suspense fallback={<div className="h-20 bg-nexus-card animate-pulse rounded-lg" />}>
+                <React.Suspense fallback={<div className="h-20 bg-white/5 animate-pulse rounded-2xl" />}>
                     <AgentStatusHub projectId={projectId} />
                 </React.Suspense>
             </div>
 
-            {/* ENLACE NEURAL (Memory Aid) - High Priority */}
-            <div className="flex-shrink-0">
-                <React.Suspense fallback={<div className="h-32 bg-nexus-card animate-pulse rounded-lg" />}>
-                    <MemoryAidWidget />
-                </React.Suspense>
-            </div>
-
-            {/* Smart Notepad (Utility Only) */}
-            <div className="flex-1 min-h-0 relative flex flex-col glass-panel rounded-xl overflow-hidden border border-white/5">
-                <div className="p-3 border-b border-white/5 bg-white/5">
-                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Notas Rápidas</span>
+            {/* 3. Bloc de Notas de Sesión (Altura Completa) */}
+            <div className="flex-1 min-h-0 relative flex flex-col glass-panel rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-xl">
+                <div className="p-3.5 border-b border-white/5 bg-white/5 flex items-center justify-between">
+                    <span className="text-xs font-bold text-gray-200 uppercase font-mono tracking-wider">Notas de Sesión</span>
+                    <span className="text-[9px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">AUTOSAVE</span>
                 </div>
-                <React.Suspense fallback={<div className="p-4 text-xs text-text-muted">Cargando Notas...</div>}>
+                <React.Suspense fallback={<div className="p-4 text-xs text-gray-500 font-mono">Cargando Notas...</div>}>
                     <SmartNotepad clientId={projectId} />
                 </React.Suspense>
             </div>
         </div>
     );
 }
-

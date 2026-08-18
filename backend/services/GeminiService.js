@@ -1,48 +1,50 @@
+// Archivo: backend/services/GeminiService.js
+// Servicio oficial de Google Gemini Generative AI (Gemini 2.5 Flash - Ley de 200 líneas)
+
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const path = require('path');
-const { VertexAI } = require('@google-cloud/vertexai');
-const serviceAccount = require('../serviceAccountKey.json');
-require("dotenv").config();
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+require('dotenv').config();
 
-const GeminiVertexService = {
-    async generateCopy(prompt) {
-        console.log("🔹 [GeminiVertexService] Generating Copy via Vertex AI...");
-        
-        if (!serviceAccount || !serviceAccount.project_id) {
-             console.error("❌ Service Account missing project_id in GeminiVertexService");
-             return null;
-        }
-
-        try {
-            process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(__dirname, "../serviceAccountKey.json");
-            
-            const vertex_ai = new VertexAI({
-                project: serviceAccount.project_id,
-                location: 'us-central1'
-            });
-
-            // Use lightweight flash model for copy generation backup
-            const model = vertex_ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-            const result = await model.generateContent({
-                contents: [{ role: 'user', parts: [{ text: prompt }] }],
-                generationConfig: { maxOutputTokens: 2000 }
-            });
-
-            const text = result.response.candidates[0].content.parts[0].text;
-            
-            if (text) {
-                console.log(`✅ [GeminiVertexService] Success! (${text.length} chars)`);
-                return text;
-            } else {
-                console.warn("⚠️ [GeminiVertexService] Empty Response");
-                return null;
-            }
-
-        } catch (e) {
-            console.error("❌ [GeminiVertexService] Vertex AI Error", e);
-            return null;
-        }
+class GeminiService {
+    constructor() {
+        this.genAI = null;
+        this._apiKey = null;
     }
-};
 
-module.exports = GeminiVertexService;
+    getClient() {
+        const apiKey = (process.env.GEMINI_API_KEY || '').trim();
+        if (!this.genAI || this._apiKey !== apiKey) {
+            this._apiKey = apiKey;
+            this.genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
+        }
+        return this.genAI;
+    }
+
+    async generate(prompt, systemInstruction = '', modelName = 'gemini-2.5-flash') {
+        const client = this.getClient();
+        if (!client) throw new Error('GEMINI_API_KEY no configurada');
+
+        const startTime = Date.now();
+        console.log(`🔹 [GeminiService] Generating with ${modelName}...`);
+
+        const model = client.getGenerativeModel({
+            model: modelName,
+            systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined
+        });
+
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        const latencyMs = Date.now() - startTime;
+
+        console.log(`✅ [GeminiService] Success! (${text.length} chars, ${latencyMs}ms)`);
+        return { text, latencyMs, provider: 'gemini', model: modelName };
+    }
+
+    async generateCopy(prompt) {
+        const res = await this.generate(prompt);
+        return res.text;
+    }
+}
+
+module.exports = new GeminiService();

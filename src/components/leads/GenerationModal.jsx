@@ -40,7 +40,12 @@ export default function GenerationModal({ isOpen, prospect, logs = [], onClose, 
 
     const buildFinalUrl = () => {
         const slug = prospect?.slug || prospect?.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-        return { href: `https://${slug}.tucured.ar`, label: `${slug}.tucured.ar` };
+        const localHref = `/clients/${slug}/index.html`;
+        return {
+            href: prospect?.siteUrl || `https://${slug}.tucured.ar`,
+            localHref,
+            label: `${slug}.tucured.ar`
+        };
     };
 
     if (!isOpen || !prospect) return null;

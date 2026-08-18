@@ -2,7 +2,7 @@
 // SERVICE: PostDeployVerifier v4.0 (Modularized - Ley de 200 líneas)
 // QA automático post-deploy para sitios en producción.
 
-const TerminalService = require("./TerminalService");
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 const ProductionAuditor = require("./verify/ProductionAuditor");
 
 class PostDeployVerifier {

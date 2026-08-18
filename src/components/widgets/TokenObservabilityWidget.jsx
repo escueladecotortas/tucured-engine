@@ -1,14 +1,18 @@
+// Archivo: src/components/widgets/TokenObservabilityWidget.jsx
 import React, { useState, useEffect } from 'react';
-import { Cpu, Zap, Coins, Server, RefreshCw, AlertCircle } from 'lucide-react';
+import { Cpu, Zap, Server, RefreshCw } from 'lucide-react';
 
-const TokenObservabilityWidget = ({ vibe }) => {
-    // Estado inicial simulado (para ser reemplazado por context/Store real)
+const GROQ_LIMIT = 500000;
+const GEMINI_ESTIMATED_LIMIT = 1000000;
+const APIFY_LIMIT = 5.00;
+
+export default function TokenObservabilityWidget({ vibe }) {
     const [usage, setUsage] = useState({
-        groq: { used: 0, limit: 500000, resetsIn: '12h 45m', status: 'optimal' },
-        gemini: { used: 0, limit: 'Ilimitado (Tier 1)', status: 'optimal' },
-        apify: { used: 0, limit: 5.00, resetsIn: '3d 12h', status: 'warning' }
+        groq: { used: 0, limit: GROQ_LIMIT, status: 'optimal' },
+        gemini: { used: 0, limit: GEMINI_ESTIMATED_LIMIT, status: 'optimal' },
+        apify: { used: 0, limit: APIFY_LIMIT, status: 'optimal' },
+        totalTokens: 0, memoryRssMb: 0
     });
-    
     const [loading, setLoading] = useState(false);
 
     const fetchMetrics = async () => {
@@ -16,163 +20,94 @@ const TokenObservabilityWidget = ({ vibe }) => {
         try {
             const res = await fetch('/api/nexus/metrics');
             if (res.ok) {
-                const data = await res.json();
-                
-                setUsage(prev => ({
-                    ...prev,
-                    groq: {
-                        ...prev.groq,
-                        used: data.groq?.usedTokens || 0,
-                        status: (data.groq?.usedTokens || 0) > 400000 ? 'warning' : 'optimal'
-                    },
-                    gemini: {
-                        ...prev.gemini,
-                        used: data.gemini?.usedTokens || 0,
-                        status: 'optimal'
-                    },
-                    apify: {
-                        ...prev.apify,
-                        used: data.apify?.usedCost || 0,
-                        status: (data.apify?.usedCost || 0) > 4.5 ? 'warning' : 'optimal'
-                    }
-                }));
+                const d = await res.json();
+                const groq = d.tokenUsage?.groq || d.groq?.usedTokens || 0;
+                const gemini = d.tokenUsage?.gemini || d.gemini?.usedTokens || 0;
+                const apify = d.costs?.apify || d.apify?.usedCost || 0;
+                const total = d.tokenUsage?.totalTokens || (groq + gemini);
+
+                setUsage({
+                    groq: { used: groq, limit: GROQ_LIMIT, status: groq > (GROQ_LIMIT * 0.8) ? 'warning' : 'optimal' },
+                    gemini: { used: gemini, limit: GEMINI_ESTIMATED_LIMIT, status: gemini > (GEMINI_ESTIMATED_LIMIT * 0.8) ? 'warning' : 'optimal' },
+                    apify: { used: apify, limit: APIFY_LIMIT, status: apify > (APIFY_LIMIT * 0.8) ? 'warning' : 'optimal' },
+                    totalTokens: total, memoryRssMb: d.memory?.rssMb || 0
+                });
             }
-        } catch (error) {
-            console.error("Failed to fetch metrics", error);
-        } finally {
-            setLoading(false);
-        }
+        } catch (e) { console.warn("Error en telemetría de tokens", e); }
+        finally { setLoading(false); }
     };
 
-    useEffect(() => {
-        fetchMetrics();
-    }, []);
+    useEffect(() => { fetchMetrics(); }, []);
 
-    // Color definitions based on status
-    const getStatusColor = (status) => {
-        if (status === 'warning') return 'text-amber-400';
-        if (status === 'critical') return 'text-red-400';
-        return 'text-emerald-400';
+    const getBadgeStyle = (status) => {
+        if (status === 'warning') return 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+        if (status === 'critical') return 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+        return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
     };
 
-    const getStatusBg = (status) => {
-        if (status === 'warning') return 'bg-amber-500/20';
-        if (status === 'critical') return 'bg-red-500/20';
-        return 'bg-emerald-500/20';
-    };
-
-    const handleRefresh = () => {
-        fetchMetrics();
-    };
+    const getPercent = (used, limit) => Math.min(100, Math.max(2, Math.round((used / limit) * 100)));
 
     return (
         <div className="bg-[#0A0A1A]/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-            {/* Ambient Glow */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/20 transition-all duration-700"></div>
 
             <div className="flex justify-between items-start mb-6 relative z-10">
                 <div>
-                    <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
-                        <Cpu className="w-4 h-4 text-indigo-400" />
-                        Observabilidad de Consumo IA
+                    <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2 font-mono">
+                        <Cpu className="w-4 h-4 text-indigo-400" /> Telemetría de Consumo IA
                     </h3>
-                    <p className="text-[10px] text-gray-400 font-mono mt-1">SISTEMA CORTEX - MONITOREO DE TOKENS</p>
+                    <p className="text-[10px] text-gray-400 font-mono mt-1">SISTEMA CORTEX • {usage.totalTokens.toLocaleString()} TOKENS PROCESADOS</p>
                 </div>
-                <button 
-                    onClick={handleRefresh}
-                    disabled={loading}
-                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 transition-colors border border-white/5"
-                    title="Actualizar Métricas"
-                >
+                <button onClick={fetchMetrics} disabled={loading} className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 transition-colors border border-white/5 cursor-pointer" title="Actualizar Métricas en Vivo">
                     <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-indigo-400' : ''}`} />
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-                
-                {/* GROQ Metrics */}
-                <div className="bg-black/40 border border-white/5 rounded-xl p-4 hover:border-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-3">
-                        <div className="flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-orange-400" />
-                            <span className="text-xs font-bold text-gray-300">GROQ (Llama 3)</span>
-                        </div>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getStatusBg(usage.groq.status)} ${getStatusColor(usage.groq.status)} border-current opacity-70`}>
-                            {usage.groq.status.toUpperCase()}
-                        </span>
-                    </div>
-                    
-                    <div className="mb-2">
-                        <p className="text-2xl font-mono text-white leading-none">
-                            {(usage.groq.used / 1000).toFixed(1)}k <span className="text-xs text-gray-500">/ {(usage.groq.limit / 1000).toFixed(0)}k</span>
-                        </p>
-                    </div>
-                    
-                    {/* Progress Bar */}
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-2">
-                        <div 
-                            className="h-full bg-orange-400 rounded-full" 
-                            style={{ width: `${(usage.groq.used / usage.groq.limit) * 100}%` }}
-                        ></div>
-                    </div>
-                    <p className="text-[9px] text-gray-500 font-mono text-right">Reset: {usage.groq.resetsIn}</p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 font-mono">
+                {/* GROQ */}
+                <MetricCard 
+                    icon={<Zap className="w-4 h-4 text-orange-400" />} title="GROQ (Llama 3)"
+                    status={usage.groq.status} badgeStyle={getBadgeStyle(usage.groq.status)}
+                    value={`${(usage.groq.used / 1000).toFixed(1)}k`} max={`${(usage.groq.limit / 1000).toFixed(0)}k`}
+                    percent={getPercent(usage.groq.used, usage.groq.limit)} color="bg-orange-400" subtitle="Tier Free"
+                />
 
-                {/* GEMINI Metrics */}
-                <div className="bg-black/40 border border-white/5 rounded-xl p-4 hover:border-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-3">
-                        <div className="flex items-center gap-2">
-                            <Cpu className="w-4 h-4 text-blue-400" />
-                            <span className="text-xs font-bold text-gray-300">GEMINI PRO</span>
-                        </div>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getStatusBg(usage.gemini.status)} ${getStatusColor(usage.gemini.status)} border-current opacity-70`}>
-                            {usage.gemini.status.toUpperCase()}
-                        </span>
-                    </div>
-                    
-                    <div className="mb-2">
-                        <p className="text-2xl font-mono text-white leading-none">
-                            {(usage.gemini.used / 1000).toFixed(1)}k <span className="text-xs text-gray-500">Tokens</span>
-                        </p>
-                    </div>
-                    
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-2">
-                        <div className="h-full bg-blue-400 rounded-full w-[15%]"></div>
-                    </div>
-                    <p className="text-[9px] text-gray-500 font-mono text-right">Límite: {usage.gemini.limit}</p>
-                </div>
+                {/* GEMINI */}
+                <MetricCard 
+                    icon={<Cpu className="w-4 h-4 text-blue-400" />} title="GEMINI PRO"
+                    status={usage.gemini.status} badgeStyle={getBadgeStyle(usage.gemini.status)}
+                    value={`${(usage.gemini.used / 1000).toFixed(1)}k`} max="tokens"
+                    percent={getPercent(usage.gemini.used, usage.gemini.limit)} color="bg-blue-400" subtitle="Tier 1 Cloud"
+                />
 
-                {/* APIFY Metrics */}
-                <div className="bg-black/40 border border-white/5 rounded-xl p-4 hover:border-white/10 transition-colors">
-                    <div className="flex justify-between items-center mb-3">
-                        <div className="flex items-center gap-2">
-                            <Server className="w-4 h-4 text-amber-400" />
-                            <span className="text-xs font-bold text-gray-300">APIFY SCRAPING</span>
-                        </div>
-                        {usage.apify.status === 'warning' && <AlertCircle className="w-3.5 h-3.5 text-amber-500 animate-pulse" />}
-                    </div>
-                    
-                    <div className="mb-2">
-                        <p className="text-2xl font-mono text-white leading-none">
-                            ${usage.apify.used.toFixed(2)} <span className="text-xs text-gray-500">/ ${usage.apify.limit.toFixed(2)}</span>
-                        </p>
-                    </div>
-                    
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-2 relative">
-                         <div 
-                            className="h-full bg-amber-500 rounded-full transition-all" 
-                            style={{ width: `${(usage.apify.used / usage.apify.limit) * 100}%` }}
-                        ></div>
-                    </div>
-                    <div className="flex justify-between items-center text-[9px] font-mono">
-                        <span className="text-amber-500/70">CUOTA AL LÍMITE</span>
-                        <span className="text-gray-500">Reset: {usage.apify.resetsIn}</span>
-                    </div>
-                </div>
-
+                {/* APIFY */}
+                <MetricCard 
+                    icon={<Server className="w-4 h-4 text-amber-400" />} title="APIFY SCRAPING"
+                    status={usage.apify.status} badgeStyle={getBadgeStyle(usage.apify.status)}
+                    value={`$${usage.apify.used.toFixed(2)}`} max={`$${usage.apify.limit.toFixed(2)} USD`}
+                    percent={getPercent(usage.apify.used, usage.apify.limit)} color="bg-amber-500" subtitle="Monthly Credit"
+                />
             </div>
         </div>
     );
-};
+}
 
-export default TokenObservabilityWidget;
+function MetricCard({ icon, title, status, badgeStyle, value, max, percent, color, subtitle }) {
+    return (
+        <div className="bg-black/40 border border-white/5 rounded-xl p-4 hover:border-white/15 transition-all">
+            <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">{icon}<span className="text-xs font-bold text-gray-200">{title}</span></div>
+                <span className={`text-[9px] px-2 py-0.5 rounded-full border font-bold ${badgeStyle}`}>{status.toUpperCase()}</span>
+            </div>
+            <div className="mb-2">
+                <p className="text-xl font-bold text-white leading-none">{value} <span className="text-xs text-gray-500 font-normal">/ {max}</span></p>
+            </div>
+            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-1.5">
+                <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${percent}%` }} />
+            </div>
+            <div className="flex justify-between text-[9px] text-gray-500">
+                <span>{percent}% consumo</span><span>{subtitle}</span>
+            </div>
+        </div>
+    );
+}

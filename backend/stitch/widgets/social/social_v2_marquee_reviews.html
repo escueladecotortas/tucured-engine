@@ -1,0 +1,118 @@
+<!-- WIDGET: Social_Marquee_Reviews_v2 -->
+<!-- VIBE: Trust, Kinetic, Dark/Light Adaptive — Cinta continua con hover-pause -->
+<style>
+    @keyframes marqueeReviews {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+        animation: marqueeReviews 40s linear infinite;
+        display: flex;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+</style>
+
+<section class="py-14 bg-transparent dark:bg-zinc-950/50 backdrop-blur-md border-y border-zinc-200 dark:border-zinc-800/60 overflow-hidden relative" id="reviews">
+    <!-- Gradientes de fade lateral -->
+    <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+
+    <div class="text-center mb-8 px-4">
+        <div class="inline-flex items-center gap-2 mb-3 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-4 opacity-90">
+            <span class="text-zinc-600 dark:text-zinc-300 text-xs font-semibold">{{RATING_DISPLAY}} • Google Reviews</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">Lo que dicen nuestros clientes</h2>
+    </div>
+
+    <!-- Marquee Track (duplicado para loop infinito) -->
+    <div class="flex overflow-hidden">
+        <div class="marquee-track gap-4">
+            <!-- Loop 1 -->
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-amber-500/15 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center font-bold text-xs border border-amber-500/20">M</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Martín G.</p>
+                            <p class="text-[10px] text-zinc-400">Local Guide</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_1_TEXT}}"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center font-bold text-xs border border-emerald-500/20">S</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Sofía R.</p>
+                            <p class="text-[10px] text-zinc-400">Cliente Frecuente</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_2_TEXT}}"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-500/15 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center font-bold text-xs border border-blue-500/20">L</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Luciano T.</p>
+                            <p class="text-[10px] text-zinc-400">Verificado</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_3_TEXT}}"</p>
+            </div>
+
+            <!-- Loop 2 (Duplicado para loop infinito) -->
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-amber-500/15 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center font-bold text-xs border border-amber-500/20">M</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Martín G.</p>
+                            <p class="text-[10px] text-zinc-400">Local Guide</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_1_TEXT}}"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center font-bold text-xs border border-emerald-500/20">S</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Sofía R.</p>
+                            <p class="text-[10px] text-zinc-400">Cliente Frecuente</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_2_TEXT}}"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-500/15 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center font-bold text-xs border border-blue-500/20">L</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Luciano T.</p>
+                            <p class="text-[10px] text-zinc-400">Verificado</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"{{REVIEW_3_TEXT}}"</p>
+            </div>
+        </div>
+    </div>
+</section>

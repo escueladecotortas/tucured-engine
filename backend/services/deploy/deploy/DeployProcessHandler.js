@@ -1,6 +1,6 @@
 // Archivo: backend/services/deploy/DeployProcessHandler.js
 const { exec } = require('child_process');
-const TerminalService = require('../TerminalService');
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 
 /**
  * Especialista en la ejecución del proceso CLI de Netlify.

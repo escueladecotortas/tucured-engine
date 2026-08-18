@@ -1,35 +1,35 @@
 <!-- POWER-UP: Calculator_Budget_Simple -->
-<!-- VIBE: Functional, Service, Lead Gen -->
-<section class="py-16 bg-[var(--primary)]/5">
+<!-- VIBE: Functional, Service, Lead Gen, Dark/Light Adaptive -->
+<section class="py-16 bg-transparent dark:bg-zinc-950/40 backdrop-blur-md transition-colors" id="cotizador">
     <div class="container mx-auto px-4 max-w-2xl">
-        <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div class="bg-white/90 dark:bg-zinc-900/90 rounded-3xl shadow-2xl p-8 border border-zinc-200 dark:border-zinc-800 backdrop-blur-md text-zinc-900 dark:text-zinc-100 transition-all">
             <div class="text-center mb-8">
-                <span class="bg-[var(--primary)]/10 text-[var(--primary)] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Cotizador Online</span>
-                <h2 class="text-2xl font-bold mt-3 text-gray-800">{{CALC_TITLE}}</h2>
-                <p class="text-gray-500 text-sm">{{CALC_DESC}}</p>
+                <span class="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Cotizador Online</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold mt-3 text-zinc-900 dark:text-zinc-50 tracking-tight">{{CALC_TITLE}}</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 text-sm mt-1">{{CALC_DESC}}</p>
             </div>
 
             <div class="space-y-6">
-                <!-- Input Unit: e.g., m2 -->
+                <!-- Input Unit -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">{{CALC_INPUT_LABEL}}</label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">{{CALC_INPUT_LABEL}}</label>
                     <div class="flex items-center">
-                        <input type="number" id="calcInput" class="w-full p-4 border border-gray-200 rounded-l-xl focus:ring-2 focus:ring-[var(--primary)] outline-none text-lg" placeholder="10">
-                        <span class="bg-gray-100 p-4 border border-gray-200 border-l-0 rounded-r-xl text-gray-500 font-bold">{{CALC_UNIT}}</span>
+                        <input type="number" id="calcInput" class="w-full p-4 border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800 rounded-l-2xl focus:ring-2 focus:ring-emerald-500 outline-none text-lg font-bold text-zinc-900 dark:text-zinc-100" placeholder="10">
+                        <span class="bg-zinc-100 dark:bg-zinc-800/80 p-4 border border-zinc-200 dark:border-zinc-800 border-l-0 rounded-r-2xl text-zinc-600 dark:text-zinc-300 font-bold">{{CALC_UNIT}}</span>
                     </div>
                 </div>
 
                 <!-- Estimated Price Display -->
-                <div class="bg-[var(--primary)]/5 p-6 rounded-xl text-center border border-[var(--primary)]/20">
-                    <p class="text-gray-500 text-xs uppercase font-bold mb-1">Presupuesto Estimado</p>
-                    <p class="text-4xl font-black text-[var(--primary)]" id="calcResult">$0</p>
-                    <p class="text-xs text-gray-400 mt-2">*Precio referencial, sujeto a visita técnica.</p>
+                <div class="bg-emerald-500/10 dark:bg-emerald-950/20 p-6 rounded-2xl text-center border border-emerald-500/20">
+                    <p class="text-zinc-500 dark:text-zinc-400 text-xs uppercase font-bold mb-1">Presupuesto Estimado</p>
+                    <p class="text-4xl font-black text-emerald-600 dark:text-emerald-400 font-mono" id="calcResult">$0</p>
+                    <p class="text-xs text-zinc-400 dark:text-zinc-500 mt-2">*Precio referencial sujeto a confirmación.</p>
                 </div>
 
                 <!-- CTA -->
-                <button onclick="sendQuote()" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-lg">
-                    Contratar Ahora
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                <button onclick="sendQuote()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 shadow-xl hover:scale-[1.01] active:scale-[0.99]">
+                    <span>Contratar / Solicitar por WhatsApp</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
         </div>
@@ -37,31 +37,27 @@
 </section>
 
 <script>
-    // CONFIG
-    const UNIT_PRICE = {{CALC_UNIT_PRICE}};
-    const SERVICE_NAME = "{{CALC_SERVICE_NAME}}";
-    const WA_NUMBER_CALC = "{{WHATSAPP_NUMBER}}";
+    const UNIT_PRICE = Number("{{CALC_UNIT_PRICE}}") || 1500;
+    const SERVICE_NAME = "{{CALC_SERVICE_NAME}}" || "Servicio";
+    const WA_NUMBER_CALC = "{{WHATSAPP_NUMBER}}" || "+5493815559876";
 
     const input = document.getElementById('calcInput');
     const resultDisplay = document.getElementById('calcResult');
 
-    input.addEventListener('input', (e) => {
-        const val = parseFloat(e.target.value) || 0;
-        const total = val * UNIT_PRICE;
-        resultDisplay.innerText = '$' + total.toLocaleString();
-    });
+    if (input) {
+        input.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value) || 0;
+            const total = val * UNIT_PRICE;
+            resultDisplay.innerText = '$' + total.toLocaleString('es-AR');
+        });
+    }
 
     function sendQuote() {
-        const val = parseFloat(input.value) || 0;
-        if(val <= 0) {
-            alert("Por favor ingresa una cantidad válida.");
-            return;
-        }
+        const val = parseFloat(input?.value) || 0;
+        if (val <= 0) return alert("Por favor ingresa una cantidad válida.");
         const total = val * UNIT_PRICE;
-        
-        const message = `Hola! Hice una cotización en la web.\n\n🛠️ *Servicio:* ${SERVICE_NAME}\n📏 *Cantidad:* ${val} {{CALC_UNIT}}\n💰 *Estimado:* $${total.toLocaleString()}\n\nQuisiera coordinar una visita.`;
-        
-        const url = `https://wa.me/${WA_NUMBER_CALC}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
+        const msg = `¡Hola! Usé el cotizador web para *${SERVICE_NAME}* (${val} unidades). Presupuesto estimado: *$${total.toLocaleString('es-AR')}*. ¿Podemos coordinar?`;
+        const cleanPhone = String(WA_NUMBER_CALC).replace(/[^0-9]/g, '');
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 </script>

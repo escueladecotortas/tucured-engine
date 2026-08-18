@@ -1,107 +1,51 @@
-/**
- * SERVICE: SmartCopyEngine
- * Purpose: Generate copy and content based on business category.
- * Extracted from AutoSiteGenerator.js for Argus Compliance.
- */
+// Archivo: backend/services/SmartCopyEngine.js
+// SERVICE: SmartCopyEngine (Generación de Copy Estructurado con UnifiedAI - Ley de 200 líneas)
 
-const GeminiService = require('./GeminiService');
-const GroqService = require('./GroqService');
+const UnifiedAIService = require('./UnifiedAIService');
 
 class SmartCopyEngine {
-
     static async generate(prospectData, brandKit) {
         const { name, category, subcategory, instagram, address, aiContext } = prospectData;
-        
-        console.log(`🧠 [SmartCopy] Generating REAL AI copy for: ${name} (${category})`);
+        console.log(`🧠 [SmartCopy] Generando copy inteligente para: ${name} (${category})`);
 
-        // Prompt Engineering for Gemini
         const prompt = `
-            You are a professional Copywriter for a high-end web agency.
-            Write the content for a landing page for a client with these details:
-            - Name: "${name}"
-            - Category: "${category}"
-            - Features/Context: "${subcategory || ''}, ${aiContext || ''}"
+            Actúa como un Copywriter profesional para una agencia web de alta gama.
+            Escribe el contenido para la landing page de:
+            - Nombre: "${name}"
+            - Rubro: "${category}"
+            - Contexto: "${subcategory || ''}, ${aiContext || ''}"
             - Vibe: "${brandKit.vibes?.archtype || 'Modern'}"
 
-            IMPORTANT: Write all content in SPANISH (Argentina/Latin American).
-            Tone: Professional, engaging, and aligned with the Vibe.
-
-            CRITICAL ANTI-HALLUCINATION RULES:
-            1. ONLY list services or benefits explicitly found in the data source.
-            2. DO NOT invent professional titles or credentials.
-            3. If a service is not mentioned in the source, OMIT IT entirely.
-            4. Accuracy is the highest design priority.
-            5. ONLY list services explicitly mentioned in the "Features/Context".
-            6. DO NOT invent or assume services.
-            7. If context provides only 1 service, return ONLY 1 in the array. Do not force 3 items.
-            8. If no services are found, describe the general value of the business category.
-
-            Return a JSON object (strictly JSON, no markdown) with this structure:
-            {
-                "hero": {
-                    "title": "A short, punchy 3-5 word headline",
-                    "subtitle": "A persuasive 10-15 word subheadline focusing on value",
-                    "cta": "Call to action text (e.g., 'Book Now')"
-                },
-                "about": {
-                    "title": "About Us",
-                    "text": "A warm, professional 30-word description of the business."
-                },
-                "services": [
-                    { "name": "Service 1", "description": "Short desc" },
-                    { "name": "Service 2", "description": "Short desc" },
-                    { "name": "Service 3", "description": "Short desc" }
-                ],
-                "contact": {
-                    "cta": "Final CTA",
-                    "instagram": "${instagram || ''}",
-                    "address": "${address || ''}"
-                }
-            }
+            REGLAS:
+            1. Escribe en ESPAÑOL natural (Argentina/Latinoamérica).
+            2. Devuelve un JSON estructurado con: hero, about, services (array de objetos {name, description}), contact.
         `;
 
         try {
-            // [GROQ] Primary Engine (Llama 3.3)
-            let rawText = await GroqService.generate(prompt, "You are a professional UX Copywriter.");
-            
-            // [GEMINI] Backup Engine (Flash Lite 2.0)
-            if (!rawText) {
-                 console.warn("⚠️ [SmartCopy] Groq failed. Switching to Gemini Backup...");
-                 rawText = await GeminiService.generateCopy(prompt);
-            }
-            
-            if (!rawText) throw new Error("AI Engines returned NULL response.");
-
-            console.log(`🧠 [SmartCopy] Gemini Raw Response (Preview): ${rawText.substring(0, 100)}...`);
-            
-            // Robust JSON Extraction
-            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) throw new Error("No JSON found in response");
-            
-            const jsonStr = jsonMatch[0];
-            const content = JSON.parse(jsonStr);
+            const { data } = await UnifiedAIService.generateJSON(prompt, {
+                systemPrompt: "Eres un copywriter profesional de alta conversión.",
+                prefer: 'groq'
+            });
 
             return {
-                ...content,
-                category: category,
+                hero: data.hero || { title: `Bienvenido a ${name}`, subtitle: 'Calidad y compromiso', cta: 'Contactar' },
+                about: data.about || { title: 'Sobre Nosotros', text: `En ${name} brindamos una experiencia única en ${category}.` },
+                services: Array.isArray(data.services) ? data.services : [{ name: 'Atención Personalizada', description: 'Servicio de primera calidad' }],
+                contact: data.contact || { cta: 'Escribinos por WhatsApp', instagram: instagram || '', address: address || '' },
+                category,
                 features: prospectData.aiFeatures || []
             };
-
         } catch (error) {
-            console.error(`❌ [SmartCopy] AI Generation Failed: ${error.message}`);
-            // console.error(error); // Keep clean logs
-            return this.getFallback(prospectData);
+            console.warn(`⚠️ [SmartCopy] Fallback Heurístico activado: ${error.message}`);
+            return {
+                hero: { title: `Bienvenido a ${name}`, subtitle: `Lo mejor en ${category} para vos.`, cta: 'Pedir Ahora' },
+                about: { title: 'Sobre Nosotros', text: `Nos dedicamos a brindar la mejor experiencia a nuestros clientes.` },
+                services: [{ name: 'Calidad Garantizada', description: 'Atención personalizada y productos de primera línea.' }],
+                contact: { cta: 'Contactanos', instagram: instagram || '', address: address || '' },
+                category,
+                features: []
+            };
         }
-    }
-
-    static getFallback(prospectData) {
-        return {
-            hero: { title: `Bienvenido a ${prospectData.name}`, subtitle: 'Calidad y servicio profesional.', cta: 'Contactar' },
-            about: { title: `Sobre ${prospectData.name}`, text: 'Comprometidos con la excelencia y la satisfacción de nuestros clientes.' },
-            services: [{ name: "Atención Personalizada", description: "Brindamos el mejor servicio para nuestra categoría." }],
-            contact: { cta: 'Consultar', instagram: '', address: '' },
-            category: 'general'
-        };
     }
 }
 

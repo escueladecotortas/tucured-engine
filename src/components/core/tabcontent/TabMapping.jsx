@@ -1,4 +1,4 @@
-// Archivo: frontend/src/components/core/tabcontent/TabMapping.jsx
+// Archivo: src/components/core/tabcontent/TabMapping.jsx
 import React from 'react';
 
 // Lazy imports para tabs (Compartidos con TabContent)
@@ -36,7 +36,7 @@ export const getTabComponent = (tab, props) => {
         case 'briefing':
             return <div className="h-full p-4"><IntelligenceMonitor projectId={projectId} assets={{}} /></div>;
         case 'vault':
-            return <TheVault projectId={projectId} rootPath={currentProject?.assetsPath?.replace('nexus_archives/', '')} />;
+            return <TheVault projectId={projectId} rootPath="root" />;
         case 'leads':
             return <NeuralFactory />;
         case 'missions':
@@ -53,7 +53,7 @@ export const getTabComponent = (tab, props) => {
             return <BlueprintTab projectId={projectId} />;
         case 'clients':
         case 'portfolio':
-            return <ClientPortfolio onOpenClient={(id) => window.location.hash = `#/project/${id}`} />;
+            return <ClientPortfolio onOpenClient={(id) => onNavigate ? onNavigate('portfolio') : (window.location.pathname = `/project/${id}`)} />;
         case 'database':
             return <DatabaseStats />;
         case 'showroom':

@@ -1,48 +1,73 @@
 <!-- WIDGET: Trust_Reviews_Google -->
-<!-- VIBE: Authentic, Verified, Social Proof -->
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-4 text-center">
-        <div class="flex items-center justify-center gap-2 mb-4">
-             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-8">
-             <span class="text-gray-500 font-medium">Rating: 4.9/5</span>
+<!-- VIBE: Authentic, Verified, Dark/Light Adaptive Social Proof -->
+<section class="py-20 bg-transparent dark:bg-zinc-950/60 backdrop-blur-md transition-colors" id="reviews">
+    <div class="container mx-auto px-4 text-center max-w-6xl">
+        <div class="inline-flex items-center justify-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-5">
+             <span class="text-zinc-600 dark:text-zinc-300 text-xs font-semibold">Rating Oficial: 4.9/5 (Google Reviews)</span>
         </div>
-        <h2 class="text-3xl font-bold mb-12">Lo que dicen nuestros clientes</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-zinc-900 dark:text-zinc-50 tracking-tight">Lo que dicen nuestros clientes</h2>
+        <p class="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto mb-12 text-sm">Experiencias reales compartidas por nuestra comunidad en Google Maps.</p>
 
-        <div class="flex flex-wrap justify-center gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <!-- Review 1 -->
-            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-600">A</div>
-                    <div>
-                        <p class="font-bold text-sm">Ana Gomez</p>
-                        <div class="text-yellow-400 text-xs">★★★★★</div>
+            <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl shadow-xl border border-zinc-200/80 dark:border-zinc-800/80 p-6 flex flex-col justify-between hover:-translate-y-1 hover:border-amber-500/40 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center font-bold text-sm border border-amber-500/20">M</div>
+                            <div>
+                                <p class="font-bold text-sm text-zinc-900 dark:text-zinc-100">Martín G.</p>
+                                <p class="text-[11px] text-zinc-400 dark:text-zinc-500">Local Guide • 42 reseñas</p>
+                            </div>
+                        </div>
+                        <div class="text-amber-400 text-xs font-bold tracking-widest">★★★★★</div>
                     </div>
+                    <p class="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed italic">"{{REVIEW_1_TEXT}}"</p>
                 </div>
-                <p class="text-gray-600 text-sm">"{{REVIEW_1_TEXT}}"</p>
+                <div class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                    <span>✓ Reseña verificada en Google</span>
+                </div>
             </div>
 
             <!-- Review 2 -->
-            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
-                <div class="flex items-center gap-3 mb-4">
-                     <img src="https://i.pravatar.cc/100?img=12" class="w-10 h-10 rounded-full">
-                    <div>
-                        <p class="font-bold text-sm">Carlos Ruiz</p>
-                        <div class="text-yellow-400 text-xs">★★★★★</div>
+            <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl shadow-xl border border-zinc-200/80 dark:border-zinc-800/80 p-6 flex flex-col justify-between hover:-translate-y-1 hover:border-amber-500/40 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center font-bold text-sm border border-emerald-500/20">S</div>
+                            <div>
+                                <p class="font-bold text-sm text-zinc-900 dark:text-zinc-100">Sofía R.</p>
+                                <p class="text-[11px] text-zinc-400 dark:text-zinc-500">Cliente Verificada</p>
+                            </div>
+                        </div>
+                        <div class="text-amber-400 text-xs font-bold tracking-widest">★★★★★</div>
                     </div>
+                    <p class="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed italic">"{{REVIEW_2_TEXT}}"</p>
                 </div>
-                <p class="text-gray-600 text-sm">"{{REVIEW_2_TEXT}}"</p>
+                <div class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                    <span>✓ Reseña verificada en Google</span>
+                </div>
             </div>
 
             <!-- Review 3 -->
-            <div class="w-full md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 p-6 text-left hover:-translate-y-1 transition-transform">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-600">M</div>
-                    <div>
-                        <p class="font-bold text-sm">Maria T.</p>
-                        <div class="text-yellow-400 text-xs">★★★★★</div>
+            <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-2xl shadow-xl border border-zinc-200/80 dark:border-zinc-800/80 p-6 flex flex-col justify-between hover:-translate-y-1 hover:border-amber-500/40 transition-all duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center font-bold text-sm border border-blue-500/20">L</div>
+                            <div>
+                                <p class="font-bold text-sm text-zinc-900 dark:text-zinc-100">Luciano T.</p>
+                                <p class="text-[11px] text-zinc-400 dark:text-zinc-500">Cliente Frecuente</p>
+                            </div>
+                        </div>
+                        <div class="text-amber-400 text-xs font-bold tracking-widest">★★★★★</div>
                     </div>
+                    <p class="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed italic">"{{REVIEW_3_TEXT}}"</p>
                 </div>
-                <p class="text-gray-600 text-sm">"{{REVIEW_3_TEXT}}"</p>
+                <div class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                    <span>✓ Reseña verificada en Google</span>
+                </div>
             </div>
         </div>
     </div>

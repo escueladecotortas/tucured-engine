@@ -1,6 +1,5 @@
-// Archivo: frontend/src/components/tabs/useNeuralFactory.js
+// Archivo: src/components/tabs/useNeuralFactory.js
 import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
 import { useToast } from '../Toast';
 import { useNeuralActions } from './neural-factory/useNeuralActions';
 
@@ -30,21 +29,32 @@ export function useNeuralFactory() {
 
     const { addToast } = useToast();
 
-    // Hook de acciones extraído para reducir tamaño
+    // Hook de acciones extraído para modularización
     const { handleManualAdd, executeGeneration } = useNeuralActions({
         setProspects, addToast, setIsExtracting, setExtractionStatus, 
         setGenerationLogs, setActiveAgents, useAI, currentGeneration
     });
 
     useEffect(() => {
-        const socketUrl = window.location.hostname === 'localhost' ? 'http://localhost:5000' : window.location.origin;
-        const socket = io(socketUrl);
-        socket.on('terminal:output', (data) => {
-            if (data?.line && (data.line.includes('[Stitch') || data.line.includes('Agente') || data.line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬)/))) {
-                setGenerationLogs(prev => [...prev, { message: data.line, timestamp: new Date(data.timestamp || Date.now()) }]);
-            }
-        });
-        return () => socket.disconnect();
+        // Suscripción al stream SSE de logs del terminal
+        let eventSource = null;
+        try {
+            eventSource = new EventSource('/api/terminal/stream');
+            eventSource.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    const line = data?.line || data?.message;
+                    if (line && (line.includes('[Stitch') || line.includes('Agente') || line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬)/))) {
+                        setGenerationLogs(prev => [...prev, { message: line, timestamp: new Date(data.timestamp || Date.now()) }]);
+                    }
+                } catch (e) {}
+            };
+            eventSource.onerror = () => {};
+        } catch (e) {}
+
+        return () => {
+            if (eventSource) eventSource.close();
+        };
     }, []);
 
     useEffect(() => {
@@ -113,7 +123,8 @@ export function useNeuralFactory() {
         currentGeneration, setCurrentGeneration, generationLogs, setGenerationLogs,
         activeAgents, isExtracting, extractionStatus, useAI, setUseAI,
         outreachModalOpen, setOutreachModalOpen, targetProspect, setTargetProspect,
-        handleBatchImport, handleValidateAddress, handleDelete, 
+        handleBatchImport, handleValidateAddress, handleDelete,
+        handleUpdateLead: (updated) => setProspects(prev => prev.map(p => (p.id === updated.id || p.slug === updated.slug) ? { ...p, ...updated } : p)),
         handleManualAdd: (hasMaps) => handleManualAdd(formData, setFormData, hasMaps),
         executeGeneration, handleSendWhatsApp, 
         handleRadarSelect: (p) => { setTargetProspect(p); setOutreachModalOpen(true); },

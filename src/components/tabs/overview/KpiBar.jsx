@@ -1,6 +1,7 @@
-// Archivo: frontend/src/components/tabs/overview/KpiBar.jsx
+// Archivo: src/components/tabs/overview/KpiBar.jsx
 import React from 'react';
 import { Shield, Zap, Activity, ChevronUp } from 'lucide-react';
+import { navigate } from '../../../hooks/useAppLogic';
 
 export function KpiBar({ vibe, projectData }) {
     return (
@@ -27,10 +28,10 @@ export function KpiBar({ vibe, projectData }) {
                     <div className="flex items-center gap-1.5">
                         <span
                             className="w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: vibe.palette.primary }}
+                            style={{ backgroundColor: vibe?.palette?.primary || '#F97316' }}
                         ></span>
                         <span className="text-[9px] font-mono text-gray-400">
-                            VIBRA {vibe.number}
+                            VIBRA {vibe?.number || 8}
                         </span>
                     </div>
                 </div>
@@ -68,8 +69,9 @@ export function KpiBar({ vibe, projectData }) {
             {/* Quick Actions */}
             <div className="flex items-center gap-3">
                 <button
-                    onClick={() => (window.location.hash = "#/?start=lobby")}
-                    className="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1"
+                    onClick={() => navigate('/?start=lobby')}
+                    className="text-[10px] text-gray-400 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1 cursor-pointer font-mono"
+                    title="Volver a la Entrada Cinemática"
                 >
                     <ChevronUp className="w-3 h-3" /> LOBBY
                 </button>

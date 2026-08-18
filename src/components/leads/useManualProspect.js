@@ -1,4 +1,4 @@
-// Archivo: frontend/src/components/leads/useManualProspect.js
+// Archivo: src/components/leads/useManualProspect.js
 import { useState } from 'react';
 import { MAPS_URL_REGEX, formatWhatsApp } from './ProspectFormUtils';
 
@@ -42,11 +42,15 @@ export const useManualProspect = (formData, onChange, onSubmit) => {
 
   const handleSubmit = () => {
     if (!validate()) return;
+    let dataToSubmit = { ...formData };
     if (formData.whatsapp) {
       const formatted = formatWhatsApp(formData.whatsapp);
-      onChange({ ...formData, whatsapp: formatted });
+      dataToSubmit.whatsapp = formatted;
+      onChange(dataToSubmit);
     }
-    onSubmit(hasMaps);
+    if (typeof onSubmit === 'function') {
+      onSubmit(dataToSubmit, hasMaps);
+    }
   };
 
   return {

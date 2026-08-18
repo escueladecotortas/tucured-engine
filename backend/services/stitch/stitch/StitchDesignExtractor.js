@@ -4,7 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 const StitchRpcHandler = require("./StitchRpcHandler");
-const TerminalService = require("../TerminalService");
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 
 class StitchDesignExtractor {
   /**

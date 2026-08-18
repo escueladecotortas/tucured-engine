@@ -1,6 +1,5 @@
-// Archivo: frontend/src/components/DatabaseView.jsx
-// Orquestador del módulo de Base de Datos de Prospectos
-// Ley de 200 líneas: delega renderizado a células atómicas en /database/
+// Archivo: src/components/DatabaseView.jsx
+// Orquestador del módulo de Base de Datos de Prospectos — Ley de 200 líneas
 
 import React, { useState, useMemo } from "react";
 import { Search } from "lucide-react";
@@ -10,7 +9,7 @@ import GalleryModal from "./database/GalleryModal";
 
 const STATUSES = ["all", "new", "enriched", "ready", "stitch_ready", "generated"];
 
-export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach, onDelete }) {
+export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach, onDelete, onUpdateLead }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [selectedGallery, setSelectedGallery] = useState(null);
@@ -26,11 +25,11 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
     [prospects, searchTerm, filterStatus]
   );
 
-  // Elimina foto optimísticamente y notifica al backend
   const handleRemovePhoto = (prospect, index, photoUrl) => {
     if (!window.confirm("¿Descartar este activo de la Bóveda?")) return;
     const updated = { ...prospect, photos: prospect.photos.filter((_, i) => i !== index) };
     setSelectedGallery(updated);
+    if (onUpdateLead) onUpdateLead(updated);
     fetch(`/api/prospects/${prospect.id}/photos`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -40,10 +39,8 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
 
   return (
     <div className="h-full flex flex-col gap-6">
-      {/* Panel KPIs */}
       <DbKpis prospects={prospects} />
 
-      {/* Controles de búsqueda y filtro */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="relative w-full sm:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
@@ -72,7 +69,6 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
         </div>
       </div>
 
-      {/* Tabla de prospectos */}
       <ProspectsTable
         prospects={filtered}
         onGenerate={onGenerate}
@@ -80,9 +76,9 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
         onOutreach={onOutreach}
         onDelete={onDelete}
         onOpenGallery={setSelectedGallery}
+        onUpdateLead={onUpdateLead}
       />
 
-      {/* Modal de galería */}
       {selectedGallery && (
         <GalleryModal
           prospect={selectedGallery}

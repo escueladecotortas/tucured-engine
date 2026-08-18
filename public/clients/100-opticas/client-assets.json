@@ -1,0 +1,136 @@
+{
+  "business_name": "100 OPTICAS",
+  "slug": "100-opticas",
+  "source": "cyborg_injection",
+  "extraction_date": "2026-08-18T04:35:02.849Z",
+  "category": "Optician",
+  "toneVoice": "Profesional, cercano, moderno",
+  "rating": 4.3,
+  "reviewsCount": 39,
+  "coordinates": {
+    "lat": -26.82282,
+    "lng": -65.2059553
+  },
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "8:30 AM to 8 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "8:30 AM to 8 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "8:30 AM to 8 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "8:30 AM to 8 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "8:30 AM to 8 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "9 AM to 1 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "Closed"
+    }
+  ],
+  "phone": "+54 381 421-7626",
+  "whatsapp": "543814217626",
+  "phoneNormalized": {
+    "raw": "543814217626",
+    "clean": "3814217626",
+    "e164": "+543814217626",
+    "whatsapp": "543814217626",
+    "display": "+54 381 421-7626",
+    "isMobile": false,
+    "isValid": true
+  },
+  "instagram": "100.opticas",
+  "address": "Maipú 562, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+  "logo_url": "/nexus_archives/tucu-red/clients/100-opticas/assets/logo.jpg",
+  "photos": [
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_1.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_2.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_3.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_4.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/hero.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/logo.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/maps_main.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/product_1.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/product_2.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/product_3.jpg",
+    "/nexus_archives/tucu-red/clients/100-opticas/assets/product_4.jpg"
+  ],
+  "semantic_photos": {
+    "hero": "/nexus_archives/tucu-red/clients/100-opticas/assets/hero.jpg",
+    "logo": "/nexus_archives/tucu-red/clients/100-opticas/assets/logo.jpg",
+    "showcase": [
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/product_1.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/product_2.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/product_3.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/product_4.jpg"
+    ],
+    "atmosphere": [
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_1.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_2.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_3.jpg",
+      "/nexus_archives/tucu-red/clients/100-opticas/assets/ambient_4.jpg"
+    ]
+  },
+  "about": {
+    "planning": [
+      "Quick visit"
+    ],
+    "payments": [
+      "Credit cards",
+      "Debit cards",
+      "NFC mobile payments",
+      "Credit cards"
+    ]
+  },
+  "features": [
+    "quick visit",
+    "credit cards",
+    "debit cards",
+    "nfc mobile payments"
+  ],
+  "topReviews": [
+    {
+      "author": "Silvia Seleme",
+      "rating": 5,
+      "text": "Muy buena atención, se dedicaron el tiempo a mostrarme los diferentes anteojos y me ayudaron a decidirme",
+      "date": "2026-08-04T01:08:57.495Z"
+    },
+    {
+      "author": "Mariel Hija de Hashem",
+      "rating": 5,
+      "text": "EXCELENTE ATENCIÓN, LAS CHICAS MUY AMABLES Y CORDUALES !!",
+      "date": "2026-07-01T16:19:27.796Z"
+    },
+    {
+      "author": "Samuel Mumeli",
+      "rating": 5,
+      "text": "Es una muy buena óptica y muy elegida es la 2da vez que me voy a hacer unos lentes 😊😊🫂👌👌",
+      "date": "2026-04-16T18:01:23.760Z"
+    },
+    {
+      "author": "Facundo Britos",
+      "rating": 5,
+      "text": "Excelente atención , materiales de calidad, buenos precios , 100% recomendable. sin duda la mejor óptica de Tucumán",
+      "date": "2026-04-02T21:47:12.666Z"
+    },
+    {
+      "author": "ARMATUC ARMERIA",
+      "rating": 5,
+      "text": "Excelente óptica y atención. Compré mis anteojos ahí y se me partió el marco. Hablé con ellos y no dudaron en cambiármelos sin costo. Totalmente recomendables. Súper conforme 😁",
+      "date": "2026-01-19T14:01:57.105Z"
+    }
+  ]
+}

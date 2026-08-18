@@ -1,6 +1,6 @@
+// Archivo: src/components/NexusConsole.jsx
 'use client';
 import React, { useState } from 'react';
-import { LayoutGrid, Monitor, Target, Cpu, HardDrive, User, Briefcase, Database, Fingerprint, Palette, Trello, Activity } from 'lucide-react';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from '../context/AuthContext';
@@ -19,16 +19,11 @@ import SidebarPanel from './core/SidebarPanel';
 import ModalManager from './core/ModalManager';
 import CollapsibleSidebar from './core/CollapsibleSidebar';
 import MobileVoiceController from './core/MobileVoiceController';
-import MobileCommandCenter from './mobile/MobileCommandCenter'; // NEW
-
-// ============================================
-// MAIN COMPONENT
-// ============================================
+import MobileCommandCenter from './mobile/MobileCommandCenter';
 
 export default function NexusConsole({ projectId: initialProjectId, initialTab, initialAgent, userOverride, mobileTranscript }) {
-    console.log(`[NexusConsole] Mounting for project: ${initialProjectId}`);
     const { currentUser: authUser, logout, userRole } = useAuth();
-    const currentUser = userOverride || authUser; // BYPASS FOR MOBILE TUNNEL
+    const currentUser = userOverride || authUser;
 
     const { toggleLanguage } = useLanguage();
     const { addToast, removeToast, toasts } = useToast();
@@ -73,19 +68,7 @@ export default function NexusConsole({ projectId: initialProjectId, initialTab, 
     if (!currentProject) return <div className="min-h-screen bg-black flex items-center justify-center font-mono text-red-500">ERROR: PROJECT NODE NOT FOUND [{projectId}]</div>;
 
     const tabs = getConsoleTabs(projectId);
-
     if (!currentUser) return null;
-
-    const getBackNav = () => {
-        // Smart Navigation for Agency Clients
-        if (currentProject?.managerAgentId === 'tucu_red' && currentProject.id !== 'tucu-red') {
-            return { url: '#/project/tucu-red?tab=portfolio', label: 'Volver a Tucu Red HQ' };
-        }
-        // Default System Navigation
-        return { url: '#/?start=lobby', label: 'Back to System Root' };
-    };
-
-    const backNav = getBackNav();
 
     return (
         <div className="min-h-screen bg-nexus-bg text-text-primary font-outfit relative overflow-hidden selection:bg-nexus-cyan/20">
@@ -107,8 +90,6 @@ export default function NexusConsole({ projectId: initialProjectId, initialTab, 
                         userRole={userRole} 
                         onLogout={logout} 
                         onToggleLanguage={toggleLanguage} 
-                        backUrl={backNav.url}
-                        backLabel={backNav.label}
                     />
                     <div className="flex-1 grid grid-cols-12 gap-6 overflow-hidden">
                         <TabContent 
@@ -144,16 +125,11 @@ export default function NexusConsole({ projectId: initialProjectId, initialTab, 
                     agentId={ui.selectedAgent?.id || 'nexus'} 
                     agentName={ui.selectedAgent?.name || 'NEXUS'}
                     onMessageSent={async (text) => {
-                        // Enviar comando al agente seleccionado
                         try {
                             await fetch('/api/nexus/command', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    agentId: ui.selectedAgent?.id || 'nexus',
-                                    command: text,
-                                    projectId: projectId || 'general'
-                                })
+                                body: JSON.stringify({ agentId: ui.selectedAgent?.id || 'nexus', command: text, projectId: projectId || 'general' })
                             });
                             addToast(`Comando enviado: ${text.substring(0, 20)}...`, 'success');
                         } catch (e) {

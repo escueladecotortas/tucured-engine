@@ -1,28 +1,26 @@
 <!-- POWER-UP: Promo_Countdown_Bar -->
-<!-- VIBE: Urgency, High Visibility, FOMO -->
-<div id="promoBar" class="fixed bottom-0 left-0 w-full bg-gradient-to-r from-red-600 to-orange-500 text-white py-3 px-4 z-50 flex flex-col md:flex-row items-center justify-center gap-4 text-center shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
-    <div class="flex items-center gap-2 animate-pulse">
-        <span class="text-xl">🔥</span>
-        <span class="font-bold uppercase tracking-wider text-sm md:text-base">{{PROMO_TEXT}}</span>
+<!-- VIBE: Urgency, Sleek Dark/Light Floating Bar -->
+<div id="promoBar" class="fixed bottom-0 left-0 w-full bg-zinc-900/95 dark:bg-black/95 text-white py-3.5 px-4 z-50 flex flex-col md:flex-row items-center justify-center gap-4 text-center border-t border-amber-500/30 backdrop-blur-md shadow-2xl transition-all">
+    <div class="flex items-center gap-2">
+        <span class="text-lg">🔥</span>
+        <span class="font-extrabold uppercase tracking-wider text-xs md:text-sm text-amber-400">{{PROMO_TEXT}}</span>
     </div>
     
-    <div class="flex items-center gap-2 font-mono text-lg font-bold bg-white/20 px-4 py-1 rounded-lg">
-        <span id="promoHours">00</span>h :
-        <span id="promoMinutes">00</span>m :
-        <span id="promoSeconds">00</span>s
+    <div class="flex items-center gap-2 font-mono text-sm font-black bg-white/10 dark:bg-zinc-800/80 px-3.5 py-1 rounded-xl border border-white/10">
+        <span id="promoHours" class="text-amber-400">00</span>h :
+        <span id="promoMinutes" class="text-amber-400">00</span>m :
+        <span id="promoSeconds" class="text-amber-400">00</span>s
     </div>
 
-    <button onclick="scrollToShop()" class="bg-white text-red-600 px-4 py-1 rounded font-bold text-sm hover:bg-gray-100 transition-colors shadow-sm">
+    <button onclick="scrollToPromo()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-black px-5 py-1.5 rounded-xl text-xs uppercase tracking-wider transition-transform hover:scale-105 shadow-md">
         {{PROMO_CTA}}
     </button>
     
-    <button onclick="closePromo()" class="absolute top-2 right-2 md:relative md:top-auto md:right-auto opacity-50 hover:opacity-100">✕</button>
+    <button onclick="closePromo()" class="absolute top-2 right-2 md:relative md:top-auto md:right-auto text-zinc-400 hover:text-white p-1 text-xs">✕</button>
 </div>
 
 <script>
-    // COUNTDOWN LOGIC
-    // Set deadline to X hours from now (simulated urgency)
-    const HOURS_LEFT = {{PROMO_HOURS_DURATION}}; 
+    const HOURS_LEFT = Number("{{PROMO_HOURS_DURATION}}") || 4; 
     const deadline = new Date(Date.now() + HOURS_LEFT * 60 * 60 * 1000);
 
     function updateTimer() {
@@ -30,7 +28,8 @@
         const diff = deadline - now;
 
         if (diff <= 0) {
-            document.getElementById('promoBar').style.display = 'none';
+            const bar = document.getElementById('promoBar');
+            if (bar) bar.style.display = 'none';
             return;
         }
 
@@ -38,21 +37,23 @@
         const m = Math.floor((diff / 1000 / 60) % 60);
         const s = Math.floor((diff / 1000) % 60);
 
-        document.getElementById('promoHours').innerText = String(h).padStart(2, '0');
-        document.getElementById('promoMinutes').innerText = String(m).padStart(2, '0');
-        document.getElementById('promoSeconds').innerText = String(s).padStart(2, '0');
+        const elH = document.getElementById('promoHours');
+        const elM = document.getElementById('promoMinutes');
+        const elS = document.getElementById('promoSeconds');
+        if (elH) elH.innerText = String(h).padStart(2, '0');
+        if (elM) elM.innerText = String(m).padStart(2, '0');
+        if (elS) elS.innerText = String(s).padStart(2, '0');
     }
 
     setInterval(updateTimer, 1000);
     updateTimer();
 
     function closePromo() {
-        document.getElementById('promoBar').remove();
+        document.getElementById('promoBar')?.remove();
     }
 
-    function scrollToShop() {
-        // Scroll to product grid if exists, else top
-        const shop = document.querySelector('.add-to-cart-btn')?.closest('section');
-        if(shop) shop.scrollIntoView({behavior: 'smooth'});
+    function scrollToPromo() {
+        const target = document.querySelector('#booking') || document.querySelector('#cotizador') || document.querySelector('section');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
     }
 </script>

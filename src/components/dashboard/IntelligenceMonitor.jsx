@@ -1,4 +1,4 @@
-// Archivo: frontend/src/components/dashboard/IntelligenceMonitor.jsx
+// Archivo: src/components/dashboard/IntelligenceMonitor.jsx
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, CheckCircle } from 'lucide-react';
@@ -10,8 +10,7 @@ import { StrategicResponse } from './intelligence/StrategicResponse';
 
 /**
  * INTELLIGENCE MONITOR (Saneado v2026)
- * Orquestador de la capa neural del proyecto.
- * Modularizado para cumplir con la Ley de 200 líneas.
+ * Orquestador de la capa neural del proyecto con fallbacks resilientes.
  */
 export default function IntelligenceMonitor({ projectId }) {
     const [transcription, setTranscription] = useState('');
@@ -41,10 +40,26 @@ export default function IntelligenceMonitor({ projectId }) {
                 { key: 'brief', path: `nexus_archives/tucu_red/clients/${projectId}/assets/brief.md` }
             ];
             for (const ep of endpoints) {
-                const res = await fetch(`http://localhost:5000/api/files/read?path=${ep.path}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    ep.key === 'trans' ? setTranscription(data.content) : setBrief(data.content);
+                try {
+                    const res = await fetch(`/api/files/read?path=${encodeURIComponent(ep.path)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data?.content) {
+                            ep.key === 'trans' ? setTranscription(data.content) : setBrief(data.content);
+                        } else {
+                            ep.key === 'trans' 
+                                ? setTranscription('## 🎧 Archivo: Transcripción\n> Sin grabaciones o transcripciones procesadas.') 
+                                : setBrief('## 📋 Requerimientos Estratégicos\n- Sin notas de briefing registradas para este proyecto');
+                        }
+                    } else {
+                        ep.key === 'trans' 
+                            ? setTranscription('## 🎧 Archivo: Transcripción\n> Sin notas de audio registradas para este proyecto.') 
+                            : setBrief('## 📋 Requerimientos Estratégicos\n- Sin notas de briefing registradas para este proyecto');
+                    }
+                } catch (e) {
+                    ep.key === 'trans' 
+                        ? setTranscription('## 🎧 Archivo: Transcripción\n> Sin notas de audio registradas.') 
+                        : setBrief('## 📋 Requerimientos\n- Sin notas de briefing registradas');
                 }
             }
         };

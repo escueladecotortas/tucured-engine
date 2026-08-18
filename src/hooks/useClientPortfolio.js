@@ -41,7 +41,12 @@ export function useClientPortfolio() {
             .catch(err => console.error(err));
     }, []);
 
-    const existingClients = projects.filter(p => p.id !== 'tucu-red' && p.status !== 'idle');
+    const existingClients = projects.filter(p =>
+        p.id !== 'tucu-red' &&
+        p.status !== 'idle' &&
+        p.source !== 'mock'   // Purga de mocks hardcodeados (Adoré, Amora, Nexus System)
+    );
+
     const existingIds = new Set(existingClients.map(c => c.id));
 
     const allClients = [

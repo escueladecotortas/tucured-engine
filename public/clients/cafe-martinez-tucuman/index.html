@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Martínez Tucumán | Home</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+<script src="/nexus-core.js" type="module"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen">
+<nexus-navbar data-links="[{&quot;label&quot;:&quot;Servicios&quot;,&quot;url&quot;:&quot;#servicios&quot;},{&quot;label&quot;:&quot;Sobre Mí&quot;,&quot;url&quot;:&quot;#sobre-mi&quot;},{&quot;label&quot;:&quot;Contacto&quot;,&quot;url&quot;:&quot;#contacto&quot;}]" data-logo="Café Martínez Tucumán"></nexus-navbar>
+
+    <!-- WIDGET: Nexus_Hero_Standard -->
+<!-- VIBE: Premium, Shadow DOM, Zero Latency -->
+<section class="nexus-hero-wrapper relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#171817]">
+    <nexus-gallery id="sobre-mi" 
+        data-photos='[]'
+        data-accent='#ef4444'
+        data-surface='#fbf9f4'
+        data-on-surface='#1b1c19'
+        data-primary='#1e293b'
+        data-head-font='Rajdhani'
+        data-body-font='Montserrat'
+        data-client-name='Café Martínez Tucumán'
+    ></nexus-gallery>
+    
+    <!-- Capa de Contenido Flotante para Hero -->
+    <div class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-center z-10 px-6">
+        <h1 class="text-white text-5xl md:text-7xl font-serif mb-6 drop-shadow-2xl">Café Martínez Tucumán</h1>
+        <p class="text-white/80 text-lg md:text-xl max-w-2xl font-light mb-8">Excelencia y compromiso en cada detalle.</p>
+        <div class="pointer-events-auto">
+            <a href="#booking" class="inline-block px-8 py-4 bg-[var(--accent)] text-white font-bold rounded-full uppercase tracking-widest hover:scale-105 transition-transform">
+                Escribinos
+            </a>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- WIDGET: Nexus_Catalog_Standard -->
+<!-- VIBE: Structured, Clean, Conversion-Focused -->
+<section class="py-20 bg-[var(--surface)]">
+    <div class="container mx-auto px-6 mb-12 text-center">
+        <h2 class="text-4xl font-serif text-[var(--on-surface)]">Nuestro Catálogo</h2>
+        <div class="w-12 h-1 bg-[var(--accent)] mx-auto mt-4"></div>
+    </div>
+    
+    <nexus-catalog id="servicios"
+        data-catalog='[{&quot;name&quot;:&quot;Calidad Garantizada&quot;,&quot;description&quot;:&quot;Compromiso de máxima calidad en cada entrega.&quot;,&quot;price&quot;:&quot;&quot;,&quot;image&quot;:&quot;https://placehold.co/400x300/333/FFF?text=Calidad%20Garantizada&quot;},{&quot;name&quot;:&quot;Atención Personalizada&quot;,&quot;description&quot;:&quot;Compromiso de máxima calidad en cada entrega.&quot;,&quot;price&quot;:&quot;&quot;,&quot;image&quot;:&quot;https://placehold.co/400x300/333/FFF?text=Atenci%C3%B3n%20Personalizada&quot;},{&quot;name&quot;:&quot;Experiencia Única&quot;,&quot;description&quot;:&quot;Compromiso de máxima calidad en cada entrega.&quot;,&quot;price&quot;:&quot;&quot;,&quot;image&quot;:&quot;https://placehold.co/400x300/333/FFF?text=Experiencia%20%C3%9Anica&quot;}]'
+        data-accent='#ef4444'
+        data-surface='#fbf9f4'
+        data-on-surface='#1b1c19'
+        data-head-font='Rajdhani'
+        data-body-font='Montserrat'
+    ></nexus-catalog>
+</section>
+
+    
+    
+    
+    <!-- WIDGET: Nexus_Footer_Standard -->
+<footer class="bg-[var(--primary)] text-white pt-20 pb-10">
+    <div class="container mx-auto px-6">
+        <nexus-map
+            data-q='San%20Mart%C3%ADn%20650%2C%20San%20Miguel%20de%20Tucum%C3%A1n'
+            data-address='San Martín 650, San Miguel de Tucumán'
+            data-accent='#ef4444'
+            data-font='Rajdhani'
+            data-on-surface='#fbf9f4'
+        ></nexus-map>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 border-t border-white/10 pt-12">
+            <div>
+                <h4 class="font-serif text-2xl mb-6">Café Martínez Tucumán</h4>
+                <p class="opacity-60 text-sm leading-relaxed"></p>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-widest font-bold mb-6 text-[var(--accent)]">Contacto</h5>
+                <ul class="space-y-4 text-sm opacity-80">
+                    <li>+5493815559876</li>
+                    <li>hola@nexus-os.com</li>
+                    <li>San Martín 650, San Miguel de Tucumán</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-widest font-bold mb-6 text-[var(--accent)]">Horarios</h5>
+                <p class="text-sm opacity-80">Lunes a Viernes: 09:00 - 20:00</p>
+                <p class="text-sm opacity-80">Sábados: 10:00 - 18:00</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-20 opacity-30 text-[10px] uppercase tracking-widest">
+            Handcrafted by NEXUS-OS &copy; 2026
+        </div>
+    </div>
+</footer>
+
+    
+    <a href="https://wa.me/+5493815559876?text=Hola!%20Vi%20su%20web%20y%20quer%C3%ADa%20consultar" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>

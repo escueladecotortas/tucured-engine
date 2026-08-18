@@ -1,12 +1,9 @@
-// Archivo: frontend/src/hooks/useVaultBackup.js
-import { useState } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
+// Archivo: src/hooks/useVaultBackup.js
+// Hook de Respaldo Local-First de la Bóveda (Sin dependencias de Firestore Cloud)
 
-/**
- * Hook para gestionar los respaldos de la Bóveda (Vault)
- */
-export function useVaultBackup(projectId) {
+import { useState } from 'react';
+
+export function useVaultBackup(projectId = 'tucu-red') {
     const [isBackingUp, setIsBackingUp] = useState(false);
     const [backupStatus, setBackupStatus] = useState(null); // 'success' | 'error'
 
@@ -14,31 +11,38 @@ export function useVaultBackup(projectId) {
         setIsBackingUp(true);
         setBackupStatus(null);
         try {
-            // 1. Obtener Datos de Misiones (Firestore)
-            const tasksRef = collection(db, 'tasks');
-            const q = query(tasksRef, where('projectId', '==', projectId));
-            const snapshot = await getDocs(q);
-            const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // 1. Obtener estadísticas reales del motor y base local
+            let statsData = {};
+            try {
+                const res = await fetch('/api/tucu/stats');
+                if (res.ok) statsData = await res.json();
+            } catch (e) {
+                console.warn('[useVaultBackup] Error leyendo stats:', e);
+            }
 
-            // 2. Construir Objeto de Respaldo
-            const backupData = {
+            // 2. Construir Objeto de Respaldo Local-First
+            const backupPayload = {
                 meta: {
-                    version: 'Nexus v5.4',
-                    timestamp: new Date().toISOString(),
+                    kernel: 'Nexus OS v11.1',
+                    engine: 'Tucu Red Generation Engine v10.0',
                     projectId: projectId,
-                    user: 'Admin'
+                    timestamp: new Date().toISOString(),
+                    mode: 'LOCAL_FIRST_SSOT',
+                    storage: 'data/db_dump.json'
                 },
-                stats: {
-                    total_tasks: tasks.length,
-                    active_nodes: 1 // Placeholder dinámico
+                system: {
+                    uptimeSec: statsData.uptime || 0,
+                    memory: statsData.memory || {},
+                    environment: 'local'
                 },
                 data: {
-                    tasks: tasks,
+                    stats: statsData,
+                    exportedAt: new Date().toLocaleString('es-AR')
                 }
             };
 
-            // 3. Generar Blob y Descargar
-            const dataStr = JSON.stringify(backupData, null, 2);
+            // 3. Generar archivo JSON y disparar descarga en cliente
+            const dataStr = JSON.stringify(backupPayload, null, 2);
             const blob = new Blob([dataStr], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -47,12 +51,13 @@ export function useVaultBackup(projectId) {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
 
             setBackupStatus('success');
-            setTimeout(() => setBackupStatus(null), 3000);
+            setTimeout(() => setBackupStatus(null), 4000);
             return { success: true };
         } catch (error) {
-            console.error("Error en respaldo:", error);
+            console.error("[useVaultBackup] Fallo en respaldo:", error);
             setBackupStatus('error');
             return { success: false, error: error.message };
         } finally {
@@ -60,9 +65,5 @@ export function useVaultBackup(projectId) {
         }
     };
 
-    return {
-        isBackingUp,
-        backupStatus,
-        handleBackup
-    };
+    return { isBackingUp, backupStatus, handleBackup };
 }

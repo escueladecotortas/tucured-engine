@@ -1,6 +1,5 @@
 // Archivo: backend/services/AutoSiteGenerator.js
-// SERVICE: AutoSiteGenerator v4.0 (Modularized - Ley de 200 líneas)
-// Orquestador de generación y despliegue de sitios en Tucu Red.
+// SERVICE: AutoSiteGenerator v4.1 (Generador y Deployer de Sitios - Ley de 200 líneas)
 
 const fs = require('fs').promises;
 const path = require('path');
@@ -15,6 +14,7 @@ class AutoSiteGenerator {
     const { name, instagram } = prospectData;
     const clientId = StitchMapper.slugify(name);
     const clientPath = path.resolve(__dirname, "../../nexus_archives/tucu-red/clients", clientId);
+    const publicClientPath = path.resolve(__dirname, "../../public/clients", clientId);
 
     try {
       await AssetManager.ensureStructure(clientPath);
@@ -29,12 +29,18 @@ class AutoSiteGenerator {
       const brandKit = await ContentHydrator.getOrGenerateBrandKit(clientPath, prospectData, options.forceRegenerate);
       const content = await ContentHydrator.getOrGenerateContent(clientPath, prospectData, brandKit, options.forceRegenerate);
 
-      // Build HTML
+      // Build HTML y persistencia dual (nexus_archives + public/clients)
       const html = new NexusBuilder().stitch(StitchMapper.map(brandKit, content, scrapedPhotos));
       await fs.writeFile(path.join(clientPath, "index.html"), html);
+      
+      try {
+        await fs.mkdir(publicClientPath, { recursive: true });
+        await fs.writeFile(path.join(publicClientPath, "index.html"), html);
+      } catch (pe) { console.warn("Public mirror warning:", pe.message); }
+
       await AssetManager.writeNetlifyConfig(clientPath);
 
-      // Deploy
+      // Deploy a Netlify
       const deploy = await NetlifyDeployService.deployToNetlify(clientPath, {
         siteName: clientId, customDomain: `${clientId}.tucured.ar`, dryRun: options.dryRun, siteId: prospectData.netlifySiteId
       });

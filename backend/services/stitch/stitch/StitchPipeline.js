@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const NexusInjectorService = require("../NexusInjectorService");
-const TerminalService = require("../TerminalService");
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 const StitchPromptService = require("../StitchPromptService");
 const WidgetManifestService = require("../WidgetManifestService");
 const StitchRpcHandler = require("./StitchRpcHandler");

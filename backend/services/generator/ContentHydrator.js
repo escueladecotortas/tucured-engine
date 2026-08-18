@@ -47,7 +47,8 @@ DEBES DEVOLVER UN JSON ÚNICAMENTE:
   "contact": { "cta": "Contactar", "instagram": "${data.instagram || ""}", "address": "${data.address || ""}" }
 }`;
         const response = await AgentService.interact("lorem", prompt, [], data.id);
-        const jsonMatch = response.content.match(/\{[\s\S]*\}/);
+        const raw = response?.content || response?.text || '';
+        const jsonMatch = raw ? raw.match(/\{[\s\S]*\}/) : null;
         content = jsonMatch ? JSON.parse(jsonMatch[0]) : this.getFallback(data);
       } catch (err) {
         console.error("❌ [ContentHydrator] MAS Fallback Error:", err.message);
@@ -61,13 +62,26 @@ DEBES DEVOLVER UN JSON ÚNICAMENTE:
 
   static getFallback(data) {
     return {
-      hero: { title: `Bienvenido a ${data.name}`, subtitle: 'Calidad y servicio profesional.', cta: 'Contactar' },
-      about: { title: `Sobre ${data.name}`, text: 'Comprometidos con la excelencia y la satisfacción de nuestros clientes.' },
-      services: [{ name: "Atención Personalizada", description: "Brindamos el mejor servicio para nuestra categoría." }],
-      contact: { cta: 'Consultar', instagram: data.instagram || '', address: data.address || '' }
+      hero: {
+        title: data.name || "Tu Negocio",
+        subtitle: data.tagline || "Excelencia y compromiso en cada detalle.",
+        cta: "Contactar por WhatsApp"
+      },
+      about: {
+        title: "Sobre Nosotros",
+        text: data.description || "Brindamos una experiencia diferencial para todos nuestros clientes."
+      },
+      services: (data.benefits || ["Calidad Garantizada", "Atención Personalizada", "Experiencia Única"]).map(b => ({
+        name: b,
+        description: "Compromiso de máxima calidad en cada entrega."
+      })),
+      contact: {
+        cta: "Escribinos",
+        instagram: data.instagram || "",
+        address: data.address || ""
+      }
     };
   }
 }
 
 module.exports = ContentHydrator;
-

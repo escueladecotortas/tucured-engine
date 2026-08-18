@@ -1,0 +1,18 @@
+{
+  "prompt": "Landing page de alta conversión para \"Bar Irlanda\" en Tucumán.",
+  "designTokens": {
+    "namedColors": {
+      "primary": "#6ee591",
+      "secondary": "#e9c349",
+      "surface": "#001800"
+    },
+    "font": "Montserrat",
+    "bodyFont": "Inter",
+    "roundness": "MEDIUM"
+  },
+  "metadata": {
+    "projectId": "7523618963240747915",
+    "modelId": "GEMINI_3_1_PRO",
+    "timestamp": "2026-08-17T04:36:33.906Z"
+  }
+}

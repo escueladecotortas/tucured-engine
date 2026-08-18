@@ -1,19 +1,13 @@
-// Archivo: frontend/src/components/widgets/SmartGantt.jsx
+// Archivo: src/components/widgets/SmartGantt.jsx
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { collection, query, where, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-// Componentes Atómicos
 import { TacticalHeader } from './tactical/TacticalHeader';
 import { TaskItem } from './tactical/TaskItem';
 import { TacticalFooter, EmptyState } from './tactical/TacticalExtras';
 
-/**
- * RADAR TÁCTICO (Vanguardia 2026)
- * Anteriormente SmartGantt. Monitor de misiones críticas y automaciones.
- * Cumple con la Ley de 200 líneas (< 100 líneas efectivas).
- */
 const TacticalCenter = ({ projectId }) => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,7 +20,6 @@ const TacticalCenter = ({ projectId }) => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const loaded = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
-            // Priorización: En Progreso -> Nuevas -> Recientes
             loaded.sort((a, b) => {
                 if (a.status === 'in_progress' && b.status !== 'in_progress') return -1;
                 if (b.status === 'in_progress' && a.status !== 'in_progress') return 1;
@@ -69,7 +62,9 @@ const TacticalCenter = ({ projectId }) => {
                         <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin" />
                         <span className="text-[10px] font-mono tracking-widest uppercase">Escaneando Prioridades...</span>
                     </div>
-                ) : tasks.length === 0 ? <EmptyState /> : (
+                ) : tasks.length === 0 ? (
+                    <EmptyState projectId={projectId} />
+                ) : (
                     <div className="space-y-3">
                         <AnimatePresence>
                             {tasks.map(task => (

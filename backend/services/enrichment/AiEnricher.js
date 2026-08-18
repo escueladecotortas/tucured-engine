@@ -1,14 +1,9 @@
 // Archivo: backend/services/enrichment/AiEnricher.js
+// Gestor de Análisis Vibracional, Tono de Voz y Rubro Real (Hybrid Cortex) - Ley de 200 líneas
+
 const aiService = require("../aiService");
 
-/**
- * Gestor de Análisis Vibracional e Identidad Visual (Hybrid Cortex).
- * Extraído para cumplimiento de la Ley de 200 líneas.
- */
 class AiEnricher {
-  /**
-   * Genera el copy y la identidad del negocio usando IA.
-   */
   static async enrich(lead, enrichedData) {
     console.log(`⚙️ [PROCESS] AI Vibrational Analysis (Hybrid Cortex)`);
 
@@ -17,70 +12,80 @@ class AiEnricher {
     const igFollowers = enrichedData.instagramData?.followers || 0;
     const mapCategory = enrichedData.category || lead.category || "General";
     const mapAddress = enrichedData.googlePlace?.address || lead.address || "";
-    const mapReviews = enrichedData.reviews || 0;
+    const mapReviews = enrichedData.reviewsCount || enrichedData.reviews || 0;
     const mapRating = enrichedData.rating || 0;
     const reviewTexts = (enrichedData.topReviews || []).map((r) => `${r.author}: "${r.text}"`).slice(0, 5);
-    const hoursData = (enrichedData.hours || []).map((h) => `${h.day}: ${h.hours}`).join(", ");
+    const hoursData = (enrichedData.openingHours || enrichedData.hours || []).map((h) => typeof h === 'string' ? h : `${h.day}: ${h.hours}`).join(", ");
 
-    const prompt = `Sos un copywriter experto en negocios locales. Tu trabajo es crear la identidad verbal de un negocio para su Landing Page.
-
-VAS A LEER los datos reales del negocio y USAR SUS PROPIAS PALABRAS para generar el copy. Prohibido inventar frases genéricas.
+    const prompt = `Sos un copywriter y estratega de marca experto en negocios locales de Argentina.
+Analizá los datos reales y generá la identidad verbal para su Landing Page de alta conversión.
 
 ══ DATOS REALES DEL NEGOCIO ══
 Nombre: ${lead.name}
-Rubro: ${mapCategory}
+Rubro inicial: ${mapCategory}
 Dirección: ${mapAddress}
 Rating: ${mapRating}⭐ (${mapReviews} reviews)
 Instagram: @${lead.instagram || "N/A"} (${igFollowers} seguidores)
 Bio IG: "${igBio}"
 ${hoursData ? `Horarios: ${hoursData}` : ""}
 
-══ QUÉ PUBLICA EN INSTAGRAM (sus propias palabras) ══
-${igCaptions.length > 0 ? igCaptions.map((c, i) => `Post ${i + 1}: "${c.substring(0, 300)}"`).join("\n") : "Sin datos de posts"}
+══ PUBLICACIONES EN INSTAGRAM ══
+${igCaptions.length > 0 ? igCaptions.map((c, i) => `Post ${i + 1}: "${c.substring(0, 250)}"`).join("\n") : "Sin posts"}
 
-══ QUÉ DICEN SUS CLIENTES (reseñas reales de Google) ══
+══ RESEÑAS REALES DE GOOGLE MAPS ══
 ${reviewTexts.length > 0 ? reviewTexts.join("\n") : "Sin reseñas"}
 
-══ INSTRUCCIONES ESTRICTAS ══
-Genera un JSON con estos campos:
+══ REGLAS DE GENERACIÓN ══
+Genera un JSON estrictamente válido con estos campos:
+1. "vibe": Número 1-9 según la personalidad estética y energética.
+2. "toneVoice": Descripción del tono de voz en 3 a 6 adjetivos (ej: "Nocturno, juvenil, cervecero, enérgico" o "Elegante, cálido, profesional").
+3. "tagline": Slogan de máximo 6 palabras que capture la esencia del negocio.
+4. "description": Descripción persuasiva de 1-2 oraciones (máx 180 caracteres).
+5. "benefits": Array de EXACTAMENTE 3 beneficios comerciales clave.
+6. "suggested_features": Array de 4 servicios o platos destacados.
+7. "canonicalCategory": Asignar el rubro real específico entre: ['gastronomia_bar', 'cerveceria', 'pub', 'restaurante', 'pizzeria', 'burger', 'cafe', 'heladeria', 'sushi', 'estetica', 'barberia', 'peluqueria', 'gimnasio', 'salud_clinica', 'veterinaria', 'automotive', 'retail', 'professional'].
 
-1. "vibe": Número 1-9 según la personalidad del negocio.
-2. "tagline": Slogan de máximo 6 palabras. REGLA: debe contener al menos UNA palabra o concepto que aparezca en los posts de Instagram o en las reseñas.
-3. "description": Descripción comercial de 1-2 oraciones (max 200 chars).
-4. "benefits": Array de EXACTAMENTE 3 beneficios.
-5. "suggested_features": Array de features para la Landing.
-6. "canonicalCategory": Elige una: ['burger', 'pizza', 'cafe', 'heladeria', 'sushi', 'gastronomy', 'fast_food', 'beauty', 'nail_salon', 'fitness', 'professional', 'automotive', 'retail', 'pet_shop', 'veterinary'].
-
-RESPONDER EXCLUSIVAMENTE EN JSON VÁLIDO. Sin markdown.`.trim();
+RESPONDE EXCLUSIVAMENTE EN JSON VÁLIDO.`.trim();
 
     try {
       const aiResult = await aiService.generateJSON(prompt);
 
-      enrichedData.vibe = String(aiResult.vibe || "1");
+      enrichedData.vibe = String(aiResult.vibe || "2");
+      enrichedData.toneVoice = aiResult.toneVoice || "Profesional, cercano, moderno";
       enrichedData.tagline = aiResult.tagline || "";
       enrichedData.description = aiResult.description || "";
       enrichedData.benefits = aiResult.benefits || [];
       enrichedData.aiFeatures = aiResult.suggested_features || [];
 
-      // Semantic Crosswalk (Mapeo CATEGORIA)
-      const allowedCats = ['burger', 'pizza', 'cafe', 'heladeria', 'sushi', 'gastronomy', 'fast_food', 'beauty', 'nail_salon', 'fitness', 'professional', 'automotive', 'retail', 'pet_shop', 'veterinary'];
-      const rawCanonical = (aiResult.canonicalCategory || "").toLowerCase().trim();
+      // Semantic Crosswalk con detección heurística de contexto
+      const allowedCats = [
+        'gastronomia_bar', 'cerveceria', 'pub', 'restaurante', 'pizzeria', 'burger',
+        'cafe', 'heladeria', 'sushi', 'estetica', 'barberia', 'peluqueria',
+        'gimnasio', 'salud_clinica', 'veterinaria', 'automotive', 'retail', 'professional'
+      ];
       
-      if (allowedCats.includes(rawCanonical)) {
-        enrichedData.category = rawCanonical;
-        console.log(`   🔀 [Semantic Crosswalk] Mapped "${mapCategory}" -> "${rawCanonical}"`);
-      } else {
-        console.log(`   ⚠️ [Semantic Crosswalk] Failed boundary on "${rawCanonical}". Fallback: retail`);
-        enrichedData.category = "retail";
+      let finalCategory = (aiResult.canonicalCategory || "").toLowerCase().trim();
+      const combinedText = `${lead.name} ${mapCategory} ${igBio}`.toLowerCase();
+
+      if (combinedText.includes('bar') || combinedText.includes('pub') || combinedText.includes('cervez') || combinedText.includes('birra') || combinedText.includes('irlanda')) {
+        finalCategory = 'gastronomia_bar';
       }
 
-      console.log(`   🧠 Vibe: ${enrichedData.vibe} — "${enrichedData.tagline}"`);
-      enrichedData.enrichmentLog.push(`AI: Vibe ${enrichedData.vibe} via Hybrid Cortex`);
+      if (allowedCats.includes(finalCategory)) {
+        enrichedData.category = finalCategory;
+        console.log(`   🔀 [Semantic Crosswalk] Mapped "${mapCategory}" -> "${finalCategory}"`);
+      } else {
+        enrichedData.category = mapCategory || "gastronomia_bar";
+      }
+
+      console.log(`   🧠 Vibe: ${enrichedData.vibe} | Tono: "${enrichedData.toneVoice}" | Tagline: "${enrichedData.tagline}"`);
+      enrichedData.enrichmentLog.push(`AI: Vibe ${enrichedData.vibe}, Tono: ${enrichedData.toneVoice} via Hybrid Cortex`);
 
     } catch (err) {
       console.error(`   ❌ AI failed: ${err.message}`);
-      enrichedData.enrichmentLog.push(`AI: Failed (${err.message}). Defaults.`);
-      enrichedData.vibe = lead.vibe || "1";
+      enrichedData.vibe = lead.vibe || "2";
+      enrichedData.toneVoice = "Cercano, moderno, profesional";
+      enrichedData.enrichmentLog.push(`AI: Fallback por error (${err.message})`);
     }
   }
 }

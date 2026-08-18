@@ -1,55 +1,81 @@
-// Archivo: frontend/src/components/tabs/bionics/BionicsHeader.jsx
+// Archivo: src/components/tabs/bionics/BionicsHeader.jsx
 import React from 'react';
-import { ScanEye, Globe, Zap, Loader2, Terminal } from 'lucide-react';
+import { ScanEye, Globe, Zap, Loader2, Terminal, FileDown } from 'lucide-react';
 
-export function BionicsHeader({ url, onUrlChange, loading, onCapture, logs }) {
+export function BionicsHeader({
+    url = '',
+    onUrlChange = () => {},
+    loading = false,
+    onCapture,
+    onExportReport,
+    canExport = false,
+    logs = []
+}) {
+    const safeLogs = Array.isArray(logs) ? logs : [];
+
     return (
-        <div className="grid grid-cols-12 gap-6 shrink-0">
-            <section className="col-span-12 lg:col-span-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group shadow-2xl">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-                    <ScanEye size={120} className="text-cyan-500" />
+        <div className="grid grid-cols-12 gap-4 shrink-0 font-mono">
+            <section className="col-span-12 lg:col-span-8 bg-black/40 border border-white/10 rounded-2xl p-4 relative overflow-hidden shadow-xl">
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                        <ScanEye className="w-5 h-5 text-cyan-400" />
+                        <h2 className="text-sm font-bold text-white tracking-wider">
+                            NEXUS <span className="text-cyan-400">VISION</span>
+                        </h2>
+                        <span className="text-[10px] text-gray-500 font-mono ml-2 hidden sm:inline">Auditoría Biónica & WCAG</span>
+                    </div>
+
+                    {canExport && (
+                        <button
+                            onClick={onExportReport}
+                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 text-cyan-300 hover:text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                            title="Exportar Ficha Comercial de Diagnóstico"
+                        >
+                            <FileDown className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>Exportar Reporte</span>
+                        </button>
+                    )}
                 </div>
                 
-                <h2 className="text-2xl font-serif font-bold text-white mb-2 flex items-center gap-3">
-                    <ScanEye className="text-cyan-400" /> NEXUS <span className="text-gray-500">Vision</span>
-                </h2>
-                <p className="text-xs text-gray-500 font-mono mb-6 uppercase tracking-widest">Auditoría de Activos y Salud Digital</p>
-                
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                     <div className="relative flex-1">
-                        <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                        <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-3.5 h-3.5" />
                         <input 
                             type="url" 
-                            placeholder="https://example.com"
+                            placeholder="http://localhost:5005"
                             value={url}
                             onChange={(e) => onUrlChange(e.target.value)}
-                            className="w-full bg-black/60 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white font-mono text-sm focus:border-cyan-500/50 outline-none transition-all"
+                            className="w-full bg-black/60 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-white font-mono text-xs focus:border-cyan-500/50 outline-none transition-all"
                         />
                     </div>
                     <button 
                         type="button"
                         onClick={onCapture}
                         disabled={loading || !url}
-                        className={`px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg ${
-                            loading ? 'bg-gray-800 text-gray-500 cursor-wait' : 'bg-cyan-500 text-black hover:scale-105 active:scale-95'
+                        className={`px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-lg cursor-pointer ${
+                            loading ? 'bg-gray-800 text-gray-500 cursor-wait' : 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-cyan-950/40'
                         }`}
                     >
-                        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                        {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5" />}
                         {loading ? 'AUDITANDO...' : 'INICIAR AUDITORÍA'}
                     </button>
                 </div>
             </section>
 
-            <aside className="col-span-12 lg:col-span-4 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-inner">
-                <h3 className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <Terminal size={12} /> Live Trace
+            <aside className="col-span-12 lg:col-span-4 bg-black/40 border border-white/10 rounded-2xl p-3.5 shadow-xl flex flex-col">
+                <h3 className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                    <Terminal size={11} /> Live Trace
                 </h3>
-                <div className="font-mono text-[9px] h-28 space-y-1 overflow-hidden">
-                    {logs.map((log, i) => (
-                        <div key={i} className={`p-1 border-l border-white/5 ${i === 0 ? 'text-white' : 'text-gray-600'}`}>
-                            {log}
-                        </div>
-                    ))}
+                <div className="font-mono text-[9px] flex-1 max-h-16 overflow-y-auto custom-scrollbar space-y-1">
+                    {safeLogs.length > 0 ? (
+                        safeLogs.map((log, i) => (
+                            <div key={i} className={`p-0.5 border-l border-white/10 pl-1.5 ${i === 0 ? 'text-cyan-300 font-bold' : 'text-gray-500'}`}>
+                                {typeof log === 'string' ? log : (log?.message || JSON.stringify(log))}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-gray-600 italic">Listo para auditar.</div>
+                    )}
                 </div>
             </aside>
         </div>

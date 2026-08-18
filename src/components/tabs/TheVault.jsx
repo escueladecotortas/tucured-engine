@@ -1,4 +1,4 @@
-// Archivo: frontend/src/components/tabs/TheVault.jsx
+// Archivo: src/components/tabs/TheVault.jsx
 'use client';
 import React, { useState } from 'react';
 import { HardDrive, Image as ImageIcon, Database } from 'lucide-react';
@@ -7,25 +7,24 @@ import { useVaultBackup } from '../../hooks/useVaultBackup';
 import { VaultHeader } from './vault/VaultHeader';
 import { DataCoreBackup } from './vault/DataCoreBackup';
 
-// Carga perezosa de componentes pesados
 const FileExplorer = React.lazy(() => import('../FileExplorer'));
 const AssetVault = React.lazy(() => import('../AssetVault'));
 
-export default function TheVault({ projectId, rootPath }) {
-    const fsPath = rootPath || projectId;
+export default function TheVault({ projectId, rootPath = 'root' }) {
+    const fsPath = rootPath || 'root';
     const [activeDrive, setActiveDrive] = useState('system');
     const { isBackingUp, backupStatus, handleBackup } = useVaultBackup(projectId);
 
     const drives = [
-        { id: 'system', label: 'Sistema de Archivos', icon: HardDrive, color: 'text-indigo-400', desc: 'Código Fuente' },
-        { id: 'assets', label: 'Activos de Marca', icon: ImageIcon, color: 'text-pink-400', desc: 'Medios' },
-        { id: 'database', label: 'Núcleo de Datos', icon: Database, color: 'text-emerald-400', desc: 'Firestore' },
+        { id: 'system', label: 'Sistema de Archivos', icon: HardDrive, color: 'text-indigo-400', desc: 'Raíz del Satélite' },
+        { id: 'assets', label: 'Activos de Marca', icon: ImageIcon, color: 'text-pink-400', desc: 'Medios Clientes' },
+        { id: 'database', label: 'Núcleo de Datos', icon: Database, color: 'text-emerald-400', desc: 'Snapshots SSOT' },
     ];
 
     const activeDriveLabel = drives.find(d => d.id === activeDrive)?.label;
 
     return (
-        <div className="h-full flex flex-col bg-[#050510]">
+        <div className="h-full flex flex-col bg-[#050510] font-mono">
             <VaultHeader 
                 activeDriveLabel={activeDriveLabel} 
                 drives={drives} 
@@ -57,7 +56,7 @@ export default function TheVault({ projectId, rootPath }) {
                                     exit={{ opacity: 0, x: -20 }}
                                     className="h-full"
                                 >
-                                    <AssetVault projectId={fsPath} assetsPath="assets" />
+                                    <AssetVault projectId={projectId || 'tucu-red'} assetsPath="assets" />
                                 </motion.div>
                             )}
 

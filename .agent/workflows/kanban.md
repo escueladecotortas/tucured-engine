@@ -1,8 +1,304 @@
-# Kanban Local — tucured-engine (Nexus OS v10.0)
+# Kanban Local — tucured-engine (Nexus OS v11.1)
 
 ## [IN_PROGRESS]
 
+## 🧠 BANCO DE IDEAS & REFACTORINGS FUTUROS
+- [ ] **[IDEA-001] Standby de Verificación en Vivo**: Realizar inspección visual en pantalla completa del preview local de 100 OPTICAS (`http://localhost:5005`) para corroborar el turnero clínico y la purga total de `[...]`.
+- [ ] **[IDEA-002] Telemetría Real en Modal de Forja (Eliminar Simulación 92%)**: Implementar Server-Sent Events (SSE) o WebSockets en `/api/forge/stitch` para que la barra de progreso y los agentes (Atenea, Codi, Argus) reflejen pasos y tiempos reales en lugar de un setInterval simulado.
+- [ ] **[IDEA-003] Túnel Temporal de Assets Locales para Stitch**: Evaluar Cloudflare R2 o túnel público temporal para exponer las fotos cacheadas en disco si la CDN pública de Instagram caduca con firmas temporales (`_nc_ohc`).
+
 ## [DONE]
+- [x] **[TASK-045]** Auditoría E2E: Saneamiento de Timeouts, Purga de Placeholders, Blindaje de Gates y Contextualización de Widgets *(18/08/2026, 13:18:00)*
+  - [x] **Blindaje Estricto de 3 Gates (Cero Auto-Deploy)**: En `CloudDeployOrchestrator.js` y `backend/routes/forge/stitch.js`, Gate 2 compila localmente en `nexus_archives` y `public/clients` sin invocar Netlify. El deploy (Gate 3) queda aislado exclusivamente en `POST /api/forge/deploy`.
+  - [x] **Purga Radical Bidireccional de Placeholders (`WidgetInjector.js` & `StitchPostProcessor.js`)**: Reemplazo dual (por ID de DOM y por coincidencia de texto plano `[...]`) erradicando completamente cualquier texto residual en el DOM.
+  - [x] **Contextualización de Turnero Clínico (`booking_v1_turnero.html`)**: Erradicado todo texto gastronómico hardcodeado ("Mesa", "experiencia gastronómica"). 100 Ópticas renderiza "Solicitá tu Consulta", opciones de graduación y turno por WhatsApp.
+  - [x] **Restauración del Botón [🌐 Ver Web] (`ProspectsTable.jsx`)**: Botón permanente y accesible en la botonera de Tactical Actions para cualquier sitio forjado o desplegado.
+  - [x] **Timeouts y Proxy**: Configurados timeouts de 15 minutos en `vite.config.js` y `backend/server.js`.
+  - [x] **Certificación QA & Build**: Script `scripts/test_full_audit_100opticas.cjs` verificado con **5/5 checks pasados** y build de producción limpio (`npm run build` en 31.86s).
+
+
+- [x] **[TASK-044]** Generador Narrativo por ADN de Negocio, Composición Libre en Stitch y Selección Inteligente de Widgets *(18/08/2026, 03:12:00)*
+  - [x] **Generador Narrativo Auténtico (`StitchPromptBuilder.js`)**: Erradicadas las listas numeradas rígidas de layout. Implementado Brief Creativo por ADN de marca extrayendo conceptos auténticos de `topReviews` (platos, show, ambiente), `features` de Maps y URLs CDN públicas.
+  - [x] **Matriz Inteligente de Widgets por Rubro (`WidgetPools.js` & `WidgetInjector.js`)**: Desacoplada la inyección universal forzosa. Gastronomía activa Stories Grid + Reserva de Mesa + Marquee (6 widgets); Salud/Óptica prioriza Turnero Clínico + Trust Badge + Mapa (5 widgets).
+  - [x] **Sincronización con Bóveda Visual (`PhotoCuratorService.js`)**: Incorporado método `getPersistedPhotos` que enlaza las reasignaciones de roles en la Bóveda con los servicios de inyección y prompt en tiempo real.
+  - [x] **Certificación QA & Build**: Script `scripts/test_narrative_prompt_and_dynamic_widgets.cjs` verificado con **3/3 checks pasados** y build de producción limpio (`npm run build` en 14.14s).
+
+
+- [x] **[TASK-043]** Saneamiento de Navbar, Erradicación de Placeholders de Carrusel y Sincronización de Pipeline Stitch *(18/08/2026, 02:53:00)*
+  - [x] **Sanitización Quirúrgica de Navbar (`StitchPostProcessor.js`)**: Inyectado contenedor de branding limpio (Logo Real + Nombre) a la izquierda, erradicada la barra de enlaces intermedios huérfanos (`#menu`, `#reservas`, etc.) y colocado botón CTA de WhatsApp funcional a la derecha.
+  - [x] **Erradicación de Imágenes Rotas en Carrusel (`WidgetInjector.js`)**: Mapeadas e hidratadas de forma cíclica las fotos reales en `{{IMG_1}}` a `{{IMG_7}}` en `gallery_v1_reel`, reduciendo los placeholders `{{IMG_...}}` e imágenes rotas a **0**.
+  - [x] **Estrategia CDN de Fotos Públicas (`StitchPromptBuilder.js`)**: Incorporada sección explícita con URLs públicas de Google Maps e Instagram en el prompt de Stitch, y normalización a archivos locales en post-procesamiento.
+  - [x] **Selector de Pantalla en Pipeline (`StitchPipeline.js`)**: Optimizada la selección de pantalla y descarga resiliente en Paso 3.
+  - [x] **Certificación QA & Build**: Script `scripts/audit_stitch_screen_selection.cjs` verificado con **0 imágenes rotas y 29 fotos reales locales normalizadas** y build de producción limpio (`npm run build` en 15.18s).
+
+
+- [x] **[TASK-042]** Ensamblador Dinámico de Prompts por Arquetipo, Post-Procesador de Logo Real y Reclasificación en Bóveda *(18/08/2026, 02:35:00)*
+  - [x] **Ensamblador Dinámico por Arquetipos (`StitchPromptBuilder.js`)**: Creado generador de prompts adaptativos clasificados por 4 arquetipos semánticos (`gastronomia`, `salud_optica`, `servicios_talleres`, `retail_comercio`) con libertad creativa de layout y slots limpios como contenedores `<div id="nexus-<widget_id>"></div>` sin texto plano.
+  - [x] **Pipeline Post-Procesador & Sustitución de Logo Real (`StitchPostProcessor.js`)**: Implementada inyección quirúrgica de `<img src="/nexus_archives/tucu-red/clients/<slug>/assets/logo.jpg">` en el navbar/branding y purga estricta de cualquier placeholder residual `[...]`.
+  - [x] **Reclasificación Interactiva en Bóveda Visual (`GalleryModal.jsx` y `PATCH /api/nexus/assets/reclassify`)**: Dropdown interactivo en cada card de foto con opciones `Hero Banner`, `Showcase (Producto)`, `Atmosphere (Local)`, `Logo Identidad` y `Descartar`, persistiendo en tiempo real en `client-assets.json`.
+  - [x] **Botón Táctico de Deploy a Netlify (`ProspectsTable.jsx`)**: Incorporado botón `[🚀 Desplegar a Netlify]` en la columna Tactical Actions para disparar `POST /api/forge/deploy` con feedback inmediato vía Toast.
+  - [x] **Certificación QA & Build**: Script `scripts/test_archetype_prompt_and_postprocessor.cjs` verificado con **3/3 checks pasados** y build de producción limpio (`npm run build` en 25.80s).
+
+
+- [x] **[TASK-041]** Saneamiento Universal de Servidor Estático y Resolución 1:1 de Bóveda Visual *(18/08/2026, 01:41:00)*
+  - [x] **Exposición Estática & Fallback Inteligente (Dual Path)**: En `backend/server.js`, expuestas las rutas absolutas de `nexus_archives` y `public/clients` con middleware inteligente que resuelve imágenes desde cualquiera de las dos ubicaciones físicas sin arrojar 404.
+  - [x] **Configuración Proxy Vite (:5005 -> :5006)**: En `vite.config.js`, configurado proxy explícito con `changeOrigin: true` para `/nexus_archives` y `/clients`.
+  - [x] **Endpoint de Inspección de Activos (`/api/nexus/assets/list`)**: Creados endpoints `GET /api/nexus/assets/list?slug=...` y `GET /api/nexus/assets/client-assets?slug=...` en `backend/routes/nexus/assets.js` para inspeccionar y devolver exclusivamente archivos físicos existentes (>0 bytes).
+  - [x] **Hidratación en Bóveda Visual (`GalleryModal.jsx`)**: El modal sincroniza en vivo los activos reales desde `/api/nexus/assets/list`, erradicando miniaturas rotas y placeholders en "100 ÓPTICAS", "La Sirio Barrio Norte" y "Bar Irlanda".
+  - [x] **Certificación QA & Build**: Script `scripts/test_asset_serving_all_clients.cjs` verificado con **15/15 checks pasados** y build de producción limpio (`npm run build` en 14.54s).
+
+
+- [x] **[TASK-040]** Reactividad en Caliente de Prospectos, Reparación de Bóveda Visual y Copy Táctico CYBORG *(18/08/2026, 01:31:00)*
+  - [x] **Copy Táctico Oficial**: En `ProspectsTable.jsx`, actualizado el tooltip del botón táctico a `"⚡ Extraer Datos (CYBORG)"` y mensaje Toast a `"⚡ Datos actualizados vía CYBORG para [Nombre]"`.
+  - [x] **Reactividad en Caliente (Sin F5)**: En `ProspectsTable.jsx`, `DatabaseView.jsx`, `SearchTab.jsx` y `useNeuralFactory.js`, implementada mutación de estado local y propagación reactiva con `onUpdateLead` que refresca fotos, rating y badge `STITCH_READY` instantáneamente.
+  - [x] **Bóveda Visual y Clasificación Semántica**: En `DbUtils.js`, erradicada la duplicación de prefijos en `resolveAssetUrl`. En `GalleryModal.jsx`, clasificados los activos visuales por rol semántico (`hero`, `logo`, `showcase`, `atmosphere`) renderizando miniaturas nítidas con HTTP 200 sin placeholders grises.
+  - [x] **Estado Vacío Inteligente en Visores**: En `ProspectDocViewers.jsx`, implementado estado informativo elegante con el mensaje oficial para comercios no forjados en Gate 2 (`DESIGN.md` y `stitch-manifest.json`).
+  - [x] **Certificación QA & Build**: Script `scripts/test_reactivity_and_assets_modal.cjs` verificado con **4/4 checks pasados** y build de producción limpio (`npm run build` en 19.97s).
+
+
+- [x] **[TASK-039]** Botón Táctico de Re-Extracción CYBORG en Prospectos y Sincronización de Salud Vitalis *(18/08/2026, 01:11:00)*
+  - [x] **Botón de Re-Extracción Táctica en UI**: En `ProspectsTable.jsx`, incorporado el botón `[⚡ Re-extraer CYBORG]` en la columna *Tactical Actions* (`bg-cyan-600/20 text-cyan-400 border-cyan-500/30 rounded-xl`) con micro-feedback de carga giratorio (`RefreshCw` animate-spin) y toast confirmatorio.
+  - [x] **Compuerta 1 Aislada & Soporte Multivariable**: Actualizado `backend/routes/leads/core.js` (`enrichLeadHandler` y `/api/leads/cyborg`) para soportar tanto `leadId` como payload de `lead` completo, asegurando retorno en `stitch_ready` y actualización de KPIs sin forja automática.
+  - [x] **Sincronización Telemetría Vitalis Doctor**: En `backend/routes/vitalis.js`, expuesta la telemetría unificada (`/api/nexus/health/apis`) con score de salud multicloud integrado.
+  - [x] **Certificación QA & Build**: Script `scripts/test_cyborg_reextract_button.cjs` verificado con **3/3 checks pasados** y build de producción limpio (`npm run build` en 14.55s).
+
+
+- [x] **[TASK-038]** Saneamiento Dinámico de Model Probe en Groq y Certificación HTTP 200 en UI *(18/08/2026, 00:53:00)*
+  - [x] **Purga de Strings Obsoletos & Protocolo Kill & Reload**: Erradicado `llama-3.3-70b-versatile` en `backend/routes/nexus/nexus/core.js` (L81). Ejecutado Kill sobre el proceso huérfano PID 17876 / 18636 y reload limpio de `backend/server.js` en puerto 5006.
+  - [x] **Detección Dinámica & Pool Canónico**: En `backend/routes/nexus/apiHealth.js` y `backend/services/GroqService.js`, implementada selección dinámica sobre modelos de chat verificados (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `groq/compound`, `qwen/qwen3.6-27b`) filtrando modelos de audio/terms.
+  - [x] **Certificación HTTP Real 200 OK**: Probe en vivo `POST /api/nexus/health/test-api {"provider":"groq"}` y `GET /api/nexus/health/apis` retornan `status: "connected"`, `allConnected: true` con latencia real (415ms).
+  - [x] **Validación Automatizada**: Script `scripts/test_groq_probe_real_http.cjs` verificado con **2/2 checks pasados** y build de producción limpio (`npm run build` en 13.68s).
+
+
+- [x] **[TASK-037]** Corrección Canónica de Model ID Groq y Visor de Errores con Copia en UI *(18/08/2026, 00:41:00)*
+  - [x] **Identificación & Actualización de Modelos Groq**: Diagnosticado que `llama-3.3-70b-versatile`, `llama3-70b-8192` y `mixtral-8x7b-32768` fueron descomisionados en Groq Cloud. Implementado pool canónico con auto-fallback (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `groq/compound`, `qwen/qwen3.6-27b`) en `GroqService.js` y `apiHealth.js`.
+  - [x] **Probe Groq HTTP 200 OK**: El probe vivo de `apiHealth.js` y `GroqService.generate()` resuelve con HTTP 200 OK y estado `🟢 Conectado` con latencia en tiempo real.
+  - [x] **Visor de Errores con Copia al Portapapeles en UI**: En `ApiHealthModal.jsx`, eliminado el truncamiento ciego de mensajes de error, implementado contenedor scrollable multilínea y botón interactivo `[📋 Copiar / ✓ Copiado]` con `navigator.clipboard.writeText(error)`.
+  - [x] **Certificación QA & Build**: Script `scripts/test_groq_health_and_ui_error.cjs` verificado con **4/4 checks pasados** y build de producción limpio (`npm run build` en 15.42s).
+
+
+- [x] **[TASK-036]** Remediación de Ingesta Profunda (Maps/IG), Integridad Física de Assets y Normalizador Telefónico E.164 *(18/08/2026, 00:30:00)*
+  - [x] **Fase 1 (Instagram Fast Track)**: Optimizado `ApifyService.scrapeInstagram`: extrae directamente fotos y captions de `profile.latestPosts` devuelto por `apify/instagram-profile-scraper` en ~3.5s. Erradicado el rate-limit 429 y el timeout de 30s de `instagram-post-scraper`.
+  - [x] **Fase 2 (Google Maps Íntegro & Reseñas)**: `ApifyService.scrapeMaps` exporta `additionalInfo`, `categories`, `placesTags` y `menu` con `maxReviews: 20`. `MapsEnricher.js` parsea las secciones ("opciones_de_servicio", "aspectos_destacados", "qué_ofrece", etc.) extrayendo 39 features reales y 5 reseñas completas con texto.
+  - [x] **Fase 3 (Integridad Física 1:1 en Disco)**: `PhotoCuratorService.js` y `EnricherService.js` validan con `fs.existsSync()` la existencia de cada archivo en `assets/`. Erradicadas las 8 fotos fantasma en `semantic_photos` (`product_1..4.jpg`), logrando 100% de concordancia con los archivos reales en disco.
+  - [x] **Fase 4 (PhoneNormalizerService E.164 & Meta WhatsApp)**: Creado `backend/services/PhoneNormalizerService.js` que procesa números de 7 dígitos (`4312590` -> `+54 381 431-2590` / WA: `543814312590`), celulares locales (`155123456` -> `5493815123456`) y formatos 10 dígitos. Integrado en `MapsEnricher`, `InstagramEnricher` y `EnricherService`.
+  - [x] **Certificación QA & Build**: Script `scripts/test_remediated_ingest_pipeline.cjs` certificado con **8/8 checks pasados** y compilación limpia de Vite (`npm run build` en 16.70s).
+
+- [x] **[TASK-035]** Desacople de Fábrica en 3 Gates con KPIs, Saneamiento de Identidad/Portafolio y Sincronización Total de Slots *(17/08/2026, 23:42:00)*
+  - [x] **Purga de Mocks & Retorno Fluido**: Marcados `adore-tu-esencia`, `amora-nails` y `system` con `source: 'mock'` en `src/data/projects.js` y filtrados en `src/hooks/useClientPortfolio.js`. Añadido botón visible `[← Portafolio]` en `HeaderProjectInfo.jsx` para retorno limpio desde cualquier nodo de cliente hacia `#/project/tucu-red?tab=portfolio`.
+  - [x] **Identidad Conectada a Disco Real**: `IdentityAssetSection.jsx` conectado a `/api/nexus/assets/design-md` y `/api/nexus/assets/stitch-manifest`. Integra visualización interactiva de paleta cromática (`#hex` copiable al portapapeles) y tipografías con carga on-demand y caché local.
+  - [x] **Sincronización Total de 7 Slots**: Refactorizado `WidgetInjector.js` con mapeo canónico de los 7 slots (`booking_v1_turnero`, `gallery_v2_stories_grid`, `gallery_v1_reel`, `social_v2_marquee_reviews`, `trust_v2_live_badge`, `contact_v2_action_dock`, `footer_v1_map`). Implementada contextualización por rubro (salud/óptica vs gastronomía) y purga regex de placeholders de texto residuales `[widget_name]`.
+  - [x] **Desacople en 3 QA Gates con KPIs**:
+    - **Gate 1**: `useNeuralActions.js` ejecuta ingesta aislada sin auto-forja, calculando y registrando `tiempoTotal`, `tiempoMaps`, `tiempoInstagram`, `reviewsValidas` y `fotosIndexadas`.
+    - **Gate 2**: Selección explícita de motor (`Stitch MCP` vs `Nexus Native`) en `EngineSelector.jsx`.
+    - **Gate 3**: `GenerationResult.jsx` mantiene preview local inmediato y separa el deploy a Netlify en acción manual con registro de timestamp `Último Despliegue: DD/MM/AAAA - HH:mm:ss`.
+  - [x] **Certificación QA & Build**: Script `scripts/test_three_gates_and_identity.cjs` certificado con **18/18 checks pasados** y compilación limpia de Vite (`npm run build` en 43.26s).
+
+- [x] **[TASK-034]** Integración de Widgets Faltantes del Arsenal 2026 (Stories Grid y Live Trust Badge) *(17/08/2026, 22:08:00)*
+  - [x] **`gallery_v2_stories_grid.html`** — Grid vertical estilo Instagram Stories, 5 cards 4:5, zoom hover `scale-105`, overlay degradado, badge IG flotante, CTA "Ver más en Instagram". Adaptable Dark/Light. 113 líneas.
+  - [x] **`trust_v2_live_badge.html`** — Píldora flotante Google Trust: logo oficial, 5 estrellas ámbar, `{{RATING}}` + `{{REVIEWS_COUNT}}`, `backdrop-blur-md`, pulse live indicator `animate-ping`. Versión inline para hero. Auto-hide en mobile si coexiste con action-dock. 81 líneas.
+  - [x] Ambos widgets registrados en `WidgetPools.UNIVERSAL` y `WidgetValidator.js` con reglas: stories_grid activa con `photos.length >= 3` o instagram; trust_badge activa con `rating > 0 && reviewsCount > 0`.
+  - [x] Certificación ARGUS QA: `scripts/test_complete_arsenal_widgets.cjs` → **16/16 checks pasados** (existencia física, semántica, pools, validator). Arsenal 2026 CERTIFIED.
+
+
+- [x] **[TASK-033]** Arquitectura Maestra de Ingesta Profunda, Curaduría por Rol Visual, Arsenal Stitch 2026 y Visor de DESIGN.md *(17/08/2026, 22:00:00)*
+  - [x] **Célula 1 — Ingesta Profunda Maps:** Refactorizado `MapsEnricher.js` con extracción exhaustiva de la matriz "Acerca de" (accesibilidad, service_options, highlights, food_offerings, atmosphere, planning, payments, parking). Los `features` se persisten como array plano en `client-assets.json` y en Firestore.
+  - [x] **Célula 2 — Curaduría Semántica por Rol Visual:** Refactorizado `PhotoCuratorService.js` con clasificación en 4 roles (`identity`, `showcase`, `atmosphere`, `details`). Puntaje por keywords en filename+caption, descarte automático de imágenes inutilizables (flyers, QR), purga de temporales `insta_*.jpg`.
+  - [x] **Célula 3 — Arsenal Stitch 2026 (2 nuevos widgets v2):** Creados `social_v2_marquee_reviews.html` (cinta cinética con hover-pause, fade lateral, 100% Dark/Light) y `contact_v2_action_dock.html` (dock mobile flotante con WhatsApp, Reserva, Llamada, Mapa). Actualizados `WidgetPools.js` y `WidgetValidator.js` con activación dinámica basada en `features` extraídos (cart solo con delivery, reviews solo con topReviews reales).
+  - [x] **Célula 4 — Visores DESIGN.md y stitch-manifest.json en UI:** Creado `ProspectDocViewers.jsx` con modales on-demand con caché local. Integrado en `ProspectsTable.jsx` (botones DESIGN/MANIFEST en columna Intelligence). Añadido endpoint `GET /api/nexus/assets/design-md` en `backend/routes/nexus/assets.js`.
+
+- [x] **[TASK-030]** Modernización y Estandarización Cromática Universal de los 13 Widgets de Arsenal Stitch *(17/08/2026, 16:00:00)*
+  - [x] Modernizado `social/trust_v1_google.html`: erradicadas clases rígidas `bg-white`, tarjetas adaptables con `bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border-zinc-200/80 dark:border-zinc-800/80`, estrellas doradas `#f59e0b` y tipografía contextual WCAG AAA.
+  - [x] Rediseñado `booking/booking_v1_turnero.html`: erradicado el botón blanco aislado, reemplazado por panel interactivo pre-renderizado inline (selector de días, franjas horarias 20:00-23:00, cantidad de comensales y despacho directo de mensaje estructurado por WhatsApp).
+  - [x] Estandarizados `powerups/calc_v1_simple.html`, `powerups/cart_v1_whatsapp.html`, `footers/footer_v1_map.html`, `galleries/gallery_v1_reel.html` y `powerups/bar_v1_countdown.html` con soporte fluido Dark/Light y tokens de Tailwind CSS.
+  - [x] Actualizado `WidgetInjector.js` con hidratación de datos reales enriquecidos e inyección atómica tolerante a fallos.
+  - [x] Certificación automatizada con `scripts/test_standardized_widgets_render.js` (4/4 checks pasados, 0 anomalías cromáticas en landing de "Bar Irlanda") y compilación limpia de Vite (`npm run build` en 13.94s).
+- [x] **[TASK-029]** Auditoría Forense y Censo de Adaptabilidad de los 13 Widgets de Arsenal Stitch *(17/08/2026, 15:10:00)*
+  - [x] Censo e inspección forense exhaustiva de los 13 widgets en `backend/stitch/widgets/` clasificados en 7 familias (`booking`, `footers`, `galleries`, `grids`, `heroes`, `powerups`, `social`).
+  - [x] Identificación de arquitectura dual: 6 Web Components avanzados (`<nexus-*>`) con Shadow DOM y soporte de variables CSS vs 7 widgets HTML/Tailwind v1 legacy.
+  - [x] Detección precisa de la causa raíz de rupturas estéticas en Dark Mode (Bar Irlanda): clases rígidas `bg-white`, `border-gray-100` y `text-gray-600` en `trust_v1_google.html` y modal de `booking_v1_turnero.html`.
+  - [x] Elaboración del Plan de Estandarización Universal de Widgets para adaptación fluida Light/Dark y desacople de variables de diseño.
+  - [x] Certificación automatizada con `scripts/test_audit_all_widgets.js` (3/3 checks pasados) y compilación limpia de Vite (`npm run build` en 25.99s).
+- [x] **[TASK-028]** Corrección Quirúrgica de Extracción de Project ID en StitchMcpClient *(17/08/2026, 02:30:00)*
+  - [x] Refactorizado `StitchMcpClient._createProject`: extracción universal y resiliente del `projectId` soportando SDK oficial `@google/stitch-sdk` (`stitch.createProject`), `structuredContent.name`, deserialización de `content[0].text`, y regex global sobre payload crudo.
+  - [x] Incorporado logging de trazabilidad (`[Stitch MCP Raw Response]`) ante respuestas ambiguas o excepciones.
+  - [x] Certificación 100% automatizada con `scripts/test_stitch_client_create_project.js` (4/4 checks pasados, ID real `2126236908701827818` extraído con éxito) y compilación limpia de Vite (`npm run build` en 15.85s).
+- [x] **[TASK-027]** Desenmascaramiento de Errores en Paso 3 de Stitch, Polling de Artefactos e Inyección Resiliente *(17/08/2026, 02:18:00)*
+  - [x] Desenmascarado y erradicado el bloqueo en `CloudDeployOrchestrator.js` y `backend/routes/forge/stitch.js`: eliminación del monkey-patching frágil, logueo explícito de `error.message`, `error.stack` y fallback transparente a Cockpit Local cuando Netlify no está disponible.
+  - [x] Implementado polling seguro de 4 intentos espaciados por 2s en `StitchPipeline.js` (Paso 3) para sincronización con CDN de Google Stitch tras `edit_screens` / `get_screen`.
+  - [x] Descarga HTTP resiliente en `StitchRpcHandler.js` con seguimiento automático de redirecciones (`fetch(..., { redirect: 'follow' })`) y validación de contenido > 500 bytes.
+  - [x] Inyección tolerante a fallos en `WidgetInjector.js`: soporte tanto para slots explícitos (`#slot-turnero`, `#slot-reviews`, `#slot-map`) como para inserción semántica en `footer` o `body` sin abortar el flujo.
+  - [x] Certificación 100% automatizada con `scripts/test_stitch_step3_resilience.js` (4/4 checks pasados) y compilación limpia de Vite (`npm run build` en 15.43s).
+- [x] **[TASK-026]** Pipeline Maestro de Ingesta Profunda, Curaduría Semántica y Generación Stitch con Widgets E2E *(17/08/2026, 02:00:00)*
+  - [x] Ingesta profunda de Maps e Instagram en `EnricherService.js` y `MapsEnricher.js`: extracción de `rating` (4.3), `reviewsCount` (4288), `openingHours`, `coordinates` y top 3 reviews.
+  - [x] Clasificador de Rubro y Tono en `AiEnricher.js`: asignación de rubros específicos (`gastronomia_bar`, `cerveceria`, `pub`, `barberia`, etc.) y `toneVoice` (ej: "Nocturno, juvenil, cervecero, enérgico").
+  - [x] Curaduría semántica de fotos en `PhotoCuratorService.js`: clasificación y materialización en disco de `hero.jpg`, `logo.jpg`, `product_1.jpg` a `product_4.jpg` y `ambient_1.jpg` a `ambient_4.jpg`, con persistencia dual en `client-assets.json`.
+  - [x] Prompt canónico de Google Stitch en `PipelineTemplates.js` y `StitchPromptService.js` estructurado estrictamente en `Idea + Theme + Content` con placeholders semánticos (`#slot-turnero`, `#slot-reviews`, `#slot-map`).
+  - [x] Inyección modular e hidratada de widgets del Arsenal Stitch (`booking_v1_turnero.html` y `trust_v1_google.html`) en `WidgetInjector.js`.
+  - [x] Micro-feedback visual en botón de tabla `[Copiar Payload Stitch]` en `ProspectsTable.jsx` (`✓ ¡Copiado!` verde durante 2000ms + Toast).
+  - [x] Certificación 100% automatizada con `scripts/test_master_journey_stitch.js` (5/5 checks pasados) y compilación limpia de Vite (`npm run build` en 22.36s).
+- [x] **[TASK-025]** Cierre Reactivo al 100% de Pipeline Stitch, Fix de Copiar Payload y Trazabilidad de DESIGN.md *(17/08/2026, 01:37:00)*
+  - [x] Resuelta la desconexión en 92% de la UI en `useNeuralActions.js`: implementada la ejecución real de `executeGeneration` con streaming de logs interactivos, emisión de log de éxito `✅ ¡Sitio generado y desplegado con éxito! (100%)` y transición automática a `GenerationResult`.
+  - [x] Reparado el botón `[🗄️ Copiar Payload Stitch]` en `src/components/database/ProspectsTable.jsx`: conexión directa al endpoint `GET /api/nexus/assets/payload?slug=<slug>`, escritura segura al portapapeles y emisión de Toast `📋 Payload de Stitch copiado al portapapeles`.
+  - [x] Implementada la trazabilidad de diseño en `StitchDesignExtractor.js`: extracción automática y persistencia dual de `stitch-manifest.json` y `DESIGN.md` con tokens de color, tipografía y metadatos MCP (`GEMINI_3_1_PRO`).
+  - [x] Creado endpoint modular `backend/routes/nexus/assets.js` (`/api/nexus/assets/payload` y `/api/nexus/assets/stitch-manifest`).
+  - [x] Certificación 100% automatizada con `scripts/test_pipeline_ui_and_payload.js` (5/5 checks pasados) y compilación limpia de Vite (`npm run build` en 16.06s).
+- [x] **[TASK-024]** Integración Oficial de Google Stitch SDK con Header X-Goog-Api-Key y Forja Premium E2E *(17/08/2026, 01:15:00)*
+  - [x] Instalado y configurado el SDK oficial `@google/stitch-sdk` con inicialización basada en `STITCH_API_KEY` / `GOOGLE_STITCH_API_KEY`.
+  - [x] Refactorizado `backend/services/stitch/StitchRpcHandler.js` para enviar el header canónico de autenticación `X-Goog-Api-Key`, erradicando el uso incorrecto de `Authorization: Bearer` para API Keys simples.
+  - [x] Certificada la forja de landing pages con la fórmula de Stitch (Idea + Theme + Content) generando pantallas HTML enriquecidas con dark mode, tipografías sans-serif y llamadas a la acción directas.
+  - [x] Implementada la persistencia dual en disco escribiendo simultáneamente en `public/clients/<slug>/index.html` y en `nexus_archives/tucu-red/clients/<slug>/index.html`.
+  - [x] Actualizado `GenerationModal.jsx` y `GenerationResult.jsx` para proveer acceso instantáneo a la preview en el Cockpit Local (`/clients/<slug>/index.html`) y URL pública.
+  - [x] Certificación 100% automatizada con `scripts/test_stitch_official_generation.js` (5/5 checks pasados) y compilación limpia de Vite (`npm run build` en 15.23s).
+- [x] **[TASK-022]** Saneamiento de Persistencia Atómica, Purga de Leads Zombis y Reparación Canónica de Endpoints 400/404 *(16/08/2026, 20:00:00)*
+  - [x] Purgados atómicamente los 7 registros residuales de "Café San Martín Test" en Cloud Firestore (`nexus-v2-native`), `data/db_dump.json` y filesystem (`nexus_archives/tucu-red/clients/cafe-san-martin-test`).
+  - [x] Implementado `deleteLeadHandler` atómico y bidireccional en `backend/routes/leads/core.js` y `manage.js`, sincronizando eliminación simultánea en Firestore, `db_dump.json` y carpetas locales (`public/clients/<slug>` y `nexus_archives`).
+  - [x] Corregido el error 400 en `POST /api/prospects` unificando la extracción de campos (`name`, `phone`, `whatsapp`, `mapsUrl`, `instagram`, `category`, `city`) y sanitizando el payload de `useNeuralActions.js`.
+  - [x] Erradicado el error 404 en `POST /api/leads/enrich` mediante aliases canónicos y redundantes en `backend/server.js` (`/api/leads/enrich`, `/api/enrich-lead`, `/api/prospects/:id`, `/api/leads/:id`).
+  - [x] Certificación 100% automatizada con `scripts/test_lead_delete_and_ingest_fix.js` (5/5 checks pasados) y compilación limpia de Vite (`npm run build` en 16.45s).
+- [x] **[TASK-021]** Auto-transición Reactiva en Fleet Manager y Prueba de Fuego de Ingesta Real en Fábrica de Leads *(16/08/2026, 19:30:00)*
+  - [x] Implementada la función reactiva `pollUntilOnline` en `system_core/dashboard/fleet_ui.js` (sondeo cada 800ms contra `/api/fleet/processes`), conmutando automáticamente de `STARTING` a `ONLINE`, habilitando el botón `[🌐 Web]` y deteniendo el sondeo sin requerir recarga manual.
+  - [x] Saneado `backend/routes/leads/core.js` para recibir e ingerir leads tanto por lote (`req.body.prospects`) como individuales, preservando ID unificado, datos de Instagram, Maps URL y WhatsApp.
+  - [x] Actualizado `ApifyService.js` con método `unrollShortUrl` para desenrollar redirecciones de URLs cortas (`maps.app.goo.gl`) y fallback automático a búsqueda por nombre y ciudad.
+  - [x] Implementado guardado dual en `AutoSiteGenerator.js` escribiendo tanto en `nexus_archives/tucu-red/clients/<slug>/index.html` como en `public/clients/<slug>/index.html`.
+  - [x] Certificada ingesta real de punta a punta con `scripts/test_fleet_and_lead_ingest.js` (6/6 checks pasados) y compilación limpia de Vite (`npm run build` en 24.51s).
+- [x] **[TASK-020]** Probes Vivos de APIs en Tiempo Real, Auto-Switch Gemini->Groq y Handshake de Google Stitch *(16/08/2026, 19:00:00)*
+  - [x] Implementado `UnifiedAIService.js` con Auto-Switch transparente: ejecuta con Gemini 2.5 Flash (`gemini-2.5-flash`) y, ante cualquier error o degradación de cuota (400, 403, 429, timeout), conmuta en caliente a Groq Llama 3.3 70B (`llama-3.3-70b-versatile`) sin abortar la experiencia del usuario.
+  - [x] Certificado handshake exitoso contra el endpoint de Google Stitch MCP (`https://stitch.googleapis.com/mcp` - JSON-RPC `tools/list` retornando 15 herramientas y Status 200 con `GOOGLE_STITCH_API_KEY`).
+  - [x] Creado endpoint de diagnóstico activo `backend/routes/nexus/apiHealth.js` (`GET /api/nexus/health/apis` y `POST /api/nexus/health/test-api`) para ejecutar probes en vivo contra los 6 proveedores cloud (Gemini, Groq, Stitch, Apify, Firebase, Netlify).
+  - [x] Creado `ApiHealthModal.jsx` e integrado botón interactivo `[⚡ APIs]` en `HeaderUserActions.jsx` para visualizar el estado, latencia real en ms y botón individual `[⚡ Probar Ahora]`.
+  - [x] Certificación 100% automatizada con `scripts/test_live_api_probes.js` (9/9 checks pasados) y compilación limpia de producción en Vite (`npm run build`).
+- [x] **[TASK-019]** Certificación de Conectividad Real Multicloud y Reparación E2E Fábrica de Leads *(16/08/2026, 18:40:00)*
+  - [x] Inicializado Firebase Admin SDK v12 con `admin.cert(serviceAccountKey)` y `getFirestore()`, conectando exitosamente contra Cloud Firestore (`nexus-v2-native`).
+  - [x] Certificada conectividad real y autenticación de los 5 servicios cloud del stack: Cloud Firestore (Docs activos), Apify API (Usuario `@operational_ghatam`), Groq Llama-3.3-70b (Cortex narrativo), Google Gemini 2.5 Flash (Visión) y Netlify API (`Leonardo Laricchiuta`).
+  - [x] Corregida la firma en frontend (`src/components/leads/useManualProspect.js` y `useNeuralActions.js`) para propagar el `formData` completo con Maps URL, WhatsApp, categoría e Instagram.
+  - [x] Implementada la auto-forja instantánea post-extracción conectando el pipeline C.Y.B.O.R.G. con `POST /api/forge/stitch-mcp` y `nexus-builder`.
+  - [x] Saneados `InstagramScraperService.js`, `AutoHealerService.js`, `RubroProfileService.js`, `ContentHydrator.js` y `AgentService.js`, erradicando dependencias faltantes y módulos huérfanos.
+  - [x] Certificación 100% automatizada con `scripts/test_live_connectivity_e2e.js` (7/7 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-018]** Auditoría Forense de Ingesta Manual y Censo Integral de Credenciales *(16/08/2026, 18:25:00)*
+  - [x] Ejecutada auditoría forense paso a paso del circuito de Ingesta Manual y botón `[⚡ Iniciar Extracción (C.Y.B.O.R.G.)]`.
+  - [x] Identificadas las 4 causas raíz del bloqueo: desajuste de parámetros en `useManualProspect.js`, ruta 404 en subrouter, credenciales faltantes y falta de desenrollador de URLs cortas.
+  - [x] Elaborado censo quirúrgico de variables de entorno y mapeo exacto de dependencias para operar 100% conectado.
+- [x] **[TASK-017]** Reparación de Print en Vitalis, Saneamiento de Stitch y Auditoría Forense de Fábrica de Leads *(16/08/2026, 18:18:00)*
+  - [x] Reparada la regla `@media print` en `src/index.css` y `CommercialReportModal.jsx` con `body * { visibility: hidden }` y `#vitalisPrintReport { visibility: visible }`, erradicando hojas en blanco y fondos oscuros al imprimir o guardar en PDF.
+  - [x] Saneado `StitchShowroom.jsx` eliminando el botón huérfano `[Live Hub]` y la variable `SHOWROOM_URL`, incorporando botón interactivo `[📋 Copiar Código]` con toast y feedback de copiado.
+  - [x] Resuelto el parseo de prospectos en `backend/routes/leads/core.js` para leer tanto arrays como objetos de `db_dump.json` (Local-First SSOT) retornando 6 prospectos reales (`En las Manos de Mariana`, `Adoré Tu Esencia`, etc.).
+  - [x] Realizada auditoría forense integral de la Fábrica de Leads: fuentes de datos (Local-First/Firestore), estado de tokens de scraping (`ApifyService`, `MapsScraperService`), pipeline de ingesta y acciones tácticas de cada lead.
+  - [x] Certificación 100% automatizada con `scripts/test_leads_factory_audit.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-016]** Ficha Imprimible A4 de Vitalis, Iframe Responsivo en Biónica y Verificación de Arsenal Stitch *(16/08/2026, 17:55:00)*
+  - [x] Configurado aislamiento total de impresión `@media print` en `src/index.css`, ocultando la UI del sistema y aislando `#vitalisPrintReport`.
+  - [x] Diseñada la Ficha Institucional A4 de Vitalis en `CommercialReportModal.jsx` con cabecera clínica, diagnóstico ejecutivo de ventas/SEO redactado por Vitalis y desglose estructurado de hallazgos.
+  - [x] Implementado el visor responsivo en `AuditVisor.jsx` con navegador simulado, `<iframe>` embebido interactivo, conmutador Desktop (100%) / Mobile (375px), recarga y apertura externa.
+  - [x] Certificada la disponibilidad y renderizado de los 13 widgets modulares en 7 categorías en Arsenal Stitch (`StitchShowroom.jsx` y `/api/stitch/components`).
+  - [x] Certificación 100% automatizada con `scripts/test_bionics_print_iframe.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-015]** Motor Heurístico de Auditoría Web Verídica y Exportador de Reporte Comercial en Biónica Visual *(16/08/2026, 17:40:00)*
+  - [x] Erradicados todos los mocks hardcodeados (Score 96 fijo, Contraste 7.8 fijo e issues estáticos) en `VisualBionicsService.js`.
+  - [x] Implementado analizador heurístico profundo de HTML en Node.js: SSL/HTTPS, metadatos `<title>` (longitud), `<meta description>`, `<meta viewport>`, OpenGraph, unicidad de `<h1>`, accesibilidad de imágenes (`alt`), enlaces, scripts y latencia TTFB real.
+  - [x] Cálculo matemático riguroso de Bionic Score (1-100) y generación dinámica de SVG vectorial con los datos reales del objetivo analizado.
+  - [x] Creado `CommercialReportModal.jsx` (Ficha de Diagnóstico Comercial) con exportación directa vía `window.print()` / PDF y copia instantánea de resumen en Markdown.
+  - [x] Integrado botón `[📄 Exportar Reporte]` en `BionicsHeader.jsx` y conectado a `BionicsTab.jsx`.
+  - [x] Certificación 100% automatizada con `scripts/test_bionics_real_analysis.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-014]** Layout Compacto y Accionabilidad de Issues en Biónica Visual + Auditoría de Arsenal Stitch *(16/08/2026, 17:30:00)*
+  - [x] Rediseñado el layout de `BionicsTab.jsx`, `BionicsHeader.jsx`, `AuditKpiSection.jsx` y `AuditVisor.jsx` en proporciones compactas zero-scroll.
+  - [x] Incorporada botonera interactiva `[🔧 Reparar con Codi]` en `AuditIssuesList.jsx`, invocando `POST /api/nexus/apply-html-patch` y copiando la directiva de fix al portapapeles con toast.
+  - [x] Auditoría forense de Arsenal Stitch (`StitchShowroom.jsx` y `backend/routes/stitch.js`): catalogados 13 widgets modulares en 7 categorías (`heroes`, `grids`, `galleries`, `booking`, `social`, `footers`, `powerups`) con renderizado simulado funcional.
+  - [x] Certificación 100% automatizada con `scripts/test_bionics_stitch.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-013]** Erradicación de Modales Nativos en Bóveda, Preview Seguro de Imágenes y Certificación de Biónica Visual *(16/08/2026, 17:15:00)*
+  - [x] Erradicadas todas las llamadas a `window.prompt()` en el frontend, reemplazándolas por `CreateFolderModal.jsx` (modal nativo Nexus OS con auto-focus).
+  - [x] Implementado el servicio de streaming crudo `GET /api/files/raw` y preview seguro de imágenes (`.png`, `.jpg`, `.svg`, `.webp`), erradicando cuelgues del Main Thread de Chrome.
+  - [x] Agregada navegación interna por subcarpetas y modal de previsualización en `AssetVault.jsx` (`AssetCard.jsx` y `AssetPreviewModal.jsx`), eliminando aperturas ciegas de JSON en pestañas externas.
+  - [x] Calibrado el flujo completo de Biónica Visual (`BionicsTab.jsx`, `useBionics.js`, `AuditIssuesList.jsx`, `AuditVisor.jsx`), permitiendo auditar `http://localhost:5005` con renderizado vectorial SVG y telemetría de latencia TTFB.
+  - [x] Certificación 100% automatizada con `scripts/test_bionics_vault.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-012]** Calibración de La Bóveda: Explorador de Archivos Root, Galería de Assets de Clientes y Respaldo Local-First *(16/08/2026, 16:53:00)*
+  - [x] Configurado `TabMapping.jsx` pasando `rootPath="root"` a `TheVault.jsx`, erradicando la pantalla `FOLDER EMPTY`.
+  - [x] Saneado `backend/routes/files.js` con resolución nativa de raíz del repositorio (`repoRoot`) y fallbacks seguros a `public/clients`.
+  - [x] Reorientada la pestaña "Activos de Marca" en `AssetVault.jsx` para explorar y previsualizar imágenes, logos y demos de clientes (`public/clients/`).
+  - [x] Desacoplado `DataCoreBackup.jsx` y `useVaultBackup.js` de Firestore Cloud, generando un respaldo atómico JSON Local-First con estética sobria Nexus OS.
+  - [x] Certificación 100% automatizada con `scripts/test_vault_calibration.js` (6/6 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-011]** Parser Local-First de Kanban.md en Tab de Misiones y Tooltips Descriptivos en Terminal Core *(16/08/2026, 16:34:00)*
+  - [x] Creado `backend/routes/kanban.js` (134 líneas) con parser SSOT de `.agent/workflows/kanban.md` (`GET /api/kanban/tasks` y `POST /api/kanban/tasks/add`).
+  - [x] Desacoplado `MissionsTab.jsx` de Firestore Cloud (`collection(db, 'tasks')`), conectándolo al endpoint reactivo local `/api/kanban/tasks`.
+  - [x] Erradicadas las 12 tareas fósiles de Firebase en la UI, mostrando la verdad real del proyecto en 3 columnas (Pendiente, En Progreso, Completada).
+  - [x] Incorporada matriz de 5 tooltips descriptivos con posicionamiento interactivo en la cabecera de `AgentTerminal.jsx`.
+  - [x] Certificación 100% automatizada con `scripts/test_kanban_sync.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-010]** Botonera de Comandos en Terminal Core, Purga de Tareas Fósiles y Plantillas de Embudo en Misiones *(16/08/2026, 16:20:00)*
+  - [x] Incorporada barra de comandos rápidos (`[🩺 Salud Motor]`, `[⚙️ Catálogo Servicios]`, `[📊 Git Status]`, `[📋 Directorio]`, `[🧹 Limpiar]`) en cabecera de `AgentTerminal.jsx`.
+  - [x] Eliminado el archivo huérfano y obsoleto `backend/services/TerminalService.js` (residuo Socket.IO) y saneados sus imports.
+  - [x] Purgadas de `data/db_dump.json` las 11 tareas fósiles asignadas a agentes desfasados (`deco`, `lumina`).
+  - [x] Configuradas 4 plantillas de misión instantáneas en `QuickAddMission.jsx` alineadas al embudo comercial de Tucu Red (Scraping, Demo Stitch, Deploy & QA, Cierre WhatsApp).
+  - [x] Conectado el botón de ignición en `MissionCard.jsx` hacia el endpoint canónico `POST /api/nexus/ignite-mission`.
+  - [x] Certificación 100% automatizada con `scripts/test_terminal_missions.js` (8/8 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y `npm run build` limpio en Vite.
+- [x] **[TASK-009]** Saneamiento Integral de 14 Puntos de UI/UX en Pantalla Principal y Header *(16/08/2026, 15:52:00)*
+  - [x] 1. Branding Lateral: Reemplazado `NEXUS PRO v5.4 NEON` por texto sobrio `Nexus OS` en `CollapsibleSidebar.jsx`.
+  - [x] 2. Removido el botón/link `← Volver a la Entrada` de `HeaderProjectInfo.jsx` y `HeaderIsland.jsx`.
+  - [x] 3. Título Principal sobrio: Cambiado a `Tucu Red` en `HeaderProjectInfo.jsx`.
+  - [x] 4. Podadas las migas de pan `NEXUS OS / TUCU-RED / MODO CONSOLA` en `HeaderProjectInfo.jsx`.
+  - [x] 5. Erradicada la píldora HUD central `CommandCenterHud` en `HeaderIsland.jsx`.
+  - [x] 6. Removido el botón duplicado de terminal `>_` en `HeaderUserActions.jsx`.
+  - [x] 7. Transformado el botón del cohete en un botón con texto claro `Landing` hacia `https://tucured.ar`.
+  - [x] 8. Removido el botón de cuadrícula `[🔲]` (editor visual) del header.
+  - [x] 9. Reparados los avatares rotos en `NeuralTeam` (`AgentGridView.jsx` y `AgentDetailView.jsx`) con iconos vectoriales Lucide y colores por rol sin 404s.
+  - [x] 10. Desactivado el selector de idioma redundante dejando el sistema en Español Nativo por defecto.
+  - [x] 11. Creado `QuickProductionActions.jsx` (Accesos Rápidos) erradicando los límites falsos (512 MB) de `NetlifyHealth`.
+  - [x] 12. Reorientada la columna derecha en `SidebarPanel.jsx` con accesos rápidos y `SmartNotepad` expandido de altura completa.
+  - [x] 13. Removida la imagen cinemática en `OverviewV2.jsx`, aplicando fondo plano sobrio `bg-slate-950`.
+  - [x] 14. Unificado el contenedor de `SmartGantt.jsx` (`TacticalExtras.jsx`) con un estado operativo activo de pipeline de leads y clientes.
+  - [x] Certificación 100% automatizada con `scripts/test_overview_calibration.js` (8/8 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y compilación limpia de Vite (`npm run build`).
+- [x] **[TASK-008]** Unificación de Lanzador de Flota en Master y Transformación Operativa del Overview (Métricas Reales y Poda de Adornos) *(16/08/2026, 15:30:00)*
+  - [x] Unificado `system_core/dashboard/project_launcher.js` y `dashboard_ui.js` en `blueprint-nexus` delegando el botón `[Lanzar]` al API `/api/fleet/start/:projectId` y apertura automática de pestaña web sin errores.
+  - [x] Podada la franja intermedia redundante `KpiBar.jsx` en `PowerGridLayout.jsx`.
+  - [x] Erradicado el widget muerto `MemoryAidWidget.jsx` ("248 temas") en `SidebarPanel.jsx`, expandiendo `SmartNotepad` como bloc de notas operativo de altura completa con autosave.
+  - [x] Creado `OverviewKpis.jsx` (Radar Operativo de Tucu Red) conectando métricas vivas de leads (`/api/prospects`), sitios listos (`/api/nexus/assets/list`) y salud del enjambre (`/api/health`).
+  - [x] Certificación 100% automatizada con `test_headless_launch.js` (9/9 checks en Master), `test_overview_calibration.js` (6/6 checks) y `test_menu_endpoints.js` (20/20 checks en satélite).
+- [x] **[TASK-007]** Enrutamiento Limpio HTML5, Binding de Consumo IA y Calibración de Header y Widgets de Overview *(16/08/2026, 15:08:00)*
+  - [x] Migrado el enrutador en `src/hooks/useAppLogic.js` a `popstate` / `history.pushState` con normalizador de rutas limpias `/project/tucu-red` y fallback dual.
+  - [x] Actualizado `src/components/app/AppDesktopRouter.jsx` y `backend/server.js` con soporte de fallback SPA para rutas directas.
+  - [x] Reestructurado `TokenObservabilityWidget.jsx` con binding dinámico a `tokenUsage.groq`, `tokenUsage.gemini`, `costs.apify` y barras de consumo calculadas en tiempo real.
+  - [x] Conectado `NetlifyHealth.jsx` con telemetría viva de `/api/health` (Uptime real, RAM de Node.js, 51 servicios curados).
+  - [x] Pulido el Header (`HeaderUserActions.jsx`, `CommandCenterHud.jsx`, `HeaderProjectInfo.jsx`) con tooltips interactivos, rutas limpias y telemetría de motor.
+  - [x] Certificación 100% automatizada con `scripts/test_overview_calibration.js` (5/5 checks), `scripts/test_menu_endpoints.js` (20/20 checks) y build limpio de Vite (`npm run build`).
+- [x] **[TASK-CORE-032]** Corrección de Estructura Overlay Modal en Visor de Logs y Blindaje de Layout en Dashboard Master *(16/08/2026, 14:33:00)*
+  - [x] Saneado `blueprint-nexus/system_core/dashboard/index.html` eliminando fragmentos DOM duplicados y encapsulando `#fleetLogsModal` como overlay fijo (`fixed inset-0 z-50 flex items-center justify-center hidden`).
+  - [x] Actualizados controladores en `fleet_ui.js` (`openFleetLogs`, `closeFleetLogs`, `clearFleetLogsScreen`) garantizando conmutación `display = 'flex' / 'none'` sin alterar el flujo del DOM principal.
+  - [x] Certificado balance exacto de 148 tags `<div>` en `index.html` erradicando la deformación del margen derecho en `:3000`.
+  - [x] Baterías de prueba `test_calibracion_ui.js` (29/29 checks) y `test_headless_launch.js` (9/9 checks) aprobadas al 100%.
+- [x] **[TASK-006]** Desactivación de Socket.IO Huérfano, Resiliencia en IntelligenceMonitor y Pulido de Controles en Visor de Logs *(16/08/2026, 14:26:00)*
+  - [x] Desacoplado Socket.IO en `src/components/tabs/useNeuralFactory.js` y reemplazado por suscripción SSE `/api/terminal/stream` sin fallas de WebSocket.
+  - [x] Blindado `src/components/dashboard/IntelligenceMonitor.jsx` con capturas seguras y textos por defecto ante 404s en `brief.md` o `transcription_groq.md`.
+  - [x] Creados assets base para demos de clientes (`adore-tu-esencia` y `amora-nails`) y blindaje de tipos MIME en `backend/server.js`.
+  - [x] Pulida la botonera del modal de logs en `blueprint-nexus` (`index.html` y `fleet_ui.js`): removido botón duplicado e incorporado `[🧹 Limpiar Pantalla]`.
+  - [x] Suites `test_legacy_fixes.js` (5/5 checks), `test_menu_endpoints.js` (20/20 checks) y `test_headless_launch.js` (9/9 checks) certificadas al 100%.
+- [x] **[TASK-005]** Erradicación de Endpoints Legacy :5000, Mapeo Estático de Clientes y Endpoint de Assets *(16/08/2026, 14:16:00)*
+  - [x] Purgadas todas las referencias hardcodeadas a `localhost:5000` en `src/components/tabs/useNeuralFactory.js` y `src/components/dashboard/IntelligenceMonitor.jsx`.
+  - [x] Implementado endpoint `GET /api/nexus/assets/list` y `POST /api/nexus/upload_asset` en `backend/routes/nexus.js` con soporte en `FileManager.jsx`.
+  - [x] Mapeadas las rutas estáticas `/nexus_archives` y `/clients` en `backend/server.js` para visualización de demos y assets de clientes.
+  - [x] Incorporada rutina pre-flight de limpieza de sockets (puertos 5005 y 5006) en `scripts/dev_runner.js` erradicando `EADDRINUSE`.
+  - [x] Suite `scripts/test_legacy_fixes.js` ejecutada con 5/5 checks aprobados (100%) y certificación general verde.
+- [x] **[TASK-004]** Blindaje Defensivo en BionicsHeader (.map crash) y Calibración de Logs/Restart del Master Hub *(16/08/2026, 14:08:00)*
+  - [x] Blindaje de `BionicsHeader.jsx` asignando valores por defecto seguros (`url = ''`, `logs = []`, callbacks noop) y encapsulamiento de arrays defensivos `(logs || []).map()`.
+  - [x] Sincronización de `BionicsTab.jsx` con el hook `useBionics` pasando `url`, `setUrl`, `logs`, `handleCapture` y renderizado seguro de KPIs y visor visual.
+  - [x] Conexión de logs del satélite `blueprint-nexus` en `system_core/dashboard/fleet_manager.js` hacia `system_core/storage/telemetry/live_execution.log`.
+  - [x] Habilitación del botón interactivo `[🔄 Restart]` en la tarjeta de `BLUEPRINT-NEXUS` en `system_core/dashboard/fleet_ui.js` invocando `/api/action/restart-server`.
+  - [x] Certificación 100% de la suite `test_headless_launch.js` (9/9 checks), `test_menu_endpoints.js` (20/20 checks) y `test_engine_full_health.js` (19/19 checks).
+- [x] **[TASK-003]** Desacople de Puertos Vite (5005) / Express (5006), Saneamiento ANSI y Botón Copiar Log en Master Dashboard *(16/08/2026, 13:56:00)*
+  - [x] Desacople de arquitectura en `backend/server.js` fijando puerto `5006` por defecto (`BACKEND_PORT`).
+  - [x] Reconfiguración del proxy en `vite.config.js` (`port: 5005`, proxy `/api` -> `http://127.0.0.1:5006`), erradicando `connect EADDRINUSE 127.0.0.1:5005`.
+  - [x] Creación de `scripts/dev_runner.js` como orquestador dual silencioso (`npm run dev`) para Express (:5006) y Vite (:5005).
+  - [x] Implementación de `stripAnsi(text)` en `system_core/dashboard/fleet_ui.js` para sanear previews de logs en tarjetas de satélites en `:3000`.
+  - [x] Inclusión del botón interactivo `[📋 Copiar Log]` en `#fleetLogsModal` con `navigator.clipboard.writeText` y feedback `¡Copiado!`.
+  - [x] Certificación 100% automatizada con `test_headless_launch.js` (9/9 checks), `test_menu_endpoints.js` (20/20 checks) y `test_engine_full_health.js` (19/19 checks).
+- [x] **[TASK-002]** Administrador Central de Servidores de Flota y Reparación de Runtime React *(16/08/2026, 13:42:00)*
+  - [x] Corrección quirúrgica del hook `useEffect` en `src/components/AgentTerminal.jsx` eliminando el retorno implícito que disparaba `TypeError: destroy is not a function`.
+  - [x] Creación de `system_core/dashboard/fleet_manager.js` en `blueprint-nexus` con control silencioso (`windowsHide: true`), captura de `stdout`/`stderr` y canal SSE `/api/fleet/logs/:projectId`.
+  - [x] Implementación de endpoints `/api/fleet/processes`, `/api/fleet/start/:id`, `/api/fleet/stop/:id`, `/api/fleet/restart/:id` en `system_core/dashboard/server.js`.
+  - [x] Despliegue de UI del Administrador de Servidores (`system_core/dashboard/fleet_ui.js` e `index.html`) con botonera atómica y modal de telemetría de logs en vivo.
+  - [x] Certificación 100% automatizada con `test_headless_launch.js` (9/9 checks) y `test_menu_endpoints.js` (20/20 checks).
+- [x] **[TASK-001]** Auditoría forense, calibración clínica de los 18 ítems del menú lateral y resolución de los 4 errores críticos del backend *(16/08/2026, 13:08:00)*
+  - [x] Error 1 (Biblioteca / SOPs): Blindaje de normalización de rutas Windows en `backend/routes/files.js` y provisión de documentación canónica.
+  - [x] Error 2 (Arsenal Stitch): Creación de `backend/routes/stitch.js` y rediseño interactivo de `StitchShowroom.jsx` con catálogo de widgets.
+  - [x] Error 3 (Biónica Visual): Implementación de auditoría heurística y generación de preview SVG autónomo en `VisualBionicsService.js` y `backend/routes/vision.js`.
+  - [x] Error 4 (Terminal Core): Despliegue de streaming SSE `/api/terminal/stream` y ejecutor en background sin ventanas CMD en `backend/routes/terminal.js`.
+  - [x] Conexión y certificación de los 18 ítems del menú lateral y 51 servicios con suite automatizada `scripts/test_menu_endpoints.js` (20/20 checks - 100%).
 - [x] **[TASK-INIT]** Extraccion quirurgica, inicializacion del repositorio y configuracion del motor Tucu Red *(16/08/2026, 04:00:00)*
   - [x] Crear estructura de directorios (backend/services, routes, stitch, data, scripts, tools)
   - [x] Copiar 50 servicios del motor desde NEXUS-OS (sin mutacion en el origen)

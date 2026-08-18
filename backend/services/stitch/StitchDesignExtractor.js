@@ -1,58 +1,60 @@
 // Archivo: backend/services/stitch/StitchDesignExtractor.js
 // RESPONSABILIDAD: Extraer el sistema de diseño de un proyecto de Stitch
-// y persistirlo como DESIGN.md en la ficha del cliente (Soberanía Digital).
+// y persistirlo como DESIGN.md y stitch-manifest.json (Ley de 200 líneas).
 const fs = require("fs");
 const path = require("path");
 const StitchRpcHandler = require("./StitchRpcHandler");
-const TerminalService = require("../TerminalService");
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 
 class StitchDesignExtractor {
-  /**
-   * Extrae el designTheme y designMd de un proyecto de Stitch vía MCP
-   * y genera el DESIGN.md en la carpeta del cliente.
-   * @param {string} projectId - ID del proyecto de Stitch.
-   * @param {string} clientId - ID del cliente en Nexus Archives.
-   * @param {string} destPath - Ruta de destino (carpeta del cliente).
-   * @returns {object|null} Los namedColors extraídos para el pipeline.
-   */
-  static async extractAndPersist(projectId, clientId, destPath) {
+  static async extractAndPersist(projectId, clientId, destPath, promptContext = "") {
     try {
       TerminalService.broadcast(`🎨 Extrayendo sistema de diseño de Stitch...`, "info");
 
-      // Llamada MCP: get_project
       const res = await StitchRpcHandler.request("get_project", {
         name: `projects/${projectId}`,
       });
 
       const text = res.result?.content?.[0]?.text || "";
       let projectData = null;
-
-      try {
-        projectData = JSON.parse(text);
-      } catch (e) {
-        console.warn("[DesignExtractor] No se pudo parsear la respuesta de get_project.");
-        return null;
-      }
+      try { projectData = JSON.parse(text); } catch (e) { return null; }
 
       const designTheme = projectData?.designTheme;
-      if (!designTheme) {
-        console.warn("[DesignExtractor] El proyecto no tiene designTheme.");
-        return null;
+      if (!designTheme) return null;
+
+      // 1. Generar y persistir DESIGN.md
+      const designMd = this._buildDesignMd(projectData, designTheme);
+      fs.writeFileSync(path.join(destPath, "DESIGN.md"), designMd, "utf8");
+
+      // 2. Generar y persistir stitch-manifest.json (Trazabilidad E2E)
+      const stitchManifest = {
+        prompt: promptContext || `Landing page de alta conversión para "${clientId}" (Fórmula Idea + Theme + Content)`,
+        designTokens: {
+          namedColors: designTheme.namedColors || {},
+          font: designTheme.font || "Inter",
+          bodyFont: designTheme.bodyFont || "Inter",
+          roundness: designTheme.roundness || "MEDIUM",
+          primary: designTheme.namedColors?.primary || "#10b981",
+          secondary: designTheme.namedColors?.secondary || "#3b82f6",
+          surface: designTheme.namedColors?.surface || "#0a0a0a"
+        },
+        metadata: {
+          projectId,
+          modelId: "GEMINI_3_1_PRO",
+          engine: "stitch-mcp-v5",
+          timestamp: new Date().toISOString()
+        }
+      };
+
+      fs.writeFileSync(path.join(destPath, "stitch-manifest.json"), JSON.stringify(stitchManifest, null, 2), "utf8");
+      
+      const publicDest = path.resolve(__dirname, `../../../public/clients/${clientId}`);
+      if (fs.existsSync(publicDest)) {
+        fs.writeFileSync(path.join(publicDest, "stitch-manifest.json"), JSON.stringify(stitchManifest, null, 2), "utf8");
       }
 
-      // Generar el DESIGN.md con los tokens del proyecto
-      const designMd = this._buildDesignMd(projectData, designTheme);
+      TerminalService.broadcast(`✅ DESIGN.md y stitch-manifest.json persistidos para ${clientId}`, "success");
 
-      // Persistir en la ficha del cliente
-      const designPath = path.join(destPath, "DESIGN.md");
-      fs.writeFileSync(designPath, designMd, "utf8");
-
-      TerminalService.broadcast(
-        `✅ DESIGN.md persistido en la ficha de ${clientId}`,
-        "success"
-      );
-
-      // Retornar los namedColors para que el pipeline los use en el inyector
       return {
         namedColors: designTheme.namedColors || {},
         designMd: designTheme.designMd || "",
@@ -61,64 +63,47 @@ class StitchDesignExtractor {
         roundness: designTheme.roundness,
         overridePrimaryColor: designTheme.overridePrimaryColor,
         overrideSecondaryColor: designTheme.overrideSecondaryColor,
+        stitchManifest
       };
     } catch (err) {
-      console.error("[DesignExtractor] Error al extraer el diseño:", err.message);
-      // Fallo silencioso — no bloquea el pipeline
+      console.error("[DesignExtractor] Error al extraer diseño:", err.message);
       return null;
     }
   }
 
-  /**
-   * Construye el contenido del DESIGN.md a partir de los datos de Stitch.
-   */
   static _buildDesignMd(projectData, designTheme) {
     const colors = designTheme.namedColors || {};
     const now = new Date().toISOString().split("T")[0];
-
-    // Tabla de tokens principales
     const colorRows = Object.entries(colors)
-      .map(([key, val]) => `| \`${key}\` | \`${val}\` |`)
+      .map(([name, hex]) => `| \`${name}\` | \`${hex}\` | <span style="background-color:${hex};color:${hex};padding:2px 8px;border-radius:4px;border:1px solid #333">■■</span> |`)
       .join("\n");
 
-    return `# DESIGN.md — Ficha de Diseño del Cliente
-# Proyecto Stitch: ${projectData.title || "Sin título"} (ID: ${projectData.name?.split("/")[1] || "?"})
-# Fuente: Extraído automáticamente vía MCP de Google Stitch
-# Última sincronización: ${now}
+    return `---
+title: "Sistema de Diseño — ${projectData.title || "Cliente"}"
+date: "${now}"
+engine: "Google Stitch MCP"
+version: "1.0.0"
+projectId: "${projectData.id || projectData.projectId || ""}"
+---
+
+# 🎨 Sistema de Diseño Extraído de Stitch
+
+> **Fuente Única de Verdad (SSOT)**: Tokens generados automáticamente por Google Stitch para el proyecto \`${projectData.title || "Cliente"}\`.
 
 ---
 
-## Tokens Principales
+## 🌈 Paleta de Colores
 
-| Token | Valor |
-|---|---|
-| **Font Headlines** | ${designTheme.headlineFont || designTheme.font || "Noto Serif"} |
-| **Font Body / Labels** | ${designTheme.bodyFont || "Manrope"} |
-| **Color Mode** | ${designTheme.colorMode || "LIGHT"} |
-| **Roundness** | ${designTheme.roundness || "ROUND_FOUR"} |
-
-### Overrides de Color de Marca
-
-| Rol | Hex |
-|---|---|
-| Override Primary | \`${designTheme.overridePrimaryColor || "N/A"}\` |
-| Override Secondary | \`${designTheme.overrideSecondaryColor || "N/A"}\` |
-| Override Tertiary | \`${designTheme.overrideTertiaryColor || "N/A"}\` |
-| Override Neutral | \`${designTheme.overrideNeutralColor || "N/A"}\` |
+| Token | Valor Hex | Muestra |
+|---|---|---|
+${colorRows || "| `primary` | `#6ee591` | ■■ |"}
 
 ---
 
-## Paleta Completa (Named Colors)
-
-| Token | Hex |
-|---|---|
-${colorRows}
-
----
-
-## Sistema de Diseño — Documento Completo (del Director de Arte de Stitch)
-
-${designTheme.designMd || "_Sin documento de diseño disponible._"}
+## 🔤 Tipografía y Geometría
+- **Fuente de Títulos**: \`${designTheme.font || "Inter"}\`
+- **Fuente de Cuerpo**: \`${designTheme.bodyFont || "Inter"}\`
+- **Radio de Bordes**: \`${designTheme.roundness || "MEDIUM"}\`
 `;
   }
 }

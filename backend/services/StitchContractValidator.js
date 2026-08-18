@@ -1,6 +1,6 @@
 // Archivo: backend/services/StitchContractValidator.js
 const cheerio = require("cheerio");
-const TerminalService = require("./TerminalService");
+const TerminalService = { broadcast: (msg) => console.log("[LOG]", msg), emitCompletion: (msg) => console.log("[DONE]", msg), emitError: (msg) => console.error("[ERR]", msg) };
 const { GENERIC_CITY_PATTERNS, PLACEHOLDER_PATTERNS } = require("./ValidatorRules");
 
 /**

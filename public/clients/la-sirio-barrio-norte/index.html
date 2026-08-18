@@ -1,0 +1,760 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>La Sirio Barrio Norte</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2a2a2b",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "on-primary-fixed": "#111c2d",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "on-surface": "#e4e2e3",
+                        "on-error": "#690005",
+                        "surface-bright": "#39393a",
+                        "secondary": "#b9c7e0",
+                        "on-secondary-container": "#abb9d2",
+                        "inverse-on-surface": "#303032",
+                        "on-tertiary-container": "#a38c6a",
+                        "on-background": "#e4e2e3",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "surface-variant": "#353536",
+                        "surface-dim": "#131315",
+                        "secondary-container": "#3c4a5e",
+                        "on-primary-container": "#8590a6",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "primary-fixed": "#d8e3fb",
+                        "secondary-fixed": "#d5e3fd",
+                        "surface-container": "#1f1f21",
+                        "on-surface-variant": "#c5c6cd",
+                        "primary-container": "#1e293b",
+                        "inverse-surface": "#e4e2e3",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "error-container": "#93000a",
+                        "outline": "#8f9097",
+                        "tertiary-container": "#35260c",
+                        "tertiary-fixed": "#fadfb8",
+                        "on-secondary": "#233144",
+                        "surface-container-low": "#1b1b1d",
+                        "on-tertiary-fixed": "#271902",
+                        "on-primary": "#263143",
+                        "surface": "#131315",
+                        "background": "#131315",
+                        "outline-variant": "#45474c",
+                        "tertiary": "#ddc39d",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#bcc7de",
+                        "surface-container-lowest": "#0e0e0f",
+                        "inverse-primary": "#545f73",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "primary-fixed-dim": "#bcc7de",
+                        "surface-container-highest": "#353536",
+                        "primary": "#bcc7de",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#3e2e13",
+                        "custom-surface": "#0f172a",
+                        "custom-primary": "#1e293b",
+                        "custom-accent": "#38bdf8",
+                        "custom-secondary": "#334155"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "xl": "80px",
+                        "lg": "48px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "md": "24px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Montserrat"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0f172a; /* Force custom deep dark background */
+            color: #e4e2e3;
+        }
+        .organic-transition {
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+            :root { --font-sans: 'Inter', sans-serif; }
+            body { font-family: var(--font-sans); margin: 0; padding: 0; }
+        </style></head>
+<body class="font-body-md text-on-surface antialiased overflow-x-hidden">
+<!-- TopNavBar (From Shared Components JSON) -->
+<nav class="docked full-width top-0 sticky z-50 glass-nav shadow-sm dark:shadow-none bg-surface-container dark:bg-surface-container organic-transition" role="navigation">
+
+        <div class="flex items-center gap-3">
+          <img src="/nexus_archives/tucu-red/clients/la-sirio-barrio-norte/assets/logo.jpg" alt="La Sirio Barrio Norte" class="h-10 w-10 object-contain rounded-xl border border-white/10 shadow-sm" onerror="this.style.display='none'">
+          <span class="font-bold text-lg text-white font-display tracking-tight">La Sirio Barrio Norte</span>
+        
+        <a href="https://wa.me/543814312590?text=Hola!%20Quisiera%20consultar%20por%20La%20Sirio%20Barrio%20Norte" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-lg flex items-center gap-2">
+          💬 Contactar
+        </a></div>
+</nav>
+<!-- Hero Section -->
+<header class="relative w-full min-h-[90vh] flex items-center justify-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden">
+<!-- Ambient Background Layer -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-[#0f172a]/40 to-[#0f172a] z-10"></div>
+<div class="w-full h-full bg-cover bg-center opacity-40" data-alt="A cinematic, wide-angle shot of a high-end, modern organic gastro-bar interior at night. The scene is illuminated by soft, moody, ambient lighting with subtle cyan and warm golden accents. Deep dark slate and navy tones dominate the color palette (#0f172a, #1e293b). Artisanal cocktails sit elegantly on a sleek dark wood bar counter. The atmosphere is sophisticated, calm, and exclusive." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDX0bj2F33MRFK6-VDC4pVmB9WfIJM2Lt0f4nE38yq8tSrHFRJ7VpOU2PB6aiwIwtO1uj2J-K8917-bTBKzskwSn6X7Tv9qcIarKGy49kQp9a2rKYgnNDcMKvA63mkJc9GXUZbKjn7lc5amnvermdzYkU18S2gk-OKP75KcpQexfnqssUVaZj7LrufGkKooTQi3O__0XVROToY0S9OLajuJJnNdzAZMDU9nHB7eeUVYqlNIqwseuqra1ZUB87cO8Bm6XQsP4YD2vUrr')"></div>
+</div>
+<div class="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-xl">
+<div class="flex-1 flex flex-col items-start gap-lg">
+<div class="inline-flex items-center gap-2 px-sm py-xs rounded-full bg-[#334155] text-on-surface font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse"></span>
+                    Abierto esta noche
+                </div>
+<h1 class="text-headline-lg-mobile md:text-headline-xl font-headline-xl text-on-surface max-w-2xl leading-tight">
+                    Gastronomía Premium y Coctelería de Autor en <span class="text-[#38bdf8]">Barrio Norte</span>
+</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-xl">
+                    Descubre La Sirio. Un refugio nocturno donde la tradición se encuentra con la innovación culinaria en el corazón de San Miguel de Tucumán.
+                </p>
+<div class="flex flex-wrap gap-md mt-sm">
+<a class="bg-[#38bdf8] text-[#0f172a] px-xl py-md rounded-md font-headline-md text-label-md uppercase tracking-wider organic-transition hover:opacity-90 shadow-[0_0_20px_rgba(56,189,248,0.3)]" href="#reservas">
+                        Hacer Reserva
+                    </a>
+<a class="border border-[#334155] text-on-surface px-xl py-md rounded-md font-headline-md text-label-md uppercase tracking-wider organic-transition hover:bg-[#1e293b]" href="#especialidades">
+                        Ver Menú
+                    </a>
+</div>
+<!-- Trust Badge Slot -->
+<div class="mt-lg w-full">
+<div id="nexus-trust_v2_live_badge"></div>
+</div>
+</div>
+<!-- Hero Visual Area -->
+<div class="flex-1 w-full relative hidden lg:block">
+<div class="glass-panel p-base rounded-xl organic-transition hover:translate-y-[-8px]">
+<div class="w-full h-[600px] rounded-lg bg-cover bg-center" data-alt="A close-up, high-end commercial photograph of an artisanal cocktail (like a 'Sirio Sunset') resting on a dark slate table. The drink features a vibrant, warm gradient of colors contrasting beautifully against the deep, dark (#0f172a) background. Soft, directional ambient lighting highlights the condensation on the glass and the fresh garnish. The style is modern, minimalist, and highly appetizing." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCSMfwcYY9cZiwAA-7LKaIPZyrRVdRv6gT2wVzaTmZHojH0H0j5HSw2x0oBkokNufAsah5BOfPWPDDl4yS6rn5TlF-nmjSMrRLMAoQ9gJGuj1eRnDy5O_gsCCsQZASd78-RkDzFhDFBolS8gspPUqiorbkWO0wVIjPUriW6RHQx3SvYW6o7wbY0krmQWllIAKiVCplFr0flf4q5QriyoQ6zHhZFvbT-UvP7Y5dhCVgeBWlnQKxQ_L5NMRTMa1KaR_7jGMfGqNe2gC7')"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Specialties Section (Bento Grid) -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-xl md:py-[120px] relative" id="especialidades">
+<div class="max-w-7xl mx-auto">
+<div class="mb-xl max-w-2xl">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface mb-sm">Nuestras Especialidades</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                    Platos diseñados para despertar los sentidos, elaborados con ingredientes de primera calidad y técnicas de vanguardia.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Highlight Card 1 -->
+<div class="md:col-span-2 glass-panel p-lg rounded-xl flex flex-col md:flex-row gap-lg group organic-transition hover:bg-[#1e293b]">
+<div class="flex-1">
+<div class="w-full h-64 md:h-full rounded-lg bg-cover bg-center" data-alt="A top-down, beautifully styled food photography shot of 'Lomo al Malbec'. A perfectly cooked, thick cut of premium beef tenderloin glazed in a rich, dark Malbec wine reduction. Served on a dark, matte ceramic plate. The lighting is moody and dramatic, casting soft shadows and emphasizing the glossy texture of the sauce against a deep slate background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLwbVUpZheRVa0GB_WgQCn4mfTQP46viHNtLAjws429sMdaWha_YYylcT7Z9UzQw9wyY-fITkzTaN2s2VAMj0D05HJDw76XQ3X_Fa0fUagj0B1vVicctZLDaAW2OByIY6S2oc79T-LGbgU58IW6ijklYOqy7InTnCvdJ7U-JYperJUwQ-S62ZXYvRdbmMtjj8_Vr2tvDILLR_uPd_fHBcqE_25klnIFBN9b4857nCXVv2Wj8zTbHRNXlaDpxTIlaJVf411yPDpmXTn')"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-sm">
+<span class="inline-block px-sm py-xs rounded-full bg-[#334155] w-max text-label-sm font-label-sm text-on-surface">Plato Principal</span>
+<h3 class="text-headline-md font-headline-md text-on-surface">Lomo al Malbec</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-md">
+                            Corte premium de lomo bañado en una reducción intensa de vino Malbec, acompañado de puré rústico trufado.
+                        </p>
+<a class="inline-flex items-center gap-xs text-[#38bdf8] font-label-md text-label-md group-hover:gap-sm organic-transition" href="#">
+                            Pedir ahora <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Highlight Card 2 -->
+<div class="glass-panel p-lg rounded-xl flex flex-col gap-sm group organic-transition hover:bg-[#1e293b]">
+<div class="w-full h-48 rounded-lg bg-cover bg-center mb-sm" data-alt="A sleek, modern glass containing the 'Sirio Sunset' signature cocktail. The drink transitions from a deep amber at the bottom to a bright citrus top. Set against a minimalist dark background (#0f172a). Soft blue ambient light touches the edge of the glass, creating a premium, inviting atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYW2-XJq2oiR_dK-kpzeY_0L18tI4NGsXd0yGzeW9ib70wEUPqZOg3s7uHqlhB5J1wLhccVbnsGbOGPtwOGRYrk_j_pj2Qzpr41P_VCj1zd3Z9-YXB3rQd54a4qBC9b7wphtRGO9AxzpQbQ5hqFhxXCQIuLSyi8B-cqUEkAnLM-OkKFdscO9ROqKilVB1rAG86Z9EhGHM5QOcCAlBXnT5n1W6D8rDCagjXM0Hg65eBNC7z4bbplXO_uJOKaiFyMcCk44A6ozV5UanC')"></div>
+<span class="inline-block px-sm py-xs rounded-full bg-[#334155] w-max text-label-sm font-label-sm text-on-surface">Coctelería</span>
+<h3 class="text-headline-md font-headline-md text-on-surface">Sirio Sunset</h3>
+<p class="text-body-md font-body-md text-on-surface-variant flex-grow">
+                        Nuestra creación insignia. Gin artesanal, notas cítricas y un toque ahumado que evoca el atardecer tucumano.
+                    </p>
+</div>
+<!-- Highlight Card 3 -->
+<div class="md:col-span-3 glass-panel p-lg rounded-xl flex flex-col md:flex-row-reverse gap-lg group organic-transition hover:bg-[#1e293b]">
+<div class="flex-1">
+<div class="w-full h-64 md:h-[300px] rounded-lg bg-cover bg-center" data-alt="A highly detailed shot of 'Salmón Sirio'. A perfectly seared fillet of fresh salmon with a crispy skin, resting on a bed of dark quinoa and vibrant green asparagus. The plating is minimalist and elegant on a dark stoneware dish. Soft, cinematic lighting highlights the rich coral color of the salmon against the dark, moody environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAU3xMR_yLeWbs5UTg0p6_GcV_uF4v8LXLHXHX7c8e3s1qgOefWziZBJbNhIdGFRs4ZmdTXQfWhTDNS5YXtXzt6sDL5Vv5ZnWTkWbq4GeTFYhjNLrXRnO78aiL2f4iSYXZ_ZFM21tbgmb4hfNqCXbWrC-XX_rF_RgYgmJxkCyaiDA1F6XOeuTGBwXd4eMk_n1tKTpJceJfzYyrY7WoL_jazd5Ln5D2-OmEvuJohV5-cdDEJVwhy5SB5ytrIvr3KycJ0wnWhvQduMoRO')"></div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-sm">
+<span class="inline-block px-sm py-xs rounded-full bg-[#334155] w-max text-label-sm font-label-sm text-on-surface">Pescados</span>
+<h3 class="text-headline-md font-headline-md text-on-surface">Salmón Sirio</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-md">
+                            Salmón fresco sellado a la perfección, servido sobre un delicado risotto de azafrán y espárragos grillados.
+                        </p>
+<a class="inline-flex items-center gap-xs text-[#38bdf8] font-label-md text-label-md group-hover:gap-sm organic-transition" href="#">
+                            Pedir ahora <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Atmosphere / Gallery Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-xl bg-[#131315] relative" id="galeria">
+<div class="max-w-7xl mx-auto">
+<div class="mb-xl text-center max-w-2xl mx-auto">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface mb-sm">Nuestra Atmósfera</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                    Un espacio diseñado para desconectar. Iluminación tenue, música envolvente y un servicio impecable.
+                </p>
+</div>
+<!-- Gallery Slot -->
+<!-- WIDGET: Gallery_v2_Stories_Grid -->
+<!-- VIBE: Instagram Stories / Reels — Kinetic, Vertical, Dark/Light Adaptive -->
+<!-- Archivo: backend/stitch/widgets/galleries/gallery_v2_stories_grid.html -->
+
+<section id="stories" class="py-14 bg-transparent dark:bg-zinc-950/40" aria-label="Galería Stories">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1">
+          📸 Momentos Reales
+        </p>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
+          La Sirio Barrio Norte
+        </h2>
+      </div>
+      <!-- Badge IG -->
+      <a href="https://instagram.com/lasirioresto" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 hover:border-pink-500/50 transition-all group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-pink-500">
+          <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"></rect>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"></circle>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle>
+        </svg>
+        <span class="text-xs font-bold text-zinc-600 dark:text-zinc-300 group-hover:text-pink-500 transition-colors">
+          @lasirioresto
+        </span>
+      </a>
+    </div>
+
+    <!-- Stories Grid — 5 cards verticales 4:5 -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+
+      <!-- Story Card 1 -->
+      <div class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-200 dark:bg-zinc-800 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-300">
+        <img src="/nexus_archives/tucu-red/clients/la-sirio-barrio-norte/assets/product_2.jpg" alt="Story 1" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform">
+        <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 right-3">
+          <span class="text-white text-[10px] font-semibold leading-tight line-clamp-2 drop-shadow-lg">
+            
+          </span>
+        </div>
+        <!-- Instagram badge -->
+        <div class="absolute top-2.5 left-2.5 w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 flex items-center justify-center shadow-md">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" stroke-width="2.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2.5"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg>
+        </div>
+      </div>
+
+      <!-- Story Card 2 -->
+      <div class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-200 dark:bg-zinc-800 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-300">
+        <img src="/nexus_archives/tucu-red/clients/la-sirio-barrio-norte/assets/product_3.jpg" alt="Story 2" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform">
+        <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 right-3">
+          <span class="text-white text-[10px] font-semibold leading-tight line-clamp-2 drop-shadow-lg">
+            
+          </span>
+        </div>
+        <div class="absolute top-2.5 left-2.5 w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 flex items-center justify-center shadow-md">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" stroke-width="2.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2.5"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg>
+        </div>
+      </div>
+
+      <!-- Story Card 3 -->
+      <div class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-200 dark:bg-zinc-800 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-300">
+        <img src="/nexus_archives/tucu-red/clients/la-sirio-barrio-norte/assets/product_4.jpg" alt="Story 3" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform">
+        <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 right-3">
+          <span class="text-white text-[10px] font-semibold leading-tight line-clamp-2 drop-shadow-lg">
+            
+          </span>
+        </div>
+        <div class="absolute top-2.5 left-2.5 w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 flex items-center justify-center shadow-md">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" stroke-width="2.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2.5"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg>
+        </div>
+      </div>
+
+      <!-- Story Card 4 -->
+      <div class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-200 dark:bg-zinc-800 cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-300 hidden md:block">
+        <img src="/nexus_archives/tucu-red/clients/la-sirio-barrio-norte/assets/product_1.jpg" alt="Story 4" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform">
+        <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 right-3">
+          <span class="text-white text-[10px] font-semibold leading-tight line-clamp-2 drop-shadow-lg">
+            
+          </span>
+        </div>
+        <div class="absolute top-2.5 left-2.5 w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 flex items-center justify-center shadow-md">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" stroke-width="2.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2.5"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg>
+        </div>
+      </div>
+
+      <!-- Story Card 5 — Ver más en IG -->
+      <div class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-gradient-to-br from-pink-500/10 via-rose-500/10 to-amber-500/10 dark:from-pink-500/20 dark:via-rose-500/20 dark:to-amber-500/20 border-2 border-dashed border-pink-500/30 dark:border-pink-500/40 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 hidden md:flex items-center justify-center">
+        <a href="https://instagram.com/lasirioresto" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 text-center p-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 via-rose-500 to-amber-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-white" stroke="white" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </div>
+          <span class="text-xs font-bold text-pink-500 dark:text-pink-400 leading-tight">Ver todo en Instagram</span>
+          <span class="text-[10px] text-zinc-400">@lasirioresto</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div>
+</section>
+<!-- Booking Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-xl md:py-[120px]" id="reservas">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-xl items-center">
+<div class="flex-1 w-full">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface mb-sm">Asegura tu Mesa</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mb-lg">
+                    Recomendamos realizar su reserva con anticipación para garantizar disponibilidad, especialmente los fines de semana.
+                </p>
+<!-- Booking Slot -->
+<div class="glass-panel p-md md:p-lg rounded-xl">
+<!-- WIDGET: Booking_WhatsApp_Turnero -->
+<!-- VIBE: Modern, Pre-rendered Inline Reservation Panel with WhatsApp Dispatch -->
+<section class="py-16 bg-transparent dark:bg-zinc-950/40 backdrop-blur-md transition-colors" id="booking">
+    <div class="container mx-auto px-4 max-w-3xl text-center">
+        <div class="inline-flex items-center gap-2 mb-3 px-4 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider">
+            <span>📅 Reservas y Turnos Online</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-zinc-900 dark:text-zinc-50 mb-3 tracking-tight">Reservá tu Mesa en La Sirio Barrio Norte</h2>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm max-w-xl mx-auto mb-10">Elegí día y horario para disfrutar la mejor experiencia.</p>
+
+        <!-- Interactive Reservation Card -->
+        <div class="bg-white dark:bg-zinc-900/90 rounded-3xl p-6 md:p-8 shadow-2xl border border-zinc-200 dark:border-zinc-800 text-left transition-all">
+            
+            <!-- Step 1: Select Day -->
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">1. Seleccioná el Día</label>
+                <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="dayPicker">
+                    <button type="button" onclick="selectTurneroDay(this, 'Hoy')" class="turnero-day-btn active-day py-2.5 px-3 rounded-xl border border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold text-xs text-center transition-all">Hoy</button>
+                    <button type="button" onclick="selectTurneroDay(this, 'Mañana')" class="turnero-day-btn py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 font-semibold text-xs text-center hover:border-emerald-500 transition-all">Mañana</button>
+                    <button type="button" onclick="selectTurneroDay(this, 'Viernes')" class="turnero-day-btn py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 font-semibold text-xs text-center hover:border-emerald-500 transition-all">Viernes</button>
+                    <button type="button" onclick="selectTurneroDay(this, 'Sábado')" class="turnero-day-btn py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 font-semibold text-xs text-center hover:border-emerald-500 transition-all">Sábado</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Select Time Slot -->
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">2. Horario Disponible</label>
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="slotPicker">
+                    <button type="button" onclick="selectTurneroSlot(this, '20:00')" class="turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all">20:00</button>
+                    <button type="button" onclick="selectTurneroSlot(this, '21:00')" class="turnero-slot-btn active-slot py-2 rounded-lg border border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-mono text-center transition-all">21:00</button>
+                    <button type="button" onclick="selectTurneroSlot(this, '21:30')" class="turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all">21:30</button>
+                    <button type="button" onclick="selectTurneroSlot(this, '22:00')" class="turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all">22:00</button>
+                    <button type="button" onclick="selectTurneroSlot(this, '22:30')" class="turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all">22:30</button>
+                    <button type="button" onclick="selectTurneroSlot(this, '23:00')" class="turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all">23:00</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Person Details & Dispatch -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1.5">Nombre</label>
+                    <input type="text" id="turneroName" placeholder="Tu nombre" class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1.5">Cantidad de Personas</label>
+                    <select id="turneroPax" class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="2 personas">2 personas</option>
+                        <option value="4 personas" selected="">4 personas</option>
+                        <option value="6 personas">6 personas</option>
+                        <option value="Mesa Grande (8+ personas)">Mesa Grande (8+ personas)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CTA Submit -->
+            <button type="button" onclick="dispatchTurneroWhatsApp()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-base shadow-xl flex items-center justify-center gap-3 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
+                <span>Confirmar Reserva por WhatsApp</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+            </button>
+            <p class="text-center text-[11px] text-zinc-400 dark:text-zinc-500 mt-3">⚡ Confirmación instantánea directa por WhatsApp sin intermediarios.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    let selectedDay = 'Hoy';
+    let selectedSlot = '21:00';
+    const rawWaNumber = '543814312590' || '+5493815559876';
+
+    function selectTurneroDay(btn, day) {
+        selectedDay = day;
+        document.querySelectorAll('.turnero-day-btn').forEach(b => {
+            b.className = 'turnero-day-btn py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 font-semibold text-xs text-center hover:border-emerald-500 transition-all';
+        });
+        btn.className = 'turnero-day-btn active-day py-2.5 px-3 rounded-xl border border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold text-xs text-center transition-all';
+    }
+
+    function selectTurneroSlot(btn, slot) {
+        selectedSlot = slot;
+        document.querySelectorAll('.turnero-slot-btn').forEach(b => {
+            b.className = 'turnero-slot-btn py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 text-xs font-mono text-center hover:border-emerald-500 transition-all';
+        });
+        btn.className = 'turnero-slot-btn active-slot py-2 rounded-lg border border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-mono text-center transition-all';
+    }
+
+    function dispatchTurneroWhatsApp() {
+        const name = document.getElementById('turneroName')?.value.trim() || 'Cliente';
+        const pax = document.getElementById('turneroPax')?.value || '4 personas';
+        const msg = `¡Hola! Quiero reservar una mesa:\n👤 *Nombre:* ${name}\n📅 *Día:* ${selectedDay}\n⏰ *Horario:* ${selectedSlot}\n👥 *Mesa para:* ${pax}\n\n¿Tienen disponibilidad?`;
+        const cleanPhone = rawWaNumber.replace(/[^0-9]/g, '');
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+</script>
+
+</div>
+</div>
+<div class="flex-1 w-full hidden md:block">
+<div class="w-full h-[600px] rounded-xl bg-cover bg-center shadow-[0_10px_30px_rgba(0,0,0,0.4)]" data-alt="A sophisticated, dimly lit interior view of a high-end restaurant table setup ready for guests. Elegant wine glasses catch subtle glints of warm light. The table is dark slate, and the seating is plush deep navy velvet. In the background, the soft blur of a glowing, modern bar area creates depth. The overall aesthetic is exclusive, calm, and premium dark mode." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5LCqFiG4wlpH9M2bFV4BOq2tDeNuBiIhcvb4x6IijDwnfhLnB1xTEOkYW_E8jEfg9TxF1c_0UK1sPl8elVHon_dZIOflfrb8VW48HM6cbxcMF7nn0dp4mSJ34mzuFai8Put1HuqA7Oblk1BBNVYSMZ1JbbWlYCLBzX2gqOMc17i7GEFjYLiKqxDJI5UwekXbpUX2aJECXXsv5g6YOg8yyjjO_FdmDLklKYCr_4_i2gNK4VftMw1VduFhLeSpAHOFxu2zhaOw4yJSI')"></div>
+</div>
+</div>
+</section>
+<!-- Reviews Section -->
+<section class="w-full py-xl bg-[#0f172a] border-t border-[#334155]/30">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop mb-lg text-center">
+<h2 class="text-headline-md font-headline-md text-on-surface">Lo que dicen nuestros clientes</h2>
+</div>
+<!-- Reviews Marquee Slot -->
+<!-- WIDGET: Social_Marquee_Reviews_v2 -->
+<!-- VIBE: Trust, Kinetic, Dark/Light Adaptive — Cinta continua con hover-pause -->
+<style>
+    @keyframes marqueeReviews {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+        animation: marqueeReviews 40s linear infinite;
+        display: flex;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+</style>
+
+<section class="py-14 bg-transparent dark:bg-zinc-950/50 backdrop-blur-md border-y border-zinc-200 dark:border-zinc-800/60 overflow-hidden relative" id="reviews">
+    <!-- Gradientes de fade lateral -->
+    <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+
+    <div class="text-center mb-8 px-4">
+        <div class="inline-flex items-center gap-2 mb-3 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-4 opacity-90">
+            <span class="text-zinc-600 dark:text-zinc-300 text-xs font-semibold">4.2 ⭐ (890 opiniones) • Google Reviews</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">Lo que dicen nuestros clientes</h2>
+    </div>
+
+    <!-- Marquee Track (duplicado para loop infinito) -->
+    <div class="flex overflow-hidden">
+        <div class="marquee-track gap-4">
+            <!-- Loop 1 -->
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-amber-500/15 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center font-bold text-xs border border-amber-500/20">M</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Martín G.</p>
+                            <p class="text-[10px] text-zinc-400">Local Guide</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Exquisitos platos árabes... Muy cálido el lugar"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center font-bold text-xs border border-emerald-500/20">S</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Sofía R.</p>
+                            <p class="text-[10px] text-zinc-400">Cliente Frecuente</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Muy rica la comida. Si no podemos ir, pedimos a su delivery.Muy buena la atención.Muy recomendable."</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-500/15 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center font-bold text-xs border border-blue-500/20">L</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Luciano T.</p>
+                            <p class="text-[10px] text-zinc-400">Verificado</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Espectacular la comida riquísima toda vale la pena, el servicio excelente"</p>
+            </div>
+
+            <!-- Loop 2 (Duplicado para loop infinito) -->
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-amber-500/15 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center font-bold text-xs border border-amber-500/20">M</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Martín G.</p>
+                            <p class="text-[10px] text-zinc-400">Local Guide</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Exquisitos platos árabes... Muy cálido el lugar"</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center font-bold text-xs border border-emerald-500/20">S</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Sofía R.</p>
+                            <p class="text-[10px] text-zinc-400">Cliente Frecuente</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Muy rica la comida. Si no podemos ir, pedimos a su delivery.Muy buena la atención.Muy recomendable."</p>
+            </div>
+
+            <div class="flex-shrink-0 w-72 bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-500/15 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center font-bold text-xs border border-blue-500/20">L</div>
+                        <div>
+                            <p class="font-bold text-xs text-zinc-900 dark:text-zinc-100">Luciano T.</p>
+                            <p class="text-[10px] text-zinc-400">Verificado</p>
+                        </div>
+                    </div>
+                    <div class="text-amber-400 text-xs">★★★★★</div>
+                </div>
+                <p class="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed italic">"Espectacular la comida riquísima toda vale la pena, el servicio excelente"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</section>
+<!-- Contact Dock Slot (Fixed or floating, depending on slot implementation) -->
+<div id="nexus-contact_v2_action_dock"></div>
+<!-- Footer (From Shared Components JSON + Map Slot) -->
+<footer class="bg-surface-dim dark:bg-surface-dim border-t border-secondary/30 full-width pt-xl pb-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-mobile md:px-margin-desktop w-full max-w-7xl mx-auto mb-xl">
+<!-- Brand & Info -->
+<div class="flex flex-col gap-sm">
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-on-surface">La Sirio Barrio Norte</span>
+<p class="text-body-md font-body-md text-on-secondary-container mt-xs max-w-xs">
+                    El punto de encuentro exclusivo para los amantes de la buena gastronomía en Tucumán.
+                </p>
+</div>
+<!-- Quick Links -->
+<div class="flex flex-col gap-sm">
+<h4 class="text-headline-sm font-headline-sm text-secondary dark:text-secondary mb-xs">Navegación</h4>
+<ul class="flex flex-col gap-sm">
+<li><a class="text-on-secondary-container text-body-md font-body-md hover:text-primary transition-colors duration-300" href="#">Contacto</a></li>
+<li><a class="text-on-secondary-container text-body-md font-body-md hover:text-primary transition-colors duration-300" href="#">Horarios</a></li>
+<li><a class="text-on-secondary-container text-body-md font-body-md hover:text-primary transition-colors duration-300" href="#">Mapa de Sitio</a></li>
+<li><a class="text-on-secondary-container text-body-md font-body-md hover:text-primary transition-colors duration-300" href="#">Privacidad</a></li>
+</ul>
+</div>
+<!-- Map Slot -->
+<div class="flex flex-col gap-sm w-full h-48 md:h-full min-h-[200px] rounded-lg overflow-hidden bg-[#1e293b]">
+
+      <section class="py-16 bg-transparent text-center" id="ubicacion">
+        <div class="container mx-auto px-4 max-w-4xl">
+          <h3 class="text-3xl font-extrabold text-white mb-2">Cómo Llegar a La Sirio Barrio Norte</h3>
+          <p class="text-zinc-400 mb-8 text-sm">Maipú 575, T4000 San Miguel de Tucumán, Tucumán, Argentina</p>
+          <a href="https://maps.google.com/?q=La%20Sirio%20Barrio%20Norte%20Maip%C3%BA%20575%2C%20T4000%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n%2C%20Argentina" target="_blank" class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-2xl transition-all shadow-xl hover:scale-105">Abrir en Google Maps 🗺️</a>
+        </div>
+      </section>
+</div>
+</div>
+<!-- Copyright -->
+<div class="w-full px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto text-center border-t border-[#334155]/30 pt-lg">
+<p class="text-body-md font-body-md text-on-secondary-container">© 2024 La Sirio Barrio Norte. Todos los derechos reservados.</p>
+</div>
+</footer>
+<!-- WIDGET: Trust_v2_Live_Badge -->
+<!-- VIBE: Authority Signal, Floating Trust Pill — Dark/Light Adaptive -->
+<!-- Archivo: backend/stitch/widgets/social/trust_v2_live_badge.html -->
+
+<!-- Píldora flotante fija (desktop + mobile) -->
+<div id="trustBadge" class="fixed bottom-4 left-4 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-full
+            bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md
+            border border-zinc-200 dark:border-zinc-800
+            shadow-xl shadow-black/10 dark:shadow-black/40
+            hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-default
+            group" role="complementary" aria-label="Calificación en Google">
+
+  <!-- Google Icon -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-4 opacity-90 flex-shrink-0">
+
+  <!-- Separador vertical -->
+  <div class="w-px h-5 bg-zinc-200 dark:bg-zinc-700 flex-shrink-0"></div>
+
+  <!-- Estrellas -->
+  <div class="flex items-center gap-0.5 flex-shrink-0" aria-hidden="true">
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+  </div>
+
+  <!-- Rating + Counter -->
+  <div class="flex flex-col leading-tight">
+    <span class="text-xs font-extrabold text-zinc-900 dark:text-zinc-50 tabular-nums">
+      4.2
+    </span>
+    <span class="text-[9px] text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
+      890 opiniones
+    </span>
+  </div>
+
+  <!-- Pulse live indicator -->
+  <span class="relative flex-shrink-0">
+    <span class="absolute inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+  </span>
+
+</div>
+
+<!-- Versión inline/embebida para integración en sección hero (no flotante) -->
+<div id="trustBadgeInline" class="hidden inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full
+            bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md
+            border border-zinc-200 dark:border-zinc-800
+            shadow-lg shadow-black/5" role="complementary" aria-label="Calificación en Google">
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-3.5 opacity-90">
+  <div class="w-px h-4 bg-zinc-200 dark:bg-zinc-700"></div>
+  <div class="flex items-center gap-0.5">
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+    <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+  </div>
+  <span class="text-xs font-bold text-zinc-900 dark:text-zinc-50">4.2 · 890 opiniones</span>
+</div>
+
+<script>
+  // Auto-ocultar badge flotante si el action-dock ya está visible (evitar colisión mobile)
+  (function () {
+    const dock = document.getElementById('actionDock');
+    const badge = document.getElementById('trustBadge');
+    if (dock && badge && window.innerWidth < 768) {
+      badge.classList.add('hidden');
+    }
+  })();
+</script>
+<!-- WIDGET: Contact_Action_Dock_v2 -->
+<!-- VIBE: Tactical, Mobile-First, Floating Bottom Dock — Dark/Light Adaptive -->
+<div id="actionDock" class="fixed bottom-0 left-0 w-full z-50 md:hidden">
+    <!-- Dock Background -->
+    <div class="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg border-t border-zinc-200 dark:border-zinc-800 shadow-2xl px-4 py-3">
+        <div class="flex items-center justify-around gap-2 max-w-sm mx-auto">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/543814312590" target="_blank" rel="noopener noreferrer" class="flex-1 flex flex-col items-center gap-1 py-2 px-3 rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 transition-all active:scale-95">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-[#25D366]">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+                </svg>
+                <span class="text-[10px] font-bold text-[#25D366]">WhatsApp</span>
+            </a>
+
+            <!-- Reserva (Turnero) -->
+            <button onclick="scrollToDockTarget('booking')" class="flex-1 flex flex-col items-center gap-1 py-2 px-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all active:scale-95">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-emerald-500">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="text-[10px] font-bold text-emerald-500">Reservar</span>
+            </button>
+
+            <!-- Llamada Directa -->
+            <a href="tel:543814312590" class="flex-1 flex flex-col items-center gap-1 py-2 px-3 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-all active:scale-95">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-500">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.48 11 19.79 19.79 0 01.36 2.38 2 2 0 012.34.22h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.77-1.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
+                </svg>
+                <span class="text-[10px] font-bold text-blue-500">Llamar</span>
+            </a>
+
+            <!-- Ubicación -->
+            <a href="https://maps.google.com/?q=La%20Sirio%20Barrio%20Norte%20Maip%C3%BA%20575%2C%20T4000%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n%2C%20Argentina" target="_blank" rel="noopener noreferrer" class="flex-1 flex flex-col items-center gap-1 py-2 px-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-all active:scale-95">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-amber-500">
+                    <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"></path>
+                    <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+                <span class="text-[10px] font-bold text-amber-500">Cómo Llegar</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function scrollToDockTarget(targetId) {
+        const target = document.getElementById(targetId) || document.querySelector(`#${targetId}`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+</script>
+</body></html>

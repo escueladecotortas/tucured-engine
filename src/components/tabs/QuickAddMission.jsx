@@ -1,129 +1,171 @@
-// Archivo: frontend/src/components/tabs/QuickAddMission.jsx
-// Formulario inteligente con análisis heurístico de contexto para nuevas misiones.
-// Extraído del monolito MissionsTab.jsx — Ley de 200 Líneas 2026.
+// Archivo: src/components/tabs/QuickAddMission.jsx
+// Creador de Misiones con Plantillas del Embudo Comercial y Análisis Heurístico
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Zap, User } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Terminal, Zap, Search, Palette, Rocket, MessageSquare } from 'lucide-react';
 import { PRIORITY_CONFIG, AGENTS } from './missions-config';
 
-/**
- * QuickAddMission — Formulario de alta de misión con análisis heurístico de intención.
- */
-const QuickAddMission = ({ onAdd, onCancel }) => {
-    const [input, setInput] = useState('');
-    const [analysis, setAnalysis] = useState({ priority: 'medium', agent: null, detectedType: 'generic', isAutomation: false, reqTokens: false });
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
+const FUNNEL_TEMPLATES = [
+  {
+    id: 'scraping',
+    icon: Search,
+    title: 'Scraping de Zona y Prospección',
+    desc: 'Extracción de 20 comercios en Tucumán (Gastronomía/Estética).',
+    agent: 'icaro',
+    priority: 'high',
+    automationType: 'ai_action',
+    requiresTokens: true
+  },
+  {
+    id: 'stitch',
+    icon: Palette,
+    title: 'Generar Demo Stitch de Alta Conversión',
+    desc: 'Ensamble de landing demo con Stitch Showroom y tokens visuales.',
+    agent: 'atenea',
+    priority: 'critical',
+    automationType: 'system_action',
+    requiresTokens: false
+  },
+  {
+    id: 'deploy',
+    icon: Rocket,
+    title: 'Deploy en Subdominio y Auditoría Biónica',
+    desc: 'Publicación de preview y verificación biónica de accesibilidad.',
+    agent: 'argus',
+    priority: 'high',
+    automationType: 'system_action',
+    requiresTokens: false
+  },
+  {
+    id: 'closing',
+    icon: MessageSquare,
+    title: 'Propuesta Comercial y Cierre WhatsApp',
+    desc: 'Redacción de propuesta comercial personalizada con enlace demo.',
+    agent: 'lorem',
+    priority: 'medium',
+    automationType: 'ai_action',
+    requiresTokens: true
+  }
+];
 
-    // Análisis heurístico con debounce
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (!input.trim()) {
-                setAnalysis({ priority: 'medium', agent: null, detectedType: 'generic' });
-                return;
-            }
-            setIsAnalyzing(true);
-            const text = input.toLowerCase();
+export default function QuickAddMission({ onAdd, onCancel }) {
+  const [input, setInput] = useState('');
+  const [analysis, setAnalysis] = useState({ priority: 'medium', agent: null, detectedType: 'generic', isAutomation: false, reqTokens: false });
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-            // Lógica de prioridad
-            let priority = 'medium';
-            if (text.includes('urgente') || text.includes('crítico') || text.includes('error fatal')) priority = 'critical';
-            else if (text.includes('importante') || text.includes('prioridad')) priority = 'high';
-            else if (text.includes('cuando puedas') || text.includes('baja')) priority = 'low';
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!input.trim()) {
+        setAnalysis({ priority: 'medium', agent: null, detectedType: 'generic' });
+        return;
+      }
+      setIsAnalyzing(true);
+      const text = input.toLowerCase();
+      let priority = 'medium';
+      if (text.includes('urgente') || text.includes('crítico')) priority = 'critical';
+      else if (text.includes('importante') || text.includes('alta')) priority = 'high';
 
-            // Lógica de agente
-            let agent = null;
-            if (text.includes('código') || text.includes('bug') || text.includes('react') || text.includes('api')) agent = 'codi';
-            else if (text.includes('diseño') || text.includes('logo') || text.includes('color')) agent = 'atenea';
-            else if (text.includes('copy') || text.includes('texto') || text.includes('redacción')) agent = 'lorem';
-            else if (text.includes('ventas') || text.includes('growth') || text.includes('marketing')) agent = 'icaro';
-            else if (text.includes('test') || text.includes('qa') || text.includes('prueba')) agent = 'argus';
+      let agent = null;
+      if (text.includes('código') || text.includes('bug')) agent = 'codi';
+      else if (text.includes('diseño') || text.includes('demo') || text.includes('stitch')) agent = 'atenea';
+      else if (text.includes('copy') || text.includes('whatsapp') || text.includes('propuesta')) agent = 'lorem';
+      else if (text.includes('leads') || text.includes('scraping') || text.includes('prospectos')) agent = 'icaro';
+      else if (text.includes('qa') || text.includes('biónica') || text.includes('test')) agent = 'argus';
 
-            // Lógica de automatización
-            let isAutomation = false, reqTokens = false, detectedType = 'generic';
-            if (text.includes('sincronizar') || text.includes('backup') || text.includes('desplegar') || text.includes('deploy')) {
-                isAutomation = true; detectedType = 'system_action';
-            } else if (text.includes('redactar') || text.includes('generar') || text.includes('analizar') || text.includes('auditar')) {
-                isAutomation = true; reqTokens = true; detectedType = 'ai_action';
-            }
+      setTimeout(() => {
+        setAnalysis({ priority, agent, detectedType: 'generic', isAutomation: false, reqTokens: false });
+        setIsAnalyzing(false);
+      }, 300);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [input]);
 
-            setTimeout(() => {
-                setAnalysis({ priority, agent, detectedType, isAutomation, reqTokens });
-                setIsAnalyzing(false);
-            }, 600);
-        }, 800);
-        return () => clearTimeout(timer);
-    }, [input]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    onAdd({
+      title: input.split('\n')[0].substring(0, 60),
+      description: input,
+      priority: analysis.priority,
+      assignedTo: analysis.agent || 'nexus',
+      status: 'pending'
+    });
+    setInput('');
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!input.trim()) return;
-        const lines = input.split('\n');
-        const title = lines[0].length > 50 ? lines[0].substring(0, 50) + '...' : lines[0];
-        onAdd({
-            title,
-            description: input.length > title.length ? input : '',
-            priority: analysis.priority,
-            assignedTo: analysis.agent,
-            status: 'pending',
-            aiGenerated: true,
-            ...(analysis.isAutomation ? { automationType: analysis.detectedType, requiresTokens: analysis.reqTokens } : {})
-        });
-        setInput('');
-    };
+  const handleApplyTemplate = (tpl) => {
+    onAdd({
+      title: tpl.title,
+      description: tpl.desc,
+      priority: tpl.priority,
+      assignedTo: tpl.agent,
+      status: 'pending',
+      automationType: tpl.automationType,
+      requiresTokens: tpl.requiresTokens
+    });
+  };
 
-    const priorityConfig = PRIORITY_CONFIG[analysis.priority];
-    const agentConfig = AGENTS.find(a => a.id === analysis.agent);
-
-    return (
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
-            className="mb-8 relative group">
-            <div className={`absolute -inset-0.5 bg-linear-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity blur duration-1000 ${isAnalyzing ? 'animate-pulse' : ''}`} />
-            <form onSubmit={handleSubmit} className="relative bg-[#0A0A1A] border border-white/10 rounded-xl p-0 overflow-hidden shadow-2xl">
-                {/* Header con indicadores de análisis */}
-                <div className="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center justify-between min-h-[40px]">
-                    <div className="flex items-center gap-2">
-                        <Terminal className="w-3 h-3 text-indigo-400" />
-                        <span className="text-[10px] font-mono text-indigo-300 tracking-wider">
-                            {isAnalyzing ? 'ANALIZANDO CONTEXTO...' : 'ASISTENTE IA LISTO'}
-                        </span>
-                    </div>
-                    <div className="flex gap-2">
-                        <AnimatePresence>
-                            <motion.span key={analysis.priority} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-                                className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border bg-${priorityConfig.color}-500/10 text-${priorityConfig.color}-400 border-${priorityConfig.color}-500/20 lowercase`}>
-                                <priorityConfig.icon className="w-3 h-3" /> {priorityConfig.label}
-                            </motion.span>
-                            {agentConfig && (
-                                <motion.span key={analysis.agent} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-                                    className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border bg-${agentConfig.color}-500/10 text-${agentConfig.color}-400 border-${agentConfig.color}-500/20 lowercase`}>
-                                    <User className="w-3 h-3" /> @{agentConfig.name}
-                                </motion.span>
-                            )}
-                        </AnimatePresence>
-                    </div>
+  return (
+    <motion.div initial={{ opacity: 0, y: -15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mb-6 space-y-4 font-mono">
+      {/* Plantillas Rápidas del Embudo */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+        {FUNNEL_TEMPLATES.map((tpl) => {
+          const Icon = tpl.icon;
+          const prio = PRIORITY_CONFIG[tpl.priority];
+          return (
+            <button
+              key={tpl.id}
+              onClick={() => handleApplyTemplate(tpl)}
+              className="p-3 bg-[#0A0A1A]/80 hover:bg-indigo-950/40 border border-white/10 hover:border-indigo-500/50 rounded-xl text-left transition-all group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-1.5 rounded-lg bg-white/5 group-hover:bg-indigo-500/20 text-indigo-400">
+                  <Icon className="w-4 h-4" />
                 </div>
-                {/* Área de texto principal */}
-                <div className="p-4">
-                    <textarea value={input} onChange={e => setInput(e.target.value)} rows={2} autoFocus
-                        placeholder="Escribe tu misión en lenguaje natural (ej: 'Codi, necesito arreglar crítico el login')..."
-                        className="w-full bg-transparent text-lg text-white placeholder-gray-600 focus:outline-none resize-none font-light"
-                        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }} />
-                </div>
-                {/* Controles inferiores */}
-                <div className="px-4 py-3 bg-white/2 flex justify-between items-center">
-                    <button type="button" onClick={onCancel}
-                        className="text-xs text-gray-500 hover:text-white transition-colors flex items-center gap-1">
-                        <span>ESC</span> Cancelar
-                    </button>
-                    <button type="submit" disabled={!input.trim()}
-                        className="flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20">
-                        <Zap className="w-3 h-3 fill-current" /> INICIAR MISIÓN
-                    </button>
-                </div>
-            </form>
-        </motion.div>
-    );
-};
+                <span className={`text-[9px] px-1.5 py-0.5 rounded border border-${prio.color}-500/30 bg-${prio.color}-500/10 text-${prio.color}-400`}>
+                  {prio.label}
+                </span>
+              </div>
+              <div>
+                <h5 className="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors line-clamp-1">{tpl.title}</h5>
+                <p className="text-[10px] text-gray-400 line-clamp-2 mt-0.5">{tpl.desc}</p>
+              </div>
+              <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[9px] text-gray-500">
+                <span>@{tpl.agent}</span>
+                <span className="text-indigo-400 font-bold group-hover:underline">+ Instanciar</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
 
-export default QuickAddMission;
+      {/* Input Libre en Lenguaje Natural */}
+      <form onSubmit={handleSubmit} className="bg-[#0A0A1A] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+        <div className="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center justify-between text-[10px] text-gray-400">
+          <div className="flex items-center gap-2">
+            <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{isAnalyzing ? 'ANALIZANDO CONTEXTO...' : 'NUEVA MISIÓN PERSONALIZADA'}</span>
+          </div>
+          <span>Prioridad inferida: <strong className="text-white">{analysis.priority}</strong></span>
+        </div>
+        <div className="p-3 flex gap-2">
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Escribe tu misión (ej: 'Ícaro, prospectar 15 gimnasios en Yerba Buena')..."
+            className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 focus:outline-none"
+          />
+          <button type="button" onClick={onCancel} className="px-3 py-1.5 text-xs text-gray-400 hover:text-white">Cancelar</button>
+          <button
+            type="submit"
+            disabled={!input.trim()}
+            className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer shadow-lg shadow-indigo-900/20"
+          >
+            <Zap className="w-3 h-3" /> Crear
+          </button>
+        </div>
+      </form>
+    </motion.div>
+  );
+}

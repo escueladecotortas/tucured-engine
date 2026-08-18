@@ -1,21 +1,18 @@
-// Archivo: frontend/src/components/tabs/overview/PowerGridLayout.jsx
+// Archivo: src/components/tabs/overview/PowerGridLayout.jsx
 import React from 'react';
 import { Clock, ArrowRight } from 'lucide-react';
-import TokenObservabilityWidget from '../../widgets/TokenObservabilityWidget';
+import { OverviewKpis } from './OverviewKpis';
 import WelcomeKitTracker from '../../dashboard/WelcomeKitTracker';
 import SmartGantt from '../../widgets/SmartGantt';
-import { KpiBar } from './KpiBar';
 
 export function PowerGridLayout({ vibe, projectData, projectId, assets, onNavigate }) {
     return (
         <div className="flex flex-col h-full animate-in fade-in duration-1000 relative">
-            <KpiBar vibe={vibe} projectData={projectData} />
-
-            <div className="flex-1 p-4 lg:p-8 flex flex-col gap-6 overflow-hidden max-w-7xl mx-auto w-full">
-                {/* Upper Section: Observability */}
+            <div className="flex-1 p-4 lg:p-6 flex flex-col gap-6 overflow-hidden max-w-7xl mx-auto w-full">
+                {/* Upper Section: Radar Operativo Real de Tucu Red */}
                 {(projectId === "system" || projectId === "tucu-red") && (
                     <div className="shrink-0 animate-in slide-in-from-top-4 duration-700">
-                        <TokenObservabilityWidget vibe={vibe} />
+                        <OverviewKpis onNavigate={onNavigate} />
                     </div>
                 )}
 

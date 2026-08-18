@@ -1,11 +1,37 @@
-// Archivo: frontend/src/hooks/useAppLogic.js
+// Archivo: src/hooks/useAppLogic.js
 import { useState, useEffect } from 'react';
 
+/**
+ * getCleanRoute - Normaliza rutas limpias HTML5 y convierte hashes legados
+ */
+export const getCleanRoute = () => {
+  if (typeof window === 'undefined') return '/';
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#/')) {
+    const clean = hash.replace(/^#/, '');
+    window.history.replaceState({}, '', clean);
+    return clean;
+  }
+  const path = window.location.pathname;
+  const search = window.location.search;
+  return (path === '' || path === '/') ? '/' : `${path}${search}`;
+};
+
+/**
+ * navigate - Despachador de navegación SPA limpia sin recarga
+ */
+export const navigate = (path) => {
+  if (typeof window === 'undefined') return;
+  const target = path.startsWith('#/') ? path.replace(/^#/, '') : path;
+  window.history.pushState({}, '', target);
+  window.dispatchEvent(new Event('nexus-navigate'));
+};
+
 export const useAppLogic = () => {
-  const [route, setRoute] = useState(window.location.hash || '#/');
+  const [route, setRoute] = useState(getCleanRoute);
   const [isMobileMode, setIsMobileMode] = useState(false);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
 
@@ -27,20 +53,26 @@ export const useAppLogic = () => {
   }, []);
 
   useEffect(() => {
-    const handleHashChange = () => {
-        const h = window.location.hash || '#/';
-        setRoute(h);
-        if (h === '#/mobile') setIsMobileMode(true);
+    const handleRouteChange = () => {
+      const current = getCleanRoute();
+      setRoute(current);
+      if (current.startsWith('/mobile')) setIsMobileMode(true);
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleRouteChange);
+    window.addEventListener('hashchange', handleRouteChange);
+    window.addEventListener('nexus-navigate', handleRouteChange);
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+      window.removeEventListener('hashchange', handleRouteChange);
+      window.removeEventListener('nexus-navigate', handleRouteChange);
+    };
   }, []);
 
   const startListening = () => {
     if (!('webkitSpeechRecognition' in window)) {
-        alert("Voice not supported on this device.");
-        setTranscript('NOT SUPPORTED');
-        return;
+      alert("Voice not supported on this device.");
+      setTranscript('NOT SUPPORTED');
+      return;
     }
     const recognition = new window.webkitSpeechRecognition();
     recognition.continuous = false;
@@ -48,9 +80,9 @@ export const useAppLogic = () => {
     recognition.lang = 'es-ES';
     recognition.onstart = () => { setIsListening(true); setTranscript('LISTENING...'); };
     recognition.onresult = (event) => {
-        const text = event.results[0][0].transcript;
-        setTranscript(text);
-        setTimeout(() => setTranscript('PROCESSED: ' + text), 1000);
+      const text = event.results[0][0].transcript;
+      setTranscript(text);
+      setTimeout(() => setTranscript('PROCESSED: ' + text), 1000);
     };
     recognition.onerror = (event) => { setIsListening(false); setTranscript('ERROR: ' + event.error); };
     recognition.onend = () => setIsListening(false);
@@ -63,6 +95,7 @@ export const useAppLogic = () => {
     showCommandPalette, setShowCommandPalette,
     windowWidth,
     isListening, transcript, setTranscript,
-    startListening
+    startListening,
+    navigate
   };
 };
