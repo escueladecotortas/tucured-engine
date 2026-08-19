@@ -15,6 +15,18 @@ const StitchDesignExtractor = require("./StitchDesignExtractor");
 const TerminalService = require("../telemetry/TerminalService");
 
 class StitchPipeline {
+  static _deepSearchScreenId(res) {
+    const raw = JSON.stringify(res);
+    const match = raw.match(/screen_([a-zA-Z0-9_-]+)/);
+    return match ? match[0] : null;
+  }
+
+  static _deepSearchDownloadUrl(res) {
+    const raw = JSON.stringify(res);
+    const match = raw.match(/https:\/\/api\.stitch\.dev\/[^\s"'\\]+\.html/);
+    return match ? match[0] : null;
+  }
+
   static async generate(title, prompt, clientId, prospectData, client) {
     try {
       console.log(`\n[Stitch MCP v5.2] 🚀 Iniciando Pipeline Iterativo para "${title}"...`);
@@ -27,7 +39,7 @@ class StitchPipeline {
       TerminalService.broadcast(`🌱 Paso 1/3: Ensamblando Semilla Narrativa por Arquetipo...`, "info", 25, "ATENEA");
       const seedPrompt = StitchPromptBuilder.buildPrompt(prospectData);
       const seedResponse = await client._generateScreen(projectId, seedPrompt);
-      const seedScreenId = StitchParser.extractScreenId(seedResponse);
+      const seedScreenId = StitchParser.extractScreenId(seedResponse) || this._deepSearchScreenId(seedResponse);
 
       if (!seedScreenId) {
         console.warn(`[Stitch MCP] ⚠️ No se detectó seedScreenId. Intentando fallback...`);
@@ -44,14 +56,14 @@ class StitchPipeline {
 
       // PASO 3: POLLING Y DESCARGA RESILIENTE CON SELECTOR INTELIGENTE
       TerminalService.broadcast(`⬇️ Paso 3/3: Descarga, Inyección & Persistencia...`, "info", 75, "CODI");
-      const editedScreenId = StitchParser.extractScreenId(editResponse);
+      const editedScreenId = StitchParser.extractScreenId(editResponse) || this._deepSearchScreenId(editResponse);
       const targetScreenId = editedScreenId || seedScreenId;
       
       let downloadUrl = null;
       for (let attempt = 1; attempt <= 4; attempt++) {
         try {
           const rawScreenText = await client._getScreen(projectId, targetScreenId);
-          downloadUrl = StitchParser.extractDownloadUrlFromScreen(rawScreenText) || StitchParser.extractDownloadUrl(rawScreenText);
+          downloadUrl = StitchParser.extractDownloadUrlFromScreen(rawScreenText) || StitchParser.extractDownloadUrl(rawScreenText) || this._deepSearchDownloadUrl(rawScreenText);
           if (downloadUrl) break;
         } catch (e) {
           console.warn(`   ⚠️ [Paso 3] Intento ${attempt}/4: ${e.message}`);
@@ -60,7 +72,7 @@ class StitchPipeline {
       }
 
       if (!downloadUrl) {
-        downloadUrl = StitchParser.extractDownloadUrl(editResponse) || StitchParser.extractDownloadUrl(seedResponse);
+        downloadUrl = StitchParser.extractDownloadUrl(editResponse) || this._deepSearchDownloadUrl(editResponse) || StitchParser.extractDownloadUrl(seedResponse) || this._deepSearchDownloadUrl(seedResponse);
       }
 
       if (!downloadUrl) {
@@ -112,8 +124,11 @@ class StitchPipeline {
 
   static async fallback(title, prompt, clientId, prospectData, projectId, widgetManifest, client) {
     const genRes = await client._generateScreen(projectId, prompt);
-    const downloadUrl = StitchParser.extractDownloadUrl(genRes);
+    const downloadUrl = StitchParser.extractDownloadUrl(genRes) || this._deepSearchDownloadUrl(genRes);
+    
     if (downloadUrl) return this.processHtml(downloadUrl, clientId, prospectData, projectId, widgetManifest);
+    
+    console.log("[Stitch RAW Generation Response]", JSON.stringify(genRes, null, 2));
     return { success: false, projectId, error: "NO_HTML_URL_FALLBACK" };
   }
 }

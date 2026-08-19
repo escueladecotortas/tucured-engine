@@ -15,6 +15,7 @@ let backendProcess = null;
 let frontendProcess = null;
 let isShuttingDown = false;
 let restartTimeout = null;
+let frontendRestartTimeout = null;
 
 function killPort(port) {
     if (!isWin) return;
@@ -57,6 +58,7 @@ function cleanup() {
     if (isShuttingDown) return;
     isShuttingDown = true;
     clearTimeout(restartTimeout);
+    clearTimeout(frontendRestartTimeout);
     console.log('\n🛑 [TUCURED-ENGINE] Deteniendo servicios...');
     try { if (backendProcess) backendProcess.kill('SIGTERM'); } catch (e) {}
     try { if (frontendProcess) frontendProcess.kill('SIGTERM'); } catch (e) {}
@@ -96,6 +98,29 @@ function spawnBackend() {
     });
 }
 
+function spawnFrontend() {
+    if (isShuttingDown) return;
+
+    frontendProcess = isWin
+        ? spawn('cmd.exe', ['/c', 'npx vite --port 5005 --host'], {
+            cwd: ROOT_DIR, windowsHide: true, stdio: 'inherit'
+        })
+        : spawn('npx', ['vite', '--port', '5005', '--host'], {
+            cwd: ROOT_DIR, stdio: 'inherit'
+        });
+
+    frontendProcess.on('exit', (code, signal) => {
+        if (isShuttingDown) return;
+        console.warn(`\n🔄 [TUCURED-ENGINE] Frontend Vite finalizó/caído (código: ${code}, señal: ${signal}). Auto-Respawn activo...`);
+        clearTimeout(frontendRestartTimeout);
+        frontendRestartTimeout = setTimeout(() => {
+            killPort(5005);
+            spawnFrontend();
+            console.log('   ✅ [TUCURED-ENGINE] Frontend Vite reconectado en :5005.');
+        }, 800);
+    });
+}
+
 async function start() {
     killPort(5005);
     killPort(5006);
@@ -115,21 +140,7 @@ async function start() {
     }
 
     console.log('   ✨ 2/2 Levantando Frontend Vite SPA en http://localhost:5005 (Proxy /api -> :5006)\n');
-
-    frontendProcess = isWin
-        ? spawn('cmd.exe', ['/c', 'npx vite --port 5005 --host'], {
-            cwd: ROOT_DIR, windowsHide: true, stdio: 'inherit'
-        })
-        : spawn('npx', ['vite', '--port', '5005', '--host'], {
-            cwd: ROOT_DIR, stdio: 'inherit'
-        });
-
-    frontendProcess.on('exit', (code) => {
-        if (!isShuttingDown && code !== 0) {
-            console.error(`❌ [TUCURED-ENGINE] Frontend Vite finalizó con código: ${code}`);
-            cleanup();
-        }
-    });
+    spawnFrontend();
 }
 
 start();
