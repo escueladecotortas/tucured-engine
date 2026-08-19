@@ -79,7 +79,6 @@ router.post("/stitch-mcp", async (req, res) => {
       siteUrl: localUrl
     });
   } catch (error) {
-    console.error("NEXUS DEBUG:", error);
     res.status(500).json({ error: "Falló el pipeline de forja", details: error.message });
   }
 });

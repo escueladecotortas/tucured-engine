@@ -2,10 +2,11 @@
 // Tabla Reactiva con Botón [🌐 Ver Web], Forja Aislada, Deploy Netlify y Extracción CYBORG (Ley de 200 líneas)
 
 import React, { useState, useEffect } from "react";
-import { Phone, Globe, Zap, Trash2, MessageCircle, MapPin, RefreshCw, Database, Check, Bot, Rocket } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { generateSlug, resolveAssetUrl, computeScore } from "./DbUtils";
 import { useToast } from "../Toast";
 import { DesignMdViewer, StitchManifestViewer } from "./ProspectDocViewers";
+import { TacticalActionsCell } from "./TacticalActionsCell";
 
 const STATUS_STYLES = {
   deployed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
@@ -144,32 +145,22 @@ export default function ProspectsTable({ prospects, onGenerate, onCall, onOutrea
                   <td className="px-4 py-4 align-middle text-center">
                     <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono uppercase border ${styleClass}`}>{statusKey}</span>
                   </td>
-                  <td className="px-6 py-4 align-middle text-right">
-                    <div className="flex items-center justify-end gap-1.5 flex-wrap">
-                      <button onClick={() => handleCyborgReExtract(p)} disabled={extractingId === p.id} className={`p-2.5 rounded-xl border transition-all flex items-center justify-center ${extractingId === p.id ? "bg-cyan-600 text-white animate-pulse" : "bg-cyan-600/20 hover:bg-cyan-600 text-cyan-400 hover:text-white border-cyan-500/30"}`} title="⚡ Extraer Datos (CYBORG)">
-                        {extractingId === p.id ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5" />}
-                      </button>
-                      <button onClick={() => onGenerate(p)} className={`p-2 rounded-xl ${statusKey === "generated" || statusKey === "deployed" ? "bg-amber-600 hover:bg-amber-500" : "bg-emerald-600 hover:bg-emerald-500"} text-white transition-all shadow-lg`} title="Forjar / Regenerar Sitio">
-                        {statusKey === "generated" || statusKey === "deployed" ? <RefreshCw className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
-                      </button>
-                      {hasGeneratedSite && (
-                        <a href={webUrl} target="_blank" rel="noreferrer" className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-all shadow-lg flex items-center justify-center" title="🌐 Ver Web / Preview Local">
-                          <Globe className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                      {["generated", "deployed", "stitch_ready"].includes(statusKey) && (
-                        <button onClick={() => handleDeployNetlify(p)} disabled={deployingId === p.id} className="p-2 rounded-xl bg-teal-600/20 hover:bg-teal-600 text-teal-400 hover:text-white border border-teal-500/30 transition-all shadow-lg flex items-center justify-center" title="🚀 Desplegar a Netlify">
-                          {deployingId === p.id ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Rocket className="w-3.5 h-3.5" />}
-                        </button>
-                      )}
-                      {p.phone && <button onClick={() => onOutreach(p)} className="p-2 bg-zinc-800 hover:bg-green-600 text-zinc-400 hover:text-white rounded-xl transition-all" title="WhatsApp Strategy"><MessageCircle className="w-3.5 h-3.5" /></button>}
-                      <button onClick={() => onCall(p)} className="p-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all" title="Simular Llamada"><Phone className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => onDelete(p)} className="p-2 bg-zinc-800 hover:bg-red-900/50 text-zinc-400 hover:text-red-400 rounded-xl transition-all" title="Eliminar"><Trash2 className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => handleCopyPayload(p)} className={`p-2 rounded-xl ${copiedId === p.id ? "bg-emerald-600 text-white" : "bg-purple-600 hover:bg-purple-500 text-white"} transition-all shadow-lg flex items-center`} title="Copiar Payload Stitch">
-                        {copiedId === p.id ? <Check className="w-3.5 h-3.5 animate-bounce" /> : <Database className="w-3.5 h-3.5" />}
-                      </button>
-                    </div>
-                  </td>
+                  <TacticalActionsCell
+                    p={p}
+                    statusKey={statusKey}
+                    hasGeneratedSite={hasGeneratedSite}
+                    webUrl={webUrl}
+                    extractingId={extractingId}
+                    deployingId={deployingId}
+                    copiedId={copiedId}
+                    onCyborgReExtract={handleCyborgReExtract}
+                    onGenerate={onGenerate}
+                    onDeployNetlify={handleDeployNetlify}
+                    onOutreach={onOutreach}
+                    onCall={onCall}
+                    onDelete={onDelete}
+                    onCopyPayload={handleCopyPayload}
+                  />
                 </tr>
               );
             })}

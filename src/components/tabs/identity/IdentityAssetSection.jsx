@@ -2,121 +2,14 @@
 // Visores DESIGN.md y stitch-manifest.json conectados a ruta real del cliente (Ley de 200 líneas)
 
 import React, { useState } from 'react';
-import { FolderOpen, FileText, Layers, X, Loader2, AlertCircle } from 'lucide-react';
+import { FolderOpen, FileText, Layers } from 'lucide-react';
 import FileManager from '../../FileManager';
+import { IdentityDocModal } from './IdentityDocModal';
 
-// Mini modal de documento
-function DocModal({ title, icon: Icon, color, content, loading, onClose }) {
-  const colors = {
-    violet: 'text-violet-400 border-violet-500/30 bg-violet-500/5',
-    cyan:   'text-cyan-400   border-cyan-500/30   bg-cyan-500/5'
-  };
-  const cls = colors[color] || colors.violet;
-
-  return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
-
-        {/* Header */}
-        <div className={`flex items-center justify-between px-5 py-3 border-b border-zinc-800 ${cls}`}>
-          <div className="flex items-center gap-2">
-            <Icon className="w-4 h-4" />
-            <span className="font-bold text-sm font-mono">{title}</span>
-          </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-zinc-200 transition-colors"><X className="w-4 h-4" /></button>
-        </div>
-
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {loading ? (
-            <div className="flex items-center justify-center h-40 gap-2 text-zinc-500">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span className="text-xs">Cargando documento...</span>
-            </div>
-          ) : content ? (
-            <DesignRenderer content={content} isDesign={color === 'violet'} />
-          ) : (
-            <div className="flex flex-col items-center justify-center h-40 gap-2 text-zinc-600">
-              <AlertCircle className="w-5 h-5" />
-              <span className="text-xs">Documento no disponible para este cliente</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Renderizador inteligente: extrae colores y tipografías de DESIGN.md o muestra JSON
-function DesignRenderer({ content, isDesign }) {
-  if (!isDesign) {
-    // JSON: stitch-manifest.json
-    try {
-      const parsed = JSON.parse(content);
-      return (
-        <pre className="p-5 text-[11px] text-zinc-300 font-mono leading-relaxed whitespace-pre-wrap break-words">
-          {JSON.stringify(parsed, null, 2)}
-        </pre>
-      );
-    } catch {
-      return <pre className="p-5 text-[11px] text-zinc-300 font-mono leading-relaxed whitespace-pre-wrap">{content}</pre>;
-    }
-  }
-
-  // DESIGN.md: extraer colores hex y tipografías
-  const hexMatches = [...content.matchAll(/#([0-9A-Fa-f]{6})\b/g)].map(m => '#' + m[1]);
-  const uniqueColors = [...new Set(hexMatches)].slice(0, 8);
-  const fontMatches = [...content.matchAll(/font(?:[-_\s]?family)?[:\s]+["']?([A-Za-z\s]+)["']?/gi)].map(m => m[1].trim());
-  const uniqueFonts = [...new Set(fontMatches)].slice(0, 4);
-
-  return (
-    <div className="p-5 space-y-5">
-      {/* Paleta cromática */}
-      {uniqueColors.length > 0 && (
-        <div>
-          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">🎨 Paleta Cromática</p>
-          <div className="flex flex-wrap gap-2">
-            {uniqueColors.map(color => (
-              <button key={color} onClick={() => navigator.clipboard?.writeText(color)}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-700 hover:border-zinc-500 bg-zinc-900 transition-all group"
-                title={`Copiar ${color}`}>
-                <span className="w-5 h-5 rounded-md shadow border border-white/10 flex-shrink-0" style={{ backgroundColor: color }} />
-                <span className="text-[10px] font-mono text-zinc-300 group-hover:text-white">{color}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Tipografías */}
-      {uniqueFonts.length > 0 && (
-        <div>
-          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">🔤 Tipografías</p>
-          <div className="flex flex-wrap gap-2">
-            {uniqueFonts.map(font => (
-              <span key={font} className="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-xs text-zinc-300 font-medium" style={{ fontFamily: font }}>
-                {font}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Contenido raw */}
-      <details className="cursor-pointer">
-        <summary className="text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors">Ver documento completo</summary>
-        <pre className="mt-2 text-[10px] text-zinc-400 font-mono leading-relaxed whitespace-pre-wrap break-words max-h-80 overflow-y-auto">{content}</pre>
-      </details>
-    </div>
-  );
-}
-
-// Hook de carga bajo demanda con caché
 function useDocViewer(projectId) {
   const [cache, setCache] = useState({});
   const [loading, setLoading] = useState({});
 
-  // Resuelve el slug real del cliente desde nexus_archives/tucu-red/clients/<slug>/
   const slug = projectId || '';
 
   const load = async (type) => {
@@ -140,7 +33,7 @@ function useDocViewer(projectId) {
 }
 
 export function IdentityAssetSection({ projectId, t }) {
-  const [openModal, setOpenModal] = useState(null); // 'design' | 'manifest' | null
+  const [openModal, setOpenModal] = useState(null);
   const { cache, loading, load } = useDocViewer(projectId);
 
   const handleOpen = (type) => {
@@ -185,9 +78,9 @@ export function IdentityAssetSection({ projectId, t }) {
         <FileManager projectId={projectId} rootPath={'assets'} />
       </div>
 
-      {/* Modales */}
+      {/* Modales Atómicos */}
       {openModal === 'design' && (
-        <DocModal
+        <IdentityDocModal
           title={`DESIGN.md — ${projectId}`}
           icon={FileText} color="violet"
           content={cache.design} loading={loading.design}
@@ -195,7 +88,7 @@ export function IdentityAssetSection({ projectId, t }) {
         />
       )}
       {openModal === 'manifest' && (
-        <DocModal
+        <IdentityDocModal
           title={`stitch-manifest.json — ${projectId}`}
           icon={Layers} color="cyan"
           content={cache.manifest} loading={loading.manifest}

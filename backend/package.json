@@ -29,7 +29,6 @@
     "mercadopago": "^2.12.0",
     "multer": "^2.0.2",
     "netlify-cli": "^23.13.5",
-    "puppeteer": "^24.33.0",
     "screenshot-desktop": "^1.15.3",
     "socket.io": "^4.8.3",
     "ts-morph": "^27.0.2"

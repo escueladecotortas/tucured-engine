@@ -1,12 +1,12 @@
 // Archivo: backend/routes/leads/core.js
-// Rutas Nucleares de Leads: Ingesta, Consulta, Enriquecimiento y Borrado Atómico (Ley de 200 líneas)
+// Rutas Nucleares de Leads: Ingesta, Consulta y Borrado Atómico (Ley de 200 líneas)
 
 const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const { db } = require('../../firebase-admin');
-const EnricherService = require('../../services/EnricherService');
+const { enrichLeadHandler: baseEnrichHandler } = require('./enrich');
 
 const LOCAL_DUMP_PATH = path.resolve(process.cwd(), 'data/db_dump.json');
 const CLIENTS_ARCHIVE_DIR = path.resolve(process.cwd(), 'nexus_archives/tucu-red/clients');
@@ -113,51 +113,7 @@ async function saveLeadHandler(req, res) {
 }
 
 // 3. ENRIQUECER PROSPECTO (Re-extracción CYBORG)
-async function enrichLeadHandler(req, res) {
-    try {
-        const { leadId, lead } = req.body;
-        let leadData = lead || null;
-
-        if (!leadData && leadId) {
-            if (db) {
-                try {
-                    const doc = await db.collection('prospects').doc(leadId).get();
-                    if (doc.exists) leadData = { id: doc.id, ...doc.data() };
-                } catch (e) {}
-            }
-            if (!leadData) leadData = getLocalProspects().find(p => p.id === leadId || p.slug === leadId);
-        } else if (!leadData && req.body.name) {
-            leadData = req.body;
-        }
-
-        if (!leadData || !leadData.name) {
-            return res.status(400).json({ error: "leadId o lead con nombre requerido" });
-        }
-
-        const enrichedData = await EnricherService.enrich(leadData);
-        const finalId = leadData.id || enrichedData.slug || `lead_${Date.now()}`;
-        enrichedData.id = finalId;
-        enrichedData.status = 'stitch_ready';
-
-        if (db) {
-            try { await db.collection('prospects').doc(finalId).set(enrichedData, { merge: true }); } catch (e) {}
-        }
-        syncLocalDump(finalId, enrichedData, false);
-
-        res.json({
-            success: true,
-            lead: enrichedData,
-            status: 'stitch_ready',
-            kpis: {
-                reviewsValidas: (enrichedData.topReviews || []).length,
-                fotosIndexadas: (enrichedData.photos || []).length,
-                featuresDetectados: (enrichedData.features || []).length
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ error: "Error en enriquecimiento", details: error.message });
-    }
-}
+const enrichLeadHandler = (req, res) => baseEnrichHandler(req, res, getLocalProspects, syncLocalDump);
 
 // 4. BORRADO ATÓMICO (Firestore + db_dump.json + Filesystem)
 async function deleteLeadHandler(req, res) {

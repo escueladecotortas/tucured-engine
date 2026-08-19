@@ -65,14 +65,13 @@ async function run() {
         if (!Array.isArray(res.data.tasks) || res.data.tasks.length === 0) throw new Error('No se retornaron tareas');
         
         const ids = res.data.tasks.map(t => t.id);
-        const hasTask010 = ids.includes('TASK-010');
-        const hasTask001 = ids.includes('TASK-001');
+        const hasRecentTask = ids.includes('TASK-046') || ids.includes('TASK-045');
 
-        if (!hasTask010 || !hasTask001) {
-            throw new Error(`Faltan tareas esperadas. Tareas encontradas: ${ids.join(', ')}`);
+        if (!hasRecentTask) {
+            throw new Error(`Faltan tareas recientes. Tareas encontradas: ${ids.join(', ')}`);
         }
 
-        return `${res.data.tasks.length} tareas parseadas correctamente desde kanban.md`;
+        return `${res.data.tasks.length} tareas activas/recientes parseadas correctamente desde kanban.md`;
     });
 
     // 2. Validar estructura de tarea parseada

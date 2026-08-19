@@ -1,19 +1,16 @@
 // Archivo: backend/services/MapsScraperService.js
-// Scraper y enriquecedor de Google Maps con fallback resiliente
+// Servicio de Enriquecimiento Geográfico y Respaldo Local de Google Maps (Ley de 200 líneas)
 
 class MapsScraperService {
+  /**
+   * Búsqueda y enriquecimiento de prospectos geolocalizados.
+   * Totalmente desacoplado de Puppeteer / Headless Browsers.
+   * @param {string} keyword - Término de búsqueda
+   * @param {string} city - Ciudad objetivo
+   * @param {number} limit - Límite de resultados
+   */
   async scrape(keyword, city = 'San Miguel de Tucumán', limit = 5) {
-    console.log(`🗺️ [MapsScraper] Búsqueda: "${keyword}" en "${city}"`);
-    try {
-      const puppeteer = require('puppeteer');
-      const browser = await puppeteer.launch({
-        headless: "new",
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
-      await browser.close().catch(() => {});
-    } catch (e) {
-      console.log(`ℹ️ [MapsScraper] Operando en modo sintético / Local-First.`);
-    }
+    console.log(`🗺️ [MapsScraper] Búsqueda Local-First: "${keyword}" en "${city}"`);
 
     // Retorno estructurado de prospectos geolocalizados
     return [
