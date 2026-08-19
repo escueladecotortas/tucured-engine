@@ -83,7 +83,8 @@ class StitchPromptService {
   }
 
   static assembleSeed(data) {
-    return PipelineTemplates.assembleSeed(data);
+    const StitchPromptBuilder = require("./stitch/StitchPromptBuilder");
+    return StitchPromptBuilder.buildPrompt(data);
   }
 
   static assembleDirector(data, styleKeyword = "Editorial") {

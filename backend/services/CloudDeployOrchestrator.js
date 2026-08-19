@@ -8,12 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const StitchMcpClient = require('./StitchMcpClient');
 const NetlifyDeployService = require('./NetlifyDeployService');
 const slugify = require('../utils/slugify');
-
-const TerminalService = {
-  broadcast: (msg) => console.log("[LOG]", msg),
-  emitCompletion: (msg) => console.log("[DONE]", msg),
-  emitError: (msg) => console.error("[ERR]", msg)
-};
+const TerminalService = require('./telemetry/TerminalService');
 
 class CloudDeployOrchestrator {
   /**
@@ -25,7 +20,7 @@ class CloudDeployOrchestrator {
 
     try {
       console.log(`\n[Cloud Deploy] ⚡ Forjando localmente con Stitch MCP: ${slug}`);
-      TerminalService.broadcast(`⚡ Orquestando Forja Local (Gate 2) para "${slug}"`, 'info');
+      TerminalService.broadcast(`⚡ Orquestando Forja Local (Gate 2) para "${slug}"`, 'info', 5, 'NEXUS');
 
       const title = prospectData.name || slug;
       const enhancedPrompt = prospectData.stitchSeedPrompt || `Landing page de alta fidelidad para ${title}`;
@@ -37,7 +32,7 @@ class CloudDeployOrchestrator {
         throw new Error(`Fallo en la forja vía Stitch: ${errMsg}`);
       }
 
-      TerminalService.broadcast(`✅ Forja local finalizada con éxito. Preview listo.`, 'success');
+      TerminalService.broadcast(`✅ Forja local finalizada con éxito. Preview listo.`, 'success', 100, 'NEXUS');
 
       return {
         success: true,
@@ -51,7 +46,7 @@ class CloudDeployOrchestrator {
       };
     } catch (error) {
       console.error(`[CloudDeployOrchestrator] ❌ Error en Forja Local:`, error.message);
-      TerminalService.broadcast(`❌ Error en forja: ${error.message}`, 'error');
+      TerminalService.broadcast(`❌ Error en forja: ${error.message}`, 'error', null, 'NEXUS');
       throw error;
     }
   }

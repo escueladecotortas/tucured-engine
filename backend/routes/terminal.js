@@ -9,13 +9,46 @@ const { exec } = require('child_process');
 const sseClients = new Set();
 
 // Función de broadcast global para eventos de terminal
-function broadcastLog(agent, message) {
-    const payload = JSON.stringify({
-        timestamp: new Date().toISOString(),
-        agent: agent || 'NEXUS',
-        message: String(message)
-    });
-    const sseData = `data: ${payload}\n\n`;
+function broadcastLog(agent, message, status = 'info', progress = null) {
+    let payload;
+    if (typeof message === 'object' && message !== null) {
+        payload = {
+            timestamp: message.timestamp || new Date().toISOString(),
+            agent: message.agent || agent || 'NEXUS',
+            message: message.message || '',
+            status: message.status || status || 'info',
+            progress: message.progress !== undefined ? message.progress : progress
+        };
+    } else if (typeof message === 'string' && message.startsWith('{') && message.endsWith('}')) {
+        try {
+            const parsed = JSON.parse(message);
+            payload = {
+                timestamp: parsed.timestamp || new Date().toISOString(),
+                agent: parsed.agent || agent || 'NEXUS',
+                message: parsed.message || message,
+                status: parsed.status || status || 'info',
+                progress: parsed.progress !== undefined ? parsed.progress : progress
+            };
+        } catch (e) {
+            payload = {
+                timestamp: new Date().toISOString(),
+                agent: agent || 'NEXUS',
+                message: String(message),
+                status: status || 'info',
+                progress: typeof progress === 'number' ? progress : null
+            };
+        }
+    } else {
+        payload = {
+            timestamp: new Date().toISOString(),
+            agent: agent || 'NEXUS',
+            message: String(message),
+            status: status || 'info',
+            progress: typeof progress === 'number' ? progress : null
+        };
+    }
+
+    const sseData = `data: ${JSON.stringify(payload)}\n\n`;
 
     sseClients.forEach(client => {
         try {

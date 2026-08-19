@@ -11,11 +11,7 @@ const MapHandler = require("./injector/MapHandler");
 const BrandingHandler = require("./injector/BrandingHandler");
 const NavigationHandler = require("./injector/NavigationHandler");
 
-const TerminalService = {
-  broadcast: (msg) => console.log("[LOG]", msg),
-  emitCompletion: (msg) => console.log("[DONE]", msg),
-  emitError: (msg) => console.error("[ERR]", msg)
-};
+const TerminalService = require("./telemetry/TerminalService");
 
 class NexusInjectorService {
   static process(rawHtml, prospectData, widgetManifest = null) {

@@ -1,21 +1,21 @@
 // Archivo: src/components/database/GalleryModal.jsx
-// Modal de Bóveda Visual con Selector Interactivo de Roles Semánticos (Ley de 200 líneas)
+// Modal de Bóveda Visual con Selector de Roles, Mutex de Logo y Auto-Save Asíncrono — Ley de 200 líneas
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Trash2, Database, X, Sparkles, Loader2, Tag } from "lucide-react";
+import { ArrowUpRight, Database, X, Sparkles, Loader2 } from "lucide-react";
 import { generateSlug, resolveAssetUrl } from "./DbUtils";
 import { useToast } from "../Toast";
 
 const ROLE_OPTIONS = [
-  { value: "hero", label: "Hero Banner", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
-  { value: "logo", label: "Logo Identidad", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-  { value: "showcase", label: "Showcase (Producto)", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" },
-  { value: "atmosphere", label: "Atmosphere (Local)", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
-  { value: "discard", label: "🗑️ Descartar Activo", color: "bg-red-500/20 text-red-300 border-red-500/30" }
+  { value: "hero", label: "Hero Banner" },
+  { value: "logo", label: "Logo Identidad" },
+  { value: "showcase", label: "Showcase (Producto)" },
+  { value: "atmosphere", label: "Atmosphere (Local)" },
+  { value: "discard", label: "🗑️ Descartar Activo" }
 ];
 
-export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
+export default function GalleryModal({ prospect, onClose, onUpdateLead }) {
   if (!prospect) return null;
   const { addToast } = useToast();
   const slug = prospect.slug || prospect.clientId || generateSlug(prospect.name);
@@ -29,8 +29,15 @@ export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
     fetch(`/api/nexus/assets/list?slug=${slug}`)
       .then(res => res.json())
       .then(data => {
-        if (isMounted && data.success && Array.isArray(data.assets) && data.assets.length > 0) {
+        if (isMounted && data.success && Array.isArray(data.assets)) {
           setLiveAssets(data.assets);
+          if (onUpdateLead) {
+            onUpdateLead({
+              ...prospect,
+              photos: data.photos || data.assets.map(a => a.url),
+              semantic_photos: data.semantic_photos || prospect.semantic_photos
+            });
+          }
         }
       })
       .catch(() => {})
@@ -38,35 +45,9 @@ export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
     return () => { isMounted = false; };
   }, [slug]);
 
-  const handleRoleChange = async (item, newRole) => {
-    setUpdatingUrl(item.raw);
-    try {
-      const res = await fetch("/api/nexus/assets/reclassify", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, photoUrl: item.raw, newRole })
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || "Error al reclasificar");
-
-      if (newRole === "discard") {
-        setLiveAssets(prev => (prev || []).filter(a => a.url !== item.raw && !a.url.endsWith(item.raw)));
-        addToast("🗑️ Activo descartado de la Bóveda", "info");
-      } else {
-        setLiveAssets(prev => (prev || []).map(a => (a.url === item.raw || a.url.endsWith(item.raw)) ? { ...a, role: newRole } : a));
-        const opt = ROLE_OPTIONS.find(o => o.value === newRole);
-        addToast(`🏷️ Rol asignado: ${opt?.label || newRole}`, "success");
-      }
-    } catch (err) {
-      addToast(`❌ Error: ${err.message}`, "error");
-    } finally {
-      setUpdatingUrl(null);
-    }
-  };
-
   const categorizedPhotos = useMemo(() => {
     if (liveAssets && liveAssets.length > 0) {
-      return liveAssets.map(a => ({ raw: a.url, resolved: resolveAssetUrl(a.url, slug), role: a.role || "general" }));
+      return liveAssets.map(a => ({ raw: a.url, resolved: resolveAssetUrl(a.url, slug), role: a.role || "atmosphere" }));
     }
     const sp = prospect.semantic_photos || {};
     const items = [];
@@ -80,12 +61,57 @@ export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
     if (sp.hero) addPhoto(sp.hero, "hero");
     if (Array.isArray(sp.showcase)) sp.showcase.forEach(u => addPhoto(u, "showcase"));
     if (Array.isArray(sp.atmosphere)) sp.atmosphere.forEach(u => addPhoto(u, "atmosphere"));
-    (Array.isArray(prospect.photos) ? prospect.photos : []).forEach(u => {
-      const role = u.includes("ambient_") ? "atmosphere" : u.includes("product_") ? "showcase" : u.includes("hero") ? "hero" : u.includes("logo") ? "logo" : "general";
-      addPhoto(u, role);
-    });
+    (Array.isArray(prospect.photos) ? prospect.photos : []).forEach(u => addPhoto(u, "atmosphere"));
     return items;
   }, [prospect, slug, liveAssets]);
+
+  // Mutex del Logo: detectar si ya existe un logo asignado
+  const currentLogoRaw = useMemo(() => {
+    const logoItem = categorizedPhotos.find(item => item.role === "logo");
+    return logoItem ? logoItem.raw : null;
+  }, [categorizedPhotos]);
+
+  const handleRoleChange = async (item, newRole) => {
+    setUpdatingUrl(item.raw);
+    try {
+      const res = await fetch("/api/nexus/assets/reclassify", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, photoUrl: item.raw, newRole })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || "Error al reclasificar");
+
+      let nextAssets = [];
+      if (newRole === "discard") {
+        nextAssets = (liveAssets || []).filter(a => a.url !== item.raw && !a.url.endsWith(item.raw));
+        setLiveAssets(nextAssets);
+        addToast("🗑️ Activo descartado de la Bóveda", "info");
+      } else {
+        nextAssets = (liveAssets || []).map(a => {
+          if (a.url === item.raw || a.url.endsWith(item.raw)) return { ...a, role: newRole };
+          if (newRole === "logo" && a.role === "logo") return { ...a, role: "atmosphere" };
+          return a;
+        });
+        setLiveAssets(nextAssets);
+        const opt = ROLE_OPTIONS.find(o => o.value === newRole);
+        addToast(`🏷️ Rol asignado: ${opt?.label || newRole}`, "success");
+      }
+
+      if (onUpdateLead) {
+        onUpdateLead({
+          ...prospect,
+          photos: data.photos || nextAssets.map(a => a.url),
+          semantic_photos: data.semantic_photos,
+          logoUrl: data.semantic_photos?.logo || prospect.logoUrl
+        });
+      }
+    } catch (err) {
+      addToast(`❌ Error: ${err.message}`, "error");
+    } finally {
+      setUpdatingUrl(null);
+    }
+  };
 
   const logoSrc = resolveAssetUrl(prospect.logoUrl || prospect.semantic_photos?.logo || categorizedPhotos[0]?.resolved, slug);
 
@@ -113,26 +139,33 @@ export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
             <div className="py-24 text-center flex flex-col items-center justify-center gap-2"><Loader2 className="w-8 h-8 animate-spin text-cyan-400" /><p className="text-xs text-zinc-500 font-mono">Sincronizando Bóveda de Activos...</p></div>
           ) : categorizedPhotos.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {categorizedPhotos.map((item, i) => (
-                <div key={i} className="group aspect-square rounded-xl bg-black/80 border border-zinc-800/80 overflow-hidden relative shadow-lg flex flex-col justify-between p-2">
-                  <img src={item.resolved} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" alt="" />
-                  <div className="relative z-10 flex justify-between items-center w-full">
-                    {/* Selector interactivo de Rol */}
-                    <select
-                      value={item.role}
-                      onChange={(e) => handleRoleChange(item, e.target.value)}
-                      disabled={updatingUrl === item.raw}
-                      className="bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono font-bold rounded-lg px-2 py-1 outline-none cursor-pointer hover:border-cyan-400 transition-colors"
-                    >
-                      {ROLE_OPTIONS.map(opt => <option key={opt.value} value={opt.value} className="bg-zinc-900 text-white">{opt.label}</option>)}
-                    </select>
-                    <button className="w-7 h-7 rounded-lg bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-cyan-600 transition-all opacity-0 group-hover:opacity-100" onClick={() => window.open(item.resolved, "_blank")} title="Ver original"><ArrowUpRight className="w-3.5 h-3.5" /></button>
+              {categorizedPhotos.map((item, i) => {
+                const isLogoAssignedElsewhere = currentLogoRaw && item.raw !== currentLogoRaw && !item.raw.endsWith(currentLogoRaw);
+                return (
+                  <div key={i} className="group aspect-square rounded-xl bg-black/80 border border-zinc-800/80 overflow-hidden relative shadow-lg flex flex-col justify-between p-2">
+                    <img src={item.resolved} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" alt="" />
+                    <div className="relative z-10 flex justify-between items-center w-full">
+                      {/* Selector interactivo de Rol con Mutex de Logo */}
+                      <select
+                        value={item.role}
+                        onChange={(e) => handleRoleChange(item, e.target.value)}
+                        disabled={updatingUrl === item.raw}
+                        className="bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono font-bold rounded-lg px-2 py-1 outline-none cursor-pointer hover:border-cyan-400 transition-colors"
+                      >
+                        {ROLE_OPTIONS.map(opt => {
+                          const isOptDisabled = opt.value === "logo" && isLogoAssignedElsewhere;
+                          return (
+                            <option key={opt.value} value={opt.value} disabled={isOptDisabled} className="bg-zinc-900 text-white">
+                              {opt.label} {isOptDisabled ? "(Asignado)" : ""}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <button className="w-7 h-7 rounded-lg bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-cyan-600 transition-all opacity-0 group-hover:opacity-100" onClick={() => window.open(item.resolved, "_blank")} title="Ver original"><ArrowUpRight className="w-3.5 h-3.5" /></button>
+                    </div>
                   </div>
-                  <div className="relative z-10 flex justify-end">
-                    <button onClick={() => handleRoleChange(item, "discard")} className="w-7 h-7 rounded-lg bg-black/80 backdrop-blur-md border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all opacity-0 group-hover:opacity-100" title="Descartar"><Trash2 className="w-3.5 h-3.5" /></button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="py-24 text-center"><Database className="w-12 h-12 text-zinc-700 mx-auto mb-3" /><p className="text-zinc-400 text-sm">Sin activos visuales persistidos.</p></div>
@@ -142,7 +175,7 @@ export default function GalleryModal({ prospect, onClose, onRemovePhoto }) {
         {/* Footer */}
         <div className="p-3.5 bg-black border-t border-zinc-800 flex justify-between items-center text-[10px] text-zinc-500 font-mono">
           <div>SLUG: {slug}</div>
-          <div>ENRICHED_STATUS: {prospect.status?.toUpperCase() || "NEW"}</div>
+          <div>ACTIVOS_EN_DISCO: {categorizedPhotos.length}</div>
         </div>
       </motion.div>
     </div>

@@ -23,18 +23,31 @@ export default function GenerationModal({ isOpen, prospect, logs = [], onClose, 
     });
     const isRunning = !!engine && !isFinished;
 
-    useEffect(() => { if (isOpen) { setEngine(null); setProgress(0); } }, [isOpen, prospect]);
+    useEffect(() => {
+        if (isOpen) {
+            setEngine(null);
+            setProgress(0);
+        }
+    }, [isOpen, prospect]);
+
+    // Telemetría en tiempo real: actualiza progreso basado estrictamente en el último log con porcentaje real
+    useEffect(() => {
+        if (!logs || logs.length === 0) return;
+        const lastWithProgress = [...logs].reverse().find(l => typeof l.progress === 'number');
+        if (lastWithProgress) {
+            setProgress(lastWithProgress.progress);
+        }
+    }, [logs]);
 
     useEffect(() => {
-        if (!isRunning) return;
-        const tick = setInterval(() => setProgress((p) => p >= 92 ? p : p + Math.max(0.3, (92 - p) / 25)), 300);
-        return () => clearInterval(tick);
-    }, [isRunning]);
-
-    useEffect(() => { if (isFinished) setProgress(100); }, [isFinished]);
+        if (isFinished && isSuccess) {
+            setProgress(100);
+        }
+    }, [isFinished, isSuccess]);
 
     const handleSelect = (selectedEngine) => {
         setEngine(selectedEngine);
+        setProgress(5);
         onStartGeneration?.(selectedEngine);
     };
 

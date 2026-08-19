@@ -116,8 +116,8 @@ export default function ProspectsTable({ prospects, onGenerate, onCall, onOutrea
               const logoSrc = p.logoUrl ? resolveAssetUrl(p.logoUrl, slug) : p.photos?.[0] ? resolveAssetUrl(p.photos[0], slug) : null;
               const statusKey = p.status || "new";
               const styleClass = STATUS_STYLES[statusKey] || "bg-zinc-800 text-zinc-400 border-zinc-700";
-              const hasGeneratedSite = ["generated", "deployed", "stitch_ready"].includes(statusKey) || !!p.deployUrl || !!p.siteUrl;
-              const webUrl = p.deployUrl || p.siteUrl || `/clients/${slug}/index.html`;
+              const hasGeneratedSite = (statusKey === "generated" || statusKey === "deployed") && (!!p.deployUrl || !!p.siteUrl || !!p.localUrl);
+              const webUrl = p.deployUrl || p.siteUrl || p.localUrl || `/clients/${slug}/index.html`;
 
               return (
                 <tr key={p.id} className="group hover:bg-white/5 transition-colors">

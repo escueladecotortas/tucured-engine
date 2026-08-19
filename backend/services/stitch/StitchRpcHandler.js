@@ -19,12 +19,15 @@ class StitchRpcHandler {
     if (!apiKey) throw new Error("STITCH_API_KEY / GOOGLE_STITCH_API_KEY no configurada.");
 
     return new Promise((resolve, reject) => {
-      const data = JSON.stringify({
+      const payloadObj = {
         jsonrpc: "2.0",
         id: Date.now(),
         method: "tools/call",
         params: { name: method, arguments: params },
-      });
+      };
+      const data = JSON.stringify(payloadObj);
+
+      console.log(`[StitchRpcHandler] 📤 Invocando MCP tool: "${method}" | Payload:`, data);
 
       const options = {
         hostname: "stitch.googleapis.com",
@@ -45,7 +48,19 @@ class StitchRpcHandler {
         res.on("end", () => {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             try {
-              resolve(JSON.parse(raw));
+              const parsed = JSON.parse(raw);
+              if (parsed?.result?.isError === true) {
+                const errorText = parsed.result.content?.map(c => c.text).filter(Boolean).join(" ") || "Error desconocido devuelto por Stitch MCP";
+                console.error(`[StitchRpcHandler] ❌ Error en tool "${method}":`, errorText, "| Raw:", raw);
+                reject(new Error(`[Stitch MCP ${method}] ${errorText}`));
+                return;
+              }
+              if (parsed?.error) {
+                console.error(`[StitchRpcHandler] ❌ Error RPC en tool "${method}":`, parsed.error);
+                reject(new Error(`[Stitch MCP RPC Error] ${parsed.error.message || JSON.stringify(parsed.error)}`));
+                return;
+              }
+              resolve(parsed);
             } catch (e) {
               reject(new Error(`Fallo al parsear respuesta JSON de Stitch: ${raw.slice(0, 200)}`));
             }

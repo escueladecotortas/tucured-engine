@@ -48,30 +48,33 @@ export function TacticalActionsCell({
           {statusKey === "generated" || statusKey === "deployed" ? <RefreshCw className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
         </button>
 
-        {/* 3. Ver Web / Preview Local */}
-        {hasGeneratedSite && (
-          <a
-            href={webUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-all shadow-lg flex items-center justify-center"
-            title="🌐 Ver Web / Preview Local"
-          >
-            <Globe className="w-3.5 h-3.5" />
-          </a>
-        )}
+        {/* 3. Ver Web / Preview Local (Solo activo si status === 'generated' o 'deployed') */}
+        <button
+          onClick={() => hasGeneratedSite && window.open(webUrl, "_blank")}
+          disabled={!hasGeneratedSite}
+          className={`p-2 rounded-xl transition-all shadow-lg flex items-center justify-center ${
+            hasGeneratedSite
+              ? "bg-blue-600 hover:bg-blue-500 text-white cursor-pointer"
+              : "bg-zinc-800/60 text-zinc-600 border border-zinc-700/30 cursor-not-allowed opacity-40"
+          }`}
+          title={hasGeneratedSite ? "🌐 Ver Web / Preview Local" : "Web no generada aún (requiere forja en Gate 2)"}
+        >
+          <Globe className="w-3.5 h-3.5" />
+        </button>
 
-        {/* 4. Desplegar Netlify */}
-        {["generated", "deployed", "stitch_ready"].includes(statusKey) && (
-          <button
-            onClick={() => onDeployNetlify(p)}
-            disabled={deployingId === p.id}
-            className="p-2 rounded-xl bg-teal-600/20 hover:bg-teal-600 text-teal-400 hover:text-white border border-teal-500/30 transition-all shadow-lg flex items-center justify-center"
-            title="🚀 Desplegar a Netlify"
-          >
-            {deployingId === p.id ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Rocket className="w-3.5 h-3.5" />}
-          </button>
-        )}
+        {/* 4. Desplegar Netlify (Solo activo si status === 'generated' o 'deployed') */}
+        <button
+          onClick={() => onDeployNetlify(p)}
+          disabled={deployingId === p.id || !hasGeneratedSite}
+          className={`p-2 rounded-xl border transition-all shadow-lg flex items-center justify-center ${
+            hasGeneratedSite
+              ? "bg-teal-600/20 hover:bg-teal-600 text-teal-400 hover:text-white border-teal-500/30 cursor-pointer"
+              : "bg-zinc-800/60 text-zinc-600 border border-zinc-700/30 cursor-not-allowed opacity-40"
+          }`}
+          title={hasGeneratedSite ? "🚀 Desplegar a Netlify" : "Requiere forja local previa (Gate 2)"}
+        >
+          {deployingId === p.id ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Rocket className="w-3.5 h-3.5" />}
+        </button>
 
         {/* 5. WhatsApp & Llamada */}
         {p.phone && (

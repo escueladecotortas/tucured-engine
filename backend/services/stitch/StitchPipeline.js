@@ -5,30 +5,27 @@ const fs = require("fs");
 const path = require("path");
 const NexusInjectorService = require("../NexusInjectorService");
 const StitchPromptService = require("../StitchPromptService");
+const StitchPromptBuilder = require("./StitchPromptBuilder");
 const WidgetManifestService = require("../WidgetManifestService");
 const StitchRpcHandler = require("./StitchRpcHandler");
 const StitchIndexer = require("./StitchIndexer");
 const StitchParser = require("./StitchParser");
 const StitchDesignExtractor = require("./StitchDesignExtractor");
 
-const TerminalService = {
-  broadcast: (msg) => console.log("[LOG]", msg),
-  emitCompletion: (msg) => console.log("[DONE]", msg),
-  emitError: (msg) => console.error("[ERR]", msg)
-};
+const TerminalService = require("../telemetry/TerminalService");
 
 class StitchPipeline {
   static async generate(title, prompt, clientId, prospectData, client) {
     try {
       console.log(`\n[Stitch MCP v5.2] 🚀 Iniciando Pipeline Iterativo para "${title}"...`);
-      TerminalService.broadcast(`🚀 Pipeline Stitch v5.2 activado para "${title}"`, "info");
+      TerminalService.broadcast(`🚀 Pipeline Stitch v5.2 activado para "${title}"`, "info", 10, "ORION");
 
       const widgetManifest = WidgetManifestService.generate(prospectData);
       const projectId = await client._createProject(title);
 
-      // PASO 1: SEMILLA DE ALTA FIDELIDAD
-      TerminalService.broadcast(`🌱 Paso 1/3: Ensamblando Semilla de Alta Fidelidad...`, "info");
-      const seedPrompt = StitchPromptService.assembleSeed(prospectData);
+      // PASO 1: SEMILLA NARRATIVA POR ARQUETIPO SEMÁNTICO
+      TerminalService.broadcast(`🌱 Paso 1/3: Ensamblando Semilla Narrativa por Arquetipo...`, "info", 25, "ATENEA");
+      const seedPrompt = StitchPromptBuilder.buildPrompt(prospectData);
       const seedResponse = await client._generateScreen(projectId, seedPrompt);
       const seedScreenId = StitchParser.extractScreenId(seedResponse);
 
@@ -38,7 +35,7 @@ class StitchPipeline {
       }
 
       // PASO 2: DIRECTOR DE ARTE & ESTILO
-      TerminalService.broadcast(`🎨 Paso 2/3: Director de Arte & ADN Visual...`, "info");
+      TerminalService.broadcast(`🎨 Paso 2/3: Director de Arte & ADN Visual...`, "info", 50, "LOREM");
       const vibeNum = parseInt(prospectData.vibe) || 6;
       const styleKeyword = StitchPromptService.getStyleKeyword(vibeNum);
       const directorPrompt = StitchPromptService.assembleDirector(prospectData, styleKeyword);
@@ -46,7 +43,7 @@ class StitchPipeline {
       const editResponse = await client._editScreen(projectId, seedScreenId, directorPrompt + (slotPrompt ? "\n\n" + slotPrompt : ""));
 
       // PASO 3: POLLING Y DESCARGA RESILIENTE CON SELECTOR INTELIGENTE
-      TerminalService.broadcast(`⬇️ Paso 3/3: Descarga, Inyección & Persistencia...`, "info");
+      TerminalService.broadcast(`⬇️ Paso 3/3: Descarga, Inyección & Persistencia...`, "info", 75, "CODI");
       const editedScreenId = StitchParser.extractScreenId(editResponse);
       const targetScreenId = editedScreenId || seedScreenId;
       
@@ -68,12 +65,14 @@ class StitchPipeline {
 
       if (!downloadUrl) {
         console.error(`[Stitch MCP] ❌ Error en Paso 3: No se pudo obtener la URL de descarga del HTML.`);
+        TerminalService.broadcast(`❌ Error al obtener URL de descarga de HTML`, "error", null, "CODI");
         return { success: false, projectId, error: "NO_HTML_URL_AFTER_POLLING" };
       }
 
       return await this.processHtml(downloadUrl, clientId, prospectData, projectId, widgetManifest);
     } catch (error) {
       console.error("[Stitch MCP] ❌ Error crítico en generación:", error.message, error.stack);
+      TerminalService.broadcast(`❌ Error crítico en forja: ${error.message}`, "error", null, "NEXUS");
       throw error;
     }
   }
@@ -93,10 +92,10 @@ class StitchPipeline {
 
     try { await StitchIndexer.forceIndexation(downloadUrl); } catch (ie) {}
 
-    TerminalService.broadcast(`📥 Descargando artefacto HTML...`, "info");
+    TerminalService.broadcast(`📥 Descargando artefacto HTML...`, "info", 85, "CODI");
     const rawHtml = await StitchRpcHandler.downloadHtml(downloadUrl);
 
-    TerminalService.broadcast(`🧬 Inyectando Arsenal de Widgets & Sanitizando Navbar...`, "info");
+    TerminalService.broadcast(`🧬 Inyectando Arsenal de Widgets & Sanitizando Navbar...`, "info", 92, "ARGUS");
     const finalHtml = NexusInjectorService.process(rawHtml, prospectData, widgetManifest);
 
     fs.writeFileSync(path.join(destPath, "index.html"), finalHtml, "utf-8");
@@ -106,6 +105,7 @@ class StitchPipeline {
 
     const localUrl = `/clients/${clientId}/index.html`;
     console.log(`✅ [Stitch MCP] Artefactos persistidos exitosamente en: ${localUrl}`);
+    TerminalService.broadcast(`✅ Forja completada exitosamente. Preview listo.`, "success", 100, "NEXUS");
 
     return { success: true, projectId, widgetManifest, designExtracted: true, localUrl };
   }

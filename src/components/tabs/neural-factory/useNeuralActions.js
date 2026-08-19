@@ -114,8 +114,8 @@ export function useNeuralActions({ setProspects, addToast, setIsExtracting, setE
   const executeGeneration = async (engine) => {
     if (!currentGeneration) return;
     setGenerationLogs([
-      { message: `🚀 Iniciando secuencia de forja [${engine}]...`, timestamp: new Date() },
-      { message: `⚡ Orquestando agentes neurales para "${currentGeneration.name}"...`, timestamp: new Date() }
+      { message: `🚀 Iniciando secuencia de forja [${engine}]...`, timestamp: new Date(), progress: 5, status: 'info', agent: 'NEXUS' },
+      { message: `⚡ Orquestando agentes neurales para "${currentGeneration.name}"...`, timestamp: new Date(), progress: 10, status: 'info', agent: 'ORION' }
     ]);
 
     const agents = engine === 'stitch-mcp' ? [
@@ -129,8 +129,6 @@ export function useNeuralActions({ setProspects, addToast, setIsExtracting, setE
     const endpoint = engine === 'stitch-mcp' ? '/api/forge/stitch-mcp' : '/api/forge/native';
 
     try {
-      setGenerationLogs(prev => [...prev, { message: '🌱 Paso 1/3: Ensamblando Semilla y ADN Visual...', timestamp: new Date() }]);
-
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -142,21 +140,19 @@ export function useNeuralActions({ setProspects, addToast, setIsExtracting, setE
         const siteUrl = data.localUrl || `/clients/${currentGeneration.slug || currentGeneration.id}/index.html`;
         setGenerationLogs(prev => [
           ...prev,
-          { message: '🎨 Paso 2/3: Director de Arte & Tokens de Diseño aplicados', timestamp: new Date() },
-          { message: '⬇️ Paso 3/3: Descarga, Inyección de Widgets & Persistencia Dual', timestamp: new Date() },
-          { message: `✅ ¡Sitio generado con éxito! Preview disponible.`, timestamp: new Date() },
-          { message: `🖥️ Preview local: ${siteUrl}`, timestamp: new Date() },
+          { message: `✅ ¡Sitio generado con éxito! Preview disponible.`, timestamp: new Date(), progress: 100, status: 'success', agent: 'NEXUS' },
+          { message: `🖥️ Preview local: ${siteUrl}`, timestamp: new Date(), progress: 100, status: 'success', agent: 'NEXUS' },
           // Gate 3: El deploy a Netlify es MANUAL — ver botón en GenerationResult
-          { message: `⚠️ Deploy a Netlify: usa el botón [🚀 Desplegar a Netlify] cuando estés listo.`, timestamp: new Date() }
+          { message: `⚠️ Deploy a Netlify: usa el botón [🚀 Desplegar a Netlify] cuando estés listo.`, timestamp: new Date(), progress: 100, status: 'info', agent: 'KAEL' }
         ]);
         setProspects(prev => prev.map(p => p.id === currentGeneration.id ? { ...p, status: 'generated', siteUrl, localUrl: siteUrl } : p));
         addToast(`🚀 Sitio forjado para ${currentGeneration.name}`, 'success');
       } else {
-        setGenerationLogs(prev => [...prev, { message: `❌ Error en pipeline: ${data.error || 'Fallo desconocido'}`, timestamp: new Date() }]);
+        setGenerationLogs(prev => [...prev, { message: `❌ Error en pipeline: ${data.error || 'Fallo desconocido'}`, timestamp: new Date(), status: 'error', agent: 'NEXUS' }]);
         addToast(`❌ Error al forjar: ${data.error || 'Fallo'}`, 'error');
       }
     } catch (err) {
-      setGenerationLogs(prev => [...prev, { message: `❌ Error de conexión: ${err.message}`, timestamp: new Date() }]);
+      setGenerationLogs(prev => [...prev, { message: `❌ Error de conexión: ${err.message}`, timestamp: new Date(), status: 'error', agent: 'NEXUS' }]);
       addToast('❌ Falló la conexión con el motor de forja', 'error');
     }
   };

@@ -23149,7 +23149,411 @@
       "tagline": "Plataforma de conexión local"
     }
   },
-  "prospects": {},
+  "prospects": {
+    "manual-1787168779104": {
+      "id": "manual-1787168779104",
+      "leadScore": 10,
+      "audience": "auto",
+      "goal": "auto",
+      "city": "San Miguel de Tucumán",
+      "instagram": "canzonieri_center",
+      "source": "cyborg_injection",
+      "createdAt": "2026-08-19T19:46:19.104Z",
+      "usp": "",
+      "mapsUrl": "https://maps.app.goo.gl/cUYyLi8cFp6zs4MK9",
+      "context": "",
+      "name": "Canzonieri",
+      "subcategory": "",
+      "email": "",
+      "slug": "canzonieri",
+      "whatsapp": "543814301640",
+      "enriched": true,
+      "coordinates": {
+        "lat": -26.8111111,
+        "lng": -65.2037434
+      },
+      "rating": 4.5,
+      "reviewsCount": 386,
+      "aboutMatrix": {
+        "accessibility": [
+          "Wheelchair accessible restroom"
+        ],
+        "amenities": [
+          "Restroom"
+        ],
+        "payments": [
+          "Debit cards"
+        ],
+        "children": [
+          "Good for kids birthday"
+        ]
+      },
+      "features": [
+        "wheelchair accessible restroom",
+        "restroom",
+        "debit cards",
+        "good for kids birthday"
+      ],
+      "enrichmentLog": [
+        "IG: @canzonieri_center — 12 fotos, 3950 followers",
+        "Maps: Canzonieri — 4.5⭐ (386 reviews)",
+        "AI: Vibe 7, Tono: Festivo, cercano, confiable, alegre via Hybrid Cortex"
+      ],
+      "phone": "+54 381 430-1640",
+      "enrichedAt": "2026-08-19T19:46:39.045Z",
+      "topReviews": [
+        {
+          "author": "Victor Daniel Iajya",
+          "rating": 5,
+          "text": "Estuvo muy bueno me gustó mucho gracias lucas",
+          "date": "2026-08-07T18:16:39.480Z"
+        },
+        {
+          "author": "Andrea Autino",
+          "rating": 5,
+          "text": "el mejor de los salones, la atención de los mozos/as,el servicio de catering, TODO IMPECABLE",
+          "date": "2026-07-22T12:23:58.058Z"
+        },
+        {
+          "author": "Eduardo Rodriguez",
+          "rating": 5,
+          "text": "Excelente",
+          "date": "2026-07-17T06:55:02.745Z"
+        },
+        {
+          "author": "David orlando Castro",
+          "rating": 5,
+          "text": "Excelente mercaderia. Fresco.",
+          "date": "2026-04-14T15:41:56.656Z"
+        },
+        {
+          "author": "Nadia Georgieff",
+          "rating": 5,
+          "text": "Excelente en todo!!! Estamos más que agradecidos y felices, la comida increíble, la limpieza impecable!! Son excelentes!!",
+          "date": "2026-03-24T01:02:16.483Z"
+        }
+      ],
+      "openingHours": [],
+      "toneVoice": "Festivo, cercano, confiable, alegre",
+      "category": "professional",
+      "benefits": [
+        "Espacios versátiles para cualquier ocasión",
+        "Catering personalizado y de alta calidad",
+        "Atención dedicada y sin estrés"
+      ],
+      "vibe": "7",
+      "hours": [],
+      "semantic_photos": {
+        "hero": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+        "logo": "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+        "showcase": [
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_4.jpg",
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg"
+        ],
+        "atmosphere": [
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_10.jpg",
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_12.jpg",
+          "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_2.jpg"
+        ]
+      },
+      "address": "Bolivia 725, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+      "lng": -65.2037434,
+      "description": "En Canzonieri convertimos tu evento en una experiencia inolvidable con espacios elegantes y catering de calidad, sin complicaciones.",
+      "aiFeatures": [
+        "Buffet de carnes y ensaladas",
+        "Barra de cócteles con bartender",
+        "Decoración temática y entradas únicas",
+        "Servicio de fotografía y video"
+      ],
+      "photos": [
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_10.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_12.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_2.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_3.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_4.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_9.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+        "/nexus_archives/tucu-red/clients/canzonieri/assets/maps_main.jpg",
+        "assets/insta_canzonieri_center_1.jpg",
+        "assets/insta_canzonieri_center_2.jpg",
+        "assets/insta_canzonieri_center_3.jpg",
+        "assets/insta_canzonieri_center_4.jpg",
+        "assets/insta_canzonieri_center_5.jpg",
+        "assets/insta_canzonieri_center_6.jpg",
+        "assets/insta_canzonieri_center_7.jpg",
+        "assets/insta_canzonieri_center_8.jpg",
+        "assets/insta_canzonieri_center_9.jpg",
+        "assets/insta_canzonieri_center_10.jpg",
+        "assets/insta_canzonieri_center_11.jpg",
+        "assets/insta_canzonieri_center_12.jpg"
+      ],
+      "logoUrl": "assets/logo.jpg",
+      "curatedPhotos": {
+        "identity": [
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+            "caption": "🎉 ¿te recibiste? ¿cumplís años? ¡hay motivos que merecen una gran fiesta! 🥂✨\n\nolvidate del estrés ",
+            "score": 1
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/maps_main.jpg",
+            "caption": "hoy vivimos una tarde inolvidable en canzonieri center celebrando los 9 años de agustina! 🥳🎉 \n\ngra",
+            "score": 1
+          }
+        ],
+        "showcase": [
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_4.jpg",
+            "caption": "antes de reservar un salón o complicarte organizando todo en casa… pensá en disfrutar de verdad. ✨\n\n",
+            "score": 2
+          },
+          {
+            "path": "assets/insta_canzonieri_center_1.jpg",
+            "caption": "🎉 ¡canzonieri tiene una nueva propuesta para vos!\n\n✨ fiestas petit ✨\n\n🎂 cumpleaños\n🎓 recibidas\n🥂",
+            "score": 1
+          }
+        ],
+        "atmosphere": [
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+            "caption": "también hacemos eventos infantiles, creando momentos mágicos para los más pequeños. ¡haz de su celeb",
+            "score": 0
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_10.jpg",
+            "caption": "te mostramos un poco el 15 de agosto🤍✨ \n\n✨ nuestras entradas al salón son pura magia: únicas, inolv",
+            "score": 0
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_12.jpg",
+            "caption": "✨ revive con nosotros algunos momentos especiales del 15 de agosto. aquí te dejamos un recap de lo q",
+            "score": 0
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_2.jpg",
+            "caption": "15 cati\n\ntremenda noche. muchas felicidades! 🥳👏🏼📸🥰\nmuchas gracias por dejarme ser parte y captu",
+            "score": 1
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_3.jpg",
+            "caption": "✨ te mostramos el testimonio de una de nuestras primeras clientas que eligió festejar sus fiestas en",
+            "score": 0
+          },
+          {
+            "path": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_9.jpg",
+            "caption": "✨ no hay mejor recomendación que la de quienes ya vivieron la experiencia. 💙\n\nhoy les compartimos e",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_2.jpg",
+            "caption": "✨ te compartimos algunos testimonios de nuestras invitadas que fueron parte de esta noche tan especi",
+            "score": 1
+          },
+          {
+            "path": "assets/insta_canzonieri_center_3.jpg",
+            "caption": "así se vivió la fiesta de este casamiento inolvidable. n&g 🤍🥂💃🕺 \n.\n.\n\ngracias por confiar en mi ",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_4.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_5.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_6.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_7.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_8.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_9.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_10.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_11.jpg",
+            "caption": "",
+            "score": 0
+          },
+          {
+            "path": "assets/insta_canzonieri_center_12.jpg",
+            "caption": "",
+            "score": 0
+          }
+        ],
+        "details": [],
+        "discarded": []
+      },
+      "reviews": 386,
+      "instagramData": {
+        "handle": "canzonieri_center",
+        "photoCount": 12,
+        "bio": "Salón de eventos y cátering para tu fiesta.🎉\nPedí tu presupuesto haciendo click en el enlace.🤳",
+        "full_name": "Canzonieri Center",
+        "followers": 3950,
+        "following": 1274,
+        "posts_count": 376,
+        "profile_pic": "https://instagram.fjdo10-1.fna.fbcdn.net/v/t51.2885-19/348617550_1970098779996632_1238406891438458093_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fjdo10-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2gHQIvukmNbUFTOJobEwBjVZWlxyVHsLFCjilZtAHMapnH1N7XZqOM9YPYSYP-vIe1M&_nc_ohc=NUt_z8yhUVEQ7kNvwEGfHit&_nc_gid=0Pslh00wj8D8q_CDMg5_Qg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AQFLXE3_8btbVRkKid8rRBi1AY9o_4Y6bC9tKLo85bbiDQ&oe=6A8BDF73&_nc_sid=8b3546",
+        "captions": [
+          "También hacemos eventos infantiles, creando momentos mágicos para los más pequeños. ¡Haz de su celebración un día único con nosotros! #FiestaPerfecta #EventosInfantiles 🌺📸✨",
+          "Te mostramos un poco el 15 de Agosto🤍✨ \n\n✨ Nuestras entradas al salón son pura magia: únicas, inolvidables y hechas para soñar. 💫 \n\n#momentosquebrillan #entradasúnicas",
+          "✨ Revive con nosotros algunos momentos especiales del 15 de agosto. Aquí te dejamos un recap de lo que compartimos con nuestros increíbles invitados. ¡Gracias a todos por ser parte de esta experiencia única! 🙌 \n\n#MomentosInolvidables #EncuentrosEspeciales #15DeAgosto”",
+          "15 CATI\n\nTremenda noche. Muchas felicidades! 🥳👏🏼📸🥰\nMuchas gracias por dejarme ser parte y capturar estos hermosos momentos 🥰\n\n@catalina.uezen \n\n@anicappetta \n@julieta.uezen \n@mariano.uezen \n@veronica.uezen \n@jcuezen \n@silviauezen \n@anijorrat_\n@matias.ggrande \n\nSalón: @canzonieri_center \nTorta: @juanjosecappetta \n\n#quinceaños  #fotografias #fotos #quinciañera #quince",
+          "✨ Te mostramos el testimonio de una de nuestras primeras clientas que eligió festejar sus fiestas en Petit. 💖\n\nNada nos hace más felices que ser parte de momentos tan especiales y ver la alegría de quienes confían en nosotros.\n\n¡Gracias por elegirnos! 🥂✨\n\n#petit #eventos #fiestas #celebraciones #cumpleaños momentosespeciales testimonio clientesfelices tucumán",
+          "Antes de reservar un salón o complicarte organizando todo en casa… pensá en disfrutar de verdad. ✨\n\n🎉 En Canzonieri Center & Park tenemos las Fiestas Petit, ideales para:\n• Cumpleaños\n• Reuniones\n• Recibidas\n• Festejos de 25 personas o más\n\nNos encargamos de todo para que vos no tengas que preocuparte por nada:\n🎧 DJ\n🍽️ Buffet\n🍸 Barra de tragos\n✨ Un espacio listo para disfrutar con tus invitados.\n\nVos solo venís a pasarla bien. Nosotros hacemos el resto. Y todo, a un excelente precio. 🙌\n\n📲 ¿Querés más información? Mandanos un WhatsApp al 3814628000 y te contamos todo. ¡Estamos para ayudarte a organizar un festejo inolvidable!",
+          "✨ No hay mejor recomendación que la de quienes ya vivieron la experiencia. 💙\n\nHoy les compartimos el testimonio de la mamá de una de nuestras cumpleañeras, que eligió Canzonieri Center para celebrar los 9 años de su hija.\n\nCada palabra refleja lo que más nos emociona: ver a las familias felices y ser parte de un día tan especial. 🎂🎈\n\n¡Gracias por confiar en nosotros para crear recuerdos que duran para siempre! 🫶\n\n📩 ¿Vos también querés un cumpleaños inolvidable? Escribinos y reservá tu fecha.\n\n#canzoniericenter #cumpleañosinfantil #testimonioreal #familiasfelices",
+          "🎉 ¿Te recibiste? ¿Cumplís años? ¡Hay motivos que merecen una gran fiesta! 🥂✨\n\nOlvidate del estrés de organizar todo. En Canzonieri llega Fiestas Petit, una propuesta pensada para que solo te ocupes de disfrutar.\n\n🎧 DJ en vivo\n🍽️ Buffet\n🍸 Barra de tragos\n🎊 ¡Y mucho más!\n\nReuní a tus amigos, elegí la fecha y nosotros nos encargamos del resto. 💃🕺\n\n📩 Escribinos por mensaje y conocé todos los detalles de esta propuesta.\n\n🎤 @ximecastellano \n\n#fiestaspetit #canzonieri #cumpleaños #fiestaderecibida #egresados",
+          "Hoy vivimos una tarde inolvidable en Canzonieri Center celebrando los 9 años de Agustina! 🥳🎉 \n\nGracias por elegirnos para ser parte de este día tan especial.🥹",
+          "🎉 ¡Canzonieri tiene una nueva propuesta para vos!\n\n✨ Fiestas Petit ✨\n\n🎂 Cumpleaños\n🎓 Recibidas\n🥂 Reuniones con amigos\n\nRelajate y disfrutá, nosotros nos ocupamos de todo.\n\n🎧 DJ\n🍽️ Buffet\n🍹 Barra de tragos\n✨ Y mucho más\n\n📲 Escribinos por WhatsApp y conocé esta nueva propuesta.\n\n📅 Reservá tu fecha y viví un festejo inolvidable en Canzonieri.",
+          "✨ Te compartimos algunos testimonios de nuestras invitadas que fueron parte de esta noche tan especial. 💖\n\nMomentos, emociones y recuerdos que hicieron de este 15 una celebración inolvidable. ✨🎉",
+          "Así se vivió la fiesta de este casamiento inolvidable. N&G 🤍🥂💃🕺 \n.\n.\n\nGracias por confiar en mi trabajo, permitiéndome acompañarlos y registrar cada momento de una jornada tan especial 🤍✨"
+        ],
+        "lastScraped": "2026-08-19T20:06:52.472Z"
+      },
+      "imageUrl": "assets/logo.jpg",
+      "tagline": "Momentos únicos, celebraciones sin estrés",
+      "googlePlace": {
+        "name": "Canzonieri",
+        "address": "Bolivia 725, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+        "phone": "+54 381 430-1640",
+        "category": "Function room facility",
+        "rating": 4.5,
+        "reviewCount": 386,
+        "additionalInfo": {
+          "Accessibility": [
+            {
+              "Wheelchair accessible restroom": true
+            }
+          ],
+          "Amenities": [
+            {
+              "Restroom": true
+            }
+          ],
+          "Payments": [
+            {
+              "Debit cards": true
+            }
+          ],
+          "Children": [
+            {
+              "Good for kids birthday": true
+            }
+          ]
+        },
+        "categories": [
+          "Function room facility"
+        ],
+        "placesTags": [],
+        "menu": null,
+        "topReviews": [
+          {
+            "author": "Victor Daniel Iajya",
+            "rating": 5,
+            "text": "Estuvo muy bueno me gustó mucho gracias lucas",
+            "date": "2026-08-07T18:16:39.480Z"
+          },
+          {
+            "author": "Andrea Autino",
+            "rating": 5,
+            "text": "el mejor de los salones, la atención de los mozos/as,el servicio de catering, TODO IMPECABLE",
+            "date": "2026-07-22T12:23:58.058Z"
+          },
+          {
+            "author": "Eduardo Rodriguez",
+            "rating": 5,
+            "text": "Excelente",
+            "date": "2026-07-17T06:55:02.745Z"
+          },
+          {
+            "author": "David orlando Castro",
+            "rating": 5,
+            "text": "Excelente mercaderia. Fresco.",
+            "date": "2026-04-14T15:41:56.656Z"
+          },
+          {
+            "author": "Nadia Georgieff",
+            "rating": 5,
+            "text": "Excelente en todo!!! Estamos más que agradecidos y felices, la comida increíble, la limpieza impecable!! Son excelentes!!",
+            "date": "2026-03-24T01:02:16.483Z"
+          },
+          {
+            "author": "soledad ponce",
+            "rating": 5,
+            "text": "Buenas tardes!\nQuería agradecerles de todo corazón por el excelente servicio brindado anoche, por la amabilidad, el buen trato, la comida, la atención, por la música Marito es un MAESTRO,  a su hermano que no lo conocía y estuvo presente y atento en todo.\nMil gracias Lucas por todo lo brindado anoche 🙌🏻\nLo elegiría una y mil veces!",
+            "date": "2026-02-01T22:25:07.930Z"
+          },
+          {
+            "author": "Alejandro Levi",
+            "rating": 5,
+            "text": "Yo tuve la oportunidad de ir a una fiesta de 15 años y es exelente el servicio! Un salón amplio, la gastronomía variada y de calidad y el servicio de mozo impecable. Súper recomendable!!!",
+            "date": "2025-12-11T20:05:53.852Z"
+          },
+          {
+            "author": "Belen Carrizo",
+            "rating": 5,
+            "text": "Muy hermoso el salón. Lo super recomendo. 😃😃",
+            "date": "2025-12-11T18:54:06.757Z"
+          }
+        ],
+        "photos": [],
+        "hours": [],
+        "website": null,
+        "hasWebsite": false,
+        "mapsLink": "https://www.google.com/maps/search/?api=1&query=Canzonieri&query_place_id=ChIJxXlgv8xeIpQRqOOtmJZCJH4",
+        "lat": -26.8111111,
+        "lng": -65.2037434,
+        "logoUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmcr4It1OrXvGcqHFhtNAhZct_Bn2Abuje4oK6Wy4znDht2ebTmVpgJioJHK2wiq-Md__crTDBShXJ9molLx2hCm01lqT8rYdpWFyLiER8FFeG0hG3eO8nwD8Ec2qJaJOQFt0jAiw=w408-h270-k-no",
+        "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmcr4It1OrXvGcqHFhtNAhZct_Bn2Abuje4oK6Wy4znDht2ebTmVpgJioJHK2wiq-Md__crTDBShXJ9molLx2hCm01lqT8rYdpWFyLiER8FFeG0hG3eO8nwD8Ec2qJaJOQFt0jAiw=w408-h270-k-no"
+      },
+      "lat": -26.8111111,
+      "phoneNormalized": {
+        "raw": "543814301640",
+        "clean": "3814301640",
+        "e164": "+543814301640",
+        "whatsapp": "543814301640",
+        "display": "+54 381 430-1640",
+        "isMobile": false,
+        "isValid": true
+      },
+      "status": "stitch_ready",
+      "about": {
+        "accessibility": [
+          "Wheelchair accessible restroom"
+        ],
+        "amenities": [
+          "Restroom"
+        ],
+        "payments": [
+          "Debit cards"
+        ],
+        "children": [
+          "Good for kids birthday"
+        ]
+      }
+    }
+  },
   "system_core": {
     "manifesto": {
       "name": "NEXUS v5.1",

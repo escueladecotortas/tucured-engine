@@ -68,57 +68,6 @@ router.get('/system-status', (req, res) => {
     });
 });
 
-// GET /api/nexus/assets/list - Listado de activos para FileManager
-router.get('/assets/list', (req, res) => {
-    const { projectId = 'tucu-red', subfolder = '' } = req.query;
-    const cleanSub = String(subfolder).replace(/\.\./g, '');
-    const cleanProj = String(projectId).replace(/\.\./g, '');
-
-    const candidateDirs = [
-        path.resolve(__dirname, '../../public/clients', cleanProj, cleanSub),
-        path.resolve(__dirname, '../../nexus_archives/tucu_red/clients', cleanProj, cleanSub),
-        path.resolve(__dirname, '../../public/assets', cleanSub),
-        path.resolve(__dirname, '../../public')
-    ];
-
-    let targetDir = null;
-    for (const d of candidateDirs) {
-        if (fs.existsSync(d) && fs.statSync(d).isDirectory()) {
-            targetDir = d;
-            break;
-        }
-    }
-
-    const files = [];
-    if (targetDir) {
-        try {
-            const entries = fs.readdirSync(targetDir);
-            for (const item of entries) {
-                if (item.startsWith('.')) continue;
-                const fullItem = path.join(targetDir, item);
-                const isDir = fs.statSync(fullItem).isDirectory();
-                files.push({
-                    name: item,
-                    type: isDir ? 'folder' : 'file',
-                    size: isDir ? 0 : fs.statSync(fullItem).size
-                });
-            }
-        } catch (e) {
-            console.warn('Error listando activos en', targetDir, e.message);
-        }
-    }
-
-    if (files.length === 0) {
-        files.push(
-            { name: 'cinematic', type: 'folder', size: 0 },
-            { name: 'logo.png', type: 'file', size: 24500 },
-            { name: 'brief.md', type: 'file', size: 1800 }
-        );
-    }
-
-    res.json(files);
-});
-
 // GET /api/nexus/achievements/:projectId
 router.get('/achievements/:projectId', (req, res) => {
     const achievements = achievementService.getAchievements(req.params.projectId);

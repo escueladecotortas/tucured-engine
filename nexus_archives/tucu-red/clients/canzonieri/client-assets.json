@@ -1,0 +1,106 @@
+{
+  "business_name": "Canzonieri",
+  "slug": "canzonieri",
+  "source": "cyborg_injection",
+  "extraction_date": "2026-08-19T20:07:06.117Z",
+  "category": "professional",
+  "toneVoice": "Festivo, cercano, confiable, alegre",
+  "rating": 4.5,
+  "reviewsCount": 386,
+  "coordinates": {
+    "lat": -26.8111111,
+    "lng": -65.2037434
+  },
+  "openingHours": [],
+  "phone": "+54 381 430-1640",
+  "whatsapp": "543814301640",
+  "phoneNormalized": {
+    "raw": "543814301640",
+    "clean": "3814301640",
+    "e164": "+543814301640",
+    "whatsapp": "543814301640",
+    "display": "+54 381 430-1640",
+    "isMobile": false,
+    "isValid": true
+  },
+  "instagram": "canzonieri_center",
+  "address": "Bolivia 725, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+  "logo_url": "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+  "photos": [
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_10.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_12.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_2.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_3.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_4.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_9.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+    "/nexus_archives/tucu-red/clients/canzonieri/assets/maps_main.jpg"
+  ],
+  "semantic_photos": {
+    "hero": "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+    "logo": "/nexus_archives/tucu-red/clients/canzonieri/assets/logo.jpg",
+    "showcase": [
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_4.jpg",
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg"
+    ],
+    "atmosphere": [
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_1.jpg",
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_10.jpg",
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_12.jpg",
+      "/nexus_archives/tucu-red/clients/canzonieri/assets/insta_canzonieri_center_2.jpg"
+    ]
+  },
+  "about": {
+    "accessibility": [
+      "Wheelchair accessible restroom"
+    ],
+    "amenities": [
+      "Restroom"
+    ],
+    "payments": [
+      "Debit cards"
+    ],
+    "children": [
+      "Good for kids birthday"
+    ]
+  },
+  "features": [
+    "wheelchair accessible restroom",
+    "restroom",
+    "debit cards",
+    "good for kids birthday"
+  ],
+  "topReviews": [
+    {
+      "author": "Victor Daniel Iajya",
+      "rating": 5,
+      "text": "Estuvo muy bueno me gustó mucho gracias lucas",
+      "date": "2026-08-07T18:16:39.480Z"
+    },
+    {
+      "author": "Andrea Autino",
+      "rating": 5,
+      "text": "el mejor de los salones, la atención de los mozos/as,el servicio de catering, TODO IMPECABLE",
+      "date": "2026-07-22T12:23:58.058Z"
+    },
+    {
+      "author": "Eduardo Rodriguez",
+      "rating": 5,
+      "text": "Excelente",
+      "date": "2026-07-17T06:55:02.745Z"
+    },
+    {
+      "author": "David orlando Castro",
+      "rating": 5,
+      "text": "Excelente mercaderia. Fresco.",
+      "date": "2026-04-14T15:41:56.656Z"
+    },
+    {
+      "author": "Nadia Georgieff",
+      "rating": 5,
+      "text": "Excelente en todo!!! Estamos más que agradecidos y felices, la comida increíble, la limpieza impecable!! Son excelentes!!",
+      "date": "2026-03-24T01:02:16.483Z"
+    }
+  ]
+}

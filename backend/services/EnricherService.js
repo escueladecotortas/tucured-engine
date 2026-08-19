@@ -47,6 +47,7 @@ class EnricherService {
       const captions = (enrichedData.instagramData?.captions || []);
       const curationResult = PhotoCuratorService.curate(enrichedData.photos || [], captions, downloadPath, safeName);
       enrichedData.curatedPhotos = curationResult.classified;
+      enrichedData.semantic_photos = curationResult.semantic_photos;
 
       // 5. Normalización Telefónica E.164 y Meta WhatsApp
       const rawTel = enrichedData.whatsapp || enrichedData.phone || lead.phone || lead.whatsapp || '';
@@ -56,35 +57,20 @@ class EnricherService {
       enrichedData.phoneNormalized = phoneNorm;
 
       // 6. Generar client-assets.json con inventario 100% físico real en disco
-      const toStaticUrl = (p) => {
-        if (!p) return '';
-        if (p.startsWith('http://') || p.startsWith('https://')) return p;
-        const clean = p.replace(/^\//, '');
-        return `/nexus_archives/tucu-red/clients/${safeName}/${clean}`;
+      const toStaticUrl = (filename) => {
+        if (!filename) return '';
+        if (filename.startsWith('http://') || filename.startsWith('https://')) return filename;
+        const clean = path.basename(filename);
+        return `/nexus_archives/tucu-red/clients/${safeName}/assets/${clean}`;
       };
 
-      // Helper para validar existencia real en downloadPath
-      const fileExistsOnDisk = (filename) => {
-        return fs.existsSync(path.join(downloadPath, filename));
-      };
-
-      // Construcción de semantic_photos basada estrictamente en disco físico
-      const heroUrl = fileExistsOnDisk("hero.jpg") ? toStaticUrl("assets/hero.jpg") : (enrichedData.logoUrl ? toStaticUrl(enrichedData.logoUrl) : '');
-      const logoUrl = fileExistsOnDisk("logo.jpg") ? toStaticUrl("assets/logo.jpg") : (enrichedData.logoUrl ? toStaticUrl(enrichedData.logoUrl) : '');
-
-      // Showcase y Atmosphere: solo los que existen físicamente
-      const showcaseFiles = ["product_1.jpg", "product_2.jpg", "product_3.jpg", "product_4.jpg"]
-        .filter(f => fileExistsOnDisk(f))
-        .map(f => toStaticUrl(`assets/${f}`));
-
-      const atmosphereFiles = ["ambient_1.jpg", "ambient_2.jpg", "ambient_3.jpg", "ambient_4.jpg"]
-        .filter(f => fileExistsOnDisk(f))
-        .map(f => toStaticUrl(`assets/${f}`));
-
-      // Si no hay productos pero hay maps_main.jpg o fotos adicionales reales
+      // Fotos reales existentes en downloadPath
       const realPhotosOnDisk = fs.readdirSync(downloadPath)
         .filter(f => f.endsWith('.jpg') || f.endsWith('.png') || f.endsWith('.webp'))
-        .map(f => toStaticUrl(`assets/${f}`));
+        .map(f => toStaticUrl(f));
+
+      const logoUrl = curationResult.semantic_photos?.logo || 
+                     (fs.existsSync(path.join(downloadPath, "logo.jpg")) ? toStaticUrl("logo.jpg") : (enrichedData.logoUrl ? toStaticUrl(enrichedData.logoUrl) : ''));
 
       const clientAssets = {
         business_name: enrichedData.name,
@@ -104,12 +90,7 @@ class EnricherService {
         address: enrichedData.address || '',
         logo_url: logoUrl,
         photos: realPhotosOnDisk,
-        semantic_photos: {
-          hero: heroUrl,
-          logo: logoUrl,
-          showcase: showcaseFiles,
-          atmosphere: atmosphereFiles
-        },
+        semantic_photos: curationResult.semantic_photos,
         about: enrichedData.aboutMatrix || {},
         features: enrichedData.features || [],
         topReviews: enrichedData.topReviews || []
@@ -117,7 +98,7 @@ class EnricherService {
 
       fs.writeFileSync(path.join(downloadPath, "..", "client-assets.json"), JSON.stringify(clientAssets, null, 2));
       fs.writeFileSync(path.join(publicClientDir, "client-assets.json"), JSON.stringify(clientAssets, null, 2));
-      console.log(`   📄 client-assets.json generado exitosamente (dual: archives + public) — 0 fotos fantasma`);
+      console.log(`   📄 client-assets.json generado exitosamente (dual: archives + public) — ${realPhotosOnDisk.length} fotos físicas`);
 
       // Persistir en Firestore
       await this._persistLog(lead.id, enrichedData);

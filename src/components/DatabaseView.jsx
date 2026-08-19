@@ -25,18 +25,6 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
     [prospects, searchTerm, filterStatus]
   );
 
-  const handleRemovePhoto = (prospect, index, photoUrl) => {
-    if (!window.confirm("¿Descartar este activo de la Bóveda?")) return;
-    const updated = { ...prospect, photos: prospect.photos.filter((_, i) => i !== index) };
-    setSelectedGallery(updated);
-    if (onUpdateLead) onUpdateLead(updated);
-    fetch(`/api/prospects/${prospect.id}/photos`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ index, photoUrl }),
-    }).catch((err) => console.error("Error al borrar foto:", err));
-  };
-
   return (
     <div className="h-full flex flex-col gap-6">
       <DbKpis prospects={prospects} />
@@ -83,7 +71,10 @@ export default function DatabaseView({ prospects, onGenerate, onCall, onOutreach
         <GalleryModal
           prospect={selectedGallery}
           onClose={() => setSelectedGallery(null)}
-          onRemovePhoto={handleRemovePhoto}
+          onUpdateLead={(updated) => {
+            setSelectedGallery(updated);
+            if (onUpdateLead) onUpdateLead(updated);
+          }}
         />
       )}
     </div>

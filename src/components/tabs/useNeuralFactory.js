@@ -44,8 +44,17 @@ export function useNeuralFactory() {
                 try {
                     const data = JSON.parse(event.data);
                     const line = data?.line || data?.message;
-                    if (line && (line.includes('[Stitch') || line.includes('Agente') || line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬)/))) {
-                        setGenerationLogs(prev => [...prev, { message: line, timestamp: new Date(data.timestamp || Date.now()) }]);
+                    if (line && (line.includes('[Stitch') || line.includes('Agente') || typeof data?.progress === 'number' || line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬|🌱|🎨|🚀|⚡)/))) {
+                        setGenerationLogs(prev => [
+                            ...prev,
+                            {
+                                message: line,
+                                status: data?.status || 'info',
+                                progress: typeof data?.progress === 'number' ? data.progress : null,
+                                agent: data?.agent || 'NEXUS',
+                                timestamp: new Date(data.timestamp || Date.now())
+                            }
+                        ]);
                     }
                 } catch (e) {}
             };
