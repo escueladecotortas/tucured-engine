@@ -13,7 +13,7 @@ const isWin = process.platform === 'win32';
 
 let backendProcess = null;
 let frontendProcess = null;
-let isShuttingDown = false;
+let isIntentionalShutdown = false;
 let restartTimeout = null;
 let frontendRestartTimeout = null;
 
@@ -55,11 +55,11 @@ function waitForPort(port, timeoutMs = 15000) {
 }
 
 function cleanup() {
-    if (isShuttingDown) return;
-    isShuttingDown = true;
+    if (isIntentionalShutdown) return;
+    isIntentionalShutdown = true;
     clearTimeout(restartTimeout);
     clearTimeout(frontendRestartTimeout);
-    console.log('\n🛑 [TUCURED-ENGINE] Deteniendo servicios...');
+    console.log('\n🛑 [TUCURED-ENGINE] Deteniendo servicios intencionalmente...');
     try { if (backendProcess) backendProcess.kill('SIGTERM'); } catch (e) {}
     try { if (frontendProcess) frontendProcess.kill('SIGTERM'); } catch (e) {}
     killPort(5005);
@@ -71,7 +71,9 @@ process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
 
 function spawnBackend() {
-    if (isShuttingDown) return;
+    if (isIntentionalShutdown) return;
+    
+    killPort(5006);
 
     backendProcess = isWin
         ? spawn('cmd.exe', ['/c', 'set PORT=5006& set BACKEND_PORT=5006& node backend/server.js'], {
@@ -82,11 +84,10 @@ function spawnBackend() {
         });
 
     backendProcess.on('exit', (code, signal) => {
-        if (isShuttingDown) return;
+        if (isIntentionalShutdown) return;
         console.warn(`\n🔄 [TUCURED-ENGINE] Backend Express finalizó/reinició (código: ${code}, señal: ${signal}). Reconexión resiliente activa...`);
         clearTimeout(restartTimeout);
         restartTimeout = setTimeout(async () => {
-            killPort(5006);
             spawnBackend();
             try {
                 await waitForPort(5006, 15000);
@@ -99,7 +100,9 @@ function spawnBackend() {
 }
 
 function spawnFrontend() {
-    if (isShuttingDown) return;
+    if (isIntentionalShutdown) return;
+
+    killPort(5005);
 
     frontendProcess = isWin
         ? spawn('cmd.exe', ['/c', 'npx vite --port 5005 --host'], {
@@ -110,11 +113,10 @@ function spawnFrontend() {
         });
 
     frontendProcess.on('exit', (code, signal) => {
-        if (isShuttingDown) return;
+        if (isIntentionalShutdown) return;
         console.warn(`\n🔄 [TUCURED-ENGINE] Frontend Vite finalizó/caído (código: ${code}, señal: ${signal}). Auto-Respawn activo...`);
         clearTimeout(frontendRestartTimeout);
         frontendRestartTimeout = setTimeout(() => {
-            killPort(5005);
             spawnFrontend();
             console.log('   ✅ [TUCURED-ENGINE] Frontend Vite reconectado en :5005.');
         }, 800);
@@ -122,9 +124,6 @@ function spawnFrontend() {
 }
 
 async function start() {
-    killPort(5005);
-    killPort(5006);
-
     console.log('🚀 [TUCURED-ENGINE] Iniciando Orquestador Dual Sincronizado y Resiliente...');
     console.log('   📡 1/2 Levantando Backend Express en http://localhost:5006...');
 

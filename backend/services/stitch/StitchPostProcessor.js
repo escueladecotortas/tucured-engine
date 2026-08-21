@@ -19,7 +19,7 @@ class StitchPostProcessor {
     const name = prospectData.name || 'Comercio';
     const phone = prospectData.phone || prospectData.whatsapp || '';
     const waClean = phone.replace(/[^\d]/g, '');
-    const logoSrc = `/nexus_archives/tucu-red/clients/${slug}/assets/logo.jpg`;
+    const logoSrc = `/nexus_archives/tucu-red/clients/${slug}/assets/logo.jpg`; // Relative paths for Netlify
 
     // 1. SANITIZACIÓN QUIRÚRGICA DE NAVBAR / HEADER
     const nav = $('nav, header.fixed, header').first();
@@ -65,7 +65,14 @@ class StitchPostProcessor {
     let html = $.html();
     const RESIDUAL_REGEX = /\[(?:nexus-)?(?:gallery_v[12]_[\w]+|contact_v2_action_dock|social_v2_marquee_reviews|trust_v2_live_badge|booking_v1_turnero|footer_v1_map|slot-[\w]+|[\w_]+)\]/gi;
     html = html.replace(RESIDUAL_REGEX, '');
-    html = html.replace(/\{\{IMG_\d+\}\}/g, `/nexus_archives/tucu-red/clients/${slug}/assets/ambient_1.jpg`);
+    html = html.replace(/\{\{IMG_\d+\}\}/g, `/clients/${slug}/assets/ambient_1.jpg`);
+
+    // Misión 2: Enrutamiento Local (Erradicar CDN)
+    html = html.replace(/https:\/\/(?:scontent[^"'\s]*|lh3\.googleusercontent[^"'\s]*)/gi, (match) => {
+      let basename = match.split('/').pop().split('?')[0];
+      if (!basename || !basename.includes('.')) basename = 'fallback.jpg';
+      return `/clients/${slug}/assets/${basename}`;
+    });
 
     return html;
   }

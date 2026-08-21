@@ -36,33 +36,54 @@ export function useNeuralFactory() {
     });
 
     useEffect(() => {
-        // Suscripción al stream SSE de logs del terminal
         let eventSource = null;
-        try {
-            eventSource = new EventSource('/api/terminal/stream');
-            eventSource.onmessage = (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    const line = data?.line || data?.message;
-                    if (line && (line.includes('[Stitch') || line.includes('Agente') || typeof data?.progress === 'number' || line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬|🌱|🎨|🚀|⚡)/))) {
-                        setGenerationLogs(prev => [
-                            ...prev,
-                            {
-                                message: line,
-                                status: data?.status || 'info',
-                                progress: typeof data?.progress === 'number' ? data.progress : null,
-                                agent: data?.agent || 'NEXUS',
-                                timestamp: new Date(data.timestamp || Date.now())
-                            }
-                        ]);
-                    }
-                } catch (e) {}
-            };
-            eventSource.onerror = () => {};
-        } catch (e) {}
+        let reconnectTimeout = null;
+        let retryCount = 0;
+
+        const connectSSE = () => {
+            try {
+                if (eventSource) eventSource.close();
+                eventSource = new EventSource('/api/terminal/stream');
+                
+                eventSource.onopen = () => {
+                    retryCount = 0;
+                };
+
+                eventSource.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        const line = data?.line || data?.message;
+                        if (line && (line.includes('[Stitch') || line.includes('Agente') || typeof data?.progress === 'number' || line.match(/(✅|🛡️|📥|❌|⏳|⬇️|🧬|🌱|🎨|🚀|⚡)/))) {
+                            setGenerationLogs(prev => [
+                                ...prev,
+                                {
+                                    message: line,
+                                    status: data?.status || 'info',
+                                    progress: typeof data?.progress === 'number' ? data.progress : null,
+                                    agent: data?.agent || 'NEXUS',
+                                    timestamp: new Date(data.timestamp || Date.now())
+                                }
+                            ]);
+                        }
+                    } catch (e) {}
+                };
+                
+                eventSource.onerror = () => {
+                    eventSource.close();
+                    const delay = Math.min(1000 * Math.pow(2, retryCount), 15000);
+                    retryCount++;
+                    reconnectTimeout = setTimeout(connectSSE, delay);
+                };
+            } catch (e) {
+                reconnectTimeout = setTimeout(connectSSE, 3000);
+            }
+        };
+
+        connectSSE();
 
         return () => {
             if (eventSource) eventSource.close();
+            if (reconnectTimeout) clearTimeout(reconnectTimeout);
         };
     }, []);
 

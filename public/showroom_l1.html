@@ -1,0 +1,1427 @@
+<!-- Archivo: public/showroom_l1.html -->
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showroom Split-Screen // Turnero L1 Mobile-First</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
+    textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus,
+    select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+      -webkit-text-fill-color: #f4f4f5 !important;
+      -webkit-box-shadow: 0 0 0px 1000px #09090b inset !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  </style>
+</head>
+<body class="bg-[#07090E] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0 relative">
+  
+  <!-- Sistema de Notificaciones Toast Flotante -->
+  <div id="toast-notification" class="fixed top-20 right-6 z-[100] transform -translate-y-12 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-semibold backdrop-blur-xl">
+    <span id="toast-icon">✓</span>
+    <span id="toast-message">Notificación del sistema</span>
+  </div>
+
+  <!-- Header Bar -->
+  <header class="h-16 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-base shadow-lg shadow-blue-600/30">L1</div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-bold text-sm sm:text-base leading-tight text-white tracking-wide">SHOWROOM LIVE // TURNERO L1</h1>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Horarios Semanales
+          </span>
+        </div>
+        <span class="text-[11px] sm:text-xs text-zinc-400">Matriz Semanal Dinámica & Doble Llave Soberana</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="/widget-laboratory.html" class="hidden sm:flex px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/60 transition-all items-center gap-1.5">
+        ← Laboratorio
+      </a>
+      <button id="btn-copy-configured" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 transition-all flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        <span class="hidden sm:inline">Copiar HTML Configurado</span>
+        <span class="sm:hidden">Copiar HTML</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Split-Screen -->
+  <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden h-[calc(100vh-4rem-4rem)] md:h-[calc(100vh-4rem)]">
+    
+    <!-- Panel Izquierdo: Configuración con Categorías / Drawer -->
+    <section class="lg:col-span-6 border-r border-zinc-800/80 bg-zinc-950/60 p-4 sm:p-6 overflow-y-auto hide-scrollbar flex flex-col space-y-4">
+      
+      <!-- Selector de Pestañas Desktop / Drawer Switcher -->
+      <div class="grid grid-cols-3 gap-1 bg-zinc-900/90 p-1.5 rounded-2xl border border-zinc-800/80 shrink-0">
+        <button type="button" id="tab-btn-identidad" class="admin-tab-btn py-2 px-3 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-md flex items-center justify-center gap-1.5">
+          <span>🏢</span> <span>Identidad</span>
+        </button>
+        <button type="button" id="tab-btn-agenda" class="admin-tab-btn py-2 px-3 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center justify-center gap-1.5">
+          <span>⏰</span> <span>Agenda</span>
+        </button>
+        <button type="button" id="tab-btn-whatsapp" class="admin-tab-btn py-2 px-3 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center justify-center gap-1.5">
+          <span>💬</span> <span>WhatsApp</span>
+        </button>
+      </div>
+
+      <!-- Contenido de Pestañas -->
+      <div class="space-y-4 flex-1">
+        
+        <!-- PESTAÑA 1: IDENTIDAD & CONTACTO -->
+        <div id="tab-content-identidad" class="tab-pane space-y-4">
+          <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center gap-2">
+              <span>🏢</span> Identidad de Marca
+            </h3>
+            <div>
+              <label class="block text-xs font-medium mb-1 text-zinc-300">Nombre del Comercio</label>
+              <input type="text" id="cfg-biz-name" value="Óptica 100 Tucumán" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-zinc-300">WhatsApp Destino</label>
+                <span id="wa-verified-badge" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                  <svg class="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                  <span>Verificado vía QR</span>
+                </span>
+              </div>
+              <input type="tel" inputmode="numeric" autocomplete="tel" id="cfg-wa-number" value="3811234567" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: AGENDA & MATRIZ SEMANAL -->
+        <div id="tab-content-agenda" class="tab-pane hidden space-y-4">
+          
+          <!-- Matriz Semanal de Horarios -->
+          <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
+                  <span>📅</span> Matriz Semanal de Horarios
+                </h3>
+                <p class="text-[11px] text-zinc-400">Personaliza apertura, cierre y turnos por día.</p>
+              </div>
+              <button type="button" id="btn-clone-schedule" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/20 transition-all flex items-center gap-1">
+                <span>📋</span> Copiar Lun a días hábiles
+              </button>
+            </div>
+
+            <!-- Lista de 7 Días -->
+            <div class="space-y-2.5" id="weekly-schedule-container">
+              <!-- Los 7 días se generan dinámicamente o se renderizan limpios -->
+            </div>
+
+            <!-- Intervalo y Días Hacia Adelante -->
+            <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-zinc-800/80">
+              <div>
+                <label class="block text-xs font-medium mb-1 text-zinc-300">Intervalo de turnos</label>
+                <select id="cfg-interval" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="15">15 minutos</option>
+                  <option value="30" selected>30 minutos</option>
+                  <option value="45">45 minutos</option>
+                  <option value="60">60 minutos</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1 text-zinc-300">Ventana de reserva</label>
+                <select id="cfg-days" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="7">7 días</option>
+                  <option value="14" selected>14 días</option>
+                  <option value="21">21 días</option>
+                  <option value="30">30 días</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Matriz de Feriados -->
+          <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="space-y-0.5">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center gap-1.5">
+                  <span>🇦🇷</span> Feriados Nacionales <span id="holidays-year-label">2026</span>
+                </h3>
+                <p class="text-[11px] text-zinc-400">Bloquear días patrios salvo excepción.</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="cfg-block-holidays" checked class="sr-only peer">
+                <div class="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div id="upcoming-holidays-container" class="space-y-2.5 pt-1"></div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: WHATSAPP & PLANTILLA -->
+        <div id="tab-content-whatsapp" class="tab-pane hidden space-y-4">
+          
+          <!-- TARJETA BAILEYS: ESTADO DE CONEXIÓN WHATSAPP -->
+          <div class="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800/90 space-y-3 relative overflow-hidden">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-base">📱</span>
+                <div>
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-200">Nodo WhatsApp Baileys</h3>
+                  <p class="text-[11px] text-zinc-400">Doble Llave Soberana & Local-First</p>
+                </div>
+              </div>
+              <div id="wa-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                <span id="wa-status-text">Desconectado (CLOSE)</span>
+              </div>
+            </div>
+
+            <!-- Panel de Acciones Baileys -->
+            <div class="pt-1 flex flex-col gap-2.5">
+              <div id="wa-user-info" class="hidden text-xs bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-2.5 text-zinc-300 flex items-center justify-between">
+                <span class="text-zinc-400">Línea Verificada:</span>
+                <span id="wa-user-jid" class="font-mono font-bold text-emerald-400 text-[11px]"></span>
+              </div>
+
+              <div class="flex gap-2">
+                <button type="button" id="btn-wa-init" class="flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-1.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                  <span>Vincular WhatsApp (Escanear QR)</span>
+                </button>
+                <button type="button" id="btn-wa-logout" class="hidden py-2.5 px-3 rounded-xl text-xs font-bold bg-zinc-800 hover:bg-rose-900/60 hover:text-rose-200 text-zinc-400 border border-zinc-700/60 transition-all flex items-center justify-center gap-1">
+                  <span>Desconectar</span>
+                </button>
+              </div>
+
+              <!-- Sección Prueba Rápida de Envío y Verificación (Visible cuando OPEN) -->
+              <div id="wa-test-box" class="hidden pt-2 border-t border-zinc-800/80 space-y-2">
+                <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">Test de Conectividad & Lookup</span>
+                <div class="flex gap-2">
+                  <input type="tel" id="wa-test-phone" placeholder="Ej: 3815123456" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+                  <button type="button" id="btn-wa-check" class="shrink-0 px-3 py-2 rounded-xl text-xs font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/60 transition-all">Verificar</button>
+                  <button type="button" id="btn-wa-send" class="shrink-0 px-3 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md shadow-blue-600/20">Probar Envío</button>
+                </div>
+                <div id="wa-test-feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TARJETA PLANTILLA & PREVIEW -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center gap-2">
+                <span>💬</span> Plantilla & Preview WhatsApp
+              </h3>
+              <button type="button" id="btn-reset-template" class="text-[11px] font-semibold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer">Restaurar Original</button>
+            </div>
+            
+            <div class="flex flex-col space-y-4">
+              <!-- Editor de Template Desahogado -->
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <p class="text-[11px] text-zinc-400">Tokens dinámicos (click para insertar):</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button type="button" onclick="insertToken('{{cliente}}')" class="px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-blue-400 text-xs font-mono font-bold border border-zinc-700/60 transition-all cursor-pointer shadow-sm">+ {{cliente}}</button>
+                  <button type="button" onclick="insertToken('{{fecha}}')" class="px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-blue-400 text-xs font-mono font-bold border border-zinc-700/60 transition-all cursor-pointer shadow-sm">+ {{fecha}}</button>
+                  <button type="button" onclick="insertToken('{{hora}}')" class="px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-blue-400 text-xs font-mono font-bold border border-zinc-700/60 transition-all cursor-pointer shadow-sm">+ {{hora}}</button>
+                  <button type="button" onclick="insertToken('{{comercio}}')" class="px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-blue-400 text-xs font-mono font-bold border border-zinc-700/60 transition-all cursor-pointer shadow-sm">+ {{comercio}}</button>
+                  <button type="button" onclick="insertToken('{{telefono}}')" class="px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-blue-400 text-xs font-mono font-bold border border-zinc-700/60 transition-all cursor-pointer shadow-sm">+ {{telefono}}</button>
+                </div>
+                <textarea id="cfg-template" rows="6" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3.5 font-mono text-xs text-zinc-200 leading-relaxed outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-y">¡Hola! Quiero confirmar mi reserva en {{comercio}}:
+- 👤 Nombre: {{cliente}}
+- 📅 Día: {{fecha}}
+- ⏰ Hora: {{hora}}
+- 📞 Tel: {{telefono}}
+¿Me confirman disponibilidad?</textarea>
+              </div>
+
+              <!-- Burbuja Real de WhatsApp Espaciosa -->
+              <div class="flex flex-col space-y-2">
+                <span class="text-[11px] font-medium text-zinc-400">Simulación de Mensaje Entrante en WhatsApp:</span>
+                <div class="p-4 rounded-2xl bg-[#0b141a] border border-[#1f2c34] flex flex-col justify-between shadow-inner relative overflow-hidden">
+                  <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#25d366 1px, transparent 1px); background-size: 16px 16px;"></div>
+                  <div class="bg-[#005c4b] text-[#e9edef] rounded-2xl rounded-tr-sm p-3.5 text-xs leading-relaxed shadow-md relative w-full sm:max-w-[90%] self-end">
+                    <div id="wa-bubble-preview" class="whitespace-pre-wrap font-sans text-xs break-words leading-relaxed"></div>
+                    <div class="flex items-center justify-end gap-1.5 mt-2 text-[10px] text-[#8696a0]">
+                      <span id="wa-bubble-time">14:32</span>
+                      <span class="text-[#53bdeb] font-bold">✓✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel Derecho: Widget en Vivo -->
+    <section class="lg:col-span-6 bg-[#05060A] p-4 sm:p-6 lg:p-10 flex flex-col items-center justify-center relative overflow-y-auto hide-scrollbar">
+      <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 28px 28px;"></div>
+      
+      <div class="w-full max-w-xl flex flex-col items-center justify-center relative z-10">
+        <div class="mb-4 text-center">
+          <span class="inline-block px-3 py-1 bg-zinc-900/90 border border-zinc-800 text-zinc-400 rounded-full text-xs font-bold shadow-lg">
+            Preview de Renderizado L1 (Mobile-First 440px)
+          </span>
+        </div>
+        
+        <!-- Contenedor donde se monta el Widget L1 -->
+        <div id="widget-host-container" class="w-full flex justify-center items-center"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- WIZARD MODAL: ONBOARDING SEGURO WHATSAPP BAILEYS -->
+  <div id="wa-qr-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-md w-full shadow-2xl relative text-center flex flex-col items-center">
+      <button type="button" id="btn-close-qr-modal" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-400 flex items-center justify-center text-sm transition-all">✕</button>
+      
+      <!-- Stepper Header -->
+      <div class="flex items-center justify-center gap-2 mb-5 w-full">
+        <div id="wiz-dot-1" class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-md">1</div>
+        <div class="w-8 h-0.5 bg-zinc-800 rounded-full overflow-hidden"><div id="wiz-bar-1" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+        <div id="wiz-dot-2" class="w-6 h-6 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center">2</div>
+        <div class="w-8 h-0.5 bg-zinc-800 rounded-full overflow-hidden"><div id="wiz-bar-2" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+        <div id="wiz-dot-3" class="w-6 h-6 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center">3</div>
+      </div>
+
+      <!-- PASO 1: BLINDAJE & DOBLE LLAVE SOBERANA -->
+      <div id="wizard-step-1" class="w-full space-y-4 text-left">
+        <div class="text-center space-y-1">
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-2 text-2xl">🛡️</div>
+          <h3 class="text-base font-bold text-white">Doble Llave Soberana</h3>
+          <p class="text-xs text-zinc-400">Vinculación Directa Local-First sin Intermediarios</p>
+        </div>
+
+        <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 space-y-3 text-xs text-zinc-300">
+          <div class="flex items-start gap-2.5">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <p><strong class="text-zinc-100">Soberanía de Datos:</strong> Tu sesión de WhatsApp se guarda exclusivamente en tu disco local. Cero servidores externos.</p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <p><strong class="text-zinc-100">Cifrado de Extremo a Extremo:</strong> Baileys utiliza el protocolo criptográfico oficial de WhatsApp.</p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-emerald-400 font-bold">✓</span>
+            <p><strong class="text-zinc-100">Sincronización Automática:</strong> El número de teléfono verificado se inyecta directamente en tu Turnero.</p>
+          </div>
+        </div>
+
+        <button type="button" id="btn-wizard-to-step-2" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 transition-all flex items-center justify-center gap-2">
+          <span>Generar Código QR Seguro</span>
+          <span>➔</span>
+        </button>
+      </div>
+
+      <!-- PASO 2: ESCANEO EN VIVO -->
+      <div id="wizard-step-2" class="w-full space-y-4 hidden flex flex-col items-center">
+        <div class="text-center space-y-1">
+          <div class="flex items-center justify-center gap-2">
+            <span id="modal-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
+            <h3 class="text-sm font-bold text-white tracking-wide">Escanea el Código QR</h3>
+          </div>
+          <p id="modal-status-text" class="text-xs text-zinc-400">Apunta la cámara de WhatsApp a la pantalla</p>
+        </div>
+
+        <!-- Contenedor del QR -->
+        <div id="modal-qr-box" class="w-60 h-60 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center relative overflow-hidden shadow-inner">
+          <div id="modal-qr-loader" class="flex flex-col items-center gap-2 text-zinc-500">
+            <svg class="w-8 h-8 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            <span class="text-xs">Generando QR...</span>
+          </div>
+          <img id="modal-qr-img" src="" alt="Código QR WhatsApp" class="w-full h-full object-contain p-2 bg-white rounded-xl hidden">
+        </div>
+
+        <div class="text-[11px] text-zinc-400 space-y-1 text-left w-full bg-zinc-950/70 p-3 rounded-xl border border-zinc-800/60">
+          <p class="font-bold text-zinc-300">Instrucciones:</p>
+          <p>1. Abre WhatsApp en tu teléfono.</p>
+          <p>2. Menú (⋮) o Ajustes ➔ <span class="text-emerald-400 font-semibold">Dispositivos vinculados</span>.</p>
+          <p>3. Toca <span class="text-emerald-400 font-semibold">Vincular un dispositivo</span>.</p>
+        </div>
+
+        <button type="button" id="btn-wizard-back-to-1" class="text-xs text-zinc-400 hover:text-zinc-200">← Volver a explicación</button>
+      </div>
+
+      <!-- PASO 3: CERTIFICACIÓN & TEST DE FUEGO -->
+      <div id="wizard-step-3" class="w-full space-y-4 hidden text-left">
+        <div class="text-center space-y-1">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 text-2xl">🎉</div>
+          <h3 class="text-base font-bold text-white">¡Línea Vinculada y Certificada!</h3>
+          <p class="text-xs text-zinc-400">Tu Turnero ahora cuenta con canal directo verificado</p>
+        </div>
+
+        <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-3.5 flex items-center justify-between text-xs">
+          <span class="text-zinc-400">Número Activo:</span>
+          <span id="wizard-connected-number" class="font-mono font-bold text-emerald-400 text-xs"></span>
+        </div>
+
+        <!-- Test de Fuego Rápido -->
+        <div class="bg-zinc-950/60 border border-zinc-800/60 rounded-2xl p-3.5 space-y-2.5">
+          <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">Test de Fuego Inmediato</span>
+          <div class="flex gap-2">
+            <input type="tel" id="wizard-test-phone" placeholder="Ingresa tu celular (ej. 381...)" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="button" id="btn-wizard-send-test" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-all">Probar</button>
+          </div>
+          <div id="wizard-test-feedback" class="hidden text-xs p-2 rounded-xl"></div>
+        </div>
+
+        <button type="button" id="btn-wizard-finish" class="w-full py-3.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-2">
+          <span>Completar Onboarding</span>
+          <span>✓</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NATIVO: CONFIRMACIÓN DE DESCONEXIÓN -->
+  <div id="wa-logout-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-sm w-full shadow-2xl relative text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4 text-xl">⚠️</div>
+      <h3 class="text-base font-bold text-white mb-1.5">¿Desconectar WhatsApp?</h3>
+      <p class="text-xs text-zinc-400 mb-6 leading-relaxed">Se cerrará la sesión activa y se purgarán las credenciales locales de Baileys. El número en Identidad volverá a su estado base.</p>
+      <div class="grid grid-cols-2 gap-3">
+        <button type="button" id="btn-cancel-logout" class="py-2.5 px-4 rounded-xl text-xs font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/60 transition-all">Cancelar</button>
+        <button type="button" id="btn-confirm-logout" class="py-2.5 px-4 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all">Desconectar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (Drawer Ergonómico) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/95 border-t border-zinc-800/80 backdrop-blur-xl flex items-center justify-around px-2 z-50">
+    <button type="button" id="mob-tab-identidad" class="flex flex-col items-center justify-center w-full h-full text-blue-500 font-bold text-[10px] gap-1">
+      <span class="text-base">🏢</span>
+      <span>Identidad</span>
+    </button>
+    <button type="button" id="mob-tab-agenda" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-200 font-semibold text-[10px] gap-1">
+      <span class="text-base">⏰</span>
+      <span>Agenda</span>
+    </button>
+    <button type="button" id="mob-tab-whatsapp" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-200 font-semibold text-[10px] gap-1">
+      <span class="text-base">💬</span>
+      <span>WhatsApp</span>
+    </button>
+  </nav>
+
+  <!-- Script de Orquestación y Lógica Reactiva -->
+  <script>
+    const DEFAULT_TEMPLATE = `¡Hola! Quiero confirmar mi reserva en {{comercio}}:\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 📞 Tel: {{telefono}}\n¿Me confirman disponibilidad?`;
+    
+    // Esquema Inicial Semanal (Horario Corrido Simple por Defecto)
+    let weeklySchedule = {
+      1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+    };
+
+    let holidayExceptions = {};
+    let waPollingTimer = null;
+    let wizardCurrentStep = 1;
+
+    const DAY_NAMES = {
+      1: "Lunes", 2: "Martes", 3: "Miércoles", 4: "Jueves",
+      5: "Viernes", 6: "Sábado", 0: "Domingo"
+    };
+
+    const ALL_HOLIDAYS = [
+      { date: "2026-08-17", name: "Paso a la Inmortalidad del Gral. San Martín" },
+      { date: "2026-10-12", name: "Día del Respeto a la Diversidad Cultural" },
+      { date: "2026-11-20", name: "Día de la Soberanía Nacional" },
+      { date: "2026-12-08", name: "Inmaculada Concepción de María" },
+      { date: "2026-12-25", name: "Navidad" },
+      { date: "2027-01-01", name: "Año Nuevo" },
+      { date: "2027-02-15", name: "Carnaval" },
+      { date: "2027-02-16", name: "Carnaval" },
+      { date: "2027-03-24", name: "Día de la Memoria por la Verdad y la Justicia" }
+    ];
+
+    /* ══════════════════════════════════════════════════════════════════
+       HELPER TOAST NATIVO
+    ══════════════════════════════════════════════════════════════════ */
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast-notification');
+      const icon = document.getElementById('toast-icon');
+      const msg = document.getElementById('toast-message');
+      if (!toast) return;
+
+      msg.innerText = message;
+      if (type === 'success') {
+        toast.className = 'fixed top-20 right-6 z-[100] transform translate-y-0 opacity-100 transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-semibold backdrop-blur-xl bg-emerald-950/90 border-emerald-800/80 text-emerald-200';
+        icon.innerText = '✓';
+      } else if (type === 'error') {
+        toast.className = 'fixed top-20 right-6 z-[100] transform translate-y-0 opacity-100 transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-semibold backdrop-blur-xl bg-rose-950/90 border-rose-800/80 text-rose-200';
+        icon.innerText = '✕';
+      } else {
+        toast.className = 'fixed top-20 right-6 z-[100] transform translate-y-0 opacity-100 transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-semibold backdrop-blur-xl bg-zinc-900/90 border-zinc-700/80 text-zinc-200';
+        icon.innerText = 'ℹ️';
+      }
+
+      setTimeout(() => {
+        toast.classList.add('-translate-y-12', 'opacity-0');
+      }, 3500);
+    }
+
+    function switchTab(tabId) {
+      ['identidad', 'agenda', 'whatsapp'].forEach(t => {
+        const pane = document.getElementById('tab-content-' + t);
+        const dBtn = document.getElementById('tab-btn-' + t);
+        const mBtn = document.getElementById('mob-tab-' + t);
+        if (t === tabId) {
+          if (pane) pane.classList.remove('hidden');
+          if (dBtn) dBtn.className = 'admin-tab-btn py-2 px-3 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-md flex items-center justify-center gap-1.5';
+          if (mBtn) { mBtn.classList.remove('text-zinc-400'); mBtn.classList.add('text-blue-500', 'font-bold'); }
+          if (t === 'whatsapp') checkWaStatus();
+        } else {
+          if (pane) pane.classList.add('hidden');
+          if (dBtn) dBtn.className = 'admin-tab-btn py-2 px-3 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center justify-center gap-1.5';
+          if (mBtn) { mBtn.classList.remove('text-blue-500', 'font-bold'); mBtn.classList.add('text-zinc-400'); }
+        }
+      });
+    }
+
+    ['identidad', 'agenda', 'whatsapp'].forEach(t => {
+      const dBtn = document.getElementById('tab-btn-' + t);
+      const mBtn = document.getElementById('mob-tab-' + t);
+      if (dBtn) dBtn.addEventListener('click', () => switchTab(t));
+      if (mBtn) mBtn.addEventListener('click', () => switchTab(t));
+    });
+
+    document.getElementById('holidays-year-label').innerText = new Date().getFullYear();
+
+    /* ══════════════════════════════════════════════════════════════════
+       RENDERIZADO DE LA MATRIZ SEMANAL DE HORARIOS
+    ══════════════════════════════════════════════════════════════════ */
+    function renderWeeklyScheduleUI() {
+      const container = document.getElementById('weekly-schedule-container');
+      if (!container) return;
+
+      const timeOptions = (selVal) => {
+        const times = ["07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00"];
+        return times.map(t => `<option value="${t}" ${t === selVal ? 'selected' : ''}>${t} hs</option>`).join('');
+      };
+
+      const daysOrder = [1, 2, 3, 4, 5, 6, 0];
+      container.innerHTML = daysOrder.map(d => {
+        const sch = weeklySchedule[d];
+        const isEn = !!sch.enabled;
+        const isSplit = !!sch.isSplit;
+
+        return `
+        <div class="day-card p-3 rounded-xl bg-zinc-950/80 border ${isEn ? 'border-zinc-800' : 'border-zinc-900 opacity-60'} space-y-2 transition-all" data-day="${d}">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="sch-en-${d}" class="sch-en-toggle sr-only peer" ${isEn ? 'checked' : ''} data-day="${d}">
+                <div class="w-7 h-4 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+              <span class="text-xs font-bold ${isEn ? 'text-zinc-200' : 'text-zinc-500'}">${DAY_NAMES[d]}</span>
+            </div>
+            
+            ${isEn ? `
+            <div class="flex items-center gap-1.5">
+              <label class="flex items-center gap-1.5 cursor-pointer text-[11px] text-zinc-400 select-none">
+                <input type="checkbox" id="sch-split-${d}" class="sch-split-toggle rounded bg-zinc-900 border-zinc-700 text-blue-600 focus:ring-0" ${isSplit ? 'checked' : ''} data-day="${d}">
+                <span>Horario Partido</span>
+              </label>
+            </div>` : '<span class="text-[10px] text-zinc-600 font-semibold uppercase">Cerrado</span>'}
+          </div>
+
+          ${isEn ? `
+          <div class="pt-1.5 border-t border-zinc-900 space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] text-zinc-400 mb-0.5">Apertura Mañana</label>
+                <select id="sch-open-${d}" data-day="${d}" data-field="open" class="sch-time-sel w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none focus:ring-1 focus:ring-blue-500">
+                  ${timeOptions(sch.open)}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-zinc-400 mb-0.5">${isSplit ? 'Cierre / Siesta' : 'Cierre'}</label>
+                <select id="sch-close-${d}" data-day="${d}" data-field="close" class="sch-time-sel w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none focus:ring-1 focus:ring-blue-500">
+                  ${timeOptions(sch.close)}
+                </select>
+              </div>
+            </div>
+
+            ${isSplit ? `
+            <div class="grid grid-cols-2 gap-2 pt-1.5 border-t border-zinc-900/60">
+              <div>
+                <label class="block text-[10px] text-blue-400 mb-0.5">Reapertura Tarde</label>
+                <select id="sch-open2-${d}" data-day="${d}" data-field="open2" class="sch-time-sel w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none focus:ring-1 focus:ring-blue-500">
+                  ${timeOptions(sch.open2 || "17:00")}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-blue-400 mb-0.5">Cierre Final</label>
+                <select id="sch-close2-${d}" data-day="${d}" data-field="close2" class="sch-time-sel w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none focus:ring-1 focus:ring-blue-500">
+                  ${timeOptions(sch.close2 || "21:00")}
+                </select>
+              </div>
+            </div>` : ''}
+          </div>` : ''}
+        </div>`;
+      }).join('');
+
+      // Listeners reactivos
+      container.querySelectorAll('.sch-en-toggle').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const d = parseInt(e.target.dataset.day, 10);
+          weeklySchedule[d].enabled = e.target.checked;
+          renderWeeklyScheduleUI();
+          renderShowroomWidget();
+        });
+      });
+
+      container.querySelectorAll('.sch-split-toggle').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const d = parseInt(e.target.dataset.day, 10);
+          weeklySchedule[d].isSplit = e.target.checked;
+          renderWeeklyScheduleUI();
+          renderShowroomWidget();
+        });
+      });
+
+      container.querySelectorAll('.sch-time-sel').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const d = parseInt(e.target.dataset.day, 10);
+          const fld = e.target.dataset.field;
+          weeklySchedule[d][fld] = e.target.value;
+          renderShowroomWidget();
+        });
+      });
+    }
+
+    // Botón Clonar Lunes a días hábiles
+    document.getElementById('btn-clone-schedule').addEventListener('click', () => {
+      const mon = weeklySchedule[1];
+      [2, 3, 4, 5].forEach(d => {
+        weeklySchedule[d] = {
+          enabled: true,
+          open: mon.open,
+          close: mon.close,
+          isSplit: mon.isSplit,
+          open2: mon.open2,
+          close2: mon.close2
+        };
+      });
+      renderWeeklyScheduleUI();
+      renderShowroomWidget();
+      showToast('Horarios de Lunes copiados a Martes-Viernes', 'success');
+    });
+
+    function renderUpcomingHolidays() {
+      const container = document.getElementById('upcoming-holidays-container');
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+      
+      const upcoming = ALL_HOLIDAYS.filter(h => h.date >= todayStr).slice(0, 3);
+      if (upcoming.length === 0) upcoming.push(...ALL_HOLIDAYS.slice(0, 3));
+
+      container.innerHTML = upcoming.map(h => {
+        const hasEx = !!holidayExceptions[h.date];
+        const [y, m, d] = h.date.split('-');
+        const dateFormatted = `${d}/${m}/${y}`;
+        const exOpen = holidayExceptions[h.date]?.open || "09:00";
+        const exClose = holidayExceptions[h.date]?.close || "13:00";
+
+        return `<div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-zinc-200 block">${dateFormatted} — ${h.name}</span>
+              <span class="text-[10px] text-zinc-500">Feriado Nacional</span>
+            </div>
+            <label class="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer">
+              <input type="checkbox" data-date="${h.date}" ${hasEx ? 'checked' : ''} class="holiday-ex-check rounded bg-zinc-900 border-zinc-700 text-blue-600 focus:ring-0">
+              <span class="text-[11px] font-medium text-emerald-400">Atención</span>
+            </label>
+          </div>
+          ${hasEx ? `
+          <div class="flex items-center gap-2 pt-1 border-t border-zinc-900 text-xs">
+            <span class="text-zinc-400 text-[11px]">Horario:</span>
+            <input type="text" data-date="${h.date}" data-field="open" value="${exOpen}" class="holiday-time-input w-16 bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-center text-zinc-200">
+            <span class="text-zinc-500">a</span>
+            <input type="text" data-date="${h.date}" data-field="close" value="${exClose}" class="holiday-time-input w-16 bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-xs text-center text-zinc-200">
+          </div>` : ''}
+        </div>`;
+      }).join('');
+
+      container.querySelectorAll('.holiday-ex-check').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const dt = e.target.dataset.date;
+          if (e.target.checked) holidayExceptions[dt] = { open: "09:00", close: "13:00" };
+          else delete holidayExceptions[dt];
+          renderUpcomingHolidays();
+          renderShowroomWidget();
+        });
+      });
+
+      container.querySelectorAll('.holiday-time-input').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          const dt = e.target.dataset.date;
+          const fld = e.target.dataset.field;
+          if (holidayExceptions[dt]) {
+            holidayExceptions[dt][fld] = e.target.value.trim();
+            renderShowroomWidget();
+          }
+        });
+      });
+    }
+
+    function insertToken(token) {
+      const ta = document.getElementById('cfg-template');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const text = ta.value;
+      ta.value = text.substring(0, start) + token + text.substring(end);
+      ta.selectionStart = ta.selectionEnd = start + token.length;
+      ta.focus();
+      renderShowroomWidget();
+    }
+
+    document.getElementById('btn-reset-template').addEventListener('click', () => {
+      document.getElementById('cfg-template').value = DEFAULT_TEMPLATE;
+      renderShowroomWidget();
+    });
+
+    function extractPhoneFromJid(jidOrId) {
+      if (!jidOrId) return '';
+      const raw = jidOrId.split('@')[0].split(':')[0];
+      return raw.replace(/\D/g, '');
+    }
+
+    function getFormValues() {
+      return {
+        bizName: document.getElementById('cfg-biz-name').value.trim() || 'Mi Negocio',
+        wa: document.getElementById('cfg-wa-number').value.trim() || '3811234567',
+        schedule: weeklySchedule,
+        interval: parseInt(document.getElementById('cfg-interval').value, 10),
+        days: parseInt(document.getElementById('cfg-days').value, 10),
+        blockHolidays: document.getElementById('cfg-block-holidays').checked,
+        holidayExceptions: holidayExceptions,
+        template: document.getElementById('cfg-template').value
+      };
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       GESTIÓN WHATSAPP BAILEYS, WIZARD ONBOARDING & AUTO-INYECCIÓN
+    ══════════════════════════════════════════════════════════════════ */
+    async function checkWaStatus() {
+      try {
+        const res = await fetch('/api/wa/status');
+        const data = await res.json();
+        updateWaStatusUI(data);
+        return data;
+      } catch (err) {
+        updateWaStatusUI({ status: 'CLOSE', error: err.message });
+      }
+    }
+
+    function updateWaStatusUI(data) {
+      const badge = document.getElementById('wa-status-badge');
+      const btnInit = document.getElementById('btn-wa-init');
+      const btnLogout = document.getElementById('btn-wa-logout');
+      const userInfo = document.getElementById('wa-user-info');
+      const userJid = document.getElementById('wa-user-jid');
+      const testBox = document.getElementById('wa-test-box');
+      const verifiedBadge = document.getElementById('wa-verified-badge');
+      const inputWaNumber = document.getElementById('cfg-wa-number');
+
+      const st = data?.status || 'CLOSE';
+
+      if (st === 'OPEN') {
+        const verifiedPhone = extractPhoneFromJid(data.user?.id);
+        badge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Sesión Activa (OPEN)</span>';
+        btnInit.classList.add('hidden');
+        btnLogout.classList.remove('hidden');
+        userInfo.classList.remove('hidden');
+        userJid.innerText = verifiedPhone ? `+${verifiedPhone}` : (data.user?.id || 'Conectado');
+        testBox.classList.remove('hidden');
+
+        // Auto-inyección en Identidad
+        if (verifiedPhone && inputWaNumber) {
+          if (inputWaNumber.value !== verifiedPhone) {
+            inputWaNumber.value = verifiedPhone;
+            renderShowroomWidget();
+          }
+        }
+        if (verifiedBadge) verifiedBadge.classList.remove('hidden');
+
+      } else if (st === 'QR_READY' || st === 'CONNECTING') {
+        badge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20';
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span><span>${st === 'QR_READY' ? 'QR Listo para Escanear' : 'Conectando...'}</span>`;
+        btnInit.classList.remove('hidden');
+        btnLogout.classList.add('hidden');
+        userInfo.classList.add('hidden');
+        testBox.classList.add('hidden');
+        if (verifiedBadge) verifiedBadge.classList.add('hidden');
+      } else {
+        badge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500"></span><span>Desconectado (CLOSE)</span>';
+        btnInit.classList.remove('hidden');
+        btnLogout.classList.add('hidden');
+        userInfo.classList.add('hidden');
+        testBox.classList.add('hidden');
+        if (verifiedBadge) verifiedBadge.classList.add('hidden');
+      }
+    }
+
+    function setWizardStep(step) {
+      wizardCurrentStep = step;
+      const s1 = document.getElementById('wizard-step-1');
+      const s2 = document.getElementById('wizard-step-2');
+      const s3 = document.getElementById('wizard-step-3');
+
+      const d1 = document.getElementById('wiz-dot-1');
+      const d2 = document.getElementById('wiz-dot-2');
+      const d3 = document.getElementById('wiz-dot-3');
+      const b1 = document.getElementById('wiz-bar-1');
+      const b2 = document.getElementById('wiz-bar-2');
+
+      [s1, s2, s3].forEach(s => s && s.classList.add('hidden'));
+
+      if (step === 1) {
+        if (s1) s1.classList.remove('hidden');
+        d1.className = 'w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-md';
+        d2.className = 'w-6 h-6 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center';
+        d3.className = 'w-6 h-6 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center';
+        b1.className = 'h-full bg-blue-600 w-0 transition-all duration-300';
+        b2.className = 'h-full bg-blue-600 w-0 transition-all duration-300';
+      } else if (step === 2) {
+        if (s2) s2.classList.remove('hidden');
+        d1.className = 'w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center';
+        d2.className = 'w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-md';
+        d3.className = 'w-6 h-6 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center';
+        b1.className = 'h-full bg-blue-600 w-full transition-all duration-300';
+        b2.className = 'h-full bg-blue-600 w-0 transition-all duration-300';
+      } else if (step === 3) {
+        if (s3) s3.classList.remove('hidden');
+        d1.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
+        d2.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
+        d3.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shadow-md';
+        b1.className = 'h-full bg-emerald-600 w-full transition-all duration-300';
+        b2.className = 'h-full bg-emerald-600 w-full transition-all duration-300';
+      }
+    }
+
+    function openQrModal() {
+      const modal = document.getElementById('wa-qr-modal');
+      setWizardStep(1);
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('wa-qr-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+      stopWaPolling();
+    }
+
+    function startWaPolling() {
+      stopWaPolling();
+      waPollingTimer = setInterval(async () => {
+        const data = await checkWaStatus();
+        const modalImg = document.getElementById('modal-qr-img');
+        const modalLoader = document.getElementById('modal-qr-loader');
+        const modalText = document.getElementById('modal-status-text');
+        const modalDot = document.getElementById('modal-status-dot');
+
+        if (data?.qrDataUrl && wizardCurrentStep === 2) {
+          modalImg.src = data.qrDataUrl;
+          modalImg.classList.remove('hidden');
+          modalLoader.classList.add('hidden');
+          modalText.innerText = 'Escanea el código QR con tu WhatsApp:';
+          modalDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping';
+        }
+
+        if (data?.status === 'OPEN') {
+          const verifiedPhone = extractPhoneFromJid(data.user?.id);
+          const wizardPhoneDisplay = document.getElementById('wizard-connected-number');
+          const wizardTestInp = document.getElementById('wizard-test-phone');
+          if (wizardPhoneDisplay) wizardPhoneDisplay.innerText = verifiedPhone ? `+${verifiedPhone}` : 'Conectado';
+          if (wizardTestInp && !wizardTestInp.value && verifiedPhone) wizardTestInp.value = verifiedPhone;
+
+          setWizardStep(3);
+          stopWaPolling();
+          showToast('¡Sesión de WhatsApp vinculada y certificada!', 'success');
+        }
+      }, 2000);
+    }
+
+    function stopWaPolling() {
+      if (waPollingTimer) {
+        clearInterval(waPollingTimer);
+        waPollingTimer = null;
+      }
+    }
+
+    document.getElementById('btn-wa-init').addEventListener('click', openQrModal);
+
+    document.getElementById('btn-wizard-to-step-2').addEventListener('click', async () => {
+      setWizardStep(2);
+      startWaPolling();
+      try {
+        await fetch('/api/wa/init', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ silent: true }) });
+      } catch (e) {}
+    });
+
+    document.getElementById('btn-wizard-back-to-1').addEventListener('click', () => {
+      setWizardStep(1);
+      stopWaPolling();
+    });
+
+    document.getElementById('btn-wizard-finish').addEventListener('click', closeQrModal);
+    document.getElementById('btn-close-qr-modal').addEventListener('click', closeQrModal);
+
+    // Modal Nativo de Desconexión
+    const logoutModal = document.getElementById('wa-logout-modal');
+    document.getElementById('btn-wa-logout').addEventListener('click', () => {
+      logoutModal.classList.remove('hidden');
+      setTimeout(() => logoutModal.classList.remove('opacity-0'), 10);
+    });
+
+    document.getElementById('btn-cancel-logout').addEventListener('click', () => {
+      logoutModal.classList.add('opacity-0');
+      setTimeout(() => logoutModal.classList.add('hidden'), 300);
+    });
+
+    document.getElementById('btn-confirm-logout').addEventListener('click', async () => {
+      logoutModal.classList.add('opacity-0');
+      setTimeout(() => logoutModal.classList.add('hidden'), 300);
+      try {
+        await fetch('/api/wa/logout', { method: 'POST' });
+        document.getElementById('cfg-wa-number').value = '3811234567';
+        document.getElementById('wa-verified-badge').classList.add('hidden');
+        renderShowroomWidget();
+        checkWaStatus();
+        showToast('Sesión de WhatsApp cerrada correctamente', 'info');
+      } catch (err) {
+        showToast(`Error al desconectar: ${err.message}`, 'error');
+      }
+    });
+
+    // Test de Fuego dentro del Wizard
+    document.getElementById('btn-wizard-send-test').addEventListener('click', async () => {
+      const phone = document.getElementById('wizard-test-phone').value.trim();
+      const fb = document.getElementById('wizard-test-feedback');
+      if (!phone) return showToast('Ingresa un número telefónico para la prueba', 'error');
+      fb.className = 'text-xs p-2 rounded-xl bg-zinc-900 text-zinc-400 block';
+      fb.innerText = 'Despachando mensaje de prueba...';
+      try {
+        const res = await fetch('/api/wa/send-test', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, message: '🎉 ¡Felicitaciones! Tu línea de WhatsApp fue certificada exitosamente en Tucured Engine.' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          fb.className = 'text-xs p-2 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-300 block';
+          fb.innerText = `✅ ¡Mensaje despachado con éxito! (ID: ${data.messageId})`;
+          showToast('Mensaje de prueba enviado', 'success');
+        } else {
+          fb.className = 'text-xs p-2 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 block';
+          fb.innerText = `❌ Error: ${data.error}`;
+        }
+      } catch (err) {
+        fb.className = 'text-xs p-2 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 block';
+        fb.innerText = `❌ Error: ${err.message}`;
+      }
+    });
+
+    // Diagnóstico en Panel de WhatsApp
+    document.getElementById('btn-wa-check').addEventListener('click', async () => {
+      const phone = document.getElementById('wa-test-phone').value.trim();
+      const fb = document.getElementById('wa-test-feedback');
+      if (!phone) return showToast('Ingresa un número telefónico para verificar', 'error');
+      fb.className = 'text-xs p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 block';
+      fb.innerText = 'Consultando en WhatsApp...';
+      try {
+        const res = await fetch('/api/wa/check-phone', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone })
+        });
+        const data = await res.json();
+        if (data.exists) {
+          fb.className = 'text-xs p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-800/80 text-emerald-300 block';
+          fb.innerText = `✅ ¡Número activo en WhatsApp! JID: ${data.jid} (${data.display})`;
+        } else {
+          fb.className = 'text-xs p-2.5 rounded-xl bg-amber-950/60 border border-amber-800/80 text-amber-300 block';
+          fb.innerText = `⚠️ ${data.warning || 'El número no parece estar registrado en WhatsApp.'} (JID: ${data.jid})`;
+        }
+      } catch (err) {
+        fb.className = 'text-xs p-2.5 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-300 block';
+        fb.innerText = `❌ Error: ${err.message}`;
+      }
+    });
+
+    document.getElementById('btn-wa-send').addEventListener('click', async () => {
+      const phone = document.getElementById('wa-test-phone').value.trim();
+      const fb = document.getElementById('wa-test-feedback');
+      if (!phone) return showToast('Ingresa un número telefónico para enviar prueba', 'error');
+      fb.className = 'text-xs p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 block';
+      fb.innerText = 'Enviando mensaje de prueba vía Baileys...';
+      try {
+        const res = await fetch('/api/wa/send-test', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, message: '¡Hola! Este es un mensaje de prueba emitido desde Tucured Engine Showroom L1 (Baileys PoC).' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          fb.className = 'text-xs p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-800/80 text-emerald-300 block';
+          fb.innerText = `🚀 Mensaje despachado con éxito. ID: ${data.messageId} hacia ${data.to}`;
+          showToast('Mensaje de prueba despachado', 'success');
+        } else {
+          fb.className = 'text-xs p-2.5 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-300 block';
+          fb.innerText = `❌ Falló el envío: ${data.error}`;
+        }
+      } catch (err) {
+        fb.className = 'text-xs p-2.5 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-300 block';
+        fb.innerText = `❌ Error: ${err.message}`;
+      }
+    });
+
+    /* ══════════════════════════════════════════════════════════════════
+       RENDERIZADO DEL WIDGET L1 Y BUBBLE PREVIEW
+    ══════════════════════════════════════════════════════════════════ */
+    const rawWidgetTemplate = `<!-- Archivo: backend/stitch/widgets/booking/booking_l1_turnero.html -->
+<div id="smart-turnero-widget-SHOWROOM_L1" data-widget-id="SHOWROOM_L1" data-biz-name="{{BIZ_NAME}}" data-wa="{{WA_NUMBER}}" data-schedule='{{SCHEDULE_JSON}}' data-interval="{{INTERVAL}}" data-days="{{DAYS}}" data-block-holidays="{{BLOCK_HOLIDAYS}}" data-template="{{TEMPLATE}}" class="w-full max-w-[440px] mx-auto bg-zinc-900/95 text-zinc-100 backdrop-blur-xl rounded-[2rem] border border-zinc-800 p-6 sm:p-7 shadow-2xl relative overflow-hidden font-sans transition-all duration-300 box-border">
+  <div class="text-center mb-6">
+    <h3 class="text-xl sm:text-2xl font-bold mb-1 leading-tight text-white" id="biz-title-SHOWROOM_L1">Reservar en {{BIZ_NAME}}</h3>
+    <p class="text-xs sm:text-sm text-zinc-400" id="turnero-subtitle-SHOWROOM_L1">Paso 1: Selecciona fecha y hora</p>
+    <div class="flex items-center justify-center gap-2 mt-4">
+      <div id="step-dot-1-SHOWROOM_L1" class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20 transition-all">1</div>
+      <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-1-SHOWROOM_L1" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+      <div id="step-dot-2-SHOWROOM_L1" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">2</div>
+      <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-2-SHOWROOM_L1" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+      <div id="step-dot-3-SHOWROOM_L1" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">3</div>
+    </div>
+  </div>
+
+  <div class="grid w-full overflow-hidden">
+    <div id="step-1-SHOWROOM_L1" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-100 transform translate-x-0">
+      <div class="mb-5 w-full">
+        <div class="flex items-center justify-between mb-2">
+          <label class="block text-xs sm:text-sm font-medium text-zinc-300">Selecciona un día:</label>
+          <div class="flex items-center gap-1.5">
+            <button id="day-prev-SHOWROOM_L1" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">←</button>
+            <button id="day-next-SHOWROOM_L1" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">→</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-2 w-full" id="day-selector-SHOWROOM_L1"></div>
+      </div>
+      <div class="w-full">
+        <label class="block text-xs sm:text-sm font-medium mb-2 text-zinc-300">Horarios disponibles:</label>
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 w-full max-h-64 sm:max-h-72 overflow-y-auto pr-1 hide-scrollbar" id="time-selector-SHOWROOM_L1"></div>
+      </div>
+      <button id="btn-next-1-SHOWROOM_L1" disabled class="mt-6 w-full py-4 rounded-xl font-bold text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed">Continuar</button>
+    </div>
+
+    <div id="step-2-SHOWROOM_L1" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full space-y-4 pt-1">
+      <div>
+        <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Teléfono / WhatsApp</label>
+        <input type="tel" inputmode="numeric" autocomplete="tel" id="input-phone-SHOWROOM_L1" maxlength="15" placeholder="Ej. 3811234567" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+      </div>
+      <div class="grid grid-cols-2 gap-2.5">
+        <div>
+          <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Nombre</label>
+          <input type="text" autocapitalize="words" autocomplete="given-name" id="input-fname-SHOWROOM_L1" placeholder="Ej. Juan" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+        </div>
+        <div>
+          <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Apellido</label>
+          <input type="text" autocapitalize="words" autocomplete="family-name" id="input-lname-SHOWROOM_L1" placeholder="Ej. Pérez" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+        </div>
+      </div>
+      <div id="step-2-error-SHOWROOM_L1" class="text-xs text-rose-400 font-medium hidden"></div>
+      <div class="flex gap-2.5 pt-2 mt-6">
+        <button id="btn-back-2-SHOWROOM_L1" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm">Volver</button>
+        <button id="btn-next-2-SHOWROOM_L1" class="w-2/3 py-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 text-sm">Revisar</button>
+      </div>
+    </div>
+
+    <div id="step-3-SHOWROOM_L1" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full flex flex-col justify-between">
+      <div class="bg-zinc-950/60 rounded-2xl p-5 sm:p-6 border border-zinc-800/80 w-full min-w-0 box-border">
+        <h4 class="font-bold text-base sm:text-lg mb-4 text-center text-white">Resumen de tu reserva</h4>
+        <ul class="space-y-3 text-xs sm:text-sm w-full min-w-0">
+          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
+            <span class="text-zinc-400 flex-shrink-0">Nombre:</span>
+            <span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-name-SHOWROOM_L1">-</span>
+          </li>
+          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
+            <span class="text-zinc-400 flex-shrink-0">Día:</span>
+            <span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-day-SHOWROOM_L1">-</span>
+          </li>
+          <li class="flex justify-between items-start gap-3 min-w-0">
+            <span class="text-zinc-400 flex-shrink-0">Hora:</span>
+            <span class="font-semibold text-blue-400 text-right break-words min-w-0" id="summary-time-SHOWROOM_L1">-</span>
+          </li>
+        </ul>
+      </div>
+      <div class="flex gap-2.5 mt-6">
+        <button id="btn-back-3-SHOWROOM_L1" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm">Editar</button>
+        <button id="btn-confirm-SHOWROOM_L1" class="w-2/3 py-4 rounded-xl font-bold bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 text-sm">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span>Confirmar WA</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+    function updateBubblePreview(vals) {
+      const bubble = document.getElementById('wa-bubble-preview');
+      const timeEl = document.getElementById('wa-bubble-time');
+      const text = vals.template
+        .replace(/\{\{cliente\}\}/g, 'Juan Carlos')
+        .replace(/\{\{fecha\}\}/g, 'Miércoles, 26 de agosto')
+        .replace(/\{\{hora\}\}/g, '17:30 hs')
+        .replace(/\{\{comercio\}\}/g, vals.bizName)
+        .replace(/\{\{telefono\}\}/g, vals.wa);
+      if (bubble) bubble.innerText = text;
+      if (timeEl) {
+        const now = new Date();
+        timeEl.innerText = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      }
+    }
+
+    function renderShowroomWidget() {
+      const vals = getFormValues();
+      updateBubblePreview(vals);
+
+      const scheduleJson = JSON.stringify(vals.schedule);
+      const html = rawWidgetTemplate
+        .replace(/\{\{BIZ_NAME\}\}/g, vals.bizName)
+        .replace(/\{\{WA_NUMBER\}\}/g, vals.wa)
+        .replace(/\{\{SCHEDULE_JSON\}\}/g, scheduleJson)
+        .replace(/\{\{INTERVAL\}\}/g, vals.interval)
+        .replace(/\{\{DAYS\}\}/g, vals.days)
+        .replace(/\{\{BLOCK_HOLIDAYS\}\}/g, vals.blockHolidays ? 'true' : 'false')
+        .replace(/\{\{TEMPLATE\}\}/g, vals.template.replace(/"/g, '&quot;'));
+
+      const host = document.getElementById('widget-host-container');
+      host.innerHTML = html;
+
+      if (window.initTurneroL1) {
+        window.initTurneroL1({
+          widgetId: 'SHOWROOM_L1',
+          bizName: vals.bizName,
+          wa: vals.wa,
+          schedule: vals.schedule,
+          interval: vals.interval,
+          days: vals.days,
+          blockHolidays: vals.blockHolidays,
+          holidayExceptions: vals.holidayExceptions,
+          template: vals.template
+        });
+      }
+    }
+
+    // Auto-update listeners en controles de formulario
+    ['cfg-biz-name', 'cfg-wa-number', 'cfg-interval', 'cfg-days', 'cfg-block-holidays', 'cfg-template'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', renderShowroomWidget);
+        el.addEventListener('change', renderShowroomWidget);
+      }
+    });
+
+    // Copiar código configurado
+    document.getElementById('btn-copy-configured').addEventListener('click', () => {
+      const vals = getFormValues();
+      const exportHtml = rawWidgetTemplate
+        .replace(/SHOWROOM_L1/g, '{{WIDGET_ID}}')
+        .replace(/\{\{BIZ_NAME\}\}/g, vals.bizName)
+        .replace(/\{\{WA_NUMBER\}\}/g, vals.wa)
+        .replace(/\{\{SCHEDULE_JSON\}\}/g, JSON.stringify(vals.schedule))
+        .replace(/\{\{INTERVAL\}\}/g, vals.interval)
+        .replace(/\{\{DAYS\}\}/g, vals.days)
+        .replace(/\{\{BLOCK_HOLIDAYS\}\}/g, vals.blockHolidays ? 'true' : 'false')
+        .replace(/\{\{TEMPLATE\}\}/g, vals.template);
+
+      navigator.clipboard.writeText(exportHtml).then(() => {
+        const btn = document.getElementById('btn-copy-configured');
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>¡Copiado!</span>`;
+        btn.className = 'px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-lg transition-all flex items-center gap-1.5';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.className = 'px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 transition-all flex items-center gap-1.5 cursor-pointer';
+        }, 2000);
+      });
+    });
+
+    // Motor de Turnero L1 Embebido para Showroom
+    (function() {
+      const HOLIDAYS = ["2026-01-01","2026-02-16","2026-02-17","2026-03-24","2026-04-02","2026-04-03","2026-05-01","2026-05-25","2026-06-17","2026-06-20","2026-07-09","2026-08-17","2026-10-12","2026-11-20","2026-12-08","2026-12-25","2027-01-01","2027-02-15","2027-02-16","2027-03-24","2027-04-02"];
+      const defaultSchedule = {
+        1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+      };
+
+      function parseScheduleData(val) {
+        if (typeof val === "object" && val !== null) return val;
+        try { return JSON.parse(val); } catch(e) { return null; }
+      }
+
+      function initWidget(opts = {}) {
+        const wId = opts.widgetId || "SHOWROOM_L1";
+        const root = document.getElementById('smart-turnero-widget-' + wId);
+        if (!root) return;
+
+        const cfg = {
+          schedule: parseScheduleData(opts.schedule) || parseScheduleData(root.dataset.schedule) || defaultSchedule,
+          interval: parseInt(opts.interval || root.dataset.interval || "30", 10),
+          maxDays: parseInt(opts.days || root.dataset.days || "14", 10),
+          bizName: opts.bizName || root.dataset.bizName || "Mi Negocio",
+          waNumber: (opts.wa || root.dataset.wa || "3811234567").replace(/\D/g, ''),
+          blockHolidays: opts.blockHolidays !== undefined ? !!opts.blockHolidays : (root.dataset.blockHolidays === 'true'),
+          holidayExceptions: opts.holidayExceptions || {},
+          template: opts.template || root.dataset.template || DEFAULT_TEMPLATE
+        };
+
+        const $ = (id) => document.getElementById(id + '-' + wId);
+        const dom = {
+          s1: $('step-1'), s2: $('step-2'), s3: $('step-3'),
+          d1: $('step-dot-1'), d2: $('step-dot-2'), d3: $('step-dot-3'),
+          b1: $('step-bar-1'), b2: $('step-bar-2'),
+          sub: $('turnero-subtitle'), bizTitle: $('biz-title'),
+          daySel: $('day-selector'), timeSel: $('time-selector'),
+          dayPrev: $('day-prev'), dayNext: $('day-next'),
+          btnNext1: $('btn-next-1'), btnNext2: $('btn-next-2'),
+          btnBack2: $('btn-back-2'), btnBack3: $('btn-back-3'), btnConfirm: $('btn-confirm'),
+          inpFName: $('input-fname'), inpLName: $('input-lname'), inpPhone: $('input-phone'),
+          err2: $('step-2-error'),
+          sumName: $('summary-name'), sumDay: $('summary-day'), sumTime: $('summary-time')
+        };
+
+        if (!dom.s1 || !dom.btnNext1) return;
+        if (dom.bizTitle) dom.bizTitle.innerText = "Reservar en " + cfg.bizName;
+
+        const state = {
+          step: 1, dayOffset: 0, day: null, dateObj: null, time: null,
+          fname: "", lname: "", phone: "", isToday: false, activeDayData: null
+        };
+
+        const toTitleCase = (str) => (str || '').trim().toLowerCase().replace(/(?:^|\s|-|')\S/g, c => c.toUpperCase());
+        const sanitizePhone = (val) => val.replace(/\D/g, '').replace(/^549?/, '').replace(/^0/, '').replace(/^(\d{2,4})15/, '$1');
+        const validateName = (val) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{2,30}$/.test((val || '').trim());
+        const hasBadWords = (str) => ['mierda','puto','puta','boludo','pelotudo','concha','hdp','spam','carajo','forro'].some(w => (str || '').toLowerCase().includes(w)) || /[<>{}\\\\/]/.test(str);
+
+        try {
+          const saved = JSON.parse(localStorage.getItem('tucu_turnero_profile') || '{}');
+          if (saved.phone && dom.inpPhone && !dom.inpPhone.value) dom.inpPhone.value = saved.phone;
+          if (saved.fname && dom.inpFName && !dom.inpFName.value) dom.inpFName.value = saved.fname;
+          if (saved.lname && dom.inpLName && !dom.inpLName.value) dom.inpLName.value = saved.lname;
+        } catch(e) {}
+
+        if (dom.inpPhone) {
+          dom.inpPhone.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            try {
+              const saved = JSON.parse(localStorage.getItem('tucu_turnero_profile') || '{}');
+              if (saved.phone && e.target.value === saved.phone) {
+                if (dom.inpFName && !dom.inpFName.value && saved.fname) dom.inpFName.value = saved.fname;
+                if (dom.inpLName && !dom.inpLName.value && saved.lname) dom.inpLName.value = saved.lname;
+              }
+            } catch(e) {}
+          });
+          dom.inpPhone.addEventListener('blur', (e) => {
+            e.target.value = sanitizePhone(e.target.value);
+          });
+        }
+
+        const toIso = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+        const getAllDays = () => {
+          const days = []; const names = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+          let cur = new Date(); let guard = 0; const todayStr = toIso(new Date());
+          while (days.length < cfg.maxDays && guard < 120) {
+            guard++; const d = new Date(cur); const iso = toIso(d); const dayOfWeek = d.getDay();
+            const dayCfg = cfg.schedule ? cfg.schedule[dayOfWeek] : null;
+            const isWorkday = dayCfg ? !!dayCfg.enabled : (dayOfWeek !== 0);
+            const hasEx = cfg.holidayExceptions && cfg.holidayExceptions[iso];
+            const isHol = cfg.blockHolidays && HOLIDAYS.includes(iso) && !hasEx;
+            if (isWorkday && !isHol) {
+              days.push({
+                isToday: iso === todayStr, label: iso === todayStr ? 'Hoy' : names[dayOfWeek],
+                date: d.getDate(), fullDate: d, iso, special: hasEx || null, dayOfWeek,
+                fullStr: d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
+              });
+            }
+            cur.setDate(cur.getDate() + 1);
+          }
+          return days;
+        };
+        const allDays = getAllDays();
+
+        const generateRange = (startStr, endStr, interval) => {
+          const slots = []; let current = new Date(`2000-01-01T${startStr}:00`); const end = new Date(`2000-01-01T${endStr}:00`);
+          while (current <= end) { slots.push(current.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })); current.setMinutes(current.getMinutes() + interval); }
+          return slots;
+        };
+
+        const generateTimeSlots = (dayData) => {
+          if (dayData?.special) return generateRange(dayData.special.open, dayData.special.close, cfg.interval);
+          const dayCfg = cfg.schedule ? cfg.schedule[dayData.dayOfWeek] : null;
+          if (!dayCfg || !dayCfg.enabled) return [];
+          const s1 = generateRange(dayCfg.open, dayCfg.close, cfg.interval);
+          return (!dayCfg.isSplit || !dayCfg.open2 || !dayCfg.close2) ? s1 : [...s1, ...generateRange(dayCfg.open2, dayCfg.close2, cfg.interval)];
+        };
+
+        const renderDays = () => {
+          const visibleDays = allDays.slice(state.dayOffset, state.dayOffset + 4);
+          dom.daySel.innerHTML = visibleDays.map((d, idx) => {
+            const actualIdx = state.dayOffset + idx;
+            const isSelected = state.day === d.fullStr;
+            return `<button data-idx="${actualIdx}" class="day-btn py-2.5 px-1 flex flex-col items-center justify-center border rounded-2xl transition-all text-center cursor-pointer select-none ${isSelected ? 'bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-600/30 font-bold' : 'bg-zinc-800/70 hover:bg-zinc-800 text-zinc-300 border-zinc-700/60'}">
+              <span class="text-[10px] sm:text-[11px] font-medium opacity-80 uppercase tracking-wider">${d.label}</span>
+              <span class="font-bold text-base sm:text-lg leading-tight mt-0.5">${d.date}</span>
+            </button>`;
+          }).join('');
+
+          if (dom.dayPrev) dom.dayPrev.disabled = state.dayOffset === 0;
+          if (dom.dayNext) dom.dayNext.disabled = state.dayOffset + 4 >= allDays.length;
+
+          dom.daySel.querySelectorAll('.day-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const dIdx = parseInt(e.currentTarget.dataset.idx, 10);
+              const dayData = allDays[dIdx];
+              state.day = dayData.fullStr; state.dateObj = dayData.fullDate; state.isToday = dayData.isToday; state.time = null; state.activeDayData = dayData;
+              if (dom.btnNext1) dom.btnNext1.disabled = true;
+              renderDays(); renderTimes();
+            });
+          });
+        };
+
+        if (dom.dayPrev) dom.dayPrev.addEventListener('click', () => { if (state.dayOffset > 0) { state.dayOffset = Math.max(0, state.dayOffset - 4); renderDays(); } });
+        if (dom.dayNext) dom.dayNext.addEventListener('click', () => { if (state.dayOffset + 4 < allDays.length) { state.dayOffset = Math.min(allDays.length - 4, state.dayOffset + 4); renderDays(); } });
+
+        const renderTimes = () => {
+          const allSlots = generateTimeSlots(state.activeDayData); const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes();
+          let slotsToRender = [];
+          if (state.isToday) {
+            const pastSlots = []; const upcomingSlots = [];
+            allSlots.forEach(t => {
+              const [sh, sm] = t.split(':').map(Number);
+              if ((sh * 60 + sm) <= currentMins) pastSlots.push(t); else upcomingSlots.push(t);
+            });
+            const lastPast = pastSlots.slice(-1);
+            slotsToRender = [...lastPast.map(t => ({ time: t, isPast: true })), ...upcomingSlots.map(t => ({ time: t, isPast: false }))];
+          } else {
+            slotsToRender = allSlots.map(t => ({ time: t, isPast: false }));
+          }
+
+          dom.timeSel.innerHTML = slotsToRender.map(s => {
+            if (s.isPast) return `<button disabled class="time-btn opacity-25 bg-zinc-900/60 text-zinc-500 line-through cursor-not-allowed pointer-events-none border border-zinc-800/80 font-normal py-2 text-xs sm:text-sm rounded-xl text-center">${s.time}</button>`;
+            const isSelected = state.time === s.time;
+            return `<button data-time="${s.time}" class="time-btn py-2 text-xs sm:text-sm rounded-xl transition-all text-center font-semibold ${isSelected ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30 font-bold' : 'bg-zinc-800/80 hover:bg-blue-600 hover:text-white text-zinc-200 border border-zinc-700/60'}">${s.time}</button>`;
+          }).join('');
+
+          dom.timeSel.querySelectorAll('.time-btn:not([disabled])').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              dom.timeSel.querySelectorAll('.time-btn:not([disabled])').forEach(b => {
+                b.className = 'time-btn py-2 text-xs sm:text-sm rounded-xl transition-all text-center font-semibold bg-zinc-800/80 hover:bg-blue-600 hover:text-white text-zinc-200 border border-zinc-700/60';
+              });
+              const target = e.currentTarget;
+              target.className = 'time-btn py-2 text-xs sm:text-sm rounded-xl transition-all text-center font-bold bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30';
+              state.time = target.dataset.time;
+              if (dom.btnNext1) dom.btnNext1.disabled = !(state.day && state.time);
+            });
+          });
+        };
+
+        const goStep = (step) => {
+          [dom.s1, dom.s2, dom.s3].forEach(s => { if (s) { s.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto'); s.classList.add('opacity-0', 'pointer-events-none'); } });
+          const setStepUI = (activeStep, title) => {
+            if (dom.sub) dom.sub.innerText = title;
+            [dom.d1, dom.d2, dom.d3].forEach((d, idx) => {
+              if (idx + 1 === activeStep) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20 ring-4 ring-blue-500/20 transition-all';
+              else if (idx + 1 < activeStep) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center transition-all';
+              else d.className = 'w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all';
+            });
+            if (dom.b1) dom.b1.className = activeStep > 1 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
+            if (dom.b2) dom.b2.className = activeStep > 2 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
+          };
+
+          if(step === 1) {
+            dom.s1.classList.remove('-translate-x-full'); dom.s1.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+            dom.s2.classList.add('translate-x-full'); dom.s3.classList.add('translate-x-full');
+            setStepUI(1, "Paso 1: Selecciona fecha y hora");
+          } else if (step === 2) {
+            dom.s1.classList.add('-translate-x-full'); dom.s2.classList.remove('translate-x-full', '-translate-x-full');
+            dom.s2.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto'); dom.s3.classList.add('translate-x-full');
+            setStepUI(2, "Paso 2: Datos para la reserva");
+          } else if (step === 3) {
+            if (dom.sumName) dom.sumName.innerText = `${state.fname} ${state.lname}`.trim();
+            if (dom.sumDay) dom.sumDay.innerText = state.day; if (dom.sumTime) dom.sumTime.innerText = state.time;
+            dom.s1.classList.add('-translate-x-full'); dom.s2.classList.add('-translate-x-full');
+            dom.s3.classList.remove('translate-x-full'); dom.s3.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+            setStepUI(3, "Paso 3: Confirma tu solicitud");
+          }
+        };
+
+        if (dom.btnNext1) dom.btnNext1.addEventListener('click', () => goStep(2));
+        if (dom.btnBack2) dom.btnBack2.addEventListener('click', () => goStep(1));
+        if (dom.btnNext2) dom.btnNext2.addEventListener('click', () => {
+          state.fname = toTitleCase(dom.inpFName ? dom.inpFName.value : "");
+          state.lname = toTitleCase(dom.inpLName ? dom.inpLName.value : "");
+          if (dom.inpPhone) dom.inpPhone.value = sanitizePhone(dom.inpPhone.value);
+          state.phone = (dom.inpPhone ? dom.inpPhone.value : "").trim();
+
+          const showError = (msg) => {
+            if (dom.err2) { dom.err2.innerText = msg; dom.err2.classList.remove('hidden'); }
+          };
+          if (dom.err2) dom.err2.classList.add('hidden');
+
+          if (state.phone.length < 8 || state.phone.length > 15) return showError("Ingresa un número telefónico válido (8 a 15 dígitos).");
+          if (!validateName(state.fname)) return showError("El nombre debe tener al menos 2 letras (sin números).");
+          if (!validateName(state.lname)) return showError("El apellido debe tener al menos 2 letras (sin números).");
+          if (hasBadWords(state.fname) || hasBadWords(state.lname)) return showError("Los campos contienen palabras no permitidas o caracteres inválidos.");
+
+          goStep(3);
+        });
+        if (dom.btnBack3) dom.btnBack3.addEventListener('click', () => goStep(2));
+        if (dom.btnConfirm) dom.btnConfirm.addEventListener('click', () => {
+          const clientName = `${state.fname} ${state.lname}`.trim();
+          const text = cfg.template
+            .replace(/\{\{cliente\}\}/g, clientName)
+            .replace(/\{\{fecha\}\}/g, state.day)
+            .replace(/\{\{hora\}\}/g, state.time)
+            .replace(/\{\{comercio\}\}/g, cfg.bizName)
+            .replace(/\{\{telefono\}\}/g, state.phone);
+          
+          try {
+            localStorage.setItem('tucu_turnero_profile', JSON.stringify({ phone: state.phone, fname: state.fname, lname: state.lname }));
+          } catch(e) {}
+
+          window.open(`https://wa.me/${cfg.waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        });
+
+        renderDays();
+      }
+
+      window.initTurneroL1 = initWidget;
+      renderWeeklyScheduleUI();
+      renderUpcomingHolidays();
+      renderShowroomWidget();
+      checkWaStatus();
+    })();
+  </script>
+</body>
+</html>

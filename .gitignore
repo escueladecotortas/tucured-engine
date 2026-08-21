@@ -9,4 +9,5 @@ tmp/
 .DS_Store
 Thumbs.db
 serviceAccountKey.json
-
+auth_info_baileys/
+backend/services/whatsapp/auth_info_baileys/

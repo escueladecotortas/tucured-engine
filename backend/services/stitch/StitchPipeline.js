@@ -52,7 +52,11 @@ class StitchPipeline {
       const styleKeyword = StitchPromptService.getStyleKeyword(vibeNum);
       const directorPrompt = StitchPromptService.assembleDirector(prospectData, styleKeyword);
       const slotPrompt = StitchPromptService.assembleSlotInstructions(widgetManifest);
-      const editResponse = await client._editScreen(projectId, seedScreenId, directorPrompt + (slotPrompt ? "\n\n" + slotPrompt : ""));
+      
+      let sanitizedSeedId = typeof seedScreenId === 'object' ? (seedScreenId.id || seedScreenId.screenId || '') : String(seedScreenId || '');
+      sanitizedSeedId = sanitizedSeedId.replace(/^screens\//, "").replace(/[\s\n\0]/g, "").trim();
+      
+      const editResponse = await client._editScreen(projectId, sanitizedSeedId, directorPrompt + (slotPrompt ? "\n\n" + slotPrompt : ""));
 
       // PASO 3: POLLING Y DESCARGA RESILIENTE CON SELECTOR INTELIGENTE
       TerminalService.broadcast(`⬇️ Paso 3/3: Descarga, Inyección & Persistencia...`, "info", 75, "CODI");

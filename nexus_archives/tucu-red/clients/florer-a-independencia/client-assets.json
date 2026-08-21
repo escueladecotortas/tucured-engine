@@ -1,0 +1,194 @@
+{
+  "business_name": "Florería Independencia",
+  "slug": "florer-a-independencia",
+  "source": "cyborg_injection",
+  "extraction_date": "2026-08-20T02:50:48.315Z",
+  "category": "retail",
+  "toneVoice": "Cálido, cercano, elegante, confiable, emotivo",
+  "rating": 4.8,
+  "reviewsCount": 145,
+  "coordinates": {
+    "lat": -26.8312245,
+    "lng": -65.197069
+  },
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "8 AM to 9 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "9 AM to 1 PM"
+    }
+  ],
+  "phone": "+54 381 430-4140",
+  "whatsapp": "543814304140",
+  "phoneNormalized": {
+    "raw": "543814304140",
+    "clean": "3814304140",
+    "e164": "+543814304140",
+    "whatsapp": "543814304140",
+    "display": "+54 381 430-4140",
+    "isMobile": false,
+    "isValid": true
+  },
+  "instagram": "floreriaindependenciatuc",
+  "address": "Gral. José de San Martín 10, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+  "logo_url": "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/logo.jpg",
+  "photos": [
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_10.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_11.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_12.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_2.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_3.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_5.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_7.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_8.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/logo.jpg",
+    "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/maps_main.jpg"
+  ],
+  "semantic_photos": {
+    "hero": "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/maps_main.jpg",
+    "logo": "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/logo.jpg",
+    "showcase": [
+      "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_7.jpg",
+      "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_8.jpg"
+    ],
+    "atmosphere": [
+      "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_2.jpg",
+      "/nexus_archives/tucu-red/clients/florer-a-independencia/assets/insta_floreriaindependenciatuc_3.jpg"
+    ]
+  },
+  "about": {
+    "service_options": [
+      "Delivery"
+    ],
+    "planning": [
+      "Quick visit"
+    ],
+    "payments": [
+      "Credit cards",
+      "Debit cards",
+      "NFC mobile payments"
+    ]
+  },
+  "features": [
+    "delivery",
+    "quick visit",
+    "credit cards",
+    "debit cards",
+    "nfc mobile payments"
+  ],
+  "topReviews": [
+    {
+      "author": "Elisabet Laynez",
+      "rating": 5,
+      "text": "Soy de España y quería tener un detalle con un chico muy especial para mí, pero enviar un paquete era muy complicado. Encontré esta floristería y fue la mejor decisión.\n\nCarolina me atendió de maravilla desde el primer momento. Me explicó todo con mucha paciencia, me dio confianza y dejó que solo le indicara algunos detalles para crear el ramo a su estilo. Cuando vi el resultado, me quedé sin palabras: era muchísimo más bonito de lo que imaginaba.\n\nSin duda, volveré a contar con ellos para cualquier fecha especial. Gracias por el trato, la profesionalidad y por hacer un ramo tan precioso. ¡Lo recomiendo totalmente!",
+      "date": "2026-08-07T13:37:25.289Z"
+    },
+    {
+      "author": "Karen Serrano",
+      "rating": 4,
+      "text": "Hola alguien tiene el número o como puedo contactar con la florería?",
+      "date": "2026-04-25T16:04:23.775Z"
+    },
+    {
+      "author": "Damian Villagran",
+      "rating": 5,
+      "text": "Muy buena calidad y precios accesibles",
+      "date": "2026-03-09T20:15:47.806Z"
+    },
+    {
+      "author": "Kayla Colwell",
+      "rating": 5,
+      "text": "TOP NOTCH SERVICE! I could never say enough wonderful things. Carolina went above and beyond to help me with a birthday surprise while I was away in the United States. We communicated through what’s app, she sent photos and kept me updated every step of the way. She truly made it a very special day.",
+      "date": "2026-01-29T16:34:35.544Z"
+    },
+    {
+      "author": "Natanael Paez",
+      "rating": 5,
+      "text": "Excelente atención personalizada, las flores excelentes muchas gracias! 100% recomendable",
+      "date": "2025-11-20T16:16:13.992Z"
+    },
+    {
+      "author": "Gabriela Saenz",
+      "rating": 5,
+      "text": "Muy confiables, impecable trabajo siempre! Lo mejor de Tucumán y del NOA.",
+      "date": "2025-11-19T00:30:20.870Z"
+    },
+    {
+      "author": "Emilia Maria Abregu",
+      "rating": 2,
+      "text": "Domingo cerrado . Ponen 24 hs y no stan",
+      "date": "2025-11-16T19:12:58.874Z"
+    },
+    {
+      "author": "Mauricio Llanci",
+      "rating": 5,
+      "text": "Muy bue servicio.. aunque tube demoras con la transferencia.. fueron muy pasciencia, 100% recomendable y muy linas flores/rosas. 💪🏻🌹🌹",
+      "date": "2025-10-19T17:14:28.877Z"
+    },
+    {
+      "author": "lauty 66",
+      "rating": 5,
+      "text": "Me resolvieron todo en un instante!! Los precios increíbles,  y una excelente atención!! Y todo por mensaje!! Muy feliz quedé! Sigan con muchos éxitos!!",
+      "date": "2025-10-18T18:43:28.342Z"
+    },
+    {
+      "author": "cristian alejandro paez",
+      "rating": 5,
+      "text": "excelente atención !!! pude dar una linda sorpresa gracias a como colaboran en todos los detalles !!! muchas gracias !! floreria independencia - son los mejores de Tucuman !!!!",
+      "date": "2025-09-23T20:54:49.187Z"
+    },
+    {
+      "author": "Gessica Albornoz",
+      "rating": 5,
+      "text": "Hermosa atención, tanto como los jefes y empleados del local. Recomendacion al 100% Hermosas flores naturales y bien cuidadas, los pedidos llegan a tiempo y en buen estado.!!!",
+      "date": "2025-09-23T03:00:43.421Z"
+    },
+    {
+      "author": "Natanael Luna",
+      "rating": 5,
+      "text": "Hola, donde puedo conseguir el número de WhatsApp??",
+      "date": "2025-09-10T02:14:06.429Z"
+    },
+    {
+      "author": "Sergio Fiorotto",
+      "rating": 5,
+      "text": "Muy buen servicio, excelente calidad del producto. Precio  acordé al servicio prestado. Muy recomendable. Utilice sus servicios en otras oportunidades y con la misma calidad y puntualidad. Gracias.",
+      "date": "2025-07-09T14:17:31.753Z"
+    },
+    {
+      "author": "Claudio Jimenez Saldaña",
+      "rating": 5,
+      "text": "Excelente servicio, de verdad. Soy extranjero y no tuve ningún problema de comunicación ni disposición por parte ellos. Super atentos y cordiales con los requerimientos del cliente; y los productos de primer nivel. Romendados. 100%.",
+      "date": "2025-07-02T15:41:01.573Z"
+    },
+    {
+      "author": "Cesar Díaz",
+      "rating": 5,
+      "text": "Excelente atencion! todo lo hice a traves de wsp. Rapidez, eficiencia y predisposicion para asesorar y gestionar la entrega. Sin dudas volveria a recurrir a ustedes....",
+      "date": "2025-05-06T19:04:56.219Z"
+    }
+  ]
+}

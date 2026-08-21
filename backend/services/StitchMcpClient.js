@@ -80,8 +80,12 @@ class StitchMcpClient {
   }
 
   static async _editScreen(projectId, screenId, prompt) {
-    const cleanProjectId = String(projectId).replace(/^projects\//, "").trim();
-    const cleanScreenId = String(screenId).replace(/^screens\//, "").trim();
+    let rawProject = typeof projectId === 'object' ? (projectId.id || projectId.projectId || '') : String(projectId || '');
+    let rawScreen = typeof screenId === 'object' ? (screenId.id || screenId.screenId || '') : String(screenId || '');
+
+    const cleanProjectId = rawProject.replace(/^projects\//, "").replace(/[\s\n\0]/g, "").trim();
+    const cleanScreenId = rawScreen.replace(/^screens\//, "").replace(/[\s\n\0]/g, "").trim();
+    
     const args = {
       projectId: cleanProjectId,
       selectedScreenIds: [cleanScreenId],
@@ -89,7 +93,10 @@ class StitchMcpClient {
       deviceType: "DESKTOP",
       modelId: "GEMINI_3_1_PRO",
     };
+    
     console.log(`[StitchMcpClient] 📤 Editando pantalla ${cleanScreenId} en Project ID ${cleanProjectId} | Args:`, JSON.stringify(args));
+    console.log("[Stitch RAW Edit Payload]", JSON.stringify(args));
+    
     const res = await StitchRpcHandler.request("edit_screens", args);
     return res?.result?.content?.[0]?.text || JSON.stringify(res?.result?.structuredContent || res?.result || res);
   }

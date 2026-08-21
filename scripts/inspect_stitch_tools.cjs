@@ -48,10 +48,13 @@ function callRpc(method, params = {}) {
 async function inspect() {
   const toolsRes = await callRpc('tools/list', {});
   const tools = toolsRes?.result?.tools || [];
-  const createTool = tools.find(t => t.name === 'create_project');
-  console.log(`Tool: "${createTool?.name}"`);
-  console.log(`Description: ${createTool?.description}`);
-  console.log(`Input Schema:`, JSON.stringify(createTool?.inputSchema, null, 2));
+  tools.forEach(tool => {
+    if (tool.name === 'edit_screens') {
+      console.log(`Tool: "${tool.name}"`);
+      console.log(`Description: ${tool.description}`);
+      console.log(`Input Schema:`, JSON.stringify(tool.inputSchema, null, 2));
+    }
+  });
 }
 
 inspect().catch(console.error);

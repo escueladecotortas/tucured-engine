@@ -62,15 +62,33 @@ class WidgetInjector {
 
     const activePool = WidgetPools.getPoolForCategory(category);
     const sp = prospectData?.semantic_photos || {};
-    const photoPool = [
+    
+    // Misión 3: Diversidad Visual (Sistema de Consumo y Rutas Relativas)
+    const rawPhotos = [
       ...(Array.isArray(sp.showcase) ? sp.showcase : []),
       ...(Array.isArray(sp.atmosphere) ? sp.atmosphere : []),
-      ...(Array.isArray(prospectData?.photos) ? prospectData.photos : []),
-      `/nexus_archives/tucu-red/clients/${slug}/assets/ambient_1.jpg`,
-      `/nexus_archives/tucu-red/clients/${slug}/assets/product_1.jpg`
+      ...(Array.isArray(prospectData?.photos) ? prospectData.photos : [])
     ].filter(Boolean);
 
-    const getPhoto = (index) => photoPool[index % photoPool.length] || `/nexus_archives/tucu-red/clients/${slug}/assets/hero.jpg`;
+    let photoPool = [...new Set(rawPhotos)].map(photoVal => {
+        const basename = photoVal.split('/').pop().split('?')[0] || 'fallback.jpg';
+        return `/clients/${slug}/assets/${basename}`;
+    });
+
+    if (photoPool.length === 0) {
+      photoPool = [
+        `/clients/${slug}/assets/ambient_1.jpg`,
+        `/clients/${slug}/assets/product_1.jpg`,
+        `/clients/${slug}/assets/hero.jpg`
+      ];
+    }
+
+    const getPhoto = () => {
+      if (photoPool.length > 0) {
+        return photoPool.shift(); // Consumo real para cero repeticiones
+      }
+      return `/clients/${slug}/assets/hero.jpg`;
+    };
 
     const readWidget = (key) => {
       const p = WIDGET_FILES[key];
@@ -80,9 +98,16 @@ class WidgetInjector {
     };
 
     const injectSlotBidirectional = (widgetName, html, fbTarget = 'footer') => {
-      const selectors = `#nexus-${widgetName}, #slot-${widgetName}, [data-nexus-widget="${widgetName}"]${widgetName === 'booking_v1_turnero' ? ', #booking, section[id="booking"]' : ''}`;
+      const selectors = `[data-nexus-slot="${widgetName}"]`;
       const slot = $(selectors);
-      if (slot.length > 0) { slot.first().replaceWith(html); return true; }
+      if (slot.length > 0) { 
+        slot.first().html(html); 
+        return true; 
+      }
+
+      const legacySelectors = `#nexus-${widgetName}, #slot-${widgetName}, [data-nexus-widget="${widgetName}"]${widgetName === 'booking_v1_turnero' ? ', #booking, section[id="booking"]' : ''}`;
+      const legacySlot = $(legacySelectors);
+      if (legacySlot.length > 0) { legacySlot.first().replaceWith(html); return true; }
 
       const textRegex = new RegExp(`\\[(?:nexus-)?${widgetName}\\]`, 'gi');
       let replacedInText = false;
@@ -95,8 +120,9 @@ class WidgetInjector {
       });
       if (replacedInText) return true;
 
+      console.warn(`⚠️ [WidgetInjector] Stitch alucinó y no inyectó el data-nexus-slot="${widgetName}". Aplicando fallback a ${fbTarget}`);
       const fb = $(fbTarget);
-      if (fb.length > 0) { fb.before(html); return true; }
+      if (fb.length > 0) { fb.before(`<section data-nexus-fallback="${widgetName}">${html}</section>`); return true; }
       return false;
     };
 
@@ -119,8 +145,8 @@ class WidgetInjector {
       if (h) {
         const hyd = h.replace(/\{\{INSTAGRAM_HANDLE\}\}/g, prospectData?.instagram || '')
           .replace(/\{\{BUSINESS_NAME\}\}/g, name)
-          .replace(/\{\{PHOTO_1\}\}/g, getPhoto(0)).replace(/\{\{PHOTO_2\}\}/g, getPhoto(1))
-          .replace(/\{\{PHOTO_3\}\}/g, getPhoto(2)).replace(/\{\{PHOTO_4\}\}/g, getPhoto(3))
+          .replace(/\{\{PHOTO_1\}\}/g, getPhoto()).replace(/\{\{PHOTO_2\}\}/g, getPhoto())
+          .replace(/\{\{PHOTO_3\}\}/g, getPhoto()).replace(/\{\{PHOTO_4\}\}/g, getPhoto())
           .replace(/\{\{CAPTION_\d+\}\}/g, '');
         injectSlotBidirectional('gallery_v2_stories_grid', hyd, 'footer');
       }

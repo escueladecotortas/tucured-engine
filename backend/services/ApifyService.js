@@ -115,7 +115,7 @@ class ApifyService {
 
             const topReviews = (place.reviews || [])
                 .filter(r => r.text && r.text.trim().length > 5)
-                .slice(0, 8)
+                .slice(0, 15)
                 .map(r => ({
                     author: r.name || 'Cliente Verificado',
                     rating: r.stars || 5,

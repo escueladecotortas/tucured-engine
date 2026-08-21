@@ -7,6 +7,78 @@
 - [ ] **[IDEA-003] Túnel Temporal de Assets Locales para Stitch**: Evaluar Cloudflare R2 o túnel público temporal para exponer las fotos cacheadas en disco si la CDN pública de Instagram caduca con firmas temporales (`_nc_ohc`).
 
 ## [DONE]
+- [x] **[TASK-068]** Horario Corrido por Defecto, Desahogo Visual de WhatsApp y Censo de Variables *(21/08/2026, 02:15:00)*
+  - [x] **Fase 1 (Horario Partido Inactivo / Corrido por Defecto)**: `weeklySchedule` en `showroom_l1.html` y `defaultSchedule` en `booking_l1_turnero.html` calibrados con `isSplit: false` por defecto para todos los días (Lun-Vie 09:00 a 18:00 corrido, Sáb 09:00 a 13:00 corrido).
+  - [x] **Fase 2 (Desahogo Visual de Plantilla & Preview WhatsApp)**: Rediseño a layout apilado desahogado con textarea `rows="6"` expandible, tokens dinámicos con holgura ergonómica y burbuja WhatsApp `#005c4b` fluida sin scrollbars internos ni límites `max-h` restrictivos.
+  - [x] **Fase 3 (Auditoría Forense y Censo de Datos)**: Barrido exhaustivo documentando variables y parámetros reales (`data-*`, tokens `{{...}}`, persistencia local) vs. datos hardcodeados y mocks residuales.
+  - [x] **Fase 4 (Doctrina de Hierro & Ley de 200 Líneas)**: `booking_l1_turnero.html` certificado en 170 líneas (< 180 lín umbral preventivo).
+  - [x] **Certificación QA & Suites**: Suite `scripts/test_turnero_default_hours.cjs` (7/7 checks, 100%), `scripts/test_turnero_weekly_schedule.cjs` (7/7 checks, 100%), `scripts/test_showroom_wizard.cjs` (5/5 checks, 100%), `scripts/test_baileys_poc.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-067]** Horarios Independientes por Día de la Semana en Admin y Turnero L1 *(20/08/2026, 18:25:00)*
+  - [x] **Fase 1 (Matriz Semanal en Admin `showroom_l1.html`)**: Panel con 7 tarjetas colapsables de Lunes a Domingo, switches de habilitación por día, selector de apertura/cierre de mañana, toggle de horario partido con reapertura/cierre de tarde y botón rápido "Copiar Lun a días hábiles" con Toast interactivo.
+  - [x] **Fase 2 (Generación Dinámica de Slots por Día `booking_l1_turnero.html`)**: Al seleccionar un día del carrusel, el turnero extrae `dayOfWeek` y genera los slots exactos definidos para esa jornada (ej. doble turno Lun-Vie, turno único Sábados, 0 slots Domingos cerrados) respetando excepciones de feriados y slots pasados de Hoy.
+  - [x] **Fase 3 (Serialización y Exportación `data-schedule`)**: Exportación HTML ("Copiar HTML Configurado") serializando el objeto `schedule` semanal completo dentro de `data-schedule` y pasándolo dinámicamente en `initTurneroL1`.
+  - [x] **Fase 4 (Doctrina de Hierro & Ley de 200 Líneas)**: `booking_l1_turnero.html` certificado en 170 líneas (< 180 líneas umbral preventivo).
+  - [x] **Certificación QA & Suites**: Suite `scripts/test_turnero_weekly_schedule.cjs` (7/7 checks, 100%), `scripts/test_showroom_wizard.cjs` (5/5 checks, 100%), `scripts/test_baileys_poc.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-066]** Wizard Onboarding Seguro, Erradicación de Alerts y Auto-Inyección en Identidad *(20/08/2026, 17:40:00)*
+  - [x] **Fase 1 (Erradicación Total de Alerts/Confirms Nativos)**: Reemplazo completo de `confirm()` y `alert()` por modal nativo de desconexión (`#wa-logout-modal`) y sistema de notificaciones Toast flotante (`#toast-notification`).
+  - [x] **Fase 2 (Wizard de Onboarding Seguro en 3 Pasos)**: Reestructuración de `#wa-qr-modal` con narrativa de "Doble Llave Soberana", Paso 1 (Blindaje Local-First), Paso 2 (Escaneo QR en vivo con polling reactivo) y Paso 3 (Certificación & Test de Fuego).
+  - [x] **Fase 3 (Auto-Inyección Blindada en Pestaña Identidad)**: Extracción automática del teléfono verificado (`extractPhoneFromJid`) e inyección reactiva en `#cfg-wa-number` con badge `✓ Verificado vía QR`.
+  - [x] **Fase 4 (Purga Limpia y Reseteo tras Logout)**: Al confirmar la desconexión vía modal nativo, se purgan credenciales, se restaura el teléfono de identidad y se re-renderiza el widget L1 con feedback Toast discreto.
+  - [x] **Certificación QA & Suites**: Suite `scripts/test_showroom_wizard.cjs` (5/5 checks, 100%), `scripts/test_showroom_wa_integration.cjs` (5/5 checks, 100%), `scripts/test_baileys_poc.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-065]** Integración Visual de Vinculación QR Baileys en Panel Admin Showroom L1 *(20/08/2026, 17:15:00)*
+  - [x] **Fase 1 (Módulo de Estado WhatsApp en Admin)**: Integrada tarjeta en pestaña WhatsApp de `showroom_l1.html` con badge reactivo tri-estado (🔴 `CLOSE`, 🟡 `CONNECTING / QR_READY`, 🟢 `OPEN`), botón de escaneo y logout.
+  - [x] **Fase 2 (Modal de Escaneo QR con Polling)**: Implementado modal de escaneo (`#wa-qr-modal`) con spinner, imagen de QR generada en caliente, instrucciones paso a paso y auto-cierre reactivo tras detección de estado `OPEN`.
+  - [x] **Fase 3 (Herramientas de Test en Vivo)**: Añadido bloque de test cuando la sesión está `OPEN` para validación `POST /api/wa/check-phone` y despacho de mensajes de prueba `POST /api/wa/send-test`.
+  - [x] **Certificación QA & Suites**: Suite `scripts/test_showroom_wa_integration.cjs` (5/5 checks, 100%), `scripts/test_baileys_poc.cjs` (7/7 checks, 100%), `scripts/test_turnero_split_hours.cjs` (5/5 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-064]** Proof of Concept (PoC) Micro-Servicio WhatsApp Local-First con Baileys *(20/08/2026, 17:05:00)*
+  - [x] **Fase 1 (Arquitectura y Persistencia de Sesión)**: Construido `backend/services/whatsapp/wa_node.cjs` (143 líneas) con singleton `@whiskeysockets/baileys`, persistencia `useMultiFileAuthState` en `auth_info_baileys/` y reconexión automática.
+  - [x] **Fase 2 (Generación Dual de QR)**: Integrado renderizado de QR en terminal (`qrcode-terminal`) y en dashboard web visual (`GET /api/wa/qr` con Tailwind y DataURL).
+  - [x] **Fase 3 (Micro-API y Endpoints Canónicos)**: Implementado `backend/services/whatsapp/wa_routes.cjs` (87 líneas) y puente `backend/routes/wa.js` (5 líneas) exponiendo `GET /status`, `POST /check-phone`, `POST /send-test` y `POST /init`.
+  - [x] **Fase 4 (Normalización E.164 y Sanitización JID)**: Integrado con `PhoneNormalizerService` para formateo seguro de teléfonos argentinos (+549 / 381 / 15) hacia JIDs de WhatsApp (`@s.whatsapp.net`).
+  - [x] **Certificación QA & Suites**: Suite `scripts/test_baileys_poc.cjs` (7/7 checks, 100%), `scripts/test_turnero_split_hours.cjs` (5/5 checks, 100%), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-063]** Optimización de Inputs Táctiles, Formato de Nombres y Ajuste Visual Paso 3 en Turnero L1 *(20/08/2026, 16:30:00)*
+  - [x] **Fase 1 (Inputs Mobile-First Ergonómicos)**: Teléfono configurado con `type="tel"`, `inputmode="numeric"` y `autocomplete="tel"`, forzando el teclado numérico en pantallas táctiles iOS/Android.
+  - [x] **Fase 2 (Formateo y Sanitización Title Case)**: Nombres y apellidos con `autocapitalize="words"`, `autocomplete="given-name"` / `autocomplete="family-name"` y conversión reactiva a Capital Case (`toTitleCase`) antes de renderizar resumen en Paso 3 y armar deep link de WhatsApp.
+  - [x] **Fase 3 (Refinamiento Visual Paso 3 & Botón WA con SVG)**: Botón `Confirmar WA` estilizado en verde esmeralda (`bg-emerald-600`) con icono SVG nítido y balance con botón secundario `Editar`.
+  - [x] **Fase 4 (Cumplimiento de la Ley de 200 Líneas)**: `booking_l1_turnero.html` formateado y auditado en exactamente 175 líneas (< 180 lín umbral preventivo).
+  - [x] **Certificación QA & Suites**: Test `scripts/test_turnero_split_hours.cjs` (5/5 checks, 100%), `scripts/update_widget_laboratory.cjs` (19 widgets sincronizados), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_turnero_l1_advanced.cjs` (4/4 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js` (5/5 checks, 100%).
+
+- [x] **[TASK-062]** Horario Partido (Corte de Siesta), Saneamiento Visual y Admin Drawer Mobile-First *(20/08/2026, 16:00:00)*
+  - [x] **Fase 1 (Soporte de Horario Partido & Corte de Siesta)**: Lógica de doble franja (`open`/`close` y `open2`/`close2`) en `booking_l1_turnero.html` excluyendo slots en el bache de siesta y permitiendo turno corrido o partido.
+  - [x] **Fase 2 (Saneamiento Inmediato de UI)**: Erradicación total de badges y textos residuales de días en cabecera, preservando interacción pura con las pastillas.
+  - [x] **Fase 3 (Admin Drawer Mobile-First & Pestañas Desktop)**: Reorganización en 3 categorías (🏢 Identidad, ⏰ Agenda, 💬 WhatsApp) con Bottom Navigation Bar en móviles y segmented tabs de alto contraste en pantallas grandes.
+  - [x] **Certificación QA & Suites**: Test `scripts/test_turnero_split_hours.cjs` (3/3 checks, 100%), `scripts/test_turnero_l1_v2.cjs` (4/4 checks, 100%), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js`.
+
+- [x] **[TASK-061]** Salteo Dinámico de Días Inactivos, Chat Preview WA, Persistencia Local y Excepciones de Feriados *(20/08/2026, 15:35:00)*
+  - [x] **Fase 1 (Salteo Dinámico de Días Cerrados)**: Carrusel L1 optimizado con bucle continuo que colecta únicamente los próximos N días operativos válidos, eliminando casilleros tachados intermedios.
+  - [x] **Fase 2 (Matriz de Feriados con Excepciones y Horario Especial)**: Próximos 3 feriados venideros conmutables (`Habilitar Atención`) con rango horario personalizable (`holidayExceptions`) y soporte 2026-2027.
+  - [x] **Fase 3 (Burbuja Real de WhatsApp & Blindaje Anti-Autofill)**: Vista dual con editor de tokens a la izquierda y burbuja nativa de WhatsApp a la derecha (`#005c4b`, timestamp, double check), e inyección de CSS para erradicar el autofill blanco.
+  - [x] **Fase 4 (Flujo de Identidad Phone-First & Semilla Local)**: Teléfono posicionado como primer campo con lectura y persistencia de perfil `{ phone, fname, lname }` en `localStorage.getItem('tucu_turnero_profile')`.
+  - [x] **Certificación QA & Suites**: Test `scripts/test_turnero_l1_v2.cjs` (4/4 checks, 100%), `scripts/test_turnero_l1_advanced.cjs` (4/4 checks, 100%), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js`.
+
+- [x] **[TASK-060]** Portabilidad de Configuración Avanzada L3 hacia Showroom L1 *(20/08/2026, 15:00:00)*
+  - [x] **Fase 1 (Selector de Días Laborables y Motor de Feriados 2026)**: Pastillas conmutables Lun-Dom en Admin Mock, catálogo estático de contingencia de feriados de Argentina 2026 y bloqueo reactivo de días no laborables (`opacity-25 line-through pointer-events-none`).
+  - [x] **Fase 2 (Editor de Plantillas WhatsApp con Tokens Dinámicos)**: Botones interactivos para inserción de comodines (`{{cliente}}`, `{{fecha}}`, `{{hora}}`, `{{comercio}}`, `{{telefono}}`), textarea en caliente y sustitución de variables al generar el link `wa.me`.
+  - [x] **Fase 3 (Actualización de Componentes y Showroom)**: `booking_l1_turnero.html` (176 líneas) y `public/showroom_l1.html` sincronizados y adaptados para pruebas en vivo.
+  - [x] **Certificación QA & Suites**: Test `scripts/test_turnero_l1_advanced.cjs` (4/4 checks, 100%), `scripts/test_turnero_l1_param.cjs` (5/5 checks, 100%), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js`.
+
+- [x] **[TASK-059]** Reingeniería Parametrizada de Turnero L1 y Showroom Split-Screen *(20/08/2026, 13:30:00)*
+  - [x] **Fase 1 (Paginación de Días y Limpieza de Slots Pasados)**: Carrusel de 4 pastillas visibles (`grid grid-cols-4`) con navegación lateral (`←` y `→`) respetando `data-days`, y filtro mobile-first que retiene como máximo 1 único slot previo tachado.
+  - [x] **Fase 2 (Validación de Identidad y Filtro Antiprofanidad)**: Separación en Nombre y Apellido alfabéticos obligatorios (min 2 letras, no numéricos), sanitización de prefijos de teléfono (`^549?`, `^0`, `^15`) y detección de lenguaje ofensivo / inyecciones en cliente.
+  - [x] **Fase 3 (Showroom Split-Screen Interactivo)**: Creado `public/showroom_l1.html` con panel izquierdo de Mock Admin reactivo en caliente (rango, intervalo, días, WA, nombre) y panel derecho de widget vivo con botón copiador de HTML parametrizado.
+  - [x] **Certificación QA & Suites**: Test `scripts/test_turnero_l1_param.cjs` (5/5 checks, 100%), `scripts/test_turneros_suite.cjs` (7/7 checks, 100%), `scripts/test_engine_full_health.js` (19/19 checks, 100%) y sincronización Kanban `test_kanban_sync.js`.
+
+- [x] **[TASK-058]** Bifurcación de Turneros L1/L2, Alto Contraste y Encapsulamiento de UI *(20/08/2026, 12:18:00)*
+  - [x] **Fase 1 (Contraste y Paleta de Fallback Robusta)**: Rediseñado el card contenedor a `bg-zinc-900/95 text-zinc-100 border-zinc-800` con slots interactivos en `bg-zinc-800/80 hover:bg-blue-600` y slots seleccionados `bg-blue-600 shadow-blue-600/30`, garantizando contraste absoluto tanto en modo oscuro como claro.
+  - [x] **Fase 2 (Encapsulamiento del Carrusel de Días y Barra de Pasos)**: Pastillas de selección con `min-w-[4.8rem] w-[4.8rem]` snap-start en contenedor `overflow-x-auto hide-scrollbar px-1`, y barra de pasos restaurada con píldoras circulares numeradas (1, 2, 3) y líneas de progreso activas.
+  - [x] **Fase 3 (Bifurcación Funcional L1 vs L2)**: L1 implementado en modo autónomo client-side; L2 equipado con simulación `fetchAvailability`, bloqueo asíncrono de horarios ocupados, token de reserva único y exportación `.ics` nativa.
+  - [x] **Certificación QA & Laboratorio**: Compilación y sincronización en `public/widget-laboratory.html` (19 componentes), suite de pruebas `scripts/test_turneros_suite.cjs` (6/6 checks, 100%) y suite clínica `test_engine_full_health.js` (19/19 checks, 100%).
+
 - [x] **[TASK-057]** Trazabilidad Extrema y Rechazo de Errores en Stitch MCP Client (Gate 2 - Forja) *(19/08/2026, 17:14:00)*
   - [x] **Fase 1 (Auditoría de Esquema y Sanitización de Argumentos)**: Revisado el inputSchema de `create_project` (`{ title: string }`), `generate_screen_from_text` (`{ projectId, prompt, deviceType, modelId }`), `edit_screens` (`{ projectId, selectedScreenIds, prompt, deviceType, modelId }`) y `get_screen` (`{ name, projectId, screenId }`), aplicando sanitización y trim estricto de identificadores y títulos.
   - [x] **Fase 2 (Trazabilidad Extrema - Zero Blind Spots)**: Implementada emisión previa del payload exacto JSON-RPC tanto en `StitchMcpClient.js` como en `StitchRpcHandler.js`.

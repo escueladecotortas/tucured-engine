@@ -66,32 +66,36 @@ class StitchPromptBuilder {
       if (u) publicPhotos.push(`Atmosphere ${i + 1}: ${u}`);
     });
 
-    const cdnSnippet = publicPhotos.length > 0 ? `═══ FOTOGRAFÍA REAL DEL NEGOCIO (CDN PÚBLICO) ═══\n${publicPhotos.join("\n")}\nDirectiva: Utilizá estas URLs reales en backgrounds e <img> principales.\n` : "";
+    const cdnSnippet = publicPhotos.length > 0 ? `\n[ASSETS VISUALES REALES]\n${publicPhotos.join("\n")}\nDirectiva: Utiliza estas URLs reales en backgrounds e <img> principales.` : "";
 
-    return `BRIEF CREATIVO & NARRATIVO PARA STITCH (HIGH FIDELITY LANDING PAGE)
+    return `Eres un Senior UX/UI Tailwind Architect. Tu misión es diseñar y codificar una Landing Page de alta conversión e inmersiva. No debes limitarte a estructuras rígidas ni wireframes genéricos; tienes total libertad creativa para usar Tailwind CSS avanzado (Grid, Flex, gradientes, glassmorphism, fuentes Outfit/Inter, paletas dinámicas y espacio negativo).
+
+[CONTEXTO DE NEGOCIO Y ADN]
 Negocio: "${name}" | Rubro: ${category} | Ubicación: ${address}
-Reputación: ${rating} ⭐ (${reviewsCount} opiniones verificadas en Google)
+Reputación: ${rating} ⭐ (${reviewsCount} opiniones verificadas)
+Concepto Core: ${archetype.coreConcept}
+Beneficios y Atributos: ${features.join(", ") || "Atención premium y dedicación."}
+Tono de voz y vocabulario de clientes reales:
+${vocabularyList.slice(0, 5).map(v => `> ${v}`).join("\n") || `> "Un servicio inigualable."`}${cdnSnippet}
 
-═══ ADN DE MARCA & PROPUESTA DE VALOR REAL ═══
-- Concepto Clave: ${archetype.coreConcept}
-- Atributos y Servicios Reales: ${features.join(", ") || "Atención personalizada, Calidad de servicio"}
-- Historia y Vocabulario Auténtico de Clientes:
-${vocabularyList.slice(0, 5).map(v => `  * ${v}`).join("\n") || `  * "Excelente atención y productos de calidad superior."`}
-
-${cdnSnippet}═══ DIRECTIVAS DE COMPOSICIÓN VISUAL (LIBERTAD DE DISEÑO) ═══
-- Inspiración y Layout: ${archetype.compositionHint}
-- Estilo: Dark Mode nativo con Tailwind CSS, acentos vibrantes, tipografía moderna (Inter/Montserrat/Outfit) y espaciado generoso.
+[LIBERTAD DE LAYOUT Y COMPOSICIÓN]
+- Inspiración: ${archetype.compositionHint}
 - Call to Action Principal: "${archetype.cta}" (Enlace WhatsApp: ${phone}).
+- Prohibido hacer layouts aburridos. Diseña componentes visualmente espectaculares que atrapen al usuario.
+- Todo el copy debe estar en ESPAÑOL neutro argentino, con una narrativa viva y atractiva que represente la identidad real de "${name}".
 
-═══ INTEGRACIÓN DE WIDGETS INTERACTIVOS (SLOTS LIMPIOS) ═══
-Integrá de forma armónica dentro del flujo visual los siguientes contenedores HTML vacíos (SIN texto plano tipo "[widget]"):
-- <div id="nexus-booking_v1_turnero"></div> (Módulo de reservas o turnos)
-- <div id="nexus-social_v2_marquee_reviews"></div> (Muro cinético de opiniones)
-- <div id="nexus-gallery_v2_stories_grid"></div> (Showcase visual interactivo)
-- <div id="nexus-footer_v1_map"></div> (Acceso y mapa del local)
+[SLOTS DE INYECCIÓN SEMÁNTICA (EL ANCLA)]
+Disponemos de componentes prefabricados que se inyectarán en tu diseño en una fase posterior. Cuando el flujo de la página lo requiera (por ejemplo, para mostrar una galería, reseñas o turnos), debes diseñar una sección o contenedor padre espectacular (ej. \`<section class="py-24 bg-zinc-900 flex justify-center items-center...">\`).
 
-Todo el copy debe estar en ESPAÑOL neutro argentino, con una narrativa viva y atractiva que represente la identidad real de "${name}".`;
+A este contenedor padre debes agregarle OBLIGATORIAMENTE el atributo de datos correspondiente a su propósito:
+- \`data-nexus-slot="booking_v1_turnero"\`: Para la sección de reservas o contacto interactivo.
+- \`data-nexus-slot="gallery_v2_stories_grid"\`: Para el showcase fotográfico asimétrico o galería.
+- \`data-nexus-slot="social_v2_marquee_reviews"\`: Para el muro de testimonios o social proof.
+- \`data-nexus-slot="footer_v1_map"\`: Para el mapa de ubicación y footer.
+
+INSTRUCCIÓN CLAVE: Asegúrate de que el contenedor del slot tenga la estructura visual, fondo y espaciado correctos, ya que el contenido interior será hidratado dinámicamente en post-producción. NO uses divs vacíos o sin estilo; debes maquetar la sección visualmente para que nuestro inyector herede ese contenedor premium.`;
   }
 }
 
 module.exports = StitchPromptBuilder;
+

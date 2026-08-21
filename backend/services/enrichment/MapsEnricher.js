@@ -83,7 +83,7 @@ class MapsEnricher {
 
       // Top Reviews reales con texto
       if (place.topReviews && place.topReviews.length > 0) {
-        enrichedData.topReviews = place.topReviews.slice(0, 5);
+        enrichedData.topReviews = place.topReviews.slice(0, 15);
         console.log(`   💬 ${enrichedData.topReviews.length} Reviews seleccionadas`);
       }
 

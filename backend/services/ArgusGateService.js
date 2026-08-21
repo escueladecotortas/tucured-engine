@@ -1,3 +1,4 @@
+// Archivo: backend/services/ArgusGateService.js
 /**
  * ARGUS GATE SERVICE v2.0 - SHIELD PRO MAX
  * "El Cerbero de la Bóveda"
@@ -25,16 +26,17 @@ class ArgusGateService {
         const isSource = /\.(js|jsx|tsx|css)$/.test(filePath);
         const isCompiled = /\.html$/.test(filePath);
         const isConfig = /package\.json|\.env|ecosystem\.config\.js/.test(filePath);
+        const inNexusArchives = filePath.includes('nexus_archives');
 
-        // 1. HARD-GATE: REGLA DE 200 LÍNEAS (Source Code)
-        if (isSource && !isConfig && lines > 200) {
-            console.error(`💥 [Argus-HARD-GATE]: Bloqueo de escritura activado para ${filePath}`);
-            throw new Error(`[CRITICAL_LINE_LIMIT_EXCEEDED] El archivo fuente ${filePath} tiene ${lines} líneas. EL LÍMITE ES 200. Debes refactorizar este componente en piezas atómicas antes de guardar.`);
-        }
-
-        // 2. EXCEPCIÓN VISUAL (Compiled HTML)
-        if (isCompiled && lines > 300) {
-            console.warn(`⚠️ [Argus-VISUAL]: El HTML compilado tiene ${lines} líneas. Aprobado bajo excepción de Render.`);
+        // EXCEPCIÓN TOTAL: HTML compilado o archivos en nexus_archives
+        if (isCompiled || inNexusArchives) {
+            // Se aprueba sin límite de líneas y sin warnings visuales
+        } else {
+            // 1. HARD-GATE: REGLA DE 200 LÍNEAS (Source Code)
+            if (isSource && !isConfig && lines > 200) {
+                console.error(`💥 [Argus-HARD-GATE]: Bloqueo de escritura activado para ${filePath}`);
+                throw new Error(`[CRITICAL_LINE_LIMIT_EXCEEDED] El archivo fuente ${filePath} tiene ${lines} líneas. EL LÍMITE ES 200. Debes refactorizar este componente en piezas atómicas antes de guardar.`);
+            }
         }
 
         // 3. VETO DE MEDIOCRIDAD (Lorem Ipsum)

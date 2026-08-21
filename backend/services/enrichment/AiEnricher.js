@@ -65,10 +65,12 @@ RESPONDE EXCLUSIVAMENTE EN JSON VÁLIDO.`.trim();
       ];
       
       let finalCategory = (aiResult.canonicalCategory || "").toLowerCase().trim();
-      const combinedText = `${lead.name} ${mapCategory} ${igBio}`.toLowerCase();
+      const combinedText = `${lead.name} ${mapCategory} ${igBio}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
       if (combinedText.includes('bar') || combinedText.includes('pub') || combinedText.includes('cervez') || combinedText.includes('birra') || combinedText.includes('irlanda')) {
         finalCategory = 'gastronomia_bar';
+      } else if (combinedText.includes('floreria') || combinedText.includes('florist') || combinedText.includes('flower') || combinedText.includes('flores')) {
+        finalCategory = 'retail';
       }
 
       if (allowedCats.includes(finalCategory)) {

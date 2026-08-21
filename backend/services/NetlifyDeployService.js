@@ -12,7 +12,7 @@ const DeployProcessHandler = require('./deploy/DeployProcessHandler');
 class NetlifyDeployService {
   /**
    * Deploy un sitio a Netlify.
-   * Modificado para forzar sobrescritura mediante búsqueda en Firestore.
+   * Modificado para forzar sobrescritura mediante búsqueda en Firestore y persistir nuevas creaciones.
    */
   static async deployToNetlify(sitePath, config = {}) {
     const { siteName, siteId: configSiteId, customDomain } = config;
@@ -29,38 +29,27 @@ class NetlifyDeployService {
     let targetSiteId = configSiteId;
 
     // 🔍 RECUPERACIÓN SOBERANA (SOP-DEPLOY-001)
-    // Si no tenemos siteId, lo buscamos por dominio en Firestore antes de crear uno nuevo.
     if (!targetSiteId && customDomain && db) {
         try {
             console.log(`🔍 [Netlify/DB] Consultando siteId para dominio: "${customDomain}"`);
-            
-            // 1. Intentamos en 'prospects' (Colección principal de la forja)
             const prospectSnapshot = await db.collection('prospects')
                 .where('customDomain', '==', customDomain)
-                .limit(1)
-                .get();
+                .limit(1).get();
 
             if (!prospectSnapshot.empty) {
                 targetSiteId = prospectSnapshot.docs[0].data().netlifySiteId;
                 console.log(`🎯 Match en 'prospects': ${targetSiteId}`);
             }
 
-            // 2. Si no está, probamos en 'ClientAssets'
             if (!targetSiteId) {
                 const assetSnapshot = await db.collection('ClientAssets')
                     .where('customDomain', '==', customDomain)
-                    .limit(1)
-                    .get();
-                
+                    .limit(1).get();
                 if (!assetSnapshot.empty) {
                     const data = assetSnapshot.docs[0].data();
                     targetSiteId = data.siteId || data.netlifySiteId;
                     console.log(`🎯 Match en 'ClientAssets': ${targetSiteId}`);
                 }
-            }
-
-            if (!targetSiteId) {
-                console.log(`❌ No se encontró vinculación previa para "${customDomain}" en Firestore.`);
             }
         } catch (e) {
             console.warn(`⚠️ [Netlify/DB] Fallo en recuperación de siteId: ${e.message}`);
@@ -71,7 +60,22 @@ class NetlifyDeployService {
     if (!targetSiteId) {
       console.log(`✨ [Netlify] Creando nuevo sitio: ${siteName}`);
       const siteData = await NetlifyApiClient.createSite(siteName, authToken);
-      if (siteData) targetSiteId = siteData.id;
+      if (siteData) {
+        targetSiteId = siteData.id;
+        // 💾 Persistencia en Bóveda
+        if (db) {
+            try {
+                console.log(`💾 [Netlify/DB] Persistiendo nuevo siteId en Firestore para ${siteName}...`);
+                const q1 = await db.collection('prospects').where('slug', '==', siteName).limit(1).get();
+                if (!q1.empty) await q1.docs[0].ref.update({ netlifySiteId: targetSiteId });
+
+                const q2 = await db.collection('ClientAssets').where('slug', '==', siteName).limit(1).get();
+                if (!q2.empty) await q2.docs[0].ref.update({ netlifySiteId: targetSiteId });
+            } catch (e) {
+                console.warn(`⚠️ [Netlify/DB] Error persistiendo siteId: ${e.message}`);
+            }
+        }
+      }
     } else {
       console.log(`🔄 [Netlify] Forzando Update/Overwrite en: ${targetSiteId}`);
     }

@@ -1,0 +1,128 @@
+{
+  "business_name": "Lavadero Max AutoSpa",
+  "slug": "lavadero-max-autospa",
+  "source": "cyborg_injection",
+  "extraction_date": "2026-08-19T22:24:57.640Z",
+  "category": "automotive",
+  "toneVoice": "Profesional, cercano, confiable, dinámico",
+  "rating": 4.3,
+  "reviewsCount": 281,
+  "coordinates": {
+    "lat": -26.8273742,
+    "lng": -65.2118326
+  },
+  "openingHours": [
+    {
+      "day": "Monday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Tuesday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Wednesday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Thursday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Friday",
+      "hours": "8 AM to 8 PM"
+    },
+    {
+      "day": "Saturday",
+      "hours": "8 AM to 2 PM"
+    },
+    {
+      "day": "Sunday",
+      "hours": "Closed"
+    }
+  ],
+  "phone": "+54 9 381 636-0926",
+  "whatsapp": "5493816360926",
+  "phoneNormalized": {
+    "raw": "5493816360926",
+    "clean": "3816360926",
+    "e164": "+5493816360926",
+    "whatsapp": "5493816360926",
+    "display": "+54 9 381 636-0926",
+    "isMobile": true,
+    "isValid": true
+  },
+  "instagram": "autospa_max",
+  "address": "ITC, Catamarca 167, T4000 San Miguel de Tucumán, Tucumán, Argentina",
+  "logo_url": "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/logo.jpg",
+  "photos": [
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_1.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_10.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_11.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_12.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_2.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_3.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_4.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_5.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_6.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_7.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_8.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_9.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/logo.jpg",
+    "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/maps_main.jpg"
+  ],
+  "semantic_photos": {
+    "hero": "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_1.jpg",
+    "logo": "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/logo.jpg",
+    "showcase": [
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_2.jpg",
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_4.jpg"
+    ],
+    "atmosphere": [
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_1.jpg",
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_3.jpg",
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_5.jpg",
+      "/nexus_archives/tucu-red/clients/lavadero-max-autospa/assets/insta_autospa_max_6.jpg"
+    ]
+  },
+  "about": {
+    "amenities": [
+      "Restroom"
+    ]
+  },
+  "features": [
+    "restroom"
+  ],
+  "topReviews": [
+    {
+      "author": "Profe Elizabeth Andole",
+      "rating": 5,
+      "text": "Excelente servicio",
+      "date": "2026-07-16T23:00:15.977Z"
+    },
+    {
+      "author": "TOBIAS KUSEVITZKY",
+      "rating": 5,
+      "text": "Muy bien y confiable",
+      "date": "2026-07-06T18:37:31.507Z"
+    },
+    {
+      "author": "Pedro Paez",
+      "rating": 5,
+      "text": "Recomendable excelente atención y servicio",
+      "date": "2026-07-04T15:45:40.543Z"
+    },
+    {
+      "author": "Javier Lazarte",
+      "rating": 1,
+      "text": "Dejé el auto y me llamaron al finalizar la jornada diciendo que no llegaron a lavarlo",
+      "date": "2026-06-20T18:14:25.335Z"
+    },
+    {
+      "author": "PABLO NESTOR GARCIA",
+      "rating": 5,
+      "text": "Los conocí esta semana . Me sorprendió.el servicio a pesar de pagar el lavado base muy detallistas. Recomendado changos",
+      "date": "2026-04-11T13:45:00.418Z"
+    }
+  ]
+}
