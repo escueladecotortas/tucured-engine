@@ -1,0 +1,344 @@
+<!-- Archivo: public/demo_l1_cliente.html -->
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-zinc-950 text-zinc-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turnero Online L1 — Experiencia Cliente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+            wa: { bubble: '#005c4b', light: '#25D366', dark: '#128C7E', bg: '#0b141a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .ambient-glow { background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 70%); }
+    body.is-embedded header { display: none !important; }
+    body.is-embedded main { padding: 0.5rem !important; justify-content: flex-start !important; }
+    body.is-embedded { background: transparent !important; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans bg-zinc-950 text-zinc-100 overflow-x-hidden ambient-glow selection:bg-blue-500/30 selection:text-blue-300">
+  <script>
+    if (window.self !== window.top || new URLSearchParams(window.location.search).get('embed') === '1') {
+      document.body.classList.add('is-embedded');
+    }
+  </script>
+
+  <!-- Header Superior Minimalista -->
+  <header class="w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <a href="/tucu_widgets.html" class="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 transition-all text-xs" title="Volver al Catálogo">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-xs font-semibold text-zinc-300">Turnero Online L1 <span class="text-[10px] text-blue-400 font-mono font-medium ml-1">● WhatsApp Directo</span></span>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <a href="/admin_l1.html" id="btn-return-admin" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-900 hover:bg-zinc-800 text-blue-400 hover:text-blue-300 border border-zinc-800 transition-all flex items-center gap-1.5 shadow-sm">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <span>Panel Admin</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenedor Central Mobile-First -->
+  <main class="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 max-w-lg mx-auto w-full">
+    <div class="w-full max-w-[440px] space-y-4 my-auto">
+      
+      <!-- Host del Widget L1 -->
+      <div id="client-widget-container" class="w-full transition-all duration-300"></div>
+
+      <!-- Pie de Seguridad -->
+      <div class="text-center space-y-1 pt-2">
+        <p class="text-[11px] text-zinc-500">🔒 Reserva directa con confirmación por WhatsApp.</p>
+        <p class="text-[10px] text-zinc-600 font-mono">TucuRed Engine v11.1 • Local-First Architecture</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Script de Inyección e Hidratación Reactiva -->
+  <script>
+    (function() {
+      const defaultSchedule = {
+        1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+      };
+
+      function loadConfig() {
+        return {
+          bizName: localStorage.getItem('tucu_l1_biz_name') || localStorage.getItem('tucu_biz_name') || 'Nexus Studio Demo',
+          waNumber: localStorage.getItem('tucu_l1_wa_number') || localStorage.getItem('tucu_wa_number') || '5493815551234',
+          schedule: JSON.parse(localStorage.getItem('tucu_schedule') || JSON.stringify(defaultSchedule)),
+          vacations: JSON.parse(localStorage.getItem('tucu_l1_vacations') || '[]'),
+          interval: parseInt(localStorage.getItem('tucu_l1_interval') || '30', 10),
+          days: parseInt(localStorage.getItem('tucu_l1_days') || '14', 10),
+          blockHolidays: localStorage.getItem('tucu_l1_block_holidays') !== 'false',
+          template: localStorage.getItem('tucu_l1_template') || '¡Hola! Quiero confirmar mi reserva en {{comercio}}:\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 📞 Tel: {{telefono}}\n¿Me confirman disponibilidad?'
+        };
+      }
+
+      const HOLIDAYS = ["2026-01-01","2026-02-16","2026-02-17","2026-03-24","2026-04-02","2026-04-03","2026-05-01","2026-05-25","2026-06-17","2026-06-20","2026-07-09","2026-08-17","2026-10-12","2026-11-20","2026-12-08","2026-12-25","2027-01-01","2027-02-15","2027-02-16","2027-03-24","2027-04-02"];
+
+      function renderTurnero() {
+        const cfg = loadConfig();
+        const container = document.getElementById('client-widget-container');
+        if (!container) return;
+
+        const wId = 'CLIENT_L1';
+        container.innerHTML = `
+          <div id="smart-turnero-widget-${wId}" data-widget-id="${wId}" class="w-full max-w-[440px] mx-auto bg-zinc-900/95 text-zinc-100 backdrop-blur-xl rounded-[2rem] border border-zinc-800 p-6 sm:p-7 shadow-2xl relative overflow-hidden font-sans transition-all duration-300 box-border">
+            <div class="text-center mb-6">
+              <h3 class="text-xl sm:text-2xl font-bold mb-1 leading-tight text-white" id="biz-title-${wId}">Reservar en ${cfg.bizName}</h3>
+              <p class="text-xs sm:text-sm text-zinc-400" id="turnero-subtitle-${wId}">Paso 1: Selecciona fecha y hora</p>
+              <div class="flex items-center justify-center gap-2 mt-4">
+                <div id="step-dot-1-${wId}" class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20 transition-all">1</div>
+                <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-1-${wId}" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+                <div id="step-dot-2-${wId}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">2</div>
+                <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-2-${wId}" class="h-full bg-blue-600 w-0 transition-all duration-300"></div></div>
+                <div id="step-dot-3-${wId}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">3</div>
+              </div>
+            </div>
+            <div class="grid w-full overflow-hidden">
+              <div id="step-1-${wId}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-100 transform translate-x-0">
+                <div class="mb-5 w-full">
+                  <div class="flex items-center justify-between mb-2"><label class="block text-xs sm:text-sm font-medium text-zinc-300">Selecciona un día:</label><div class="flex items-center gap-1.5"><button id="day-prev-${wId}" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">←</button><button id="day-next-${wId}" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">→</button></div></div>
+                  <div class="grid grid-cols-4 gap-2 w-full" id="day-selector-${wId}"></div>
+                </div>
+                <div class="w-full"><label class="block text-xs sm:text-sm font-medium mb-2 text-zinc-300">Horarios disponibles:</label><div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 w-full max-h-64 sm:max-h-72 overflow-y-auto pr-1 hide-scrollbar" id="time-selector-${wId}"></div></div>
+                <button id="btn-next-1-${wId}" disabled class="mt-6 w-full py-4 rounded-xl font-bold text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed">Continuar</button>
+              </div>
+              <div id="step-2-${wId}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full space-y-4 pt-1">
+                <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Teléfono / WhatsApp</label><input type="tel" inputmode="numeric" autocomplete="tel" id="input-phone-${wId}" maxlength="15" placeholder="Ej. 3811234567" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all"></div>
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Nombre</label><input type="text" autocapitalize="words" autocomplete="given-name" id="input-fname-${wId}" placeholder="Ej. Juan" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all"></div>
+                  <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Apellido</label><input type="text" autocapitalize="words" autocomplete="family-name" id="input-lname-${wId}" placeholder="Ej. Pérez" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all"></div>
+                </div>
+                <div id="step-2-error-${wId}" class="text-xs text-rose-400 font-medium hidden"></div>
+                <div class="flex gap-2.5 pt-2 mt-6"><button id="btn-back-2-${wId}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm cursor-pointer">Volver</button><button id="btn-next-2-${wId}" class="w-2/3 py-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 text-sm cursor-pointer">Revisar</button></div>
+              </div>
+              <div id="step-3-${wId}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full flex flex-col justify-between">
+                <div class="bg-zinc-950/60 rounded-2xl p-5 sm:p-6 border border-zinc-800/80 w-full min-w-0 box-border">
+                  <h4 class="font-bold text-base sm:text-lg mb-4 text-center text-white">Resumen de tu reserva</h4>
+                  <ul class="space-y-3 text-xs sm:text-sm w-full min-w-0">
+                    <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0"><span class="text-zinc-400 flex-shrink-0">Nombre:</span><span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-name-${wId}">-</span></li>
+                    <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0"><span class="text-zinc-400 flex-shrink-0">Día:</span><span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-day-${wId}">-</span></li>
+                    <li class="flex justify-between items-start gap-3 min-w-0"><span class="text-zinc-400 flex-shrink-0">Hora:</span><span class="font-semibold text-blue-400 text-right break-words min-w-0" id="summary-time-${wId}">-</span></li>
+                  </ul>
+                </div>
+                <div class="flex gap-2.5 mt-6"><button id="btn-back-3-${wId}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm cursor-pointer">Editar</button><button id="btn-confirm-${wId}" class="w-2/3 py-4 rounded-xl font-bold bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 text-sm cursor-pointer"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg><span>Confirmar WA</span></button></div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const $ = (id) => document.getElementById(id + '-' + wId);
+        const dom = {
+          s1: $('step-1'), s2: $('step-2'), s3: $('step-3'),
+          d1: $('step-dot-1'), d2: $('step-dot-2'), d3: $('step-dot-3'),
+          b1: $('step-bar-1'), b2: $('step-bar-2'),
+          sub: $('turnero-subtitle'), bizTitle: $('biz-title'),
+          daySel: $('day-selector'), timeSel: $('time-selector'),
+          dayPrev: $('day-prev'), dayNext: $('day-next'),
+          btnNext1: $('btn-next-1'), btnNext2: $('btn-next-2'),
+          btnBack2: $('btn-back-2'), btnBack3: $('btn-back-3'),
+          btnConfirm: $('btn-confirm'),
+          inpFName: $('input-fname'), inpLName: $('input-lname'),
+          inpPhone: $('input-phone'), err2: $('step-2-error'),
+          sumName: $('summary-name'), sumDay: $('summary-day'), sumTime: $('summary-time')
+        };
+
+        const state = { step: 1, dayOffset: 0, day: null, dateObj: null, time: null, fname: '', lname: '', phone: '', isToday: false, activeDayData: null };
+        const toTitleCase = (s) => (s || '').trim().toLowerCase().replace(/(?:^|\s|-|')\S/g, c => c.toUpperCase());
+        const sanitizePhone = (v) => v.replace(/\D/g, '').replace(/^549?/, '').replace(/^0/, '').replace(/^(\d{2,4})15/, '$1');
+        const validateName = (v) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{2,30}$/.test((v || '').trim());
+        const hasBadWords = (s) => ["mierda","puto","puta","boludo","pelotudo","concha","hdp","spam","carajo","forro"].some(w => (s || "").toLowerCase().includes(w)) || /[<>{}\\/]/.test(s);
+
+        try {
+          const saved = JSON.parse(localStorage.getItem('tucu_turnero_profile') || '{}');
+          if (saved.phone && dom.inpPhone) dom.inpPhone.value = saved.phone;
+          if (saved.fname && dom.inpFName) dom.inpFName.value = saved.fname;
+          if (saved.lname && dom.inpLName) dom.inpLName.value = saved.lname;
+        } catch(e) {}
+
+        if (dom.inpPhone) {
+          dom.inpPhone.addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, ''); });
+          dom.inpPhone.addEventListener('blur', (e) => { e.target.value = sanitizePhone(e.target.value); });
+        }
+
+        const toIso = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+        const getAllDays = () => {
+          const days = []; const names = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+          let cur = new Date(); let guard = 0; const todayStr = toIso(new Date());
+          while (days.length < cfg.days && guard < 120) {
+            guard++; const d = new Date(cur); const iso = toIso(d); const dow = d.getDay();
+            const dayCfg = cfg.schedule ? cfg.schedule[dow] : null; const isWorkday = dayCfg ? !!dayCfg.enabled : (dow !== 0);
+            const isHol = cfg.blockHolidays && HOLIDAYS.includes(iso);
+            const isVacation = cfg.vacations && cfg.vacations.some(v => iso >= v.from && iso <= v.to);
+            if (isWorkday && !isHol && !isVacation) {
+              days.push({ isToday: iso === todayStr, label: iso === todayStr ? 'Hoy' : names[dow], date: d.getDate(), fullDate: d, iso, dayOfWeek: dow, fullStr: d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) });
+            }
+            cur.setDate(cur.getDate() + 1);
+          }
+          return days;
+        };
+
+        const allDays = getAllDays();
+        const generateRange = (startStr, endStr, interval) => {
+          const slots = []; let current = new Date(`2000-01-01T${startStr}:00`); const end = new Date(`2000-01-01T${endStr}:00`);
+          while (current <= end) { slots.push(current.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })); current.setMinutes(current.getMinutes() + interval); }
+          return slots;
+        };
+
+        const generateTimeSlots = (dayData) => {
+          const dayCfg = cfg.schedule ? cfg.schedule[dayData.dayOfWeek] : null;
+          if (!dayCfg || !dayCfg.enabled) return [];
+          const s1 = generateRange(dayCfg.open, dayCfg.close, cfg.interval);
+          return (!dayCfg.isSplit || !dayCfg.open2 || !dayCfg.close2) ? s1 : [...s1, ...generateRange(dayCfg.open2, dayCfg.close2, cfg.interval)];
+        };
+
+        const renderDays = () => {
+          const visibleDays = allDays.slice(state.dayOffset, state.dayOffset + 4);
+          dom.daySel.innerHTML = visibleDays.map((d, idx) => {
+            const actualIdx = state.dayOffset + idx; const isSelected = state.day === d.fullStr;
+            return `<button data-idx="${actualIdx}" class="day-btn py-2.5 px-1 flex flex-col items-center justify-center border rounded-2xl transition-all text-center cursor-pointer select-none ${isSelected ? "bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-600/30 font-bold" : "bg-zinc-800/70 hover:bg-zinc-800 text-zinc-300 border-zinc-700/60"}"><span class="text-[10px] sm:text-[11px] font-medium opacity-80 uppercase tracking-wider">${d.label}</span><span class="font-bold text-base sm:text-lg leading-tight mt-0.5">${d.date}</span></button>`;
+          }).join('');
+          if (dom.dayPrev) dom.dayPrev.disabled = state.dayOffset === 0;
+          if (dom.dayNext) dom.dayNext.disabled = state.dayOffset + 4 >= allDays.length;
+          dom.daySel.querySelectorAll('.day-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const dayData = allDays[parseInt(e.currentTarget.dataset.idx, 10)];
+              state.day = dayData.fullStr; state.dateObj = dayData.fullDate; state.isToday = dayData.isToday; state.time = null; state.activeDayData = dayData;
+              if (dom.btnNext1) dom.btnNext1.disabled = true;
+              renderDays(); renderTimes(dayData);
+            });
+          });
+        };
+
+        const renderTimes = (dayData) => {
+          const slots = generateTimeSlots(dayData);
+          const now = new Date(); const curMins = now.getHours() * 60 + now.getMinutes();
+          dom.timeSel.innerHTML = slots.map(t => {
+            const [h, m] = t.split(':').map(Number); const slotMins = h * 60 + m;
+            const isPast = state.isToday && slotMins <= curMins;
+            const isSel = state.time === t;
+            if (isPast) return `<button disabled class="opacity-25 bg-zinc-900 border-zinc-800/60 text-zinc-600 line-through cursor-not-allowed py-2.5 px-2 text-xs font-medium rounded-xl select-none">${t}</button>`;
+            return `<button data-time="${t}" class="time-btn py-2.5 px-2 text-xs font-semibold rounded-xl border transition-all select-none cursor-pointer ${isSel ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30 font-bold" : "bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 border-zinc-700/60"}">${t}</button>`;
+          }).join('');
+          dom.timeSel.querySelectorAll('.time-btn:not([disabled])').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              state.time = e.currentTarget.dataset.time;
+              if (dom.btnNext1) dom.btnNext1.disabled = false;
+              renderTimes(dayData);
+            });
+          });
+        };
+
+        const setStepUI = (step, subtitle) => {
+          if (dom.sub) dom.sub.innerText = subtitle;
+          [dom.d1, dom.d2, dom.d3].forEach((d, idx) => {
+            if (idx + 1 === step) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20';
+            else if (idx + 1 < step) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center';
+            else d.className = 'w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center';
+          });
+          if (dom.b1) dom.b1.className = step > 1 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
+          if (dom.b2) dom.b2.className = step > 2 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
+        };
+
+        const goStep = (step) => {
+          [dom.s1, dom.s2, dom.s3].forEach(s => { s.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto'); s.classList.add('opacity-0', 'pointer-events-none'); });
+          if (step === 1) {
+            dom.s1.classList.remove('-translate-x-full'); dom.s1.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+            dom.s2.classList.add('translate-x-full'); dom.s3.classList.add('translate-x-full');
+            setStepUI(1, 'Paso 1: Selecciona fecha y hora');
+          } else if (step === 2) {
+            dom.s1.classList.add('-translate-x-full');
+            dom.s2.classList.remove('translate-x-full', '-translate-x-full'); dom.s2.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+            dom.s3.classList.add('translate-x-full');
+            setStepUI(2, 'Paso 2: Tus datos de contacto');
+          } else if (step === 3) {
+            if (dom.sumName) dom.sumName.innerText = `${state.fname} ${state.lname}`.trim();
+            if (dom.sumDay) dom.sumDay.innerText = state.day;
+            if (dom.sumTime) dom.sumTime.innerText = state.time;
+            dom.s1.classList.add('-translate-x-full'); dom.s2.classList.add('-translate-x-full');
+            dom.s3.classList.remove('translate-x-full'); dom.s3.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+            setStepUI(3, 'Paso 3: Confirma tu solicitud');
+          }
+        };
+
+        if (dom.btnNext1) dom.btnNext1.addEventListener('click', () => goStep(2));
+        if (dom.btnBack2) dom.btnBack2.addEventListener('click', () => goStep(1));
+        if (dom.btnNext2) dom.btnNext2.addEventListener('click', () => {
+          const rawPhone = dom.inpPhone ? dom.inpPhone.value.trim() : '';
+          const rawFName = dom.inpFName ? dom.inpFName.value.trim() : '';
+          const rawLName = dom.inpLName ? dom.inpLName.value.trim() : '';
+          const cleanPhone = sanitizePhone(rawPhone);
+          const fname = toTitleCase(rawFName);
+          const lname = toTitleCase(rawLName);
+          const showError = (msg) => { if (dom.err2) { dom.err2.innerText = msg; dom.err2.classList.remove('hidden'); } };
+
+          if (!cleanPhone || cleanPhone.length < 8) return showError('Ingresa un número de WhatsApp válido.');
+          if (!validateName(fname)) return showError('Ingresa un Nombre válido (2-30 letras).');
+          if (!validateName(lname)) return showError('Ingresa un Apellido válido (2-30 letras).');
+          if (hasBadWords(fname) || hasBadWords(lname)) return showError('Nombre no permitido. Revisa tus datos.');
+
+          if (dom.err2) dom.err2.classList.add('hidden');
+          state.phone = cleanPhone; state.fname = fname; state.lname = lname;
+          goStep(3);
+        });
+
+        if (dom.btnBack3) dom.btnBack3.addEventListener('click', () => goStep(2));
+        if (dom.btnConfirm) dom.btnConfirm.addEventListener('click', () => {
+          const fullName = `${state.fname} ${state.lname}`.trim();
+          const text = cfg.template
+            .replace(/\{\{cliente\}\}/g, fullName)
+            .replace(/\{\{fecha\}\}/g, state.day)
+            .replace(/\{\{hora\}\}/g, state.time)
+            .replace(/\{\{comercio\}\}/g, cfg.bizName)
+            .replace(/\{\{telefono\}\}/g, state.phone);
+          window.open(`https://wa.me/${cfg.waNumber.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`, '_blank');
+        });
+
+        if (dom.dayPrev) dom.dayPrev.addEventListener('click', () => { if (state.dayOffset > 0) { state.dayOffset -= 4; renderDays(); } });
+        if (dom.dayNext) dom.dayNext.addEventListener('click', () => { if (state.dayOffset + 4 < allDays.length) { state.dayOffset += 4; renderDays(); } });
+
+        renderDays();
+        if (allDays.length > 0) {
+          state.day = allDays[0].fullStr; state.dateObj = allDays[0].fullDate;
+          state.isToday = allDays[0].isToday; state.activeDayData = allDays[0];
+          renderTimes(allDays[0]);
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', renderTurnero);
+      window.addEventListener('storage', renderTurnero);
+    })();
+  </script>
+</body>
+</html>

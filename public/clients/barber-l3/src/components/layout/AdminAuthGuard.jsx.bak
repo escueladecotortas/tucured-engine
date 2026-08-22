@@ -1,0 +1,134 @@
+// Archivo: src/components/layout/AdminAuthGuard.jsx
+// v11.72-PLATINUM — Clean Redirect + Whitelist Sovereign + Logout Self-Healing
+'use client';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { useMounted } from '@/lib/hooks/useMounted';
+import LoginForm from '@/components/admin/LoginForm';
+import { logout } from '@/lib/firebase/auth';
+
+// ═══ WHITELIST SOBERANA — ACCESO ATÓMICO ═══
+const ALLOWED_EMAILS = [
+  'leolariarg@gmail.com',
+  'contacto@lafachadaunisex.ar',
+  'darcyrigonat@gmail.com',
+];
+
+export default function AdminAuthGuard({ children }) {
+  const { user, loading } = useAuth();
+  const mounted = useMounted();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const normalizedPath = pathname ? pathname.replace(/\/$/, '') : '';
+  const isLoginPage = normalizedPath === '/admin/login' || normalizedPath === '/admin';
+
+  const isAuthorized = useMemo(() => {
+    if (!user?.email) return false;
+    const email = user.email.toLowerCase().trim();
+    return ALLOWED_EMAILS.some((a) => a.toLowerCase().trim() === email);
+  }, [user]);
+
+  useEffect(() => {
+    // Esperar montaje + que el auth resuelva (loading=false)
+    if (!mounted || loading || isLoggingOut) return;
+
+    if (user && isAuthorized) {
+      // Autorizado: salir del login hacia operaciones
+      if (isLoginPage) {
+        router.replace('/admin/turnos');
+      }
+    } else if (user && !isAuthorized) {
+      // Autenticado pero NO en whitelist: no redirigir automáticamente,
+      // la pantalla de Acceso Restringido ofrecerá la opción de deslogueo.
+    } else {
+      // Sin sesión: proteger rutas privadas
+      if (!isLoginPage) {
+        router.replace('/admin/login');
+      }
+    }
+  }, [user, loading, mounted, isAuthorized, isLoginPage, router, isLoggingOut]);
+
+  const handleLogoutAndRetry = async () => {
+    setIsLoggingOut(true);
+    try {
+      await logout();
+      router.replace('/admin/login');
+    } catch (e) {
+      console.error('[AUTH] Error during self-healing logout:', e);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
+  // ─── PRE-MONTAJE: pantalla negra (evita flash) ───
+  if (!mounted) return <div className="min-h-screen bg-black" />;
+
+  // ─── CARGANDO AUTH (incluye procesado del redirect de Google) ───
+  if (loading || isLoggingOut) {
+    return (
+      <div className="fixed inset-0 h-screen bg-black flex flex-col items-center justify-center gap-10 z-[9999] font-mono">
+        <div className="relative w-32 h-32">
+          <div className="absolute inset-0 border-8 border-white" />
+          <div className="absolute inset-0 border-t-8 border-[#800000] animate-spin" />
+          <div className="absolute inset-4 flex items-center justify-center">
+            <span className="text-[#800000] text-2xl font-black italic">NX</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4 text-center px-8">
+          <p className="text-[14px] uppercase tracking-[0.8em] text-white font-black">
+            {isLoggingOut ? 'CERRANDO SESIÓN' : 'AUTENTICANDO'}
+          </p>
+          <div className="h-[3px] w-48 bg-[#800000]" />
+          <p className="text-[9px] uppercase tracking-[0.5em] text-[#800000] font-black">
+            NEXUS PLATINUM CORE
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── PÁGINA DE LOGIN ───
+  if (isLoginPage) {
+    // Si ya está autorizado, pantalla negra mientras redirige
+    if (user && isAuthorized) return <div className="min-h-screen bg-black" />;
+    return <LoginForm />;
+  }
+
+  // ─── CASO: SIN SESIÓN EN RUTA PRIVADA ───
+  // Para evitar destellos de la UI restringida, renderizar fondo negro mientras
+  // el useEffect realiza el router.replace('/admin/login')
+  if (!user) {
+    return <div className="min-h-screen bg-black" />;
+  }
+
+  // ─── CASO: AUTENTICADO PERO NO AUTORIZADO (WHITELIST FAIL) ───
+  if (!isAuthorized) {
+    return (
+      <div className="fixed inset-0 h-screen bg-black flex flex-col items-center justify-center z-[9999] font-mono p-8">
+        <div className="bg-black border-4 border-[#800000] border-t-[20px] p-10 shadow-[20px_20px_0px_rgba(0,0,0,0.5)] max-w-md w-full">
+          <h2 className="text-[#800000] text-2xl font-black tracking-tighter uppercase mb-2 italic">
+            ACCESO RESTRINGIDO
+          </h2>
+          <p className="text-white text-[10px] font-black uppercase tracking-widest leading-loose mb-2 opacity-60">
+            TERMINAL BAJO PROTOCOLO DE SOBERANÍA NEXUS.<br />
+            IDENTIDAD NO AUTORIZADA EN WHITELIST.
+          </p>
+          <p className="text-[#800000] text-[9px] font-black uppercase tracking-wider mb-8">
+            EMAIL: {user.email}
+          </p>
+          <button
+            onClick={handleLogoutAndRetry}
+            className="w-full py-4 bg-white text-black font-black uppercase text-[11px] tracking-[0.3em] border-4 border-[#800000] hover:bg-[#800000] hover:text-white transition-all shadow-[8px_8px_0px_#000000]"
+          >
+            INTENTAR CON OTRO USUARIO
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── ACCESO CONCEDIDO (AUTENTICADO Y AUTORIZADO) ───
+  return <>{children}</>;
+}

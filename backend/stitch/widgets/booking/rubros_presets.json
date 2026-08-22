@@ -1,0 +1,129 @@
+{
+  "version": "1.0.0",
+  "presets": {
+    "barberia": {
+      "id": "barberia",
+      "name": "Barbería Tradicional & Estudio Masculino",
+      "icon": "💈",
+      "themeColor": "#f59e0b",
+      "labels": {
+        "staffSingular": "Barbero",
+        "staffPlural": "Barberos",
+        "staffSelectorTitle": "Selecciona tu Barbero",
+        "staffAnyLabel": "Cualquier Barbero (Primer Disponible)",
+        "serviceSingular": "Servicio",
+        "servicePlural": "Servicios",
+        "serviceSelectorTitle": "Elige tu Servicio",
+        "placeSingular": "Sillón",
+        "placePlural": "Sillones"
+      },
+      "config": {
+        "slotIntervalMinutes": 30,
+        "bufferGapMinutes": 0,
+        "allowAnyStaff": true,
+        "requireInsuranceField": false,
+        "showStaffPhotos": true,
+        "maxAdvanceBookingDays": 14,
+        "cancellationDeadlineHours": 2
+      },
+      "servicesSeed": [
+        { "id": "srv-corte", "name": "Corte Clásico & Fade", "duration": 30, "price": 12000, "icon": "✂️" },
+        { "id": "srv-barba", "name": "Ritual de Barba & Toalla", "duration": 20, "price": 9000, "icon": "🪒" },
+        { "id": "srv-combo", "name": "Combo La Fachada Total", "duration": 50, "price": 18000, "icon": "👑" }
+      ]
+    },
+    "peluqueria_estetica": {
+      "id": "peluqueria_estetica",
+      "name": "Peluquería & Centro de Estética",
+      "icon": "💇‍♀️",
+      "themeColor": "#ec4899",
+      "labels": {
+        "staffSingular": "Estilista",
+        "staffPlural": "Estilistas",
+        "staffSelectorTitle": "Selecciona tu Estilista / Especialista",
+        "staffAnyLabel": "Cualquier Profesional Disponible",
+        "serviceSingular": "Tratamiento / Servicio",
+        "servicePlural": "Tratamientos",
+        "serviceSelectorTitle": "Selecciona el Tratamiento",
+        "placeSingular": "Puesto",
+        "placePlural": "Puestos de Atención"
+      },
+      "config": {
+        "slotIntervalMinutes": 30,
+        "bufferGapMinutes": 10,
+        "allowAnyStaff": true,
+        "requireInsuranceField": false,
+        "showStaffPhotos": true,
+        "maxAdvanceBookingDays": 21,
+        "cancellationDeadlineHours": 4
+      },
+      "servicesSeed": [
+        { "id": "srv-brushing", "name": "Corte & Brushing", "duration": 45, "price": 16000, "icon": "💇‍♀️" },
+        { "id": "srv-color", "name": "Colorimetría & Balayage", "duration": 120, "price": 45000, "icon": "🎨" },
+        { "id": "srv-nutricion", "name": "Nutrición Capilar Botox", "duration": 60, "price": 22000, "icon": "✨" }
+      ]
+    },
+    "salud_consultorio": {
+      "id": "salud_consultorio",
+      "name": "Consultorio Médico & Salud Integral",
+      "icon": "🩺",
+      "themeColor": "#0284c7",
+      "labels": {
+        "staffSingular": "Profesional",
+        "staffPlural": "Profesionales Médicos",
+        "staffSelectorTitle": "Selecciona el Especialista",
+        "staffAnyLabel": "Primer Turno Disponible",
+        "serviceSingular": "Consulta / Estudio",
+        "servicePlural": "Consultas & Prácticas",
+        "serviceSelectorTitle": "Tipo de Consulta Médica",
+        "placeSingular": "Consultorio",
+        "placePlural": "Consultorios"
+      },
+      "config": {
+        "slotIntervalMinutes": 20,
+        "bufferGapMinutes": 5,
+        "allowAnyStaff": false,
+        "requireInsuranceField": true,
+        "showStaffPhotos": true,
+        "maxAdvanceBookingDays": 30,
+        "cancellationDeadlineHours": 12
+      },
+      "servicesSeed": [
+        { "id": "srv-consulta", "name": "Consulta Clínica General", "duration": 20, "price": 20000, "icon": "🩺" },
+        { "id": "srv-control", "name": "Control de Rutina / Seguimiento", "duration": 20, "price": 15000, "icon": "📋" },
+        { "id": "srv-estudio", "name": "Evaluación Diagnóstica Completa", "duration": 40, "price": 35000, "icon": "🔬" }
+      ]
+    },
+    "profesional_servicios": {
+      "id": "profesional_servicios",
+      "name": "Estudio Profesional & Consultoría",
+      "icon": "⚖️",
+      "themeColor": "#6366f1",
+      "labels": {
+        "staffSingular": "Consultor",
+        "staffPlural": "Consultores / Socios",
+        "staffSelectorTitle": "Selecciona tu Asesor",
+        "staffAnyLabel": "Asignar Automáticamente",
+        "serviceSingular": "Asesoría / Sesión",
+        "servicePlural": "Servicios Profesionales",
+        "serviceSelectorTitle": "Selecciona el Tipo de Sesión",
+        "placeSingular": "Sala",
+        "placePlural": "Salas de Reunión"
+      },
+      "config": {
+        "slotIntervalMinutes": 60,
+        "bufferGapMinutes": 15,
+        "allowAnyStaff": true,
+        "requireInsuranceField": false,
+        "showStaffPhotos": false,
+        "maxAdvanceBookingDays": 30,
+        "cancellationDeadlineHours": 24
+      },
+      "servicesSeed": [
+        { "id": "srv-asesoria", "name": "Asesoría Legal / Contable Inicial", "duration": 60, "price": 40000, "icon": "⚖️" },
+        { "id": "srv-estrategia", "name": "Sesión de Planificación Estratégica", "duration": 90, "price": 65000, "icon": "📊" },
+        { "id": "srv-revision", "name": "Revisión de Contratos & Auditoría", "duration": 60, "price": 50000, "icon": "📝" }
+      ]
+    }
+  }
+}

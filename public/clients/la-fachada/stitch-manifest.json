@@ -1,0 +1,16 @@
+{
+  "clientSlug": "la-fachada",
+  "businessName": "La Fachada Barber Club",
+  "category": "barberia",
+  "tier": "L2",
+  "theme": "barbershop-dark",
+  "contact": {
+    "phone": "5493815550000",
+    "address": "Barrio Norte, San Miguel de Tucumán",
+    "instagram": "@la_fachada_tuc"
+  },
+  "widgets": [
+    "booking_l2_turnero",
+    "gallery_v2_stories_grid"
+  ]
+}

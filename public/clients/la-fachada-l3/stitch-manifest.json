@@ -1,0 +1,26 @@
+{
+  "clientSlug": "la-fachada-l3",
+  "businessName": "La Fachada Barber Club L3",
+  "category": "barberia",
+  "tier": "L3",
+  "theme": "barbershop-dark",
+  "contact": {
+    "phone": "5493815550000",
+    "address": "Barrio Norte, San Miguel de Tucumán",
+    "instagram": "@la_fachada_tuc"
+  },
+  "staff": [
+    { "id": "staff-1", "name": "Mateo", "role": "Master Fade", "avatar": "🧔🏻‍♂️" },
+    { "id": "staff-2", "name": "Lucas", "role": "Clásico & Navaja", "avatar": "👨🏽‍🦱" },
+    { "id": "staff-any", "name": "Cualquier Barbero", "role": "Primer Disponible", "avatar": "✂️" }
+  ],
+  "services": [
+    { "id": "srv-corte", "name": "Corte Clásico & Fade", "duration": 30, "price": 12000 },
+    { "id": "srv-barba", "name": "Ritual de Barba & Toalla", "duration": 20, "price": 9000 },
+    { "id": "srv-combo", "name": "Combo La Fachada Total", "duration": 50, "price": 18000 }
+  ],
+  "widgets": [
+    "booking_l3_turnero",
+    "gallery_v2_stories_grid"
+  ]
+}

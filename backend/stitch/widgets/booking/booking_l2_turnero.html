@@ -1,265 +1,119 @@
 <!-- Archivo: backend/stitch/widgets/booking/booking_l2_turnero.html -->
-<div id="smart-turnero-widget-{{WIDGET_ID}}" class="w-full max-w-[440px] mx-auto bg-zinc-900/95 text-zinc-100 backdrop-blur-xl rounded-[2rem] border border-zinc-800 p-6 sm:p-7 shadow-2xl relative overflow-hidden font-sans transition-all duration-300 box-border">
+<div id="smart-turnero-widget-{{WIDGET_ID}}" data-widget-id="{{WIDGET_ID}}" data-biz-name="{{BUSINESS_NAME}}" data-wa="{{WHATSAPP_NUMBER}}" data-schedule='{{SCHEDULE_JSON}}' data-vacations='[]' data-blacklist='[]' data-interval="30" data-days="14" data-block-holidays="true" data-template="¡Hola! Tu reserva en {{comercio}} está confirmada:\n- 🎟️ ID: #{{id}}\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 👥 Personas: {{personas}}\n- 🔗 Autogestión: {{link}}\n¡Te esperamos!" class="w-full max-w-[440px] mx-auto bg-zinc-900/95 text-zinc-100 backdrop-blur-xl rounded-[2rem] border border-zinc-800 p-6 sm:p-7 shadow-2xl relative overflow-hidden font-sans transition-all duration-300 box-border">
   <div class="text-center mb-6">
-    <h3 class="text-xl sm:text-2xl font-bold mb-1 leading-tight text-white">Reservar en {{BUSINESS_NAME}}</h3>
+    <h3 class="text-xl sm:text-2xl font-bold mb-1 leading-tight text-white" id="biz-title-{{WIDGET_ID}}">Reservar en {{BUSINESS_NAME}}</h3>
     <p class="text-xs sm:text-sm text-zinc-400" id="turnero-subtitle-{{WIDGET_ID}}">Paso 1: Selecciona fecha y hora</p>
-    <div class="flex items-center justify-center gap-2 mt-4">
-      <div id="step-dot-1-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20 transition-all">1</div>
-      <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden">
-        <div id="step-bar-1-{{WIDGET_ID}}" class="h-full bg-blue-600 w-0 transition-all duration-300"></div>
-      </div>
-      <div id="step-dot-2-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">2</div>
-      <div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden">
-        <div id="step-bar-2-{{WIDGET_ID}}" class="h-full bg-blue-600 w-0 transition-all duration-300"></div>
-      </div>
-      <div id="step-dot-3-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">3</div>
-    </div>
+    <div class="flex items-center justify-center gap-2 mt-4" id="step-indicator-{{WIDGET_ID}}"><div id="step-dot-1-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-indigo-500/20 transition-all">1</div><div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-1-{{WIDGET_ID}}" class="h-full bg-indigo-600 w-0 transition-all duration-300"></div></div><div id="step-dot-2-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">2</div><div class="w-8 sm:w-11 h-1 bg-zinc-800 rounded-full overflow-hidden"><div id="step-bar-2-{{WIDGET_ID}}" class="h-full bg-indigo-600 w-0 transition-all duration-300"></div></div><div id="step-dot-3-{{WIDGET_ID}}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all">3</div></div>
   </div>
-
   <div class="grid w-full overflow-hidden">
     <div id="step-1-{{WIDGET_ID}}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-100 transform translate-x-0">
-      <div class="mb-5 w-full">
-        <label class="block text-xs sm:text-sm font-medium mb-2 text-zinc-300">Selecciona un día:</label>
-        <div class="w-full overflow-x-auto hide-scrollbar pb-2 pt-1 snap-x px-0.5 flex gap-2.5" id="day-selector-{{WIDGET_ID}}"></div>
-      </div>
-      <div class="w-full">
-        <label class="block text-xs sm:text-sm font-medium mb-2 text-zinc-300">Horarios disponibles:</label>
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 w-full max-h-64 sm:max-h-72 overflow-y-auto pr-1 hide-scrollbar" id="time-selector-{{WIDGET_ID}}"></div>
-      </div>
-      <button id="btn-next-1-{{WIDGET_ID}}" disabled class="mt-6 w-full py-4 rounded-xl font-bold text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed">Continuar</button>
+      <div class="mb-5 w-full"><div class="flex items-center justify-between mb-2"><label class="block text-xs sm:text-sm font-medium text-zinc-300">Selecciona un día:</label><div class="flex items-center gap-1.5"><button id="day-prev-{{WIDGET_ID}}" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">←</button><button id="day-next-{{WIDGET_ID}}" class="w-7 h-7 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-25 disabled:cursor-not-allowed text-zinc-300 flex items-center justify-center text-xs transition-all">→</button></div></div><div class="grid grid-cols-4 gap-2 w-full" id="day-selector-{{WIDGET_ID}}"></div></div>
+      <div class="w-full"><label class="block text-xs sm:text-sm font-medium mb-2 text-zinc-300">Horarios disponibles (Async L2):</label><div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 w-full max-h-64 sm:max-h-72 overflow-y-auto pr-1 hide-scrollbar" id="time-selector-{{WIDGET_ID}}"></div></div>
+      <button id="btn-next-1-{{WIDGET_ID}}" disabled class="mt-6 w-full py-4 rounded-xl font-bold text-sm sm:text-base bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed">Continuar</button>
     </div>
-
     <div id="step-2-{{WIDGET_ID}}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full space-y-4 pt-1">
-      <div>
-        <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Nombre completo</label>
-        <input type="text" id="input-name-{{WIDGET_ID}}" placeholder="Ej. Juan Pérez" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+      <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Teléfono / WhatsApp</label><input type="tel" inputmode="numeric" autocomplete="tel" id="input-phone-{{WIDGET_ID}}" maxlength="15" placeholder="Ej. 3811234567" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"></div>
+      <div class="grid grid-cols-2 gap-2.5">
+        <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Nombre</label><input type="text" autocapitalize="words" autocomplete="given-name" id="input-fname-{{WIDGET_ID}}" placeholder="Ej. Juan" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"></div>
+        <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Apellido</label><input type="text" autocapitalize="words" autocomplete="family-name" id="input-lname-{{WIDGET_ID}}" placeholder="Ej. Pérez" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-3.5 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"></div>
       </div>
-      <div>
-        <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Teléfono / WhatsApp (Sin 0 ni 15)</label>
-        <input type="tel" id="input-phone-{{WIDGET_ID}}" placeholder="Ej. 3811234567" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-      </div>
-      <div>
-        <label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Personas / Servicios (Opcional)</label>
-        <select id="input-pax-{{WIDGET_ID}}" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none cursor-pointer">
-          <option value="1" class="bg-zinc-900 text-zinc-100">1 Persona</option>
-          <option value="2" class="bg-zinc-900 text-zinc-100">2 Personas</option>
-          <option value="3" class="bg-zinc-900 text-zinc-100">3 Personas</option>
-          <option value="4+" class="bg-zinc-900 text-zinc-100">4+ Personas</option>
-        </select>
-      </div>
-      <div class="flex gap-2.5 pt-2 mt-6">
-        <button id="btn-back-2-{{WIDGET_ID}}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm">Volver</button>
-        <button id="btn-next-2-{{WIDGET_ID}}" class="w-2/3 py-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 text-sm">Revisar Reserva</button>
-      </div>
+      <div><label class="block text-xs sm:text-sm font-medium mb-1.5 text-zinc-300">Personas / Servicios</label><select id="input-pax-{{WIDGET_ID}}" class="w-full bg-zinc-950/70 border border-zinc-700/70 rounded-xl px-4 py-3.5 text-sm text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"><option value="1">1 Persona</option><option value="2" selected>2 Personas</option><option value="3">3 Personas</option><option value="4+">4+ Personas</option></select></div>
+      <div id="step-2-error-{{WIDGET_ID}}" class="text-xs text-rose-400 font-medium hidden"></div>
+      <div class="flex gap-2.5 pt-2 mt-6"><button id="btn-back-2-{{WIDGET_ID}}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm cursor-pointer">Volver</button><button id="btn-next-2-{{WIDGET_ID}}" class="w-2/3 py-4 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 text-sm cursor-pointer">Revisar</button></div>
     </div>
-
     <div id="step-3-{{WIDGET_ID}}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full flex flex-col justify-between">
       <div class="bg-zinc-950/60 rounded-2xl p-5 sm:p-6 border border-zinc-800/80 w-full min-w-0 box-border">
-        <h4 class="font-bold text-base sm:text-lg mb-4 text-center text-white">Resumen de tu reserva</h4>
+        <h4 class="font-bold text-base sm:text-lg mb-4 text-center text-white">Revisión de tu turno</h4>
         <ul class="space-y-3 text-xs sm:text-sm w-full min-w-0">
-          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
-            <span class="text-zinc-400 flex-shrink-0">Reserva ID:</span>
-            <span class="font-mono text-xs text-blue-400 font-bold text-right break-words min-w-0" id="summary-hash-{{WIDGET_ID}}">-</span>
-          </li>
-          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
-            <span class="text-zinc-400 flex-shrink-0">Nombre:</span>
-            <span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-name-{{WIDGET_ID}}">-</span>
-          </li>
-          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
-            <span class="text-zinc-400 flex-shrink-0">Día:</span>
-            <span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-day-{{WIDGET_ID}}">-</span>
-          </li>
-          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0">
-            <span class="text-zinc-400 flex-shrink-0">Hora:</span>
-            <span class="font-semibold text-blue-400 text-right break-words min-w-0" id="summary-time-{{WIDGET_ID}}">-</span>
-          </li>
-          <li class="flex justify-between items-start gap-3 min-w-0">
-            <span class="text-zinc-400 flex-shrink-0">Para:</span>
-            <span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-pax-{{WIDGET_ID}}">-</span>
-          </li>
+          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0"><span class="text-zinc-400 flex-shrink-0">Nombre:</span><span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-name-{{WIDGET_ID}}">-</span></li>
+          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0"><span class="text-zinc-400 flex-shrink-0">Día:</span><span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-day-{{WIDGET_ID}}">-</span></li>
+          <li class="flex justify-between items-start gap-3 border-b border-zinc-800/80 pb-2.5 min-w-0"><span class="text-zinc-400 flex-shrink-0">Hora:</span><span class="font-semibold text-indigo-400 text-right break-words min-w-0" id="summary-time-{{WIDGET_ID}}">-</span></li>
+          <li class="flex justify-between items-start gap-3 min-w-0"><span class="text-zinc-400 flex-shrink-0">Personas:</span><span class="font-semibold text-zinc-100 text-right break-words min-w-0" id="summary-pax-{{WIDGET_ID}}">-</span></li>
         </ul>
       </div>
-      <div class="flex flex-col gap-2.5 mt-6">
-        <div class="flex gap-2.5">
-          <button id="btn-back-3-{{WIDGET_ID}}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm">Editar</button>
-          <button id="btn-confirm-{{WIDGET_ID}}" class="w-2/3 py-4 rounded-xl font-bold bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 text-sm">Confirmar WA</button>
-        </div>
-        <button id="btn-ics-{{WIDGET_ID}}" class="w-full py-3 rounded-xl text-xs sm:text-sm font-semibold bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/60 transition-colors flex items-center justify-center gap-2 shadow-sm">
-          <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          Añadir al Calendario (.ics)
-        </button>
+      <div class="flex gap-2.5 pt-2 mt-6"><button id="btn-back-3-{{WIDGET_ID}}" class="w-1/3 py-4 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 transition-colors text-sm cursor-pointer">Editar</button><button id="btn-confirm-{{WIDGET_ID}}" class="w-2/3 py-4 rounded-xl font-bold bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-all flex items-center justify-center gap-2 text-sm cursor-pointer"><span>✨ Confirmar Turno</span></button></div>
+    </div>
+    <div id="step-4-{{WIDGET_ID}}" class="[grid-area:1/1] w-full min-w-0 box-border transition-all duration-500 ease-in-out opacity-0 pointer-events-none transform translate-x-full space-y-4">
+      <div class="text-center space-y-2 py-3"><div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mx-auto shadow-lg">🎉</div><h4 class="text-lg font-bold text-white">¡Turno Confirmado con Éxito!</h4><p class="text-xs text-zinc-400">Tu horario quedó reservado en la agenda del comercio.</p></div>
+      <div class="bg-zinc-950/70 rounded-2xl p-4 border border-zinc-800 space-y-2 text-xs">
+        <div class="flex justify-between items-center border-b border-zinc-800/60 pb-1.5"><span class="text-zinc-400">Código de Turno:</span><span class="font-mono text-indigo-400 font-bold" id="success-hash-{{WIDGET_ID}}">-</span></div>
+        <div class="flex justify-between items-center border-b border-zinc-800/60 pb-1.5"><span class="text-zinc-400">Cita:</span><span class="font-semibold text-zinc-200" id="success-date-time-{{WIDGET_ID}}">-</span></div>
+        <div class="flex justify-between items-center"><span class="text-zinc-400">Comercio:</span><span class="font-semibold text-zinc-200" id="success-biz-{{WIDGET_ID}}">-</span></div>
+      </div>
+      <div id="wa-dispatch-status-{{WIDGET_ID}}" class="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-300 text-xs text-center flex items-center justify-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span><span>Despachando comprobante por WhatsApp...</span></div>
+      <div class="space-y-2 pt-1">
+        <button id="btn-ics-{{WIDGET_ID}}" class="w-full py-3 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/60 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg><span>Añadir a mi Calendario (.ics)</span></button>
+        <a id="btn-manage-link-{{WIDGET_ID}}" href="#" class="w-full py-3 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/20"><span>🎟️ Portal de Autogestión</span></a>
+        <a id="btn-fallback-wa-{{WIDGET_ID}}" href="#" target="_blank" class="w-full py-2.5 rounded-xl text-[11px] font-semibold bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-emerald-400 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 hidden"><span>💬 Guardar comprobante en mi WhatsApp</span></a>
       </div>
     </div>
   </div>
-
-  <style>
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
-
+  <style>.hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } input:-webkit-autofill { -webkit-text-fill-color: #f4f4f5 !important; -webkit-box-shadow: 0 0 0px 1000px #09090b inset !important; }</style>
   <script>
     (function() {
-      function initWidget() {
-        const wId = "{{WIDGET_ID}}";
-        const dom = {
-          s1: document.getElementById('step-1-' + wId), s2: document.getElementById('step-2-' + wId), s3: document.getElementById('step-3-' + wId),
-          d1: document.getElementById('step-dot-1-' + wId), d2: document.getElementById('step-dot-2-' + wId), d3: document.getElementById('step-dot-3-' + wId),
-          b1: document.getElementById('step-bar-1-' + wId), b2: document.getElementById('step-bar-2-' + wId),
-          sub: document.getElementById('turnero-subtitle-' + wId), daySel: document.getElementById('day-selector-' + wId), timeSel: document.getElementById('time-selector-' + wId),
-          btnNext1: document.getElementById('btn-next-1-' + wId), btnNext2: document.getElementById('btn-next-2-' + wId),
-          btnBack2: document.getElementById('btn-back-2-' + wId), btnBack3: document.getElementById('btn-back-3-' + wId),
-          btnConfirm: document.getElementById('btn-confirm-' + wId), btnIcs: document.getElementById('btn-ics-' + wId),
-          inpName: document.getElementById('input-name-' + wId), inpPhone: document.getElementById('input-phone-' + wId), inpPax: document.getElementById('input-pax-' + wId),
-          sumHash: document.getElementById('summary-hash-' + wId), sumName: document.getElementById('summary-name-' + wId),
-          sumDay: document.getElementById('summary-day-' + wId), sumTime: document.getElementById('summary-time-' + wId), sumPax: document.getElementById('summary-pax-' + wId)
-        };
-        if (!dom.s1 || !dom.btnNext1) return;
-
-        const state = { step: 1, day: null, dateObj: null, time: null, name: "", phone: "", pax: "1", isToday: false, hash: "" };
-        const waNumber = "{{WHATSAPP_NUMBER}}".replace(/[^0-9]/g, '');
-        const bizName = "{{BUSINESS_NAME}}";
-
-        const fetchAvailability = async (dateStr) => {
-          return new Promise(resolve => setTimeout(() => resolve({ occupied: ["09:30", "11:30", "17:00"], businessHours: { start: "09:00", end: "21:00", intervalMinutes: 30 } }), 150));
-        };
-
-        const sanitizePhone = (val) => {
-          let num = val.replace(/\D/g, '');
-          num = num.replace(/^549?/, '').replace(/^0/, '').replace(/^(\d{2,4})15/, '$1');
-          return num;
-        };
-
-        if (dom.inpPhone) {
-          dom.inpPhone.addEventListener('blur', (e) => { e.target.value = sanitizePhone(e.target.value); });
-          dom.inpPhone.addEventListener('paste', (e) => { setTimeout(() => { e.target.value = sanitizePhone(e.target.value); }, 10); });
-        }
-
-        const getDays = () => {
-          const days = []; const date = new Date(); const names = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-          for(let i=0; i<7; i++) {
-            const d = new Date(date); d.setDate(date.getDate() + i);
-            days.push({ isToday: i === 0, label: i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : names[d.getDay()], date: d.getDate(), fullDate: d, fullStr: d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) });
+      const HOLIDAYS = ["2026-01-01","2026-02-16","2026-02-17","2026-03-24","2026-04-02","2026-04-03","2026-05-01","2026-05-25","2026-06-17","2026-06-20","2026-07-09","2026-08-17","2026-10-12","2026-11-20","2026-12-08","2026-12-25","2027-01-01","2027-02-15","2027-02-16","2027-03-24","2027-04-02"];
+      const defaultSchedule = { 1:{enabled:true,open:"09:00",close:"18:00",isSplit:false,open2:"17:00",close2:"21:00"}, 2:{enabled:true,open:"09:00",close:"18:00",isSplit:false,open2:"17:00",close2:"21:00"}, 3:{enabled:true,open:"09:00",close:"18:00",isSplit:false,open2:"17:00",close2:"21:00"}, 4:{enabled:true,open:"09:00",close:"18:00",isSplit:false,open2:"17:00",close2:"21:00"}, 5:{enabled:true,open:"09:00",close:"18:00",isSplit:false,open2:"17:00",close2:"21:00"}, 6:{enabled:true,open:"09:00",close:"13:00",isSplit:false,open2:"17:00",close2:"21:00"}, 0:{enabled:false,open:"09:00",close:"13:00",isSplit:false,open2:"17:00",close2:"21:00"} };
+      const parseJsonSafe = (v) => { if (typeof v === "object" && v !== null) return v; try { return JSON.parse(v); } catch(e) { return null; } };
+      function initWidget(opts = {}) {
+        const wId = opts.widgetId || "{{WIDGET_ID}}"; const root = document.getElementById("smart-turnero-widget-" + wId); if (!root) return;
+        const cfg = { schedule: parseJsonSafe(opts.schedule) || parseJsonSafe(root.dataset.schedule) || defaultSchedule, vacations: parseJsonSafe(opts.vacations) || parseJsonSafe(root.dataset.vacations) || [], blacklist: parseJsonSafe(opts.blacklist) || parseJsonSafe(root.dataset.blacklist) || parseJsonSafe(localStorage.getItem("tucu_l2_blacklist")) || [], interval: parseInt(opts.interval || root.dataset.interval || "30", 10), maxDays: parseInt(opts.days || root.dataset.days || "14", 10), bizName: opts.bizName || root.dataset.bizName || "{{BUSINESS_NAME}}", waNumber: (opts.wa || root.dataset.wa || "{{WHATSAPP_NUMBER}}").replace(/\D/g, ""), blockHolidays: opts.blockHolidays !== undefined ? !!opts.blockHolidays : (root.dataset.blockHolidays === "true"), template: opts.template || root.dataset.template || "¡Hola! Tu reserva en {{comercio}} está confirmada:\n- 🎟️ ID: #{{id}}\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 👥 Personas: {{personas}}\n- 🔗 Autogestión: {{link}}\n¡Te esperamos!", occupiedSlots: opts.occupiedSlots || ["09:30","11:30","17:00"] };
+        const $ = (id) => document.getElementById(id + "-" + wId);
+        const dom = { s1: $("step-1"), s2: $("step-2"), s3: $("step-3"), s4: $("step-4"), ind: $("step-indicator"), d1: $("step-dot-1"), d2: $("step-dot-2"), d3: $("step-dot-3"), b1: $("step-bar-1"), b2: $("step-bar-2"), sub: $("turnero-subtitle"), bizTitle: $("biz-title"), daySel: $("day-selector"), timeSel: $("time-selector"), dayPrev: $("day-prev"), dayNext: $("day-next"), btnNext1: $("btn-next-1"), btnNext2: $("btn-next-2"), btnBack2: $("btn-back-2"), btnBack3: $("btn-back-3"), btnConfirm: $("btn-confirm"), btnIcs: $("btn-ics"), inpFName: $("input-fname"), inpLName: $("input-lname"), inpPhone: $("input-phone"), inpPax: $("input-pax"), err2: $("step-2-error"), sumName: $("summary-name"), sumDay: $("summary-day"), sumTime: $("summary-time"), sumPax: $("summary-pax"), succHash: $("success-hash"), succDateTime: $("success-date-time"), succBiz: $("success-biz"), waStatus: $("wa-dispatch-status"), manageLink: $("btn-manage-link"), fallbackWa: $("btn-fallback-wa") };
+        if (!dom.s1 || !dom.btnNext1) return; if (dom.bizTitle) dom.bizTitle.innerText = "Reservar en " + cfg.bizName;
+        const state = { step: 1, dayOffset: 0, day: null, dateObj: null, time: null, fname: "", lname: "", phone: "", pax: "2", isToday: false, activeDayData: null, hash: "" };
+        const toTitleCase = (s) => (s || "").trim().toLowerCase().replace(/(?:^|\s|-|')\S/g, c => c.toUpperCase());
+        const sanitizePhone = (v) => v.replace(/\D/g, "").replace(/^549?/, "").replace(/^0/, "").replace(/^(\d{2,4})15/, "$1");
+        const validateName = (v) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{2,30}$/.test((v || "").trim());
+        const hasBadWords = (s) => ["mierda","puto","puta","boludo","pelotudo","concha","hdp","spam","carajo","forro"].some(w => (s || "").toLowerCase().includes(w)) || /[<>{}\\/]/.test(s);
+        const toIso = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+        const fetchAvailability = async (iso) => { const bookings = parseJsonSafe(localStorage.getItem("tucu_l2_bookings")) || []; const occForDay = bookings.filter(b => b.date === iso && b.status === "CONFIRMED").map(b => b.time); return new Promise(r => setTimeout(() => r({ occupied: Array.from(new Set([...cfg.occupiedSlots, ...occForDay])) }), 50)); };
+        const getAllDays = () => { const days = []; const names = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]; let cur = new Date(); let guard = 0; const todayStr = toIso(new Date()); while (days.length < cfg.maxDays && guard < 120) { guard++; const d = new Date(cur); const iso = toIso(d); const dow = d.getDay(); const dayCfg = cfg.schedule ? cfg.schedule[dow] : null; const isWorkday = dayCfg ? !!dayCfg.enabled : (dow !== 0); const isHol = cfg.blockHolidays && HOLIDAYS.includes(iso); const isVacation = cfg.vacations && cfg.vacations.some(v => iso >= v.from && iso <= v.to); if (isWorkday && !isHol && !isVacation) days.push({ isToday: iso === todayStr, label: iso === todayStr ? "Hoy" : names[dow], date: d.getDate(), fullDate: d, iso, dayOfWeek: dow, fullStr: d.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }) }); cur.setDate(cur.getDate() + 1); } return days; };
+        const allDays = getAllDays();
+        const generateRange = (startStr, endStr, interval) => { const slots = []; let current = new Date(`2000-01-01T${startStr}:00`); const end = new Date(`2000-01-01T${endStr}:00`); while (current <= end) { slots.push(current.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })); current.setMinutes(current.getMinutes() + interval); } return slots; };
+        const generateTimeSlots = (dayData) => { const dayCfg = cfg.schedule ? cfg.schedule[dayData.dayOfWeek] : null; if (!dayCfg || !dayCfg.enabled) return []; const s1 = generateRange(dayCfg.open, dayCfg.close, cfg.interval); return (!dayCfg.isSplit || !dayCfg.open2 || !dayCfg.close2) ? s1 : [...s1, ...generateRange(dayCfg.open2, dayCfg.close2, cfg.interval)]; };
+        const renderDays = () => { const visibleDays = allDays.slice(state.dayOffset, state.dayOffset + 4); dom.daySel.innerHTML = visibleDays.map((d, idx) => `<button data-idx="${state.dayOffset + idx}" class="day-btn py-2.5 px-1 flex flex-col items-center justify-center border rounded-2xl transition-all text-center cursor-pointer select-none ${state.day === d.fullStr ? "bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-600/30 font-bold" : "bg-zinc-800/70 hover:bg-zinc-800 text-zinc-300 border-zinc-700/60"}"><span class="text-[10px] sm:text-[11px] font-medium opacity-80 uppercase tracking-wider">${d.label}</span><span class="font-bold text-base sm:text-lg leading-tight mt-0.5">${d.date}</span></button>`).join(""); if (dom.dayPrev) dom.dayPrev.disabled = state.dayOffset === 0; if (dom.dayNext) dom.dayNext.disabled = state.dayOffset + 4 >= allDays.length; dom.daySel.querySelectorAll(".day-btn").forEach(btn => { btn.addEventListener("click", (e) => { const dayData = allDays[parseInt(e.currentTarget.dataset.idx, 10)]; state.day = dayData.fullStr; state.dateObj = dayData.fullDate; state.isToday = dayData.isToday; state.time = null; state.activeDayData = dayData; if (dom.btnNext1) dom.btnNext1.disabled = true; renderDays(); renderTimes(dayData); }); }); };
+        const renderTimes = async (dayData) => { dom.timeSel.innerHTML = `<div class="col-span-full py-4 text-center text-xs text-indigo-400 animate-pulse">Consultando disponibilidad L2...</div>`; const avail = await fetchAvailability(dayData.iso); const slots = generateTimeSlots(dayData); const now = new Date(); const curMins = now.getHours() * 60 + now.getMinutes(); dom.timeSel.innerHTML = slots.map(t => { const [h, m] = t.split(":").map(Number); const slotMins = h * 60 + m; const isPast = state.isToday && slotMins <= curMins; const isOcc = avail.occupied && avail.occupied.includes(t); if (isPast || isOcc) return `<button disabled class="opacity-25 bg-zinc-900 border-zinc-800/60 text-zinc-600 line-through cursor-not-allowed py-2.5 px-2 text-xs font-medium rounded-xl select-none">${t}</button>`; return `<button data-time="${t}" class="time-btn py-2.5 px-2 text-xs font-semibold rounded-xl border transition-all select-none cursor-pointer ${state.time === t ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30 font-bold" : "bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 border-zinc-700/60"}">${t}</button>`; }).join(""); dom.timeSel.querySelectorAll(".time-btn:not([disabled])").forEach(btn => { btn.addEventListener("click", (e) => { state.time = e.currentTarget.dataset.time; if (dom.btnNext1) dom.btnNext1.disabled = false; renderTimes(dayData); }); }); };
+        const setStepUI = (step, subtitle) => { if (dom.sub) dom.sub.innerText = subtitle; if (step <= 3) { [dom.d1, dom.d2, dom.d3].forEach((d, idx) => { d.className = (idx + 1 === step) ? "w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-indigo-500/20" : (idx + 1 < step ? "w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center" : "w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center"); }); if (dom.b1) dom.b1.className = step > 1 ? "h-full bg-indigo-600 w-full transition-all duration-300" : "h-full bg-indigo-600 w-0 transition-all duration-300"; if (dom.b2) dom.b2.className = step > 2 ? "h-full bg-indigo-600 w-full transition-all duration-300" : "h-full bg-indigo-600 w-0 transition-all duration-300"; } };
+        const goStep = (step) => { [dom.s1, dom.s2, dom.s3, dom.s4].forEach(s => { if (s) { s.classList.remove("opacity-100", "translate-x-0", "pointer-events-auto"); s.classList.add("opacity-0", "pointer-events-none"); } }); if (step === 1) { dom.s1.classList.remove("-translate-x-full"); dom.s1.classList.add("translate-x-0", "opacity-100", "pointer-events-auto"); setStepUI(1, "Paso 1: Selecciona fecha y hora"); } else if (step === 2) { dom.s2.classList.remove("translate-x-full", "-translate-x-full"); dom.s2.classList.add("translate-x-0", "opacity-100", "pointer-events-auto"); setStepUI(2, "Paso 2: Tus datos de contacto"); } else if (step === 3) { state.hash = "TK-" + Math.random().toString(36).substring(2, 6).toUpperCase(); if (dom.sumName) dom.sumName.innerText = `${state.fname} ${state.lname}`.trim(); if (dom.sumDay) dom.sumDay.innerText = state.day; if (dom.sumTime) dom.sumTime.innerText = state.time; if (dom.sumPax) dom.sumPax.innerText = `${state.pax} persona(s)`; dom.s3.classList.remove("translate-x-full"); dom.s3.classList.add("translate-x-0", "opacity-100", "pointer-events-auto"); setStepUI(3, "Paso 3: Revisión de tu turno"); } else if (step === 4) { if (dom.ind) dom.ind.classList.add("hidden"); if (dom.succHash) dom.succHash.innerText = "#" + state.hash; if (dom.succDateTime) dom.succDateTime.innerText = `${state.day} a las ${state.time} hs`; if (dom.succBiz) dom.succBiz.innerText = cfg.bizName; if (dom.manageLink) dom.manageLink.href = `/gestion_turno.html?token=${state.hash}`; dom.s4.classList.remove("translate-x-full"); dom.s4.classList.add("translate-x-0", "opacity-100", "pointer-events-auto"); setStepUI(4, "Reserva Completada"); } };
+        if (dom.btnNext1) dom.btnNext1.addEventListener("click", () => goStep(2));
+        if (dom.btnBack2) dom.btnBack2.addEventListener("click", () => goStep(1));
+        if (dom.btnNext2) dom.btnNext2.addEventListener("click", () => {
+          const rawPhone = dom.inpPhone ? dom.inpPhone.value.trim() : ""; const rawFName = dom.inpFName ? dom.inpFName.value.trim() : ""; const rawLName = dom.inpLName ? dom.inpLName.value.trim() : ""; state.pax = dom.inpPax ? dom.inpPax.value : "2"; const cleanPhone = sanitizePhone(rawPhone); const fname = toTitleCase(rawFName); const lname = toTitleCase(rawLName);
+          const showError = (msg) => { if (dom.err2) { dom.err2.innerText = msg; dom.err2.classList.remove("hidden"); } };
+          if (!cleanPhone || cleanPhone.length < 8) return showError("Ingresa un número de WhatsApp válido.");
+          const blacklist = cfg.blacklist || []; if (blacklist.some(b => sanitizePhone(typeof b === "object" ? b.phone : b) === cleanPhone)) return showError("No es posible registrar turnos con esta línea telefónica. Contacte al comercio.");
+          if (!validateName(fname)) return showError("Ingresa un Nombre válido (2-30 letras)."); if (!validateName(lname)) return showError("Ingresa un Apellido válido (2-30 letras)."); if (hasBadWords(fname) || hasBadWords(lname)) return showError("Nombre no permitido. Revisa tus datos.");
+          if (dom.err2) dom.err2.classList.add("hidden"); state.phone = cleanPhone; state.fname = fname; state.lname = lname; goStep(3);
+        });
+        if (dom.btnBack3) dom.btnBack3.addEventListener("click", () => goStep(2));
+        if (dom.btnConfirm) dom.btnConfirm.addEventListener("click", async () => {
+          const fullName = `${state.fname} ${state.lname}`.trim(); const iso = state.activeDayData ? state.activeDayData.iso : toIso(new Date());
+          try { const bookings = parseJsonSafe(localStorage.getItem("tucu_l2_bookings")) || []; bookings.push({ id: state.hash, date: iso, time: state.time, client: fullName, phone: state.phone, pax: state.pax, status: "CONFIRMED", createdAt: new Date().toISOString() }); localStorage.setItem("tucu_l2_bookings", JSON.stringify(bookings)); } catch(e) {}
+          goStep(4);
+          const manageUrl = `${window.location.origin}/gestion_turno.html?token=${state.hash}`;
+          const text = cfg.template.replace(/\{\{id\}\}/g, state.hash).replace(/\{\{personas\}\}/g, state.pax).replace(/\{\{cliente\}\}/g, fullName).replace(/\{\{fecha\}\}/g, state.day).replace(/\{\{hora\}\}/g, state.time).replace(/\{\{comercio\}\}/g, cfg.bizName).replace(/\{\{telefono\}\}/g, state.phone).replace(/\{\{link\}\}/g, manageUrl);
+          if (dom.fallbackWa) { dom.fallbackWa.href = `https://wa.me/${cfg.waNumber}?text=${encodeURIComponent(text)}`; }
+          try {
+            const res = await fetch("/api/wa/send-test", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone: state.phone, message: text }) });
+            const data = await res.json();
+            if (data.success) { if (dom.waStatus) { dom.waStatus.className = "p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs text-center"; dom.waStatus.innerText = "✅ Comprobante enviado automáticamente a tu WhatsApp"; } } else throw new Error(data.error || "Offline");
+          } catch(err) {
+            if (dom.waStatus) { dom.waStatus.className = "p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs text-center"; dom.waStatus.innerText = "ℹ️ Turno confirmado en web. Guarda tu comprobante:"; }
+            if (dom.fallbackWa) dom.fallbackWa.classList.remove("hidden");
           }
-          return days;
-        };
-
-        const generateTimeSlots = (config) => {
-          const slots = []; let current = new Date(`2000-01-01T${config.start}:00`); const end = new Date(`2000-01-01T${config.end}:00`);
-          while (current <= end) { slots.push(current.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })); current.setMinutes(current.getMinutes() + config.intervalMinutes); }
-          return slots;
-        };
-
-        const checkStep1 = () => { if (dom.btnNext1) dom.btnNext1.disabled = !(state.day && state.time); };
-
-        const renderDays = async () => {
-          const days = getDays();
-          dom.daySel.innerHTML = days.map((d, i) => `
-            <button data-idx="${i}" class="day-btn min-w-[4.5rem] w-[4.5rem] sm:min-w-[4.8rem] sm:w-[4.8rem] flex-shrink-0 snap-start rounded-2xl py-2.5 px-2 flex flex-col items-center justify-center border transition-all text-center cursor-pointer select-none bg-zinc-800/70 hover:bg-zinc-800 text-zinc-300 border-zinc-700/60">
-              <span class="text-[10px] sm:text-[11px] font-medium opacity-80 uppercase tracking-wider">${d.label}</span>
-              <span class="font-bold text-base sm:text-lg leading-tight mt-0.5 text-white">${d.date}</span>
-            </button>`).join('');
-
-          dom.daySel.querySelectorAll('.day-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-              dom.daySel.querySelectorAll('.day-btn').forEach(b => {
-                b.className = 'day-btn min-w-[4.5rem] w-[4.5rem] sm:min-w-[4.8rem] sm:w-[4.8rem] flex-shrink-0 snap-start rounded-2xl py-2.5 px-2 flex flex-col items-center justify-center border transition-all text-center cursor-pointer select-none bg-zinc-800/70 hover:bg-zinc-800 text-zinc-300 border-zinc-700/60';
-              });
-              const t = e.currentTarget;
-              t.className = 'day-btn min-w-[4.5rem] w-[4.5rem] sm:min-w-[4.8rem] sm:w-[4.8rem] flex-shrink-0 snap-start rounded-2xl py-2.5 px-2 flex flex-col items-center justify-center border transition-all text-center cursor-pointer select-none bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-600/30 font-bold';
-              const dayData = days[parseInt(t.dataset.idx)];
-              state.day = dayData.fullStr; state.dateObj = dayData.fullDate; state.isToday = dayData.isToday; state.time = null;
-              checkStep1();
-              dom.timeSel.innerHTML = '<div class="col-span-full text-center text-xs sm:text-sm text-zinc-400 py-3 flex items-center justify-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span> Consultando disponibilidad...</div>';
-              const availability = await fetchAvailability(state.day);
-              renderTimes(availability);
-            });
-          });
-        };
-
-        const renderTimes = (availability) => {
-          const slots = generateTimeSlots(availability.businessHours); const now = new Date(); const currentTotalMins = now.getHours() * 60 + now.getMinutes();
-          dom.timeSel.innerHTML = slots.map(t => {
-            const isOccupied = availability.occupied.includes(t);
-            const [sh, sm] = t.split(':').map(Number);
-            const isPast = state.isToday && ((sh * 60 + sm) <= currentTotalMins);
-            if (isOccupied || isPast) return `<button disabled class="time-btn opacity-25 bg-zinc-900/60 text-zinc-500 line-through cursor-not-allowed pointer-events-none border border-zinc-800/80 font-normal py-2 text-xs sm:text-sm rounded-xl text-center">${t}</button>`;
-            return `<button data-time="${t}" class="time-btn bg-zinc-800/80 hover:bg-blue-600 hover:text-white text-zinc-200 border border-zinc-700/60 font-semibold py-2 text-xs sm:text-sm rounded-xl transition-all text-center">${t}</button>`;
-          }).join('');
-
-          dom.timeSel.querySelectorAll('.time-btn:not([disabled])').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              dom.timeSel.querySelectorAll('.time-btn:not([disabled])').forEach(b => {
-                b.className = 'time-btn bg-zinc-800/80 hover:bg-blue-600 hover:text-white text-zinc-200 border border-zinc-700/60 font-semibold py-2 text-xs sm:text-sm rounded-xl transition-all text-center';
-              });
-              const target = e.currentTarget;
-              target.className = 'time-btn bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30 font-bold py-2 text-xs sm:text-sm rounded-xl transition-all text-center';
-              state.time = target.dataset.time; checkStep1();
-            });
-          });
-        };
-
-        const goStep = (step) => {
-          [dom.s1, dom.s2, dom.s3].forEach(s => { if (s) { s.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto'); s.classList.add('opacity-0', 'pointer-events-none'); } });
-          const setStepUI = (activeStep, title) => {
-            if (dom.sub) dom.sub.innerText = title;
-            [dom.d1, dom.d2, dom.d3].forEach((d, idx) => {
-              if (idx + 1 === activeStep) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-lg shadow-blue-500/20 ring-4 ring-blue-500/20 transition-all';
-              else if (idx + 1 < activeStep) d.className = 'w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center transition-all';
-              else d.className = 'w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center transition-all';
-            });
-            if (dom.b1) dom.b1.className = activeStep > 1 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
-            if (dom.b2) dom.b2.className = activeStep > 2 ? 'h-full bg-blue-600 w-full transition-all duration-300' : 'h-full bg-blue-600 w-0 transition-all duration-300';
-          };
-
-          if(step === 1) {
-            dom.s1.classList.remove('-translate-x-full'); dom.s1.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
-            dom.s2.classList.add('translate-x-full'); dom.s3.classList.add('translate-x-full');
-            setStepUI(1, "Paso 1: Selecciona fecha y hora");
-          } else if (step === 2) {
-            dom.s1.classList.add('-translate-x-full'); dom.s2.classList.remove('translate-x-full', '-translate-x-full');
-            dom.s2.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto'); dom.s3.classList.add('translate-x-full');
-            setStepUI(2, "Paso 2: Datos para la reserva");
-          } else if (step === 3) {
-            state.hash = Math.random().toString(36).substring(2,8).toUpperCase();
-            if (dom.sumHash) dom.sumHash.innerText = "#" + state.hash;
-            if (dom.sumName) dom.sumName.innerText = state.name; if (dom.sumDay) dom.sumDay.innerText = state.day;
-            if (dom.sumTime) dom.sumTime.innerText = state.time; if (dom.sumPax) dom.sumPax.innerText = state.pax + " persona(s)";
-            dom.s1.classList.add('-translate-x-full'); dom.s2.classList.add('-translate-x-full');
-            dom.s3.classList.remove('translate-x-full'); dom.s3.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
-            setStepUI(3, "Paso 3: Confirma tu solicitud");
-          }
-        };
-
-        if (dom.btnNext1) dom.btnNext1.addEventListener('click', () => goStep(2));
-        if (dom.btnBack2) dom.btnBack2.addEventListener('click', () => goStep(1));
-        if (dom.btnNext2) dom.btnNext2.addEventListener('click', () => {
-          state.name = dom.inpName ? dom.inpName.value.trim() : "";
-          if (dom.inpPhone) dom.inpPhone.value = sanitizePhone(dom.inpPhone.value);
-          state.phone = dom.inpPhone ? dom.inpPhone.value.trim() : "";
-          state.pax = dom.inpPax ? dom.inpPax.value : "1";
-          if(!state.name) { dom.inpName.classList.add('ring-2', 'ring-red-500'); setTimeout(() => dom.inpName.classList.remove('ring-2', 'ring-red-500'), 1000); return; }
-          if(!state.phone) { dom.inpPhone.classList.add('ring-2', 'ring-red-500'); setTimeout(() => dom.inpPhone.classList.remove('ring-2', 'ring-red-500'), 1000); return; }
-          goStep(3);
         });
-        if (dom.btnBack3) dom.btnBack3.addEventListener('click', () => goStep(2));
-        if (dom.btnConfirm) dom.btnConfirm.addEventListener('click', () => {
-          const text = `¡Hola! Quiero confirmar mi reserva en ${bizName}:\n- 🎟️ ID: #${state.hash}\n- 👤 Nombre: ${state.name}\n- 📅 Día: ${state.day}\n- ⏰ Hora: ${state.time}\n- 👥 Pax: ${state.pax}\n- 📞 Tel: ${state.phone}\n¿Me confirman disponibilidad?`;
-          window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        if (dom.btnIcs) dom.btnIcs.addEventListener("click", () => {
+          const d = new Date(state.dateObj || new Date()); const [h, m] = (state.time || "10:00").split(":").map(Number); d.setHours(h, m, 0); const endD = new Date(d); endD.setMinutes(endD.getMinutes() + 60); const fmt = (dt) => dt.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+          const ics = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${fmt(d)}`,`DTEND:${fmt(endD)}`,`SUMMARY:Cita en ${cfg.bizName}`,`DESCRIPTION:Reserva para ${state.fname} ${state.lname} (${state.pax} pax). ID: #${state.hash}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
+          const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `reserva_${cfg.bizName.replace(/\s+/g, "_")}.ics`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
         });
-        if (dom.btnIcs) dom.btnIcs.addEventListener('click', () => {
-          if(!state.dateObj || !state.time) return;
-          const [h, m] = state.time.split(':'); const d = new Date(state.dateObj); d.setHours(parseInt(h), parseInt(m), 0);
-          const endD = new Date(d); endD.setMinutes(endD.getMinutes() + 60);
-          const fmt = (dt) => dt.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-          const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT", `DTSTART:${fmt(d)}`, `DTEND:${fmt(endD)}`, `SUMMARY:Reserva en ${bizName}`, `DESCRIPTION:Reserva para ${state.name} (${state.pax} pax). ID: #${state.hash}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-          const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-          const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url;
-          a.download = `reserva_${bizName.replace(/\s+/g, '_')}.ics`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-        });
-
+        if (dom.dayPrev) dom.dayPrev.addEventListener("click", () => { if (state.dayOffset > 0) { state.dayOffset -= 4; renderDays(); } });
+        if (dom.dayNext) dom.dayNext.addEventListener("click", () => { if (state.dayOffset + 4 < allDays.length) { state.dayOffset += 4; renderDays(); } });
         renderDays();
+        if (allDays.length > 0) { state.day = allDays[0].fullStr; state.dateObj = allDays[0].fullDate; state.isToday = allDays[0].isToday; state.activeDayData = allDays[0]; renderTimes(allDays[0]); }
       }
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWidget); else setTimeout(initWidget, 50);
+      window.initTurneroL2 = initWidget;
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => initWidget()); else setTimeout(() => initWidget(), 50);
     })();
   </script>
 </div>

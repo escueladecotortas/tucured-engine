@@ -1,0 +1,238 @@
+<!-- Archivo: public/gestion_turno.html -->
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-zinc-950 text-zinc-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autogestión de Reserva — TucuRed L2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' },
+            wa: { bubble: '#005c4b', light: '#25D366', dark: '#128C7E', bg: '#0b141a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .ambient-glow { background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 70%); }
+    .glass-card { background: rgba(24, 24, 27, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans bg-zinc-950 text-zinc-100 overflow-x-hidden ambient-glow selection:bg-indigo-500/30 selection:text-indigo-300">
+
+  <!-- Header Superior -->
+  <header class="w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-sm">
+        🎟️
+      </div>
+      <div>
+        <h1 class="text-xs font-bold text-white tracking-tight" id="header-biz-name">Nexus Studio Demo</h1>
+        <span class="text-[10px] text-zinc-400 font-mono">Portal de Autogestión L2</span>
+      </div>
+    </div>
+    <a href="/demo_l2_cliente.html" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-zinc-900 hover:bg-zinc-800 text-indigo-400 border border-zinc-800 transition-all flex items-center gap-1">
+      <span>📅 Nuevo Turno</span>
+    </a>
+  </header>
+
+  <!-- Contenedor Central Mobile-First -->
+  <main class="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 max-w-lg mx-auto w-full">
+    <div class="w-full max-w-[440px] space-y-4 my-auto">
+      
+      <!-- Tarjeta Dinámica de Estado del Turno -->
+      <div id="booking-card-container" class="w-full glass-card rounded-[2rem] border border-zinc-800 p-6 sm:p-7 shadow-2xl space-y-6 relative overflow-hidden transition-all duration-300">
+        <div class="py-12 text-center text-xs text-zinc-500 animate-pulse">Cargando datos de la reserva...</div>
+      </div>
+
+      <!-- Pie de Seguridad y Local-First -->
+      <div class="text-center space-y-1 pt-2">
+        <p class="text-[11px] text-zinc-500">🔒 Cancelación autónoma instantánea en tiempo real.</p>
+        <p class="text-[10px] text-zinc-600 font-mono">TucuRed Engine v11.1 • Local-First SSOT</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal de Confirmación de Cancelación -->
+  <div id="modal-cancel" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl space-y-4 relative animate-in fade-in zoom-in duration-200">
+      <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center text-xl mx-auto">
+        ⚠️
+      </div>
+      <div class="text-center space-y-1.5">
+        <h3 class="text-base font-bold text-white">¿Cancelar Reserva?</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Esta acción liberará el horario de forma inmediata para que otros clientes puedan reservarlo.</p>
+      </div>
+      <div class="flex gap-2.5 pt-2">
+        <button type="button" id="btn-modal-back" class="w-1/2 py-3 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50 text-xs transition-colors cursor-pointer">Mantener</button>
+        <button type="button" id="btn-modal-confirm-cancel" class="w-1/2 py-3 rounded-xl font-bold bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 text-xs transition-all cursor-pointer">Sí, Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script de Autogestión y Mutación Local-First -->
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const token = (params.get('token') || window.location.hash.replace('#', '')).trim().toUpperCase();
+
+      const bizName = localStorage.getItem('tucu_l2_biz_name') || localStorage.getItem('tucu_biz_name') || 'Nexus Studio Demo';
+      const waNumber = (localStorage.getItem('tucu_l2_wa_number') || localStorage.getItem('tucu_wa_number') || '5493815551234').replace(/\D/g, '');
+
+      document.getElementById('header-biz-name').innerText = bizName;
+
+      function getBookings() {
+        try {
+          return JSON.parse(localStorage.getItem('tucu_l2_bookings') || '[]');
+        } catch(e) {
+          return [];
+        }
+      }
+
+      function saveBookings(bookings) {
+        localStorage.setItem('tucu_l2_bookings', JSON.stringify(bookings));
+      }
+
+      function render() {
+        const container = document.getElementById('booking-card-container');
+        if (!container) return;
+
+        if (!token) {
+          container.innerHTML = `
+            <div class="text-center py-8 space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-zinc-800 text-zinc-400 flex items-center justify-center text-2xl mx-auto border border-zinc-700">🔍</div>
+              <div class="space-y-1.5">
+                <h3 class="text-base font-bold text-white">Token No Proporcionado</h3>
+                <p class="text-xs text-zinc-400">Accede a través del enlace de autogestión enviado en tu mensaje de WhatsApp.</p>
+              </div>
+              <a href="/demo_l2_cliente.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-lg shadow-indigo-600/25">
+                <span>📅 Agendar un Turno</span>
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        const bookings = getBookings();
+        const booking = bookings.find(b => b.id && b.id.toUpperCase() === token);
+
+        if (!booking) {
+          container.innerHTML = `
+            <div class="text-center py-8 space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mx-auto border border-amber-500/20">❌</div>
+              <div class="space-y-1.5">
+                <h3 class="text-base font-bold text-white">Reserva No Encontrada</h3>
+                <p class="text-xs text-zinc-400 font-mono">Token: #${token}</p>
+                <p class="text-xs text-zinc-500 pt-1">El código no existe en el sistema o fue purgado.</p>
+              </div>
+              <a href="/demo_l2_cliente.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-lg shadow-indigo-600/25">
+                <span>📅 Solicitar Nuevo Turno</span>
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        const isConfirmed = booking.status === 'CONFIRMED';
+
+        container.innerHTML = `
+          <!-- Encabezado de la Reserva -->
+          <div class="space-y-3 border-b border-zinc-800/80 pb-5">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold ${isConfirmed ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/15 text-rose-400 border border-rose-500/30'} flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full ${isConfirmed ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}"></span>
+                <span>${isConfirmed ? '● Confirmado' : '✖ Cancelado'}</span>
+              </span>
+              <span class="font-mono text-xs font-bold text-indigo-400 tracking-wider">#${booking.id}</span>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white">${bizName}</h2>
+              <p class="text-xs text-zinc-400 mt-0.5">Reserva de turno programada</p>
+            </div>
+          </div>
+
+          <!-- Detalles de la Cita -->
+          <div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b border-zinc-800/60 pb-2">
+              <span class="text-zinc-400">Cliente:</span>
+              <span class="font-semibold text-zinc-100">${booking.client || '-'}</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-zinc-800/60 pb-2">
+              <span class="text-zinc-400">Teléfono:</span>
+              <span class="font-mono text-zinc-200">${booking.phone || '-'}</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-zinc-800/60 pb-2">
+              <span class="text-zinc-400">Fecha:</span>
+              <span class="font-semibold text-zinc-100">${booking.date || '-'}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-zinc-400">Horario:</span>
+              <span class="font-bold text-indigo-400 text-sm">${booking.time || '-'} hs</span>
+            </div>
+          </div>
+
+          <!-- Acciones de Autogestión -->
+          <div class="space-y-2.5 pt-2">
+            ${isConfirmed ? `
+              <button type="button" id="btn-trigger-cancel" class="w-full py-3.5 rounded-xl font-bold text-xs bg-rose-600/15 hover:bg-rose-600/25 text-rose-400 border border-rose-500/30 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                <span>Cancelar Reserva</span>
+              </button>
+            ` : `
+              <div class="p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs text-center">
+                Este turno fue cancelado y su horario ha sido liberado.
+              </div>
+              <a href="https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, cancelé mi turno #' + booking.id + ' para el día ' + booking.date + ' a las ' + booking.time + ' hs.')}" target="_blank" class="w-full py-3 rounded-xl font-semibold text-xs bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 transition-all flex items-center justify-center gap-2">
+                <span>📱 Notificar Cancelación por WhatsApp</span>
+              </a>
+              <a href="/demo_l2_cliente.html" class="w-full py-3 rounded-xl font-bold text-xs bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
+                <span>📅 Solicitar Nuevo Turno</span>
+              </a>
+            `}
+          </div>
+        `;
+
+        if (isConfirmed) {
+          document.getElementById('btn-trigger-cancel')?.addEventListener('click', () => {
+            document.getElementById('modal-cancel').classList.remove('hidden');
+          });
+        }
+      }
+
+      // Eventos del Modal
+      document.getElementById('btn-modal-back')?.addEventListener('click', () => {
+        document.getElementById('modal-cancel').classList.add('hidden');
+      });
+
+      document.getElementById('btn-modal-confirm-cancel')?.addEventListener('click', () => {
+        const bookings = getBookings();
+        const booking = bookings.find(b => b.id && b.id.toUpperCase() === token);
+        if (booking) {
+          booking.status = 'CANCELLED';
+          booking.cancelledAt = new Date().toISOString();
+          saveBookings(bookings);
+        }
+        document.getElementById('modal-cancel').classList.add('hidden');
+        render();
+      });
+
+      window.addEventListener('DOMContentLoaded', render);
+    })();
+  </script>
+</body>
+</html>

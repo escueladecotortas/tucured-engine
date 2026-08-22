@@ -1,0 +1,10 @@
+{
+  "clientSlug": "la-fachada-l3",
+  "logo": "/assets/la-fachada/logo.png",
+  "banner": "/assets/la-fachada/hero.jpg",
+  "gallery": [
+    "/assets/la-fachada/corte1.jpg",
+    "/assets/la-fachada/barba1.jpg",
+    "/assets/la-fachada/salon1.jpg"
+  ]
+}

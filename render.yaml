@@ -1,0 +1,25 @@
+# Archivo: render.yaml
+# Blueprint de Infraestructura como Código (IaC) para Render.com ($0 Free Tier)
+# Nexus OS v11.1 | Local-First Sovereign Architecture
+
+services:
+  - type: web
+    name: tucured-engine-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node backend/server.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: BACKEND_PORT
+        value: 10000
+      - key: LOCAL_FIRST_STORAGE
+        value: "true"
+      - key: DB_TARGET
+        value: "local_first"

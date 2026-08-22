@@ -4,6 +4,7 @@
   "version": "10.0.0",
   "type": "module",
   "scripts": {
+    "start": "node backend/server.js",
     "dev": "node scripts/dev_runner.js",
     "dev:vite": "vite --port 5005 --host",
     "build": "vite build",

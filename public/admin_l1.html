@@ -1,0 +1,488 @@
+<!-- Archivo: public/admin_l1.html -->
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-zinc-950 text-zinc-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Master L1 — Gestión de Horarios & WhatsApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+            wa: { bubble: '#005c4b', light: '#25D366', dark: '#128C7E', bg: '#0b141a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(24, 24, 27, 0.5); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(63, 63, 70, 0.6); border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(113, 113, 122, 0.8); }
+    .glass-panel { background: rgba(18, 18, 23, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans bg-zinc-950 text-zinc-100 overflow-x-hidden selection:bg-blue-500/30 selection:text-blue-300 pb-16 md:pb-0">
+
+  <!-- Header Superior Full-Screen -->
+  <header class="h-16 border-b border-zinc-800/80 glass-panel sticky top-0 z-40 px-4 sm:px-6 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="/tucu_widgets.html" class="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 transition-all flex items-center justify-center text-xs group" title="Volver al Catálogo">
+        <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+        <h1 class="text-sm sm:text-base font-bold tracking-tight text-white flex items-center gap-2">
+          <span>Admin Master L1</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono font-medium">WhatsApp Directo</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Selector de Vistas Principales (Desktop Navigation) -->
+    <nav class="hidden md:flex items-center bg-zinc-900/90 p-1 rounded-2xl border border-zinc-800/90 shadow-inner">
+      <button type="button" id="main-view-btn-identidad" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+        <span>Identidad & Negocio</span>
+      </button>
+      <button type="button" id="main-view-btn-cronograma" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <span>Cronograma & Días</span>
+      </button>
+      <button type="button" id="main-view-btn-whatsapp" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        <span>WhatsApp & Mensajes</span>
+      </button>
+    </nav>
+
+    <!-- Acciones Rápidas & Enlace Directo a Cliente -->
+    <div class="flex items-center gap-2.5">
+      <a href="/demo_l1_cliente.html" id="btn-open-turnero-client" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600/15 hover:bg-blue-600/25 text-blue-400 border border-blue-500/30 transition-all flex items-center gap-1.5 shadow-sm" title="Abrir experiencia cliente en formato móvil">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        <span>Abrir Turnero Cliente</span>
+      </a>
+      <button type="button" id="btn-copy-configured" class="hidden sm:flex px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 transition-all items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        <span>Copiar HTML L1</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal Full-Screen -->
+  <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 1: 🏪 IDENTIDAD & CONFIGURACIÓN GENERAL
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="view-section-identidad" class="space-y-6">
+      <div class="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/80 space-y-6">
+        <div>
+          <h2 class="text-base font-bold text-white flex items-center gap-2">
+            <span>🏢</span> Identidad de Marca & Notificaciones
+          </h2>
+          <p class="text-xs text-zinc-400 mt-1">Configura el nombre del comercio y las reglas básicas del turnero.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Nombre del Comercio</label>
+            <input type="text" id="cfg-biz-name" value="Nexus Studio Demo" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Número de WhatsApp (Recepción)</label>
+            <input type="tel" id="cfg-wa-number" value="5493815551234" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Duración de Turno (Minutos)</label>
+            <select id="cfg-interval" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="15">15 minutos</option>
+              <option value="30" selected>30 minutos</option>
+              <option value="45">45 minutos</option>
+              <option value="60">60 minutos (1 hora)</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Ventana Máxima de Días Disponibles</label>
+            <select id="cfg-days" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="7">7 días a futuro</option>
+              <option value="14" selected>14 días a futuro</option>
+              <option value="21">21 días a futuro</option>
+              <option value="30">30 días (1 mes)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-800 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-zinc-200">Bloquear Feriados Nacionales</span>
+            <p class="text-[11px] text-zinc-400">Saltea de forma automática los feriados oficiales de Argentina.</p>
+          </div>
+          <input type="checkbox" id="cfg-block-holidays" checked class="w-4 h-4 rounded bg-zinc-950 border-zinc-700 text-blue-600 focus:ring-blue-500 cursor-pointer">
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 2: 📅 CRONOGRAMA & DÍAS OPERATIVOS
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="view-section-cronograma" class="space-y-6 hidden">
+      <div class="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/80 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              <span>Matriz Semanal de Atención</span>
+            </h2>
+            <p class="text-xs text-zinc-400 mt-1">Horario corrido por defecto con soporte opcional de horario partido.</p>
+          </div>
+          <button type="button" id="btn-clone-lun-vie" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-blue-400 border border-blue-500/20 transition-all flex items-center gap-1 self-start sm:self-auto cursor-pointer">
+            <span>📋 Clonar Lunes a Viernes</span>
+          </button>
+        </div>
+
+        <!-- Grilla de 7 Días -->
+        <div id="weekly-schedule-container" class="space-y-3"></div>
+
+        <!-- Cierres Especiales & Vacaciones -->
+        <div class="pt-6 border-t border-zinc-800 space-y-4">
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
+              <span>🏖️</span> Cierres Especiales, Vacaciones o Reformas
+            </h3>
+            <p class="text-[11px] text-zinc-400 mt-0.5">El turnero salteará automáticamente todos los días comprendidos en los rangos definidos.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80">
+            <div>
+              <label class="block text-[11px] font-medium mb-1 text-zinc-300">Fecha Desde</label>
+              <input type="date" id="vacation-start" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium mb-1 text-zinc-300">Fecha Hasta</label>
+              <input type="date" id="vacation-end" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium mb-1 text-zinc-300">Motivo</label>
+              <div class="flex gap-2">
+                <input type="text" id="vacation-reason" placeholder="Ej. Vacaciones" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="button" id="btn-add-vacation" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition-all shrink-0 cursor-pointer">Añadir</button>
+              </div>
+            </div>
+          </div>
+          <div id="vacations-list-container" class="space-y-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 3: 📱 WHATSAPP & MENSAJES
+    ══════════════════════════════════════════════════════════════════ -->
+    <section id="view-section-whatsapp" class="space-y-6 hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Vinculación Baileys QR -->
+        <div class="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/80 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+              <span>🔐</span> Conexión Soberana (Baileys QR)
+            </h3>
+            <span id="wa-connection-status" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">● En Línea</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl shrink-0">📱</div>
+            <div class="space-y-0.5">
+              <h4 class="text-xs font-bold text-white" id="wa-account-name">Nexus Studio Demo</h4>
+              <p class="text-[11px] text-zinc-400 font-mono" id="wa-account-phone">+54 9 381 555-1234</p>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" id="btn-reconnect-qr" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4zm6-6a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+              <span>Vincular / Escanear QR</span>
+            </button>
+            <button type="button" id="btn-disconnect-wa" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-rose-400 border border-rose-500/20 transition-all cursor-pointer">Desconectar</button>
+          </div>
+        </div>
+
+        <!-- Plantilla de Mensaje & Burbuja de Preview -->
+        <div class="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/80 space-y-5">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-2">
+            <span>💬</span> Plantilla de Mensaje de Reserva
+          </h3>
+          <div class="space-y-2">
+            <textarea id="cfg-msg-template" rows="5" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500 font-mono leading-relaxed resize-none"></textarea>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" onclick="insertToken('{{cliente}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-blue-300 border border-blue-500/20">+{{cliente}}</button>
+              <button type="button" onclick="insertToken('{{fecha}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-blue-300 border border-blue-500/20">+{{fecha}}</button>
+              <button type="button" onclick="insertToken('{{hora}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-blue-300 border border-blue-500/20">+{{hora}}</button>
+              <button type="button" onclick="insertToken('{{comercio}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-blue-300 border border-blue-500/20">+{{comercio}}</button>
+              <button type="button" onclick="insertToken('{{telefono}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-blue-300 border border-blue-500/20">+{{telefono}}</button>
+            </div>
+          </div>
+
+          <!-- Previsualización de Burbuja Real -->
+          <div class="p-4 rounded-2xl bg-[#0b141a] border border-zinc-800 space-y-2">
+            <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Vista Previa en WhatsApp</div>
+            <div class="p-3.5 rounded-2xl bg-[#005c4b] text-white text-xs space-y-1.5 shadow-md relative">
+              <p class="whitespace-pre-line leading-relaxed font-sans text-zinc-100" id="wa-bubble-preview"></p>
+              <div class="flex items-center justify-end gap-1 text-[10px] text-emerald-200">
+                <span id="wa-bubble-time">12:30</span>
+                <span>✓✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barra de Navegación Móvil Inferior (< 768px) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/95 backdrop-blur-lg border-t border-zinc-800/90 z-50 flex items-center justify-around px-2">
+    <button type="button" id="mob-nav-identidad" class="mobile-nav-tab flex flex-col items-center gap-1 text-blue-400 cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+      <span class="text-[10px] font-bold">Identidad</span>
+    </button>
+    <button type="button" id="mob-nav-cronograma" class="mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      <span class="text-[10px] font-bold">Cronograma</span>
+    </button>
+    <button type="button" id="mob-nav-whatsapp" class="mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+      <span class="text-[10px] font-bold">WhatsApp</span>
+    </button>
+    <a href="/demo_l1_cliente.html" class="flex flex-col items-center gap-1 text-emerald-400 cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+      <span class="text-[10px] font-bold">Cliente</span>
+    </a>
+  </nav>
+
+  <!-- Script de Lógica Operativa y Sincronización Local-First -->
+  <script>
+    (function() {
+      const defaultSchedule = {
+        1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+        0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+      };
+
+      const dayNames = { 1: 'Lunes', 2: 'Martes', 3: 'Miércoles', 4: 'Jueves', 5: 'Viernes', 6: 'Sábado', 0: 'Domingo' };
+
+      let schedule = JSON.parse(localStorage.getItem('tucu_schedule') || JSON.stringify(defaultSchedule));
+      let vacations = JSON.parse(localStorage.getItem('tucu_l1_vacations') || '[]');
+
+      // Conmutación de Vistas
+      const views = ['identidad', 'cronograma', 'whatsapp'];
+      function switchView(target) {
+        views.forEach(v => {
+          const sec = document.getElementById(`view-section-${v}`);
+          const btnDesk = document.getElementById(`main-view-btn-${v}`);
+          const btnMob = document.getElementById(`mob-nav-${v}`);
+          if (v === target) {
+            if (sec) sec.classList.remove('hidden');
+            if (btnDesk) { btnDesk.className = 'main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer'; }
+            if (btnMob) { btnMob.className = 'mobile-nav-tab flex flex-col items-center gap-1 text-blue-400 cursor-pointer'; }
+          } else {
+            if (sec) sec.classList.add('hidden');
+            if (btnDesk) { btnDesk.className = 'main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer'; }
+            if (btnMob) { btnMob.className = 'mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 cursor-pointer'; }
+          }
+        });
+      }
+
+      views.forEach(v => {
+        document.getElementById(`main-view-btn-${v}`)?.addEventListener('click', () => switchView(v));
+        document.getElementById(`mob-nav-${v}`)?.addEventListener('click', () => switchView(v));
+      });
+
+      // Render de Matriz Semanal
+      function renderScheduleMatrix() {
+        const container = document.getElementById('weekly-schedule-container');
+        if (!container) return;
+        container.innerHTML = [1, 2, 3, 4, 5, 6, 0].map(day => {
+          const d = schedule[day] || { enabled: false, open: '09:00', close: '18:00', isSplit: false, open2: '17:00', close2: '21:00' };
+          return `
+            <div class="p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <input type="checkbox" onchange="toggleDay(${day}, this.checked)" ${d.enabled ? 'checked' : ''} class="w-4 h-4 rounded bg-zinc-900 border-zinc-700 text-blue-600 focus:ring-blue-500 cursor-pointer">
+                  <span class="text-xs font-bold ${d.enabled ? 'text-zinc-100' : 'text-zinc-500'}">${dayNames[day]}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="toggleSplit(${day})" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all cursor-pointer ${d.isSplit ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'}">
+                    ${d.isSplit ? '☀️ Horario Partido' : '🔄 Horario Corrido'}
+                  </button>
+                </div>
+              </div>
+              ${d.enabled ? `
+                <div class="grid grid-cols-2 ${d.isSplit ? 'sm:grid-cols-4' : 'sm:grid-cols-2'} gap-2 pt-1">
+                  <div><label class="block text-[10px] text-zinc-400 mb-0.5">Apertura</label><input type="time" value="${d.open}" onchange="updateHour(${day}, 'open', this.value)" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-blue-500"></div>
+                  <div><label class="block text-[10px] text-zinc-400 mb-0.5">Cierre</label><input type="time" value="${d.close}" onchange="updateHour(${day}, 'close', this.value)" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-blue-500"></div>
+                  ${d.isSplit ? `
+                    <div><label class="block text-[10px] text-zinc-400 mb-0.5">Reapertura</label><input type="time" value="${d.open2 || '17:00'}" onchange="updateHour(${day}, 'open2', this.value)" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-blue-500"></div>
+                    <div><label class="block text-[10px] text-zinc-400 mb-0.5">Cierre Tarde</label><input type="time" value="${d.close2 || '21:00'}" onchange="updateHour(${day}, 'close2', this.value)" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-blue-500"></div>
+                  ` : ''}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
+      window.toggleDay = function(day, enabled) {
+        schedule[day].enabled = enabled;
+        saveSchedule();
+        renderScheduleMatrix();
+      };
+
+      window.toggleSplit = function(day) {
+        schedule[day].isSplit = !schedule[day].isSplit;
+        saveSchedule();
+        renderScheduleMatrix();
+      };
+
+      window.updateHour = function(day, field, val) {
+        schedule[day][field] = val;
+        saveSchedule();
+      };
+
+      function saveSchedule() {
+        localStorage.setItem('tucu_schedule', JSON.stringify(schedule));
+      }
+
+      // Clonar Lun a Vie
+      document.getElementById('btn-clone-lun-vie')?.addEventListener('click', () => {
+        const ref = schedule[1];
+        [2, 3, 4, 5].forEach(day => {
+          schedule[day] = JSON.parse(JSON.stringify(ref));
+        });
+        saveSchedule();
+        renderScheduleMatrix();
+      });
+
+      // Vacaciones
+      function renderVacations() {
+        const container = document.getElementById('vacations-list-container');
+        if (!container) return;
+        if (vacations.length === 0) {
+          container.innerHTML = `<p class="text-xs text-zinc-500 italic py-2">No hay períodos de cierre especiales registrados.</p>`;
+          return;
+        }
+        container.innerHTML = vacations.map((v, i) => `
+          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">${v.reason || 'Cierre'}</span>
+              <span class="text-zinc-400 font-mono">${v.from} al ${v.to}</span>
+            </div>
+            <button type="button" onclick="deleteVacation(${i})" class="text-rose-400 hover:text-rose-300 font-bold px-2 py-1 cursor-pointer">Eliminar</button>
+          </div>
+        `).join('');
+      }
+
+      window.deleteVacation = function(index) {
+        vacations.splice(index, 1);
+        localStorage.setItem('tucu_l1_vacations', JSON.stringify(vacations));
+        renderVacations();
+      };
+
+      document.getElementById('btn-add-vacation')?.addEventListener('click', () => {
+        const from = document.getElementById('vacation-start').value;
+        const to = document.getElementById('vacation-end').value;
+        const reason = document.getElementById('vacation-reason').value.trim() || 'Cierre Programado';
+        if (!from || !to) return alert('Selecciona fechas válidas');
+        vacations.push({ from, to, reason });
+        localStorage.setItem('tucu_l1_vacations', JSON.stringify(vacations));
+        document.getElementById('vacation-start').value = '';
+        document.getElementById('vacation-end').value = '';
+        document.getElementById('vacation-reason').value = '';
+        renderVacations();
+      });
+
+      // Plantilla y Tokens
+      const templateEl = document.getElementById('cfg-msg-template');
+      const previewEl = document.getElementById('wa-bubble-preview');
+
+      window.insertToken = function(tok) {
+        if (!templateEl) return;
+        templateEl.value += tok;
+        updatePreview();
+        saveConfig();
+      };
+
+      function updatePreview() {
+        if (!templateEl || !previewEl) return;
+        const raw = templateEl.value;
+        const sample = raw
+          .replace(/\{\{cliente\}\}/g, 'Juan Pérez')
+          .replace(/\{\{fecha\}\}/g, 'Lunes 24 de Agosto')
+          .replace(/\{\{hora\}\}/g, '10:30')
+          .replace(/\{\{comercio\}\}/g, document.getElementById('cfg-biz-name')?.value || 'Nexus Studio Demo')
+          .replace(/\{\{telefono\}\}/g, '3811234567');
+        previewEl.innerText = sample;
+      }
+
+      function saveConfig() {
+        const bizName = document.getElementById('cfg-biz-name')?.value.trim() || 'Nexus Studio Demo';
+        const waNumber = document.getElementById('cfg-wa-number')?.value.trim() || '5493815551234';
+        const interval = document.getElementById('cfg-interval')?.value || '30';
+        const days = document.getElementById('cfg-days')?.value || '14';
+        const blockHolidays = document.getElementById('cfg-block-holidays')?.checked ? 'true' : 'false';
+        const template = templateEl?.value || '';
+
+        localStorage.setItem('tucu_l1_biz_name', bizName);
+        localStorage.setItem('tucu_biz_name', bizName);
+        localStorage.setItem('tucu_l1_wa_number', waNumber);
+        localStorage.setItem('tucu_wa_number', waNumber);
+        localStorage.setItem('tucu_l1_interval', interval);
+        localStorage.setItem('tucu_l1_days', days);
+        localStorage.setItem('tucu_l1_block_holidays', blockHolidays);
+        localStorage.setItem('tucu_l1_template', template);
+
+        const accName = document.getElementById('wa-account-name');
+        if (accName) accName.innerText = bizName;
+      }
+
+      // Carga Inicial
+      function init() {
+        const savedName = localStorage.getItem('tucu_l1_biz_name') || localStorage.getItem('tucu_biz_name');
+        if (savedName && document.getElementById('cfg-biz-name')) document.getElementById('cfg-biz-name').value = savedName;
+
+        const savedWa = localStorage.getItem('tucu_l1_wa_number') || localStorage.getItem('tucu_wa_number');
+        if (savedWa && document.getElementById('cfg-wa-number')) document.getElementById('cfg-wa-number').value = savedWa;
+
+        const defaultTpl = '¡Hola! Quiero confirmar mi reserva en {{comercio}}:\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 📞 Tel: {{telefono}}\n¿Me confirman disponibilidad?';
+        if (templateEl) templateEl.value = localStorage.getItem('tucu_l1_template') || defaultTpl;
+
+        ['cfg-biz-name', 'cfg-wa-number', 'cfg-interval', 'cfg-days', 'cfg-block-holidays'].forEach(id => {
+          document.getElementById(id)?.addEventListener('input', () => { saveConfig(); updatePreview(); });
+          document.getElementById(id)?.addEventListener('change', () => { saveConfig(); updatePreview(); });
+        });
+        templateEl?.addEventListener('input', () => { saveConfig(); updatePreview(); });
+
+        renderScheduleMatrix();
+        renderVacations();
+        updatePreview();
+      }
+
+      window.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+</body>
+</html>

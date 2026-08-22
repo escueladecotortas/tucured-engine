@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env.local
+.env
+serviceAccountKey.json
+.netlify
+build_log.txt
+*.log
+.DS_Store

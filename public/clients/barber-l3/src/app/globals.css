@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/container-queries";
+
+@theme {
+  --font-serif: "Prata", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  /* Variables Globales Preexistentes y Nuevas (V4 Brutalismo Urbano) */
+  --color-primary: #000000;
+  --color-secondary: #E5E5E5;
+  --color-accent: #FF0000;
+  --color-surface: #121212;
+  --color-text-bone: #F5F5F5;
+  --color-border-subtle: #000000;
+  
+  /* Paleta Sobria - Nexus-OS Approved */
+  --color-silver: #C0C0C0;
+  --color-graphite: #2A2A2A;
+  --color-chrome: #E5E5E5;
+
+  /* Colores Específicos Brutalismo Urbano - ZERO GRAY POLICY */
+  --color-cement: #F2F2F2; 
+  --color-alert: #800000;
+  --color-ink: #1A1A1A;
+  --color-bordo: #800000;
+}
+
+/* Glassmorphism & Premium Utilities (Legacy Support) */
+.glass-surface {
+  @apply bg-black/50 backdrop-blur-xl border border-white/10;
+}
+
+.premium-card {
+  @apply bg-black border border-white/10 rounded-none transition-all duration-300;
+}
+
+/* Utilidades Brutalistas V4 */
+.brutal-card {
+  @apply bg-cement border-2 border-ink shadow-[4px_4px_0px_0px_#000000] p-6 transition-all duration-200 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000000];
+}
+
+.brutal-badge {
+  @apply bg-ink text-cement font-mono text-xs px-2 py-1 font-bold border border-ink uppercase tracking-wider;
+}
+
+.brutal-border {
+  @apply border-2 border-ink;
+}
+
+/* Patrón de Grilla Técnica (Blueprint Grid) */
+.blueprint-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Efecto Film Grain Industrial */
+.film-grain {
+  position: relative;
+}
+
+.film-grain::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+}
+
+/* Scrollbar Técnico estilo Terminal */
+.technical-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.technical-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid var(--color-ink);
+}
+.technical-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+}
+.technical-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-alert);
+}
+
+body {
+  background-color: #F2F2F2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family: var(--font-geist), sans-serif;
+  @apply text-ink antialiased;
+}
+
+::selection {
+  @apply bg-alert text-white;
+}
+
+/* Animaciones */
+@keyframes pulse-gentle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 3s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 15s ease infinite;
+}
+
+.btn-fomo {
+  @apply relative overflow-hidden transition-all duration-500 active:scale-95;
+}
+
+@media (max-width: 768px) {
+  .btn-fomo-mobile {
+    animation: pulse-gentle 3s ease-in-out infinite;
+    background: var(--color-alert);
+    color: white;
+    border: 2px solid var(--color-ink);
+    box-shadow: 4px 4px 0px 0px var(--color-ink);
+  }
+}
+
+.transition-grayscale {
+  @apply transition-all duration-700 ease-in-out;
+}
+
+/* Paleta Premium V11-ELEGANT */
+.admin-container {
+  background-color: #FDFBF7 !important; /* Blanco hueso / Lino */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E") !important;
+}
+
+.admin-container main {
+  background-color: transparent !important;
+}
+
+.admin-container .text-ink {
+  color: #1A1A1A !important; 
+}
+
+/* Inyección de Emergencia Nativa (ATENEA Bypass Tailwind CDN) */
+.slot-disabled {
+  @apply opacity-20 grayscale pointer-events-none cursor-not-allowed bg-white/5;
+}
+
+/* FIX: Logo Móvil y Visibilidad Admin */
+@media (max-width: 640px) {
+  .mobile-logo-container {
+    max-width: 150px !important;
+    margin-top: 1rem !important;
+  }
+}
+
+.login-visible-force {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  z-index: 99999 !important;
+}
+

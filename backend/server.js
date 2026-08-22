@@ -49,11 +49,34 @@ app.get(['/clients/:slug/assets/:file', '/nexus_archives/tucu-red/clients/:slug/
     next();
 });
 
+// Helper ultraliviano para estado Baileys sin sobrecarga
+let waNodeInstance = null;
+function getBaileysStatus() {
+    try {
+        if (!waNodeInstance) waNodeInstance = require('./services/whatsapp/wa_node.cjs');
+        return waNodeInstance?.getStatus?.()?.status || 'CLOSE';
+    } catch {
+        return 'CLOSE';
+    }
+}
+
+// Endpoint ultraliviano Keep-Alive para Render / UptimeRobot (Root Health Check)
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'online',
+        uptime: Math.round(process.uptime()),
+        timestamp: new Date().toISOString(),
+        baileysState: getBaileysStatus(),
+        service: 'tucured-engine-backend'
+    });
+});
+
 // API REST: Diagnóstico General
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'HEALTHY', engine: 'Tucu Red Generation Engine v11.1',
         port: PORT, uptimeSec: Math.round(process.uptime()),
+        baileysState: getBaileysStatus(),
         timestamp: new Date().toISOString()
     });
 });

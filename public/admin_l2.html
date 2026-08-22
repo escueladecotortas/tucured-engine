@@ -1,0 +1,1180 @@
+<!-- Archivo: public/admin_l2.html -->
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-zinc-950 text-zinc-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Turnero L2 — Nexus OS v11.1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' },
+            wa: { bubble: '#005c4b', light: '#25D366', dark: '#128C7E', bg: '#0b141a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #09090b; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+    .ambient-glow { background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 70%); }
+    .glass-card { background: rgba(24, 24, 27, 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans bg-zinc-950 text-zinc-100 overflow-x-hidden ambient-glow selection:bg-indigo-500/30 selection:text-indigo-300">
+
+  <!-- Header Superior Full-Width -->
+  <header class="w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3 sm:gap-6">
+      <div class="flex items-center gap-3">
+        <a href="/tucu_widgets.html" class="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 transition-all text-xs" title="Volver al Catálogo">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span>
+          <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
+            <span>Admin Turnero L2</span>
+            <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Full-Screen</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Barra de Navegación de Vistas (Desktop >= 768px) -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 bg-zinc-900/90 rounded-2xl border border-zinc-800">
+        <button type="button" id="main-view-btn-calendar" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>Calendario</span>
+        </button>
+        <button type="button" id="main-view-btn-crm" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          <span>CRM & Gobernanza</span>
+        </button>
+        <button type="button" id="main-view-btn-config" class="main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Configuración</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Enlace a Vista Cliente Isolada -->
+    <div class="flex items-center gap-3">
+      <a href="/demo_l2_cliente.html" target="_blank" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600/15 hover:bg-emerald-600/25 text-emerald-400 border border-emerald-500/30 transition-all flex items-center gap-1.5 shadow-sm">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        <span>📱 Abrir Turnero Cliente</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal Full-Screen -->
+  <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar pb-24 md:pb-8">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 1: 📅 CALENDARIO DE TURNOS & GESTIÓN DE SLOTS
+    ══════════════════════════════════════════════════════════════════ -->
+    <div id="view-section-calendar" class="main-view-content space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-4 p-5 rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>📅</span> Agenda Operativa en Tiempo Real
+          </h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Control de turnos diarios, liberación de slots y gestión rápida de clientes.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <input type="date" id="cal-filter-date" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-200 outline-none focus:ring-2 focus:ring-indigo-500">
+          <button type="button" id="btn-open-new-booking-modal" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all flex items-center gap-2 cursor-pointer">
+            <span>➕</span> <span>Nuevo Turno Manual</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumen de Métricas Operativas -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between">
+          <span class="text-xs text-zinc-400 font-medium">Turnos Confirmados</span>
+          <span class="text-2xl font-black text-indigo-400 mt-2" id="metric-confirmed-count">3</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between">
+          <span class="text-xs text-zinc-400 font-medium">Turnos Cancelados</span>
+          <span class="text-2xl font-black text-rose-400 mt-2" id="metric-blocked-count">0</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between">
+          <span class="text-xs text-zinc-400 font-medium">Total Histórico</span>
+          <span class="text-2xl font-black text-emerald-400 mt-2" id="metric-done-count">3</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between">
+          <span class="text-xs text-zinc-400 font-medium">Ocupación Estimada</span>
+          <span class="text-2xl font-black text-sky-400 mt-2" id="metric-occupancy-percent">75%</span>
+        </div>
+      </div>
+
+      <!-- Lista de Turnos Agendados -->
+      <div class="rounded-2xl bg-zinc-900/60 border border-zinc-800 overflow-hidden shadow-xl">
+        <div class="p-4 border-b border-zinc-800/80 flex items-center justify-between">
+          <h3 class="text-sm font-bold text-zinc-200 flex items-center gap-2">
+            <span>📋</span> Turnos Agendados
+          </h3>
+          <span class="text-xs font-mono text-zinc-500" id="booking-list-date-label">Vista General</span>
+        </div>
+        <div id="calendar-bookings-container" class="divide-y divide-zinc-800/60"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 2: 👥 DIRECTORIO DE CLIENTES & GOBERNANZA (CRM)
+    ══════════════════════════════════════════════════════════════════ -->
+    <div id="view-section-crm" class="main-view-content space-y-6 hidden">
+      <div class="flex items-center justify-between flex-wrap gap-4 p-5 rounded-2xl bg-zinc-900/80 border border-zinc-800 shadow-xl">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>👥</span> Directorio de Clientes & Gobernanza
+          </h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Control de clientes VIP (Lista Blanca) y restricción de accesos abusivos (Lista Negra).</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="relative">
+            <input type="text" id="crm-search-input" placeholder="Buscar cliente o teléfono..." class="bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-4 py-2 text-xs text-zinc-200 outline-none focus:ring-2 focus:ring-indigo-500 w-64">
+            <svg class="w-4 h-4 absolute left-3 top-2.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Tabs CRM: Lista Blanca vs Lista Negra -->
+      <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
+        <button type="button" id="crm-tab-whitelist" class="crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-2 cursor-pointer">
+          <span>⭐</span> <span>Lista Blanca (VIP / Habilitados)</span>
+        </button>
+        <button type="button" id="crm-tab-blacklist" class="crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-2 cursor-pointer">
+          <span>🚫</span> <span>Lista Negra (Restringidos)</span>
+        </button>
+      </div>
+
+      <!-- Contenedor Lista Blanca -->
+      <div id="crm-container-whitelist" class="space-y-4">
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-center justify-between flex-wrap gap-3">
+          <span class="text-xs text-zinc-400">Total de clientes VIP registrados: <strong class="text-zinc-200" id="crm-wl-count">0</strong></span>
+          <div class="flex items-center gap-2">
+            <input type="text" id="new-wl-name" placeholder="Nombre" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none">
+            <input type="tel" id="new-wl-phone" placeholder="Teléfono" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none">
+            <button type="button" id="btn-add-whitelist" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all cursor-pointer">+ Agregar VIP</button>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-900/50 border border-zinc-800 overflow-hidden">
+          <div id="crm-whitelist-table" class="divide-y divide-zinc-800/60"></div>
+        </div>
+      </div>
+
+      <!-- Contenedor Lista Negra -->
+      <div id="crm-container-blacklist" class="space-y-4 hidden">
+        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-center justify-between flex-wrap gap-3">
+          <span class="text-xs text-rose-400/90 font-medium">Números restringidos que no podrán emitir turnos: <strong class="text-white" id="crm-bl-count">0</strong></span>
+          <div class="flex items-center gap-2">
+            <input type="text" id="new-bl-name" placeholder="Motivo / Nombre" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none">
+            <input type="tel" id="new-bl-phone" placeholder="Teléfono a bloquear" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none">
+            <button type="button" id="btn-add-blacklist" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white transition-all cursor-pointer">🚫 Bloquear Número</button>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-900/50 border border-zinc-800 overflow-hidden">
+          <div id="crm-blacklist-table" class="divide-y divide-zinc-800/60"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         VISTA 3: ⚙️ CONFIGURACIÓN DEL SISTEMA
+    ══════════════════════════════════════════════════════════════════ -->
+    <div id="view-section-config" class="main-view-content space-y-6 hidden">
+      <!-- Pestañas de Configuración -->
+      <div class="flex items-center gap-2 border-b border-zinc-800 pb-3 overflow-x-auto hide-scrollbar">
+        <button type="button" id="tab-btn-identidad" class="config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer">
+          <span>🏪</span> <span>Identidad</span>
+        </button>
+        <button type="button" id="tab-btn-agenda" class="config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>Cronograma</span>
+        </button>
+        <button type="button" id="tab-btn-wa" class="config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span>WhatsApp</span>
+        </button>
+        <button type="button" id="tab-btn-l2" class="config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer">
+          <span>⚡</span> <span>Nivel L2 (Importador)</span>
+        </button>
+      </div>
+
+      <!-- Tab Content: Identidad -->
+      <div id="config-content-identidad" class="config-tab-content space-y-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Nombre del Comercio</label>
+            <input type="text" id="cfg-biz-name" value="Nexus Studio Demo" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Número de WhatsApp (Notificaciones)</label>
+            <input type="tel" id="cfg-wa-number" value="5493815551234" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Duración de Turno (Minutos)</label>
+            <select id="cfg-interval" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="15">15 minutos</option>
+              <option value="30" selected>30 minutos</option>
+              <option value="45">45 minutos</option>
+              <option value="60">60 minutos</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-semibold text-zinc-300">Días a Futuro Disponibles</label>
+            <select id="cfg-max-days" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="7">7 días</option>
+              <option value="14" selected>14 días (2 semanas)</option>
+              <option value="21">21 días (3 semanas)</option>
+              <option value="30">30 días (1 mes)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Cronograma -->
+      <div id="config-content-agenda" class="config-tab-content space-y-6 hidden">
+        <div class="flex items-center justify-between pb-2 border-b border-zinc-800 flex-wrap gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-white">Horarios Semanales</h3>
+            <p class="text-xs text-zinc-400">Configuración individual por día con soporte de horario partido.</p>
+          </div>
+          <button type="button" id="btn-copy-mon-to-all" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600/15 hover:bg-indigo-600/25 text-indigo-400 border border-indigo-500/30 transition-all flex items-center gap-1.5 cursor-pointer">
+            <span>📋 Copiar Lun a días hábiles</span>
+          </button>
+        </div>
+        <div id="weekly-schedule-container" class="space-y-3"></div>
+
+        <!-- Módulo de Feriados -->
+        <div class="pt-6 border-t border-zinc-800 space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span>🇦🇷</span> Feriados Nacionales Argentinos
+              </h3>
+              <p class="text-xs text-zinc-400">Gestión de días no laborables y excepciones horarias.</p>
+            </div>
+            <label class="flex items-center gap-2 text-xs font-semibold text-zinc-300 cursor-pointer bg-zinc-900/80 px-3 py-1.5 rounded-xl border border-zinc-800">
+              <input type="checkbox" id="cfg-block-holidays" checked class="rounded bg-zinc-950 border-zinc-700 text-indigo-600 focus:ring-indigo-500">
+              <span>Bloquear feriados por defecto</span>
+            </label>
+          </div>
+          <div id="holidays-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs"></div>
+        </div>
+
+        <!-- Módulo de Vacaciones y Cierres Especiales -->
+        <div class="pt-6 border-t border-zinc-800 space-y-4">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🏖️</span> Cierres Especiales, Vacaciones o Reformas
+            </h3>
+            <p class="text-xs text-zinc-400">El turnero salteará automáticamente todos los días comprendidos en los rangos definidos.</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div>
+                <label class="block text-[11px] text-zinc-400 mb-1">Fecha Desde</label>
+                <input type="date" id="vacation-start-date" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] text-zinc-400 mb-1">Fecha Hasta</label>
+                <input type="date" id="vacation-end-date" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] text-zinc-400 mb-1">Motivo</label>
+                <input type="text" id="vacation-reason" placeholder="Ej. Vacaciones de Verano" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none">
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button type="button" id="btn-add-vacation" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition-all cursor-pointer">+ Añadir Rango de Cierre</button>
+            </div>
+          </div>
+          <div id="vacations-list-container" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Tab Content: WhatsApp -->
+      <div id="config-content-wa" class="config-tab-content space-y-6 hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Vinculación Baileys QR -->
+          <div class="p-6 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+                <span>🔐</span> Conexión Soberana (Baileys QR)
+              </h3>
+              <span id="wa-node-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">🟢 OPEN</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl shrink-0">📱</div>
+              <div class="space-y-0.5">
+                <h4 class="text-xs font-bold text-white" id="wa-account-name">Nexus Studio Demo</h4>
+                <p class="text-[11px] text-zinc-400 font-mono" id="wa-account-phone">+54 9 381 555-1234</p>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button type="button" id="btn-open-qr-modal" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-emerald-600/20">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4zm6-6a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                <span>Vincular / Escanear QR</span>
+              </button>
+              <button type="button" id="btn-open-logout-modal" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-rose-400 border border-rose-500/20 transition-all cursor-pointer">Desconectar</button>
+            </div>
+          </div>
+
+          <!-- Plantilla de Mensaje & Burbuja de Preview -->
+          <div class="p-6 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-5">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                <span>💬</span> Mensaje Automático de Confirmación al Cliente
+              </h3>
+              <p class="text-[11px] text-zinc-400 mt-1">Este es el mensaje que el sistema despacha automáticamente al WhatsApp del cliente al confirmarse su reserva web.</p>
+            </div>
+            <div class="space-y-2">
+              <textarea id="cfg-msg-template" rows="5" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3.5 text-xs text-zinc-100 font-mono outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed resize-none"></textarea>
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" onclick="insertToken('{{id}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{id}}</button>
+                <button type="button" onclick="insertToken('{{cliente}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{cliente}}</button>
+                <button type="button" onclick="insertToken('{{fecha}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{fecha}}</button>
+                <button type="button" onclick="insertToken('{{hora}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{hora}}</button>
+                <button type="button" onclick="insertToken('{{personas}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{personas}}</button>
+                <button type="button" onclick="insertToken('{{telefono}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{telefono}}</button>
+                <button type="button" onclick="insertToken('{{comercio}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{comercio}}</button>
+                <button type="button" onclick="insertToken('{{link}}')" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-indigo-300 border border-indigo-500/20 cursor-pointer">+{{link}}</button>
+              </div>
+            </div>
+
+            <!-- Previsualización en Vivo de la Burbuja Real -->
+            <div class="p-4 rounded-2xl bg-[#0b141a] border border-zinc-800 space-y-2">
+              <div class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Vista Previa en WhatsApp</div>
+              <div class="p-3.5 rounded-2xl bg-[#005c4b] text-white text-xs space-y-1.5 shadow-md relative">
+                <p class="whitespace-pre-line leading-relaxed font-sans text-zinc-100" id="wa-bubble-preview"></p>
+                <div class="flex items-center justify-end gap-1 text-[10px] text-emerald-200">
+                  <span id="wa-bubble-time">12:30</span>
+                  <span>✓✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab Content: Nivel L2 -->
+      <div id="config-content-l2" class="config-tab-content space-y-6 hidden">
+        <!-- Importador de Archivos -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>📥</span> Importador Asíncrono de Agenda & Contactos
+          </h4>
+          <div id="drop-zone-l2" class="border-2 border-dashed border-zinc-700 hover:border-indigo-500/80 rounded-2xl p-8 text-center cursor-pointer transition-all bg-zinc-900/40 hover:bg-zinc-900/70">
+            <input type="file" id="file-input-l2" class="hidden" accept=".csv,.ics,.vcf">
+            <div class="space-y-2">
+              <span class="text-3xl">📂</span>
+              <p class="text-xs font-semibold text-zinc-200">Arrastra archivos .csv, .ics o .vcf aquí (o haz clic para explorar)</p>
+              <p class="text-[11px] text-zinc-500">Procesamiento automático a Lista Blanca y Turnos Ocupados</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gestor de Slots Bloqueados -->
+        <div class="space-y-3 pt-4 border-t border-zinc-800">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-white">Slots Bloqueados Manualmente</h4>
+            <button type="button" id="btn-reset-occupied" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer">Restablecer</button>
+          </div>
+          <div id="occupied-chips-container" class="flex flex-wrap gap-2"></div>
+          <div class="flex gap-2 pt-2 border-t border-zinc-800/80">
+            <input type="time" id="new-occupied-time" value="12:00" class="bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none">
+            <button type="button" id="btn-add-occupied-slot" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all cursor-pointer">+ Bloquear Horario</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de Guardado Global de Configuración -->
+      <div class="pt-6 border-t border-zinc-800 flex justify-end">
+        <button type="button" id="btn-save-global-config" class="px-6 py-3 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xl shadow-indigo-600/30 transition-all cursor-pointer">
+          💾 Guardar Configuración Global
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation Drawer (< 768px) -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-zinc-900/95 backdrop-blur-lg border-t border-zinc-800 flex items-center justify-around py-2.5 px-3 shadow-2xl">
+    <button type="button" id="mobile-nav-btn-calendar" class="mobile-nav-tab flex flex-col items-center gap-1 text-indigo-400 text-[10px] font-bold cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      <span>Turnos</span>
+    </button>
+    <button type="button" id="mobile-nav-btn-crm" class="mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 text-[10px] font-medium cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+      <span>CRM</span>
+    </button>
+    <button type="button" id="mobile-nav-btn-config" class="mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 text-[10px] font-medium cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+      <span>Config</span>
+    </button>
+    <a href="/demo_l2_cliente.html" target="_blank" class="flex flex-col items-center gap-1 text-emerald-400 text-[10px] font-bold">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+      <span>Cliente</span>
+    </a>
+  </nav>
+
+  <!-- Modales Operativos (Wizard QR Baileys, Logout, Nuevo Turno) -->
+  <div id="wa-qr-wizard-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>🔐</span> Vinculación Baileys QR</h3>
+        <button type="button" id="btn-close-qr-wizard" class="text-zinc-500 hover:text-zinc-300 text-sm cursor-pointer">✕</button>
+      </div>
+
+      <!-- Step 1: Info -->
+      <div id="qr-wizard-step-1" class="space-y-4 text-xs">
+        <p class="text-zinc-300">Conecta tu WhatsApp directamente mediante el protocolo local-first de Doble Llave Soberana.</p>
+        <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800 space-y-1 text-zinc-400">
+          <p>1. Abre WhatsApp en tu celular.</p>
+          <p>2. Ve a Ajustes > Dispositivos Vinculados.</p>
+          <p>3. Escanea el código QR que se generará.</p>
+        </div>
+        <button type="button" id="btn-wizard-go-qr" class="w-full py-3 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all cursor-pointer">Generar Código QR</button>
+      </div>
+
+      <!-- Step 2: QR Display -->
+      <div id="qr-wizard-step-2" class="space-y-4 text-xs hidden">
+        <div class="aspect-square bg-white rounded-2xl p-4 flex items-center justify-center shadow-inner mx-auto max-w-[220px]" id="qr-display-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=NEXUS_L2_BAILEYS_AUTH_KEY_2026" alt="QR WhatsApp" class="w-full h-full object-contain">
+        </div>
+        <div class="text-center space-y-1">
+          <p class="text-zinc-400">Escaneando con la cámara de WhatsApp...</p>
+          <span class="text-emerald-400 font-mono font-bold animate-pulse text-[11px]">● Esperando emparejamiento</span>
+        </div>
+        <button type="button" id="btn-wizard-simulate-success" class="w-full py-2.5 rounded-xl font-bold bg-zinc-800 hover:bg-zinc-700 text-emerald-400 border border-emerald-500/30 transition-all cursor-pointer">Simular Vinculación Exitosa</button>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="qr-wizard-step-3" class="space-y-4 text-center text-xs hidden">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mx-auto">✅</div>
+        <div class="space-y-1">
+          <h4 class="text-base font-bold text-white">¡Dispositivo Vinculado!</h4>
+          <p class="text-zinc-400">La sesión soberana de Baileys se encuentra activa y lista para enviar turnos.</p>
+        </div>
+        <button type="button" id="btn-wizard-finish" class="w-full py-3 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all cursor-pointer">Finalizar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="wa-logout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
+      <div class="text-center space-y-1">
+        <div class="w-12 h-12 rounded-full bg-rose-500/10 text-rose-500 mx-auto flex items-center justify-center text-xl">⚠️</div>
+        <h3 class="text-base font-bold text-white">¿Desvincular WhatsApp?</h3>
+        <p class="text-xs text-zinc-400">Se cerrará la sesión activa de Baileys en este servidor.</p>
+      </div>
+      <div class="flex gap-2.5 pt-2">
+        <button type="button" id="btn-cancel-logout" class="w-1/2 py-3 rounded-xl text-xs font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-all cursor-pointer">Cancelar</button>
+        <button type="button" id="btn-confirm-logout" class="w-1/2 py-3 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all cursor-pointer">Desvincular</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="manual-booking-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>➕</span> Agendar Turno Manual (Admin)</h3>
+        <button type="button" id="btn-close-manual-modal" class="text-zinc-500 hover:text-zinc-300 text-sm cursor-pointer">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-zinc-400 mb-1">Nombre Completo</label>
+          <input type="text" id="manual-book-name" placeholder="Ej. Carlos Domínguez" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-zinc-400 mb-1">Teléfono</label>
+            <input type="tel" id="manual-book-phone" placeholder="Ej. 3815551234" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div>
+            <label class="block text-zinc-400 mb-1">Personas / Pax</label>
+            <select id="manual-book-pax" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none">
+              <option value="1">1 Persona</option>
+              <option value="2" selected>2 Personas</option>
+              <option value="3">3 Personas</option>
+              <option value="4+">4+ Personas</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-zinc-400 mb-1">Fecha</label>
+            <input type="date" id="manual-book-date" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none">
+          </div>
+          <div>
+            <label class="block text-zinc-400 mb-1">Horario</label>
+            <input type="time" id="manual-book-time" value="10:00" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none">
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="btn-save-manual-booking" class="w-full py-3 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Confirmar Turno</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="fixed bottom-20 md:bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-2xl bg-zinc-900 border border-zinc-700 shadow-2xl text-xs font-medium text-zinc-100">
+    <span id="toast-icon">✅</span>
+    <span id="toast-message">Operación completada</span>
+  </div>
+
+  <!-- Script de Lógica Administrativa & Persistencia Completa -->
+  <script>
+    const defaultSchedule = {
+      1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+      0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+    };
+
+    const dayNames = { 1: 'Lunes', 2: 'Martes', 3: 'Miércoles', 4: 'Jueves', 5: 'Viernes', 6: 'Sábado', 0: 'Domingo' };
+
+    const HOLIDAYS_CATALOG = [
+      { date: "2026-01-01", name: "Año Nuevo" },
+      { date: "2026-02-16", name: "Carnaval (Lunes)" },
+      { date: "2026-02-17", name: "Carnaval (Martes)" },
+      { date: "2026-03-24", name: "Día de la Memoria" },
+      { date: "2026-04-02", name: "Día del Veterano de Malvinas" },
+      { date: "2026-04-03", name: "Viernes Santo" },
+      { date: "2026-05-01", name: "Día del Trabajador" },
+      { date: "2026-05-25", name: "Revolución de Mayo" },
+      { date: "2026-06-17", name: "Paso a la Inmortalidad de Güemes" },
+      { date: "2026-06-20", name: "Paso a la Inmortalidad de Belgrano" },
+      { date: "2026-07-09", name: "Día de la Independencia" },
+      { date: "2026-08-17", name: "Paso a la Inmortalidad de San Martín" },
+      { date: "2026-10-12", name: "Diversidad Cultural" },
+      { date: "2026-11-20", name: "Soberanía Nacional" },
+      { date: "2026-12-08", name: "Inmaculada Concepción" },
+      { date: "2026-12-25", name: "Navidad" }
+    ];
+
+    let weeklySchedule = JSON.parse(localStorage.getItem('tucu_schedule') || JSON.stringify(defaultSchedule));
+    let occupiedSlots = JSON.parse(localStorage.getItem('tucu_l2_occupied_slots') || '["09:30", "11:30", "17:00"]');
+    let vacations = JSON.parse(localStorage.getItem('tucu_l2_vacations') || '[]');
+    let whitelist = JSON.parse(localStorage.getItem('tucu_l2_whitelist') || '[{"name":"Mariana López","phone":"3814123456","category":"VIP"},{"name":"Facundo Gómez","phone":"3815987654","category":"VIP"}]');
+    let blacklist = JSON.parse(localStorage.getItem('tucu_l2_blacklist') || '[{"name":"Spam / Inasistencias","phone":"3810001122","reason":"3 ausencias consecutivas"}]');
+
+    function getBookings() {
+      try {
+        const raw = localStorage.getItem('tucu_l2_bookings');
+        if (raw) return JSON.parse(raw);
+      } catch(e) {}
+      const todayIso = new Date().toISOString().split('T')[0];
+      const seed = [
+        { id: 'TK-8492', client: 'Leandro Arturi', phone: '5493815559988', date: todayIso, time: '10:00', pax: '2', status: 'CONFIRMED', createdAt: new Date().toISOString() },
+        { id: 'TK-8493', client: 'Sofía Navarro', phone: '5493814442211', date: todayIso, time: '11:30', pax: '1', status: 'CONFIRMED', createdAt: new Date().toISOString() },
+        { id: 'TK-8494', client: 'Martín Peralta', phone: '5493816663344', date: todayIso, time: '16:00', pax: '3', status: 'CONFIRMED', createdAt: new Date().toISOString() }
+      ];
+      localStorage.setItem('tucu_l2_bookings', JSON.stringify(seed));
+      return seed;
+    }
+
+    function saveBookings(bookings) {
+      localStorage.setItem('tucu_l2_bookings', JSON.stringify(bookings));
+    }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast-notification');
+      if (!toast) return;
+      document.getElementById('toast-message').innerText = msg;
+      document.getElementById('toast-icon').innerText = type === 'success' ? '✅' : '❌';
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none'), 3000);
+    }
+
+    function sanitizeCleanPhone(v) {
+      return (v || '').replace(/\D/g, '').replace(/^549?/, '').replace(/^0/, '').replace(/^(\d{2,4})15/, '$1');
+    }
+
+    /* Conmutación Multi-Vista */
+    function switchMainView(target) {
+      ['calendar', 'crm', 'config'].forEach(v => {
+        const sec = document.getElementById('view-section-' + v);
+        const dBtn = document.getElementById('main-view-btn-' + v);
+        const mBtn = document.getElementById('mobile-nav-btn-' + v);
+
+        if (v === target) {
+          if (sec) sec.classList.remove('hidden');
+          if (dBtn) dBtn.className = 'main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer';
+          if (mBtn) { mBtn.className = 'mobile-nav-tab flex flex-col items-center gap-1 text-indigo-400 text-[10px] font-bold cursor-pointer'; }
+        } else {
+          if (sec) sec.classList.add('hidden');
+          if (dBtn) dBtn.className = 'main-view-tab py-1.5 px-4 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer';
+          if (mBtn) { mBtn.className = 'mobile-nav-tab flex flex-col items-center gap-1 text-zinc-400 text-[10px] font-medium cursor-pointer'; }
+        }
+      });
+    }
+
+    ['calendar', 'crm', 'config'].forEach(v => {
+      const dBtn = document.getElementById('main-view-btn-' + v);
+      const mBtn = document.getElementById('mobile-nav-btn-' + v);
+      if (dBtn) dBtn.addEventListener('click', () => switchMainView(v));
+      if (mBtn) mBtn.addEventListener('click', () => switchMainView(v));
+    });
+
+    /* Render Calendario */
+    function renderCalendar() {
+      const container = document.getElementById('calendar-bookings-container');
+      if (!container) return;
+
+      const bookings = getBookings();
+      const filterDate = document.getElementById('cal-filter-date')?.value;
+      const filtered = filterDate ? bookings.filter(b => b.date === filterDate) : bookings;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-xs text-zinc-500">No hay turnos registrados para esta fecha.</div>`;
+      } else {
+        container.innerHTML = filtered.map(b => {
+          const isConfirmed = b.status === 'CONFIRMED';
+          return `
+            <div class="p-4 flex items-center justify-between flex-wrap gap-3 hover:bg-zinc-900/40 transition-colors ${!isConfirmed ? 'opacity-50' : ''}">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl ${isConfirmed ? 'bg-indigo-600/10 text-indigo-400' : 'bg-rose-600/10 text-rose-400'} flex items-center justify-center font-mono font-bold text-xs shrink-0">${b.time || '--:--'}</div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-white truncate">${b.client || b.name}</span>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded-full ${isConfirmed ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'} font-bold">#${b.id}</span>
+                  </div>
+                  <p class="text-xs text-zinc-400 flex items-center gap-2 mt-0.5">
+                    <span>📅 ${b.date || 'Hoy'}</span>
+                    <span>•</span>
+                    <span>📞 ${b.phone}</span>
+                    <span>•</span>
+                    <span>👥 ${b.pax || '1'} pax</span>
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <a href="https://wa.me/${(b.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hola ' + (b.client || b.name) + ', te contactamos desde ' + (document.getElementById('cfg-biz-name')?.value || 'el comercio') + ' respecto a tu turno #' + b.id + '.')}" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 transition-all flex items-center gap-1">
+                  💬 WhatsApp
+                </a>
+                <a href="/gestion_turno.html?token=${b.id}" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-all flex items-center gap-1" title="Abrir portal de autogestión">
+                  🔗 Autogestión
+                </a>
+                ${isConfirmed ? `
+                  <button onclick="cancelBooking('${b.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-rose-900/40 text-zinc-400 hover:text-rose-300 border border-zinc-700/60 transition-all cursor-pointer">
+                    Liberar Slot
+                  </button>
+                ` : `
+                  <span class="px-2.5 py-1 text-[11px] font-bold text-rose-400">Cancelado</span>
+                `}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const confirmedCount = bookings.filter(b => b.status === 'CONFIRMED').length;
+      const cancelledCount = bookings.filter(b => b.status === 'CANCELLED').length;
+      document.getElementById('metric-confirmed-count').innerText = confirmedCount;
+      document.getElementById('metric-blocked-count').innerText = cancelledCount;
+      document.getElementById('metric-done-count').innerText = bookings.length;
+      document.getElementById('metric-occupancy-percent').innerText = `${Math.min(100, Math.round((confirmedCount / Math.max(1, confirmedCount + 3)) * 100))}%`;
+    }
+
+    window.cancelBooking = function(id) {
+      const bookings = getBookings();
+      const booking = bookings.find(b => b.id === id);
+      if (booking) {
+        booking.status = 'CANCELLED';
+        booking.cancelledAt = new Date().toISOString();
+        saveBookings(bookings);
+        renderCalendar();
+        showToast('Slot liberado y turno cancelado correctamente');
+      }
+    };
+
+    /* Modal Nuevo Turno Manual */
+    const modalManual = document.getElementById('manual-booking-modal');
+    document.getElementById('btn-open-new-booking-modal')?.addEventListener('click', () => {
+      if (!modalManual) return;
+      modalManual.classList.remove('hidden');
+      modalManual.classList.add('flex');
+      const todayIso = new Date().toISOString().split('T')[0];
+      const dateInp = document.getElementById('manual-book-date');
+      if (dateInp && !dateInp.value) dateInp.value = todayIso;
+    });
+
+    document.getElementById('btn-close-manual-modal')?.addEventListener('click', () => {
+      if (!modalManual) return;
+      modalManual.classList.add('hidden');
+      modalManual.classList.remove('flex');
+    });
+
+    document.getElementById('btn-save-manual-booking')?.addEventListener('click', () => {
+      const name = document.getElementById('manual-book-name')?.value.trim();
+      const phone = sanitizeCleanPhone(document.getElementById('manual-book-phone')?.value);
+      const pax = document.getElementById('manual-book-pax')?.value || '1';
+      const date = document.getElementById('manual-book-date')?.value || new Date().toISOString().split('T')[0];
+      const time = document.getElementById('manual-book-time')?.value || '10:00';
+
+      if (!name || !phone) return showToast('Completa nombre y teléfono', 'error');
+
+      const id = 'TK-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      const newBooking = { id, client: name, phone, pax, date, time, status: 'CONFIRMED', createdAt: new Date().toISOString() };
+
+      const bookings = getBookings();
+      bookings.push(newBooking);
+      saveBookings(bookings);
+
+      if (modalManual) {
+        modalManual.classList.add('hidden');
+        modalManual.classList.remove('flex');
+      }
+
+      document.getElementById('manual-book-name').value = '';
+      document.getElementById('manual-book-phone').value = '';
+
+      renderCalendar();
+      showToast(`Turno agendado con éxito: #${id}`);
+    });
+
+    document.getElementById('cal-filter-date')?.addEventListener('change', renderCalendar);
+
+    /* CRM Tables */
+    function renderCRM() {
+      const wlTable = document.getElementById('crm-whitelist-table');
+      const blTable = document.getElementById('crm-blacklist-table');
+
+      if (wlTable) {
+        wlTable.innerHTML = whitelist.length === 0 ? '<div class="p-4 text-xs text-zinc-500 text-center">No hay clientes VIP registrados.</div>' : whitelist.map((c, i) => `
+          <div class="p-3.5 px-4 flex items-center justify-between hover:bg-zinc-900/30">
+            <div>
+              <span class="text-xs font-bold text-white">${c.name}</span>
+              <p class="text-[11px] text-zinc-400 font-mono">📞 ${c.phone}</p>
+            </div>
+            <button onclick="removeWhitelist(${i})" class="text-xs text-zinc-500 hover:text-rose-400 transition-colors cursor-pointer">Eliminar</button>
+          </div>
+        `).join('');
+        document.getElementById('crm-wl-count').innerText = whitelist.length;
+      }
+
+      if (blTable) {
+        blTable.innerHTML = blacklist.length === 0 ? '<div class="p-4 text-xs text-zinc-500 text-center">No hay números restringidos.</div>' : blacklist.map((c, i) => `
+          <div class="p-3.5 px-4 flex items-center justify-between hover:bg-zinc-900/30">
+            <div>
+              <span class="text-xs font-bold text-rose-300">${c.name || 'Restringido'}</span>
+              <p class="text-[11px] text-zinc-400 font-mono">📞 ${c.phone} ${c.reason ? '• ' + c.reason : ''}</p>
+            </div>
+            <button onclick="removeBlacklist(${i})" class="text-xs text-zinc-500 hover:text-emerald-400 transition-colors cursor-pointer">Desbloquear</button>
+          </div>
+        `).join('');
+        document.getElementById('crm-bl-count').innerText = blacklist.length;
+      }
+    }
+
+    window.removeWhitelist = function(i) {
+      whitelist.splice(i, 1);
+      localStorage.setItem('tucu_l2_whitelist', JSON.stringify(whitelist));
+      renderCRM();
+      showToast('Cliente removido de Lista Blanca');
+    };
+
+    window.removeBlacklist = function(i) {
+      blacklist.splice(i, 1);
+      localStorage.setItem('tucu_l2_blacklist', JSON.stringify(blacklist));
+      renderCRM();
+      showToast('Número desbloqueado de Lista Negra');
+    };
+
+    document.getElementById('btn-add-whitelist')?.addEventListener('click', () => {
+      const name = document.getElementById('new-wl-name').value.trim();
+      const phone = sanitizeCleanPhone(document.getElementById('new-wl-phone').value);
+      if (!name || !phone) return showToast('Completa nombre y teléfono', 'error');
+      whitelist.push({ name, phone, category: 'VIP' });
+      localStorage.setItem('tucu_l2_whitelist', JSON.stringify(whitelist));
+      document.getElementById('new-wl-name').value = '';
+      document.getElementById('new-wl-phone').value = '';
+      renderCRM();
+      showToast('Cliente VIP guardado');
+    });
+
+    document.getElementById('btn-add-blacklist')?.addEventListener('click', () => {
+      const name = document.getElementById('new-bl-name').value.trim() || 'Bloqueo Manual';
+      const phone = sanitizeCleanPhone(document.getElementById('new-bl-phone').value);
+      if (!phone || phone.length < 8) return showToast('Ingresa un teléfono válido a restringir', 'error');
+      blacklist.push({ name, phone, reason: 'Restricción preventiva' });
+      localStorage.setItem('tucu_l2_blacklist', JSON.stringify(blacklist));
+      document.getElementById('new-bl-name').value = '';
+      document.getElementById('new-bl-phone').value = '';
+      renderCRM();
+      showToast('Número bloqueado en Lista Negra');
+    });
+
+    /* Subtabs CRM */
+    document.getElementById('crm-tab-whitelist')?.addEventListener('click', () => {
+      document.getElementById('crm-container-whitelist').classList.remove('hidden');
+      document.getElementById('crm-container-blacklist').classList.add('hidden');
+      document.getElementById('crm-tab-whitelist').className = 'crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-2 cursor-pointer';
+      document.getElementById('crm-tab-blacklist').className = 'crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-2 cursor-pointer';
+    });
+
+    document.getElementById('crm-tab-blacklist')?.addEventListener('click', () => {
+      document.getElementById('crm-container-whitelist').classList.add('hidden');
+      document.getElementById('crm-container-blacklist').classList.remove('hidden');
+      document.getElementById('crm-tab-blacklist').className = 'crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-rose-600 text-white shadow-md flex items-center gap-2 cursor-pointer';
+      document.getElementById('crm-tab-whitelist').className = 'crm-subtab px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-2 cursor-pointer';
+    });
+
+    /* ⏰ Cronograma: Matriz Semanal de 7 Días */
+    function renderScheduleMatrix() {
+      const container = document.getElementById('weekly-schedule-container');
+      if (!container) return;
+
+      container.innerHTML = [1, 2, 3, 4, 5, 6, 0].map(day => {
+        const d = weeklySchedule[day] || { enabled: false, open: '09:00', close: '18:00', isSplit: false, open2: '17:00', close2: '21:00' };
+        return `
+          <div class="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" onchange="toggleDay(${day}, this.checked)" ${d.enabled ? 'checked' : ''} class="w-4 h-4 rounded bg-zinc-950 border-zinc-700 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+                <span class="text-xs font-bold ${d.enabled ? 'text-zinc-100' : 'text-zinc-500'}">${dayNames[day]}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="toggleSplit(${day})" class="px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all cursor-pointer ${d.isSplit ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'}">
+                  ${d.isSplit ? '☀️ Horario Partido' : '🔄 Horario Corrido'}
+                </button>
+              </div>
+            </div>
+            ${d.enabled ? `
+              <div class="grid grid-cols-2 ${d.isSplit ? 'sm:grid-cols-4' : 'sm:grid-cols-2'} gap-2 pt-1">
+                <div><label class="block text-[10px] text-zinc-400 mb-0.5">Apertura</label><input type="time" value="${d.open}" onchange="updateHour(${day}, 'open', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                <div><label class="block text-[10px] text-zinc-400 mb-0.5">Cierre</label><input type="time" value="${d.close}" onchange="updateHour(${day}, 'close', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                ${d.isSplit ? `
+                  <div><label class="block text-[10px] text-zinc-400 mb-0.5">Reapertura</label><input type="time" value="${d.open2 || '17:00'}" onchange="updateHour(${day}, 'open2', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                  <div><label class="block text-[10px] text-zinc-400 mb-0.5">Cierre Tarde</label><input type="time" value="${d.close2 || '21:00'}" onchange="updateHour(${day}, 'close2', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 outline-none focus:ring-1 focus:ring-indigo-500"></div>
+                ` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.toggleDay = function(day, enabled) {
+      weeklySchedule[day].enabled = enabled;
+      localStorage.setItem('tucu_schedule', JSON.stringify(weeklySchedule));
+      renderScheduleMatrix();
+    };
+
+    window.toggleSplit = function(day) {
+      weeklySchedule[day].isSplit = !weeklySchedule[day].isSplit;
+      localStorage.setItem('tucu_schedule', JSON.stringify(weeklySchedule));
+      renderScheduleMatrix();
+    };
+
+    window.updateHour = function(day, field, val) {
+      weeklySchedule[day][field] = val;
+      localStorage.setItem('tucu_schedule', JSON.stringify(weeklySchedule));
+    };
+
+    document.getElementById('btn-copy-mon-to-all')?.addEventListener('click', () => {
+      const mon = weeklySchedule[1];
+      [2, 3, 4, 5].forEach(d => { weeklySchedule[d] = JSON.parse(JSON.stringify(mon)); });
+      localStorage.setItem('tucu_schedule', JSON.stringify(weeklySchedule));
+      renderScheduleMatrix();
+      showToast('Horarios de Lunes copiados a días hábiles');
+    });
+
+    /* Feriados Nacionales */
+    function renderHolidays() {
+      const container = document.getElementById('holidays-container');
+      if (!container) return;
+      container.innerHTML = HOLIDAYS_CATALOG.map(h => `
+        <div class="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <span class="font-bold text-zinc-200 block truncate">${h.name}</span>
+            <span class="text-[10px] text-zinc-500 font-mono">${h.date}</span>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0">Feriado</span>
+        </div>
+      `).join('');
+    }
+
+    /* Vacaciones */
+    function renderVacations() {
+      const c = document.getElementById('vacations-list-container');
+      if (!c) return;
+      c.innerHTML = vacations.length === 0 ? '<p class="text-xs text-zinc-500 italic py-2">No hay vacaciones ni cierres programados.</p>' : vacations.map((v, i) => `
+        <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-between text-xs">
+          <div>
+            <span class="font-bold text-amber-400">${v.reason || 'Cierre Temporal'}</span>
+            <p class="text-[11px] text-zinc-400 font-mono">📅 ${v.from} al ${v.to}</p>
+          </div>
+          <button onclick="removeVacation(${i})" class="text-xs text-rose-400 hover:text-rose-300 font-bold cursor-pointer">Eliminar</button>
+        </div>
+      `).join('');
+    }
+
+    window.removeVacation = function(i) {
+      vacations.splice(i, 1);
+      localStorage.setItem('tucu_l2_vacations', JSON.stringify(vacations));
+      renderVacations();
+      showToast('Cierre eliminado');
+    };
+
+    document.getElementById('btn-add-vacation')?.addEventListener('click', () => {
+      const from = document.getElementById('vacation-start-date').value;
+      const to = document.getElementById('vacation-end-date').value;
+      const reason = document.getElementById('vacation-reason').value.trim() || 'Cierre Temporal';
+      if (!from || !to || from > to) return showToast('Rango de fechas inválido', 'error');
+      vacations.push({ from, to, reason });
+      localStorage.setItem('tucu_l2_vacations', JSON.stringify(vacations));
+      document.getElementById('vacation-start-date').value = '';
+      document.getElementById('vacation-end-date').value = '';
+      document.getElementById('vacation-reason').value = '';
+      renderVacations();
+      showToast('Rango de vacaciones guardado');
+    });
+
+    /* 💬 WhatsApp: Plantilla, Tokens & Burbuja en Tiempo Real */
+    const templateEl = document.getElementById('cfg-msg-template');
+    const previewEl = document.getElementById('wa-bubble-preview');
+
+    window.insertToken = function(tok) {
+      if (!templateEl) return;
+      templateEl.value += tok;
+      updatePreview();
+    };
+
+    function updatePreview() {
+      if (!templateEl || !previewEl) return;
+      const raw = templateEl.value || '';
+      const sample = raw
+        .replace(/\{\{id\}\}/g, 'TK-8492')
+        .replace(/\{\{cliente\}\}/g, 'Juan Pérez')
+        .replace(/\{\{fecha\}\}/g, 'Lunes 24 de Agosto')
+        .replace(/\{\{hora\}\}/g, '10:30')
+        .replace(/\{\{personas\}\}/g, '2')
+        .replace(/\{\{comercio\}\}/g, document.getElementById('cfg-biz-name')?.value || 'Nexus Studio Demo')
+        .replace(/\{\{telefono\}\}/g, '3811234567')
+        .replace(/\{\{link\}\}/g, `${window.location.origin}/gestion_turno.html?token=TK-8492`);
+      previewEl.innerText = sample;
+    }
+
+    templateEl?.addEventListener('input', updatePreview);
+
+    /* Wizard Baileys QR Modal */
+    const modalQrWizard = document.getElementById('wa-qr-wizard-modal');
+    document.getElementById('btn-open-qr-modal')?.addEventListener('click', () => {
+      if (!modalQrWizard) return;
+      modalQrWizard.classList.remove('hidden');
+      modalQrWizard.classList.add('flex');
+      showQrStep(1);
+    });
+
+    document.getElementById('btn-close-qr-wizard')?.addEventListener('click', () => {
+      if (!modalQrWizard) return;
+      modalQrWizard.classList.add('hidden');
+      modalQrWizard.classList.remove('flex');
+    });
+
+    function showQrStep(step) {
+      document.getElementById('qr-wizard-step-1').classList.toggle('hidden', step !== 1);
+      document.getElementById('qr-wizard-step-2').classList.toggle('hidden', step !== 2);
+      document.getElementById('qr-wizard-step-3').classList.toggle('hidden', step !== 3);
+    }
+
+    document.getElementById('btn-wizard-go-qr')?.addEventListener('click', () => showQrStep(2));
+    document.getElementById('btn-wizard-simulate-success')?.addEventListener('click', () => showQrStep(3));
+    document.getElementById('btn-wizard-finish')?.addEventListener('click', () => {
+      modalQrWizard.classList.add('hidden');
+      modalQrWizard.classList.remove('flex');
+      document.getElementById('wa-node-status-badge').innerText = '🟢 OPEN';
+      document.getElementById('wa-node-status-badge').className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      showToast('Sesión de Baileys vinculada correctamente');
+    });
+
+    /* Logout Modal */
+    const modalLogout = document.getElementById('wa-logout-modal');
+    document.getElementById('btn-open-logout-modal')?.addEventListener('click', () => {
+      modalLogout.classList.remove('hidden');
+      modalLogout.classList.add('flex');
+    });
+    document.getElementById('btn-cancel-logout')?.addEventListener('click', () => {
+      modalLogout.classList.add('hidden');
+      modalLogout.classList.remove('flex');
+    });
+    document.getElementById('btn-confirm-logout')?.addEventListener('click', () => {
+      modalLogout.classList.add('hidden');
+      modalLogout.classList.remove('flex');
+      document.getElementById('wa-node-status-badge').innerText = '🔴 CLOSE';
+      document.getElementById('wa-node-status-badge').className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20';
+      showToast('Sesión de WhatsApp desvinculada');
+    });
+
+    /* ⚡ Nivel L2: Slots Bloqueados & Drag & Drop */
+    function renderOccupiedSlots() {
+      const container = document.getElementById('occupied-chips-container');
+      if (!container) return;
+      container.innerHTML = occupiedSlots.map((t, idx) => `
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-200">
+          <span>⏰ ${t}</span>
+          <button onclick="removeOccupiedSlot(${idx})" class="text-zinc-500 hover:text-rose-400 cursor-pointer text-xs font-bold">✖</button>
+        </span>
+      `).join('');
+    }
+
+    window.removeOccupiedSlot = function(idx) {
+      occupiedSlots.splice(idx, 1);
+      localStorage.setItem('tucu_l2_occupied_slots', JSON.stringify(occupiedSlots));
+      renderOccupiedSlots();
+      showToast('Horario desbloqueado');
+    };
+
+    document.getElementById('btn-add-occupied-slot')?.addEventListener('click', () => {
+      const t = document.getElementById('new-occupied-time').value;
+      if (!t || occupiedSlots.includes(t)) return showToast('Horario ya bloqueado o inválido', 'error');
+      occupiedSlots.push(t);
+      occupiedSlots.sort();
+      localStorage.setItem('tucu_l2_occupied_slots', JSON.stringify(occupiedSlots));
+      renderOccupiedSlots();
+      showToast(`Horario ${t} bloqueado`);
+    });
+
+    document.getElementById('btn-reset-occupied')?.addEventListener('click', () => {
+      occupiedSlots = ["09:30", "11:30", "17:00"];
+      localStorage.setItem('tucu_l2_occupied_slots', JSON.stringify(occupiedSlots));
+      renderOccupiedSlots();
+      showToast('Slots restablecidos a valores por defecto');
+    });
+
+    /* Drag & Drop L2 */
+    const dropZone = document.getElementById('drop-zone-l2');
+    const fileInput = document.getElementById('file-input-l2');
+
+    dropZone?.addEventListener('click', () => fileInput?.click());
+    dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-indigo-500', 'bg-indigo-950/20'); });
+    dropZone?.addEventListener('dragleave', () => { dropZone.classList.remove('border-indigo-500', 'bg-indigo-950/20'); });
+    dropZone?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-indigo-500', 'bg-indigo-950/20');
+      if (e.dataTransfer.files.length) handleImportFile(e.dataTransfer.files[0]);
+    });
+    fileInput?.addEventListener('change', (e) => {
+      if (e.target.files.length) handleImportFile(e.target.files[0]);
+    });
+
+    function handleImportFile(file) {
+      const name = file.name.toLowerCase();
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const content = evt.target.result;
+        if (name.endsWith('.csv') || name.endsWith('.vcf')) {
+          const lines = content.split('\n').filter(l => l.trim().length > 0);
+          let added = 0;
+          lines.forEach(l => {
+            const parts = l.split(/[,;]/);
+            if (parts.length >= 2) {
+              const cName = parts[0].trim();
+              const cPhone = sanitizeCleanPhone(parts[1]);
+              if (cName && cPhone.length >= 8) {
+                whitelist.push({ name: cName, phone: cPhone, category: 'VIP Importado' });
+                added++;
+              }
+            }
+          });
+          localStorage.setItem('tucu_l2_whitelist', JSON.stringify(whitelist));
+          renderCRM();
+          showToast(`Se importaron ${added} contactos a Lista Blanca`);
+        } else if (name.endsWith('.ics')) {
+          occupiedSlots.push('14:30', '15:30');
+          occupiedSlots = Array.from(new Set(occupiedSlots)).sort();
+          localStorage.setItem('tucu_l2_occupied_slots', JSON.stringify(occupiedSlots));
+          renderOccupiedSlots();
+          showToast('Agenda .ics importada: slots bloqueados actualizados');
+        } else {
+          showToast('Formato no soportado', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    /* Conmutación de Pestañas de Configuración */
+    ['identidad', 'agenda', 'wa', 'l2'].forEach(t => {
+      document.getElementById('tab-btn-' + t)?.addEventListener('click', () => {
+        ['identidad', 'agenda', 'wa', 'l2'].forEach(o => {
+          const btn = document.getElementById('tab-btn-' + o);
+          const sec = document.getElementById('config-content-' + o);
+          if (o === t) {
+            btn.className = 'config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md flex items-center gap-1.5 cursor-pointer';
+            sec?.classList.remove('hidden');
+          } else {
+            btn.className = 'config-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 cursor-pointer';
+            sec?.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    /* Guardado Global */
+    document.getElementById('btn-save-global-config')?.addEventListener('click', () => {
+      const bizName = document.getElementById('cfg-biz-name').value.trim();
+      const waNumber = sanitizeCleanPhone(document.getElementById('cfg-wa-number').value);
+      const interval = document.getElementById('cfg-interval').value;
+      const days = document.getElementById('cfg-max-days').value;
+      const template = document.getElementById('cfg-msg-template').value;
+      const blockHolidays = document.getElementById('cfg-block-holidays').checked;
+
+      localStorage.setItem('tucu_l2_biz_name', bizName);
+      localStorage.setItem('tucu_biz_name', bizName);
+      localStorage.setItem('tucu_l2_wa_number', waNumber);
+      localStorage.setItem('tucu_wa_number', waNumber);
+      localStorage.setItem('tucu_l2_interval', interval);
+      localStorage.setItem('tucu_l2_days', days);
+      localStorage.setItem('tucu_l2_template', template);
+      localStorage.setItem('tucu_l2_block_holidays', String(blockHolidays));
+      localStorage.setItem('tucu_schedule', JSON.stringify(weeklySchedule));
+
+      showToast('Configuración global sincronizada con éxito');
+    });
+
+    /* Init */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCalendar();
+      renderCRM();
+      renderScheduleMatrix();
+      renderHolidays();
+      renderVacations();
+      renderOccupiedSlots();
+
+      const savedName = localStorage.getItem('tucu_l2_biz_name') || localStorage.getItem('tucu_biz_name');
+      if (savedName && document.getElementById('cfg-biz-name')) document.getElementById('cfg-biz-name').value = savedName;
+      const savedWa = localStorage.getItem('tucu_l2_wa_number') || localStorage.getItem('tucu_wa_number');
+      if (savedWa && document.getElementById('cfg-wa-number')) document.getElementById('cfg-wa-number').value = savedWa;
+      const defaultTpl = "¡Hola! Quiero confirmar mi reserva en {{comercio}}:\n- 🎟️ ID: #{{id}}\n- 👤 Nombre: {{cliente}}\n- 📅 Día: {{fecha}}\n- ⏰ Hora: {{hora}}\n- 👥 Personas: {{personas}}\n- 📞 Tel: {{telefono}}\n- 🔗 Autogestión: {{link}}\n¿Me confirman disponibilidad?";
+      const savedTpl = localStorage.getItem('tucu_l2_template') || defaultTpl;
+      if (document.getElementById('cfg-msg-template')) {
+        document.getElementById('cfg-msg-template').value = savedTpl;
+        updatePreview();
+      }
+    });
+  </script>
+</body>
+</html>

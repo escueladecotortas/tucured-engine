@@ -1,0 +1,172 @@
+<!-- Archivo: public/clients/la-fachada-l3/index.html -->
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>La Fachada L3 — Barbería Tradicional (Multi-Staff & Servicios)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+            zinc: { 850: '#1e1e22', 900: '#18181b', 950: '#09090b' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --font-sans: 'Inter', sans-serif; }
+    body { font-family: var(--font-sans); }
+    .hero-glow { background: radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.14), transparent 70%); }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-amber-500/30 selection:text-amber-300">
+  
+  <!-- Header / Barra de Navegación L3 -->
+  <header class="fixed top-0 w-full z-40 bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center font-bold text-lg font-heading">💈</div>
+      <div>
+        <span class="font-bold text-base text-white tracking-tight font-heading block leading-none">LA FACHADA <span class="text-xs text-amber-400 font-mono font-medium ml-1">L3</span></span>
+        <span class="text-[10px] text-zinc-400 uppercase tracking-widest font-mono">Multi-Staff • Multi-Servicio</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#staff" class="hidden sm:inline-block text-xs font-semibold text-zinc-300 hover:text-amber-400 transition-colors">Barberos</a>
+      <a href="#services" class="hidden sm:inline-block text-xs font-semibold text-zinc-300 hover:text-amber-400 transition-colors">Servicios</a>
+      <a href="#booking" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-lg shadow-amber-500/20 flex items-center gap-1.5">
+        <span>Agendar Turno L3</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[85vh] flex items-center pt-24 border-b border-zinc-800/80 hero-glow px-6">
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12">
+      <div class="space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-semibold">
+          <span>⚡</span><span>Nivel L3: Elección de Barbero & Duración Flexible</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-bold font-heading text-white leading-tight">
+          Elige tu Barbero, tu Estilo y tu <span class="text-amber-400">Horario</span>.
+        </h1>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-lg">
+          Sistema de turnos Nivel 3 con agendas independientes por profesional, cálculo dinámico de duración y confirmación web nativa.
+        </p>
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="#booking" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 px-7 py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-amber-500/20">
+            📅 Agendar con tu Barbero
+          </a>
+          <a href="https://wa.me/5493815550000" target="_blank" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 px-6 py-3.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
+            <span>💬 WhatsApp Oficial</span>
+          </a>
+        </div>
+      </div>
+      <div class="relative rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-900/60 p-6 flex flex-col justify-center">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+            <span class="text-xs text-zinc-400 uppercase font-mono tracking-wider">Staff Disponible</span>
+            <span class="text-xs font-semibold text-zinc-200">3 Profesionales en simultáneo</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+            <span class="text-xs text-zinc-400 uppercase font-mono tracking-wider">Duración de Servicios</span>
+            <span class="text-xs font-semibold text-amber-400">Dinámica (20 a 50 min)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-zinc-400 uppercase font-mono tracking-wider">Tecnología L3</span>
+            <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Multi-Agenda Asíncrona</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Staff / Profesionales L3 -->
+  <section id="staff" class="py-20 px-6 border-b border-zinc-800/80 max-w-6xl mx-auto w-full">
+    <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+      <h2 class="text-3xl font-bold font-heading text-white">Nuestro Equipo de Barberos</h2>
+      <p class="text-xs sm:text-sm text-zinc-400">Especialistas con estilos únicos y agenda dedicada.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 text-center space-y-3 hover:border-amber-500/40 transition-all">
+        <div class="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-500/40 text-2xl flex items-center justify-center mx-auto">🧔🏻‍♂️</div>
+        <h3 class="text-base font-bold text-white font-heading">Mateo "The Fade"</h3>
+        <p class="text-xs text-amber-400 font-mono">Master Fade & Freestyle</p>
+        <p class="text-xs text-zinc-400">Especialista en degradados milimétricos y texturizados modernos.</p>
+      </div>
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 text-center space-y-3 hover:border-amber-500/40 transition-all">
+        <div class="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-500/40 text-2xl flex items-center justify-center mx-auto">👨🏽‍🦱</div>
+        <h3 class="text-base font-bold text-white font-heading">Lucas Tradicional</h3>
+        <p class="text-xs text-amber-400 font-mono">Cortes Clásicos & Navaja</p>
+        <p class="text-xs text-zinc-400">Maestro en afeitado tradicional con toallas calientes y perfilado pompadour.</p>
+      </div>
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 text-center space-y-3 hover:border-amber-500/40 transition-all">
+        <div class="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-500/40 text-2xl flex items-center justify-center mx-auto">✂️</div>
+        <h3 class="text-base font-bold text-white font-heading">Cualquier Profesional</h3>
+        <p class="text-xs text-indigo-400 font-mono">Primer Slot Disponible</p>
+        <p class="text-xs text-zinc-400">Asignación automática del barbero libre más próximo para mayor rapidez.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios L3 -->
+  <section id="services" class="py-20 px-6 border-b border-zinc-800/80 max-w-6xl mx-auto w-full">
+    <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+      <h2 class="text-3xl font-bold font-heading text-white">Catálogo de Servicios</h2>
+      <p class="text-xs sm:text-sm text-zinc-400">Duración y slots calculados en base a tu elección.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 space-y-4 hover:border-amber-500/40 transition-all">
+        <div class="text-3xl">✂️</div>
+        <h3 class="text-lg font-bold text-white font-heading">Corte Clásico & Fade</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Degradados precisos, tijera artesanal y peinado con cera mate de primera línea.</p>
+        <div class="pt-2 font-mono text-sm text-amber-400 font-bold">$12.000 • 30 min</div>
+      </div>
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 space-y-4 hover:border-amber-500/40 transition-all">
+        <div class="text-3xl">🪒</div>
+        <h3 class="text-lg font-bold text-white font-heading">Ritual de Barba & Toalla</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Vapor ozono, toallas calientes, perfilado a navaja y bálsamo hidratante para la piel.</p>
+        <div class="pt-2 font-mono text-sm text-amber-400 font-bold">$9.000 • 20 min</div>
+      </div>
+      <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-6 space-y-4 hover:border-amber-500/40 transition-all">
+        <div class="text-3xl">👑</div>
+        <h3 class="text-lg font-bold text-white font-heading">Combo La Fachada Total</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">Experiencia integral: Corte completo + Ritual de barba + Lavado exfoliante y café de cortesía.</p>
+        <div class="pt-2 font-mono text-sm text-amber-400 font-bold">$18.000 • 50 min</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Turnero L3 -->
+  <section id="booking" class="py-20 px-6 max-w-4xl mx-auto w-full">
+    <div class="text-center mb-10 space-y-2">
+      <h2 class="text-3xl font-bold font-heading text-white">Reserva tu Turno L3</h2>
+      <p class="text-xs sm:text-sm text-zinc-400">Selecciona barbero, servicio, fecha y hora en tiempo real.</p>
+    </div>
+    
+    <!-- Punto de Montaje del Turnero L3 -->
+    <div id="nexus-booking_turnero_l3_widget" class="w-full flex justify-center">
+      <iframe src="/demo_l2_cliente.html?embed=1" class="w-full max-w-[460px] h-[680px] rounded-3xl border border-zinc-800 shadow-2xl bg-zinc-950" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/80 py-8 px-6 text-center text-xs text-zinc-500">
+    <p>© 2026 La Fachada Barber Club L3 — Tucumán, Argentina. Impulsado por TucuRed Engine v11.1.</p>
+  </footer>
+
+</body>
+</html>

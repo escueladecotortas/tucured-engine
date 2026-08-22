@@ -1,0 +1,17 @@
+{
+  "clientSlug": "la-fachada",
+  "injectedWidgets": [
+    {
+      "id": "turnero_l2",
+      "type": "booking",
+      "level": "L2",
+      "targetElement": "nexus-booking_turnero_widget",
+      "dataAttributes": {
+        "bizName": "La Fachada Barber Club",
+        "wa": "5493815550000",
+        "interval": 30,
+        "days": 14
+      }
+    }
+  ]
+}

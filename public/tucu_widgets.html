@@ -1,0 +1,281 @@
+<!-- Archivo: public/tucu_widgets.html -->
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-zinc-950 text-zinc-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Widgets Comerciales — TucuRed</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(24, 24, 27, 0.5); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(63, 63, 70, 0.6); border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(113, 113, 122, 0.8); }
+    .glass-panel { background: rgba(18, 18, 23, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans bg-zinc-950 text-zinc-100 overflow-hidden selection:bg-indigo-500/30 selection:text-indigo-300">
+
+  <!-- Header Superior -->
+  <header class="h-16 border-b border-zinc-800/80 glass-panel sticky top-0 z-40 px-4 sm:px-6 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-sm shadow-inner">
+        ⚡
+      </div>
+      <div>
+        <h1 class="text-sm sm:text-base font-bold tracking-tight text-white flex items-center gap-2">
+          <span>Catálogo de Widgets Comerciales</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono font-medium">TucuRed Showcase</span>
+        </h1>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <a href="/widget-laboratory.html" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 transition-all flex items-center gap-1.5" title="Abrir Laboratorio Técnico">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+        <span>Sandbox Lab</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Layout Principal de 3 Columnas -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         COLUMNA 1: SIDEBAR DE SELECCIÓN DE WIDGETS (IZQUIERDA)
+    ══════════════════════════════════════════════════════════════════ -->
+    <aside class="w-72 border-r border-zinc-800/80 bg-zinc-950 flex flex-col shrink-0">
+      <div class="p-4 border-b border-zinc-800/80">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400">Componentes Activos</h2>
+        <p class="text-[11px] text-zinc-500 mt-0.5">Selecciona el módulo para previsualizar</p>
+      </div>
+
+      <nav class="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
+        <!-- Item L1 -->
+        <button type="button" id="item-widget-l1" onclick="selectWidget('l1')" class="w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-blue-600/10 border-blue-500/30 text-white shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center text-base shrink-0 mt-0.5">🚀</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white">Turnero L1</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-bold">Nivel 1</span>
+            </div>
+            <p class="text-[11px] text-zinc-400 mt-0.5 line-clamp-1">WhatsApp Directo • Sin Backend</p>
+          </div>
+        </button>
+
+        <!-- Item L2 -->
+        <button type="button" id="item-widget-l2" onclick="selectWidget('l2')" class="w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-zinc-900/50 hover:bg-zinc-900 border-zinc-800/80 text-zinc-400 hover:text-zinc-200">
+          <div class="w-8 h-8 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center text-base shrink-0 mt-0.5">⚡</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white">Turnero L2</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-bold">Nivel 2</span>
+            </div>
+            <p class="text-[11px] text-zinc-400 mt-0.5 line-clamp-1">Asíncrono • CRM & Calendario</p>
+          </div>
+        </button>
+      </nav>
+
+      <div class="p-3 border-t border-zinc-800/80 bg-zinc-950/80 text-[10px] text-zinc-500 flex items-center justify-between">
+        <span>TucuRed Engine v11.1</span>
+        <span class="text-emerald-400 font-bold">● Local-First</span>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         COLUMNA 2: LIVE PREVIEW STAGE CON MOCKUP MOBILE (CENTRAL)
+    ══════════════════════════════════════════════════════════════════ -->
+    <main class="flex-1 flex flex-col bg-zinc-900/30 overflow-hidden relative">
+      <!-- Toolbar Superior del Simulador -->
+      <div class="h-12 border-b border-zinc-800/80 bg-zinc-950/60 backdrop-blur-md px-6 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-semibold text-zinc-300" id="stage-title">Vista Previa: Turnero L1 (WhatsApp Directo)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] text-zinc-500 font-mono">Smartphone Viewport • 380px</span>
+        </div>
+      </div>
+
+      <!-- Stage Centrado con Mockup de Smartphone Premium -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 flex items-center justify-center hide-scrollbar">
+        
+        <!-- Marco de Celular (Smartphone Container) -->
+        <div class="w-[380px] h-[680px] max-h-[85vh] rounded-[44px] border-[6px] border-zinc-800 bg-zinc-950 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] relative flex flex-col overflow-hidden shrink-0 transition-all duration-300">
+          
+          <!-- Isla Dinámica / Notch Superior -->
+          <div class="w-full pt-2 pb-1 bg-zinc-950 flex justify-center shrink-0 z-20">
+            <div class="w-24 h-4 bg-zinc-900 rounded-full border border-zinc-800/80 flex items-center justify-center gap-1.5 shadow-inner">
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-800"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-800"></span>
+            </div>
+          </div>
+
+          <!-- Iframe con la Vista Cliente Pura -->
+          <div class="flex-1 w-full bg-zinc-950 overflow-hidden relative">
+            <iframe id="preview-iframe" src="demo_l1_cliente.html?embed=1" class="w-full h-full border-0 bg-transparent overflow-hidden hide-scrollbar" scrolling="no"></iframe>
+          </div>
+
+          <!-- Barra de Navegación Inferior del Dispositivo (Home Indicator) -->
+          <div class="w-full py-1.5 bg-zinc-950 flex justify-center shrink-0 z-20">
+            <div class="w-28 h-1 bg-zinc-800 rounded-full"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         COLUMNA 3: FICHA COMERCIAL & ACCIONES DIRECTAS (DERECHA)
+    ══════════════════════════════════════════════════════════════════ -->
+    <aside class="w-80 lg:w-96 border-l border-zinc-800/80 bg-zinc-950 flex flex-col shrink-0 p-5 overflow-y-auto custom-scrollbar space-y-6">
+      
+      <!-- Encabezado de Ficha Comercial -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <span id="card-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">Nivel 1 • Standalone</span>
+          <span class="text-xs text-zinc-500">Producción Ready</span>
+        </div>
+        <h3 id="card-title" class="text-lg font-bold text-white">Turnero L1 (WhatsApp Directo)</h3>
+        <p id="card-desc" class="text-xs text-zinc-400 leading-relaxed">Solución zero-friction para comercios sin servidor central. Conexión directa a WhatsApp con cronograma configurable y salteo de feriados.</p>
+      </div>
+
+      <!-- Botones de Acción Directa (Pestaña Nueva) -->
+      <div class="space-y-2.5 pt-2 border-t border-zinc-800/80">
+        <a id="btn-action-admin" href="admin_l1.html" target="_blank" class="w-full py-3 px-4 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Abrir Panel Administrador</span>
+        </a>
+        <a id="btn-action-client" href="demo_l1_cliente.html" target="_blank" class="w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          <span>Probar Vista Cliente Aislada</span>
+        </a>
+      </div>
+
+      <!-- Resumen de Capacidades Técnicas -->
+      <div class="space-y-3 pt-2 border-t border-zinc-800/80">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-300">Capacidades Técnicas</h4>
+        <ul id="card-features" class="space-y-2.5 text-xs text-zinc-400">
+          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span> <span>Vinculación WhatsApp Web (Doble Llave Baileys).</span></li>
+          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span> <span>Cronograma de 7 días con soporte de horario partido.</span></li>
+          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span> <span>Salteo automático de feriados nacionales oficiales.</span></li>
+          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span> <span>Cierres especiales y rangos de vacaciones.</span></li>
+          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span> <span>Plantilla con tokens dinámicos (<code class="text-blue-400">{{cliente}}</code>, <code class="text-blue-400">{{fecha}}</code>).</span></li>
+        </ul>
+      </div>
+
+      <!-- Arquitectura de Persistencia -->
+      <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-1.5 text-xs">
+        <span class="font-bold text-white flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Soberanía de Datos</span>
+        </span>
+        <p class="text-zinc-400 text-[11px] leading-relaxed">Persistencia local e instantánea en <code class="text-indigo-300 font-mono">localStorage</code>. Cero dependencia de bases de datos externas para operar.</p>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Script de Selección Dinámica de Widget -->
+  <script>
+    const widgetsData = {
+      l1: {
+        title: "Turnero L1 (WhatsApp Directo)",
+        badge: "Nivel 1 • Standalone",
+        badgeClass: "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20",
+        desc: "Solución zero-friction para comercios sin servidor central. Conexión directa a WhatsApp con cronograma configurable y salteo de feriados.",
+        adminUrl: "admin_l1.html",
+        adminBtnClass: "w-full py-3 px-4 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer",
+        clientUrl: "demo_l1_cliente.html",
+        previewUrl: "demo_l1_cliente.html?embed=1",
+        features: [
+          "Vinculación WhatsApp Web (Doble Llave Baileys).",
+          "Cronograma de 7 días con soporte de horario partido.",
+          "Salteo automático de feriados nacionales oficiales.",
+          "Cierres especiales y rangos de vacaciones.",
+          "Plantilla con tokens dinámicos ({{cliente}}, {{fecha}})."
+        ]
+      },
+      l2: {
+        title: "Turnero L2 (Asíncrono + CRM)",
+        badge: "Nivel 2 • Enterprise Lite",
+        badgeClass: "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20",
+        desc: "Gestión avanzada de citas con Calendario Operativo en tiempo real, Directorio CRM con Lista Blanca/Negra, bloqueo asíncrono y exportación de calendario .ics.",
+        adminUrl: "admin_l2.html",
+        adminBtnClass: "w-full py-3 px-4 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer",
+        clientUrl: "demo_l2_cliente.html",
+        previewUrl: "demo_l2_cliente.html?embed=1",
+        features: [
+          "Calendario Operativo con liberación de slots y WhatsApp directo.",
+          "Directorio CRM con Gobernanza (Lista Blanca VIP y Lista Negra).",
+          "Consulta de disponibilidad asíncrona (fetchAvailability).",
+          "Bloqueo instantáneo de horarios ya ocupados.",
+          "Generación automática de eventos iCalendar (.ics RFC 5545)."
+        ]
+      }
+    };
+
+    function selectWidget(key) {
+      const data = widgetsData[key];
+      if (!data) return;
+
+      // Actualizar Tabs
+      const itemL1 = document.getElementById('item-widget-l1');
+      const itemL2 = document.getElementById('item-widget-l2');
+      if (key === 'l1') {
+        itemL1.className = 'w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-blue-600/10 border-blue-500/30 text-white shadow-sm';
+        itemL2.className = 'w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-zinc-900/50 hover:bg-zinc-900 border-zinc-800/80 text-zinc-400 hover:text-zinc-200';
+      } else {
+        itemL2.className = 'w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-indigo-600/10 border-indigo-500/30 text-white shadow-sm';
+        itemL1.className = 'w-full text-left p-3.5 rounded-2xl border transition-all flex items-start gap-3 cursor-pointer bg-zinc-900/50 hover:bg-zinc-900 border-zinc-800/80 text-zinc-400 hover:text-zinc-200';
+      }
+
+      // Actualizar Stage y Ficha
+      document.getElementById('stage-title').innerText = `Vista Previa: ${data.title}`;
+      document.getElementById('preview-iframe').src = data.previewUrl;
+      document.getElementById('card-title').innerText = data.title;
+      document.getElementById('card-desc').innerText = data.desc;
+      
+      const badge = document.getElementById('card-badge');
+      badge.innerText = data.badge;
+      badge.className = data.badgeClass;
+
+      const btnAdmin = document.getElementById('btn-action-admin');
+      btnAdmin.href = data.adminUrl;
+      btnAdmin.className = data.adminBtnClass;
+
+      document.getElementById('btn-action-client').href = data.clientUrl;
+
+      const featsList = document.getElementById('card-features');
+      featsList.innerHTML = data.features.map(f => `
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-400 font-bold">✓</span>
+          <span>${f}</span>
+        </li>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

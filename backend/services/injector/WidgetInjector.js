@@ -8,7 +8,8 @@ const WidgetPools = require('./manifest/WidgetPools');
 const WIDGETS_DIR = path.resolve(__dirname, '../../stitch/widgets');
 
 const WIDGET_FILES = {
-  booking_v1_turnero:        'booking/booking_v1_turnero.html',
+  booking_l1_turnero:        'booking/booking_l1_turnero.html',
+  booking_v1_turnero:        'booking/booking_l1_turnero.html',
   gallery_v2_stories_grid:   'galleries/gallery_v2_stories_grid.html',
   gallery_v1_reel:           'galleries/gallery_v1_reel.html',
   social_v2_marquee_reviews: 'social/social_v2_marquee_reviews.html',
@@ -17,35 +18,15 @@ const WIDGET_FILES = {
   footer_v1_map:             'footers/footer_v1_map.html',
 };
 
-const resolveBookingTokens = (name, phone, category) => {
-  const isService = /salud|optica|opticas|optician|optometria|medico|doctor|dent|psico|estudio|servicio|profesional|taller/i.test(category);
-  if (isService) {
-    return {
-      title: `Solicitá tu Consulta en ${name}`,
-      desc: 'Elegí día y horario para tu atención personalizada y control especializado.',
-      field2Label: 'Tipo de Consulta / Servicio',
-      field2Options: `
-        <option value="Control y Graduación">Control y Graduación Visual</option>
-        <option value="Armazones y Cristales">Armazones y Cristales</option>
-        <option value="Lentes de Contacto">Lentes de Contacto</option>
-        <option value="Consulta General" selected>Consulta General</option>`,
-      waIntentText: 'Quiero solicitar un turno de atención',
-      cta: 'Confirmar Turno por WhatsApp'
-    };
-  }
-  return {
-    title: `Reservá tu Mesa en ${name}`,
-    desc: 'Elegí día y horario para disfrutar la mejor experiencia gastronómica.',
-    field2Label: 'Cantidad de Personas',
-    field2Options: `
-      <option value="2 personas">2 personas</option>
-      <option value="4 personas" selected>4 personas</option>
-      <option value="6 personas">6 personas</option>
-      <option value="Mesa Grande (8+ personas)">Mesa Grande (8+ personas)</option>`,
-    waIntentText: 'Quiero reservar una mesa',
-    cta: 'Confirmar Reserva por WhatsApp'
-  };
-};
+const DEFAULT_SCHEDULE = JSON.stringify({
+  1: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  2: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  3: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  4: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  5: { enabled: true, open: "09:00", close: "18:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  6: { enabled: true, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" },
+  0: { enabled: false, open: "09:00", close: "13:00", isSplit: false, open2: "17:00", close2: "21:00" }
+});
 
 class WidgetInjector {
   static injectWidgets($, prospectData, widgetManifest) {
@@ -63,7 +44,7 @@ class WidgetInjector {
     const activePool = WidgetPools.getPoolForCategory(category);
     const sp = prospectData?.semantic_photos || {};
     
-    // Misión 3: Diversidad Visual (Sistema de Consumo y Rutas Relativas)
+    // Diversidad Visual (Sistema de Consumo y Rutas Relativas)
     const rawPhotos = [
       ...(Array.isArray(sp.showcase) ? sp.showcase : []),
       ...(Array.isArray(sp.atmosphere) ? sp.atmosphere : []),
@@ -71,8 +52,8 @@ class WidgetInjector {
     ].filter(Boolean);
 
     let photoPool = [...new Set(rawPhotos)].map(photoVal => {
-        const basename = photoVal.split('/').pop().split('?')[0] || 'fallback.jpg';
-        return `/clients/${slug}/assets/${basename}`;
+      const basename = photoVal.split('/').pop().split('?')[0] || 'fallback.jpg';
+      return `/clients/${slug}/assets/${basename}`;
     });
 
     if (photoPool.length === 0) {
@@ -83,12 +64,7 @@ class WidgetInjector {
       ];
     }
 
-    const getPhoto = () => {
-      if (photoPool.length > 0) {
-        return photoPool.shift(); // Consumo real para cero repeticiones
-      }
-      return `/clients/${slug}/assets/hero.jpg`;
-    };
+    const getPhoto = () => photoPool.length > 0 ? photoPool.shift() : `/clients/${slug}/assets/hero.jpg`;
 
     const readWidget = (key) => {
       const p = WIDGET_FILES[key];
@@ -98,14 +74,10 @@ class WidgetInjector {
     };
 
     const injectSlotBidirectional = (widgetName, html, fbTarget = 'footer') => {
-      const selectors = `[data-nexus-slot="${widgetName}"]`;
-      const slot = $(selectors);
-      if (slot.length > 0) { 
-        slot.first().html(html); 
-        return true; 
-      }
+      const slot = $(`[data-nexus-slot="${widgetName}"]`);
+      if (slot.length > 0) { slot.first().html(html); return true; }
 
-      const legacySelectors = `#nexus-${widgetName}, #slot-${widgetName}, [data-nexus-widget="${widgetName}"]${widgetName === 'booking_v1_turnero' ? ', #booking, section[id="booking"]' : ''}`;
+      const legacySelectors = `#nexus-${widgetName}, #slot-${widgetName}, [data-nexus-widget="${widgetName}"]${widgetName.includes('booking') ? ', #booking, section[id="booking"]' : ''}`;
       const legacySlot = $(legacySelectors);
       if (legacySlot.length > 0) { legacySlot.first().replaceWith(html); return true; }
 
@@ -120,22 +92,23 @@ class WidgetInjector {
       });
       if (replacedInText) return true;
 
-      console.warn(`⚠️ [WidgetInjector] Stitch alucinó y no inyectó el data-nexus-slot="${widgetName}". Aplicando fallback a ${fbTarget}`);
       const fb = $(fbTarget);
       if (fb.length > 0) { fb.before(`<section data-nexus-fallback="${widgetName}">${html}</section>`); return true; }
       return false;
     };
 
-    // 1. Booking / Turnero Contextualizado
-    if (activePool.includes('booking_v1_turnero')) {
-      const h = readWidget('booking_v1_turnero');
+    // 1. Turnero L1 Parametrizado
+    if (activePool.includes('booking_v1_turnero') || activePool.includes('booking_l1_turnero')) {
+      const h = readWidget('booking_l1_turnero');
       if (h) {
-        const bt = resolveBookingTokens(name, phone, category);
-        const hyd = h.replace(/\{\{BOOKING_TITLE\}\}/g, bt.title).replace(/\{\{BOOKING_desc\}\}/g, bt.desc)
-          .replace(/\{\{FIELD_2_LABEL\}\}/g, bt.field2Label).replace(/\{\{FIELD_2_OPTIONS\}\}/g, bt.field2Options)
-          .replace(/\{\{WA_INTENT_TEXT\}\}/g, bt.waIntentText).replace(/\{\{BOOKING_CTA\}\}/g, bt.cta)
-          .replace(/\{\{WHATSAPP_NUMBER\}\}/g, phone).replace(/\{\{WHATSAPP_CLEAN\}\}/g, waClean);
+        const widgetId = `l1-${slug}`;
+        const hyd = h
+          .replace(/\{\{WIDGET_ID\}\}/g, widgetId)
+          .replace(/\{\{BUSINESS_NAME\}\}/g, name)
+          .replace(/\{\{WHATSAPP_NUMBER\}\}/g, waClean || phone)
+          .replace(/\{\{SCHEDULE_JSON\}\}/g, DEFAULT_SCHEDULE);
         injectSlotBidirectional('booking_v1_turnero', hyd, 'footer');
+        injectSlotBidirectional('booking_l1_turnero', hyd, 'footer');
       }
     }
 
@@ -189,7 +162,7 @@ class WidgetInjector {
     }
 
     // Purga radical de placeholders
-    const ALL_PLACEHOLDERS = /\[(?:nexus-)?(?:gallery_v[12]_[\w]+|contact_v2_action_dock|social_v2_marquee_reviews|trust_v2_live_badge|booking_v1_turnero|footer_v1_map|slot-[\w]+|[\w_]+)\]/gi;
+    const ALL_PLACEHOLDERS = /\[(?:nexus-)?(?:gallery_v[12]_[\w]+|contact_v2_action_dock|social_v2_marquee_reviews|trust_v2_live_badge|booking_v1_turnero|booking_l1_turnero|footer_v1_map|slot-[\w]+|[\w_]+)\]/gi;
     let bodyHtml = $('body').html();
     if (bodyHtml && ALL_PLACEHOLDERS.test(bodyHtml)) {
       $('body').html(bodyHtml.replace(ALL_PLACEHOLDERS, ''));
